@@ -1,0 +1,29 @@
+{
+  "name": "stacker",
+  "version": "1.0.0",
+  "description": "Asynchronous messaging communication testing tool",
+  "main": "src/main.ts",
+  "dependencies": {
+    "vue": "^2.4.4",
+    "vueify": "^9.4.1"
+  },
+  "devDependencies": {
+    "@types/electron-devtools-installer": "^2.0.2",
+    "electron-devtools-installer": "^2.2.0",
+    "electron-forge": "^4.0.2",
+    "electron": "1.7.6",
+    "electron-prebuilt-compile": "1.7.6",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/electron .",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json --type-check --force",
+    "make": "node_modules/.bin/electron-forge make"
+  },
+  "author": "Virgs",
+  "license": "MIT",
+  "config": {
+    "forge": "./forge.config.js"
+  }
+}
