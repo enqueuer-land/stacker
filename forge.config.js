@@ -21,8 +21,8 @@ const config = {
     "electronInstallerDebian": {},
     "electronInstallerRedhat": {},
     "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "lopidio",
+        "name": "stacker"
     },
     "windowsStoreConfig": {
         "packageName": "",

@@ -1,6 +1,7 @@
-<template lang="jade">
-    div
-        p.hello Hello world
+<template>
+    <div>
+        <p>Hello worldVirgs</p>
+    </div>
 </template>
 
 <script lang="ts">

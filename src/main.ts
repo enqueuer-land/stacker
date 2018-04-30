@@ -15,7 +15,7 @@ const createWindow = async () => {
         width: 1024,
         height: 768
     })
-    window.loadURL(`file://${__dirname}/index.jade`)
+    window.loadURL(`file://${__dirname}/example.html`)
     if (isDevMode) {
         await installExtension(VUEJS_DEVTOOLS)
         window.webContents.openDevTools({mode: 'bottom'})
