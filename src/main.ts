@@ -2,12 +2,12 @@ import {app, BrowserWindow} from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import {enableLiveReload} from 'electron-compile'
 
-const isDevMode = process.execPath.match(/[\\/]electron/)
+const isDevMode = process.execPath.match(/[\\/]electron/);
 if (isDevMode) {
     enableLiveReload()
 }
 
-let window: Electron.BrowserWindow | null
+let window: Electron.BrowserWindow | null;
 
 const createWindow = async () => {
     window = new BrowserWindow({
@@ -15,9 +15,10 @@ const createWindow = async () => {
         width: 1024,
         height: 768
     })
-    window.loadURL(`file://${__dirname}/example.html`)
+    window.loadURL(`file://${__dirname}/index.jade`);
+    // window.loadURL(`file://${__dirname}/example.html`);
     if (isDevMode) {
-        await installExtension(VUEJS_DEVTOOLS)
+        await installExtension(VUEJS_DEVTOOLS);
         window.webContents.openDevTools({mode: 'bottom'})
     }
 
@@ -26,7 +27,7 @@ const createWindow = async () => {
     })
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar

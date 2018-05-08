@@ -9,15 +9,16 @@
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
+    "npm": "^6.0.0",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.0.2",
-    "electron": "1.7.6",
+    "electron": "^1.7.6",
     "electron-devtools-installer": "^2.2.0",
     "electron-forge": "^4.0.2",
-    "electron-prebuilt-compile": "1.7.6",
+    "electron-prebuilt-compile": "^1.7.6",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   },
