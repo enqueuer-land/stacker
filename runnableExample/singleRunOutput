@@ -1,0 +1,31 @@
+{
+    "valid": true,
+    "runnableHttp": {
+        "valid": true,
+        "HttpTitle": {
+            "valid": true,
+            "tests": [
+                {
+                    "No time out": true
+                }
+            ],
+            "subscriptions": {
+                "valid": true,
+                "HttpSubscriptionTitle": {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "works": true
+                        },
+                        {
+                            "Message received": true
+                        },
+                        {
+                            "No time out": true
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -9,6 +9,7 @@
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
+    "enqueuer": "^1.0.3",
     "npm": "^6.0.0",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
