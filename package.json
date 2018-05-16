@@ -4,8 +4,9 @@
   "description": "Asynchronous messaging communication testing tool",
   "main": "src/main.ts",
   "scripts": {
+    "all": "npm run lint && npm run make",
     "start": "node_modules/.bin/electron .",
-    "lint": "node_modules/.bin/tslint --project tsconfig.json --type-check --force",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
@@ -18,8 +19,8 @@
     "@types/electron-devtools-installer": "^2.0.2",
     "electron": "^1.7.6",
     "electron-devtools-installer": "^2.2.0",
-    "electron-forge": "^4.0.2",
-    "electron-prebuilt-compile": "^1.7.6",
+    "electron-forge": "4.0.2",
+    "electron-prebuilt-compile": "1.7.6",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   },
