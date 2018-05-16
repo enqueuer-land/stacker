@@ -16,7 +16,7 @@ const config = {
         "packageManager": "npm"
     },
     "electronWinstallerConfig": {
-        "name": "electron_vue_typescript_starter"
+        "name": "stacker"
     },
     "electronInstallerDebian": {},
     "electronInstallerRedhat": {},
@@ -26,7 +26,7 @@ const config = {
     },
     "windowsStoreConfig": {
         "packageName": "",
-        "name": "electron_vue_typescript_starter"
+        "name": ""
     }
 }
 
