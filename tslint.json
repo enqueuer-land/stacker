@@ -17,7 +17,7 @@
         "no-require-imports": true,
         "one-line": [true, "check-else", "check-whitespace", "check-open-brace"],
         "quotemark": [true, "single", "avoid-escape"],
-        "semicolon": [true, "never"],
+        "semicolon": [true, "always"],
         "typedef-whitespace": [
             true, {
                 "call-signature": "nospace",
