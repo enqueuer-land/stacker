@@ -1,88 +1,49 @@
-// import {Logger} from 'log4js';
 import {spawn, ChildProcess} from 'child_process';
-
-const runnable = {
-    'runnableVersion': '01.00.00',
-    'name': 'runnableHttp',
-    'id': 'randomIdFixedInRunnable',
-    'initialDelay': 0,
-    'runnables': [
-        {
-            'timeout': 30000,
-            'name': 'HttpTitle',
-            'subscriptions': [
-                {
-                    'type': 'http-server',
-                    'name': 'HttpSubscriptionTitle',
-                    'endpoint': '/enqueuer',
-                    'port': 23075,
-                    'method': 'POST',
-                    'response': {
-                        'status': 200
-                    },
-                    'timeout': 10000
-                }
-            ],
-            'startEvent': {
-                'publisher': {
-                    'type': 'http-client',
-                    'name': 'HttpPublisherClientTitle',
-                    'url': 'http://localhost:23075/enqueuer',
-                    'method': 'POST',
-                    'payload': {
-                        'enqueuer': 'virgs'
-                    },
-                    'headers': {
-                        'content-type': 'application/json'
-                    }
-                }
-            }
-        }
-    ]
-};
-
+import { EventEmitter } from 'events';
+import { RunnableModel } from '../models/runnable-model';
 export type EnqueuerResponseCallback = (response: string) => void;
 
-export class EnqueuerClient {
+export class EnqueuerClient extends EventEmitter {
     private enqueuer: ChildProcess;
-    private static singleton = new EnqueuerClient();
-    private onEnqueuerResponse: EnqueuerResponseCallback;
-    private constructor() {
-        this.onEnqueuerResponse = () => {/*do nothing*/};
+    public constructor() {
+        super();
         this.startEnqueuer();
-        this.enqueuer.on('exit', (/*statusCode: number*/) => {
-            // Logger.info(`Enqueuer has exited with status: ${statusCode}`);
-            console.log('enqueuer exit');
-            this.startEnqueuer();
-        });
-    }
-
-    public setOnEnqueuerResponse(onEnqueuerResponse: EnqueuerResponseCallback): EnqueuerClient {
-        this.onEnqueuerResponse = onEnqueuerResponse;
-        return this;
     }
 
     private startEnqueuer() {
-        // Logger.info(`Starting enqueuer`);
-        this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         console.log('Starting enqueuer');
-        this.enqueuer.stdout.on('data', (data: string) => {
-            console.log('Got enqueuers response');
-            this.onEnqueuerResponse(data);
-            // this.enqueuer.kill('SIGINT');
-        });
+        this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
+        this.addExitEventListener();
+        this.addErrorEventListener();
+        this.addDataEventListener();
     }
 
-    public static getInstance = () => EnqueuerClient.singleton;
-
-    public run(): void {
+    public sendMessage(runnable: RunnableModel): void {
         //TODO: enqueue a message
-        // Logger.debug(`Sending to enqueuer: ${runnable}`
-        //     .substr(0, 100).concat('...'));
         console.log('Writing message to enqueuer');
         this.enqueuer.stdin.write(JSON.stringify(runnable) + '\r\n');
         this.enqueuer.stdin.end();
-        // this.enqueuer.stdin.resume();
+    }
+
+    private addDataEventListener() {
+        this.enqueuer.stdout.on('data', (data: string) => {
+            console.log('Got enqueuers response');
+            this.emit('response', data);
+        });
+    }
+
+    private addErrorEventListener() {
+        this.enqueuer.on('error', (error: Error) => {
+            console.log(`Enqueuer has errored: ${error}`);
+            this.emit('error', error);
+        });
+    }
+
+    private addExitEventListener() {
+        this.enqueuer.on('exit', (statusCode: number) => {
+            console.log(`Enqueuer has exited with status: ${statusCode}`);
+            this.emit('exit', statusCode);
+        });
     }
 
 }
