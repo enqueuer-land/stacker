@@ -48,7 +48,7 @@ export class EnqueuerClient {
     private static singleton = new EnqueuerClient();
     private onEnqueuerResponse: EnqueuerResponseCallback;
     private constructor() {
-        this.onEnqueuerResponse = () => {};
+        this.onEnqueuerResponse = () => {/*do nothing*/};
         this.startEnqueuer();
         this.enqueuer.on('exit', (/*statusCode: number*/) => {
             // Logger.info(`Enqueuer has exited with status: ${statusCode}`);
@@ -65,7 +65,7 @@ export class EnqueuerClient {
     private startEnqueuer() {
         // Logger.info(`Starting enqueuer`);
         this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
-        console.log("Starting enqueuer");
+        console.log('Starting enqueuer');
         this.enqueuer.stdout.on('data', (data: string) => {
             console.log('Got enqueuers response');
             this.onEnqueuerResponse(data);
@@ -79,7 +79,7 @@ export class EnqueuerClient {
         //TODO: enqueue a message
         // Logger.debug(`Sending to enqueuer: ${runnable}`
         //     .substr(0, 100).concat('...'));
-        console.log("Writing message to enqueuer");
+        console.log('Writing message to enqueuer');
         this.enqueuer.stdin.write(JSON.stringify(runnable) + '\r\n');
         this.enqueuer.stdin.end();
         // this.enqueuer.stdin.resume();
