@@ -1,17 +1,125 @@
 <template>
-    <!-- Or if you want to use the stylesheet from the CDN -->
-    <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">-->
     <div>
-        <p>Hello worldVirgs</p>
-    </div>
-    <!--<pre highlightjs>-->
-        <!--<code class="javascript">{{const s = new Date().toString(); let g;sdasd}}</code>-->
-    <!--</pre>-->
+    <p>HTTP</p>
+    
+    <fieldset>
+    <legend>Input</legend>
+            <label>Name</label><input type="text" name="input-name" /> <br />
+            <label>Initial Delay</label><input type="text" name="initial-delay" /> 
+            <p>
+                <label>Payload</label> <br />
+                <textarea name="payload" rows="4" cols="50"></textarea>
+            </p>
 
+            <p>
+                <label>Pre-Publishing</label><br />
+                <textarea name="pre-publishing" rows="4" cols="50"></textarea>
+            </p>
+
+            <p>
+                <label>Header Key</label><input type="text" name="header-key" /> &nbsp;
+                <label>Header Value</label><input type="text" name="header-value" /> <br />
+
+                <label>Method</label>
+                <select name="input-method">
+                    <option value="post">POST</option>
+                    <option value="get">GET</option>
+                    <option value="put">PUT</option>
+                </select>
+            </p>
+     </fieldset>
+
+    <fieldset>
+     <legend>Output</legend>
+            <label>Name</label><input type="text" name="output-name" /> <br />
+            <label>Timeout</label><input type="text" name="timeout" /> 
+            <p>
+                <label>OnMessageReceived</label><br />
+                <textarea name="on-message-received" rows="4" cols="50"></textarea>
+            </p>
+
+            <label>Server</label><input type="text" name="server" /> <br />
+            <label>Endpoint</label><input type="text" name="endpoint" /> <br />
+            <label>Port</label><input type="text" name="port" v-model="outputPort" /> <br />
+            <label>Method</label>
+                <select name="output-method">
+                    <option value="post">POST</option>
+                    <option value="get">GET</option>
+                    <option value="put">PUT</option>
+                </select>
+     </fieldset>
+    <p>
+        <input type="button" name="send" value="Send" v-on:click="callEnqueuer" />
+    </p>
+
+    <fieldset>
+        <legend>Response</legend>
+        <textarea name="response" rows="40" cols="50"  v-model="enqueueResponse"></textarea>
+    </fieldset>
+
+    </div>
 </template>
 
 <script lang="ts">
-    export default {}
+    import { EnqueuerClient } from '../enqueuer/enqueuer-client';
+
+    let runnable: RunnableModel = {
+                    'runnableVersion': '01.00.00',
+                    'name': 'runnableHttp',
+                    'id': 'randomIdFixedInRunnable',
+                    'initialDelay': 0,
+                    'runnables': [
+                        {
+                            'timeout': 30000,
+                            'name': 'HttpTitle',
+                            'subscriptions': [
+                                {
+                                    'type': 'http-server',
+                                    'name': 'HttpSubscriptionTitle',
+                                    'endpoint': '/enqueuer',
+                                    'port': null,
+                                    'method': 'POST',
+                                    'response': {
+                                        'status': 200
+                                    },
+                                    'timeout': 10000
+                                }
+                            ],
+                            'startEvent': {
+                                'publisher': {
+                                    'type': 'http-client',
+                                    'name': 'HttpPublisherClientTitle',
+                                    'url': 'http://localhost:23075/enqueuer',
+                                    'method': 'POST',
+                                    'payload': {
+                                        'enqueuer': 'virgs'
+                                    },
+                                    'headers': {
+                                        'content-type': 'application/json'
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                };
+
+    export default {
+        data() {
+            return {
+                enqueueResponse: null,
+                outputPort: null
+            }
+        },
+        methods: {
+            callEnqueuer: function (this) {
+                runnable.runnables[0].subscriptions[0].port = parseInt(this.outputPort);
+                
+                const enqueuer = new EnqueuerClient();
+                enqueuer.on('response', (response: string) => { this.enqueueResponse = response })
+                enqueuer.sendMessage(runnable);
+            }
+        }
+    }
 </script>
 
 <style lang="css" scoped>
