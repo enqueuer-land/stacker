@@ -1,14 +1,13 @@
 requisitions:
   run-mode:
-    single-run:
-      name: runnableExample
-      fileNamePattern: runnableExample/*.json
-      output-file: runnableExample/singleRunOutput
+    daemon:
+        -
+            type: standard-input
 outputs:
-    - type: standard-output
+    -
+        type: standard-output
+    # - 
+    #     type: file
+    #     filenamePrefix: results
 
-variables:
-    httpPort: 23076
-    enqueuerKey: 10
-
-log-level: trace
+# log-level: trace

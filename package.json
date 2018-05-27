@@ -1,7 +1,7 @@
 {
   "name": "stacker",
   "version": "1.0.0",
-  "description": "Asynchronous messaging communication testing tool",
+  "description": "Asynchronous messaging communication testing UI tool",
   "main": "src/main.ts",
   "scripts": {
     "all": "npm run lint && npm run make",
@@ -10,7 +10,7 @@
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
-    "enqueuer": "^1.0.4",
+    "enqueuer": "^1.0.6",
     "npm": "^6.0.0",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
