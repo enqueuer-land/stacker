@@ -1,4 +1,4 @@
-export interface ResultTimeModel {
+export interface TimeModel {
     readonly totalTime: number;
     readonly startTime: Date | string;
     readonly endTime: Date | string;

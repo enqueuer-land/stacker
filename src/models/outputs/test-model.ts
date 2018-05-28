@@ -1,3 +1,3 @@
-export interface ResultTestModel {
+export interface TestModel {
     readonly [name: string]: boolean;
 }
