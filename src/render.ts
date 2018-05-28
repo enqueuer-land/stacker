@@ -2,6 +2,7 @@ import * as Vue from 'vue';
 import * as App from './components/App.vue';
 import { EnqueuerClient } from './enqueuer/enqueuer-client';
 import { RunnableModel } from './models/runnable-model';
+import { ResultModel } from './models/results/result-model';
 Vue.config.productionTip = false;
 
 const runnable: RunnableModel = {
@@ -46,8 +47,8 @@ const runnable: RunnableModel = {
 
 //tslint:disable-next-line:no-unused-expression
 new Vue(App).$mount('#app');
-const enqueuer = new EnqueuerClient();
-enqueuer.on('response', (response: string) => {
-                    console.log(`Enqueuer response: ${response}`);
-                });
-enqueuer.sendMessage(runnable);
+const enqueuer = new EnqueuerClient(runnable);
+enqueuer.on('response', (response: ResultModel) => console.log(`response: ${response}`));
+enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
+enqueuer.on('error', (response: Error) => console.log(`error: ${response}`));
+enqueuer.send();
