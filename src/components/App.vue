@@ -62,9 +62,9 @@
 
 <script lang="ts">
     import { EnqueuerClient } from '../enqueuer/enqueuer-client';
-    import {RunnableModel} from '../models/runnables/runnable-model';
-    import {ResultModel} from '../models/results/result-model';
-    import { RequisitionModel } from '../models/runnables/requisition-model';
+    import { RequisitionModel } from '../enqueuer/models/inputs/requisition-model';
+    import { RunnableModel } from '../enqueuer/models/inputs/runnable-model';
+    import { ResultModel } from '../enqueuer/models/outputs/result-model';
 
     let runnable: RunnableModel = {
                     'runnableVersion': '01.00.00',
@@ -120,8 +120,8 @@
                 
                 const enqueuer = new EnqueuerClient(runnable);
                 enqueuer.on('response', (response: ResultModel) => {
-                        this.enqueueResponse = response;
-                        console.log(`response: ${response}`)
+                        this.enqueueResponse = JSON.stringify(response, null, 4);
+                        console.log(`response: ${JSON.stringify(response, null, 4)}`)
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.log(`error: ${response}`));

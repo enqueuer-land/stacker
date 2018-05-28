@@ -1,7 +1,7 @@
 import {spawn, ChildProcess} from 'child_process';
 import { EventEmitter } from 'events';
-import { ResultModel } from '../models/outputs/result-model';
-import { RunnableModel } from '../models/inputs/runnable-model';
+import { RunnableModel } from './models/inputs/runnable-model';
+import { ResultModel } from './models/outputs/result-model';
 
 const result: ResultModel = {
     valid: true,
