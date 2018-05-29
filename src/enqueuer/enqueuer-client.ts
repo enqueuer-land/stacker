@@ -64,8 +64,8 @@ export class EnqueuerClient extends EventEmitter {
 
     private startEnqueuer() {
         console.log('Starting enqueuer');
-        // this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
-        this.enqueuer = spawn('node', ['../enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
+        this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
+        // this.enqueuer = spawn('node', ['../enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         this.addExitEventListener();
         this.addErrorEventListener();
         // this.addDataEventListener();
