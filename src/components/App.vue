@@ -124,7 +124,8 @@
                         console.log(`response: ${JSON.stringify(response, null, 4)}`)
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
-                enqueuer.on('error', (response: Error) => console.log(`error: ${response}`));
+                enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
+                enqueuer.on('log', (response: Error) => console.log(`error: ${response}`));
                 enqueuer.send();
 
             }

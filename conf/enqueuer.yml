@@ -5,9 +5,7 @@ requisitions:
             type: standard-input
 outputs:
     -
-        type: standard-output
-    # - 
-    #     type: file
-    #     filenamePrefix: results
+        type: uds
+        path: enqueuer-response-server
 
 log-level: warn
