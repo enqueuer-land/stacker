@@ -4,49 +4,52 @@ import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
 
 const result: ResultModel = {
-    valid: true,
-    name: 'runnableAmqp',
-    type: 'runnable',
-    id: 'runnableAmqpId',
-    runnables: [
-        {
-            name: 'amqpRequisition',
-            type: 'requisition',
-            valid: true,
-            tests: {
-                'No time out': true
+'type': 'runnable',
+    'valid': true,
+    'name': 'runnableAmqp',
+    'id': 'runnableAmqpId',
+    'runnables': [
+      {
+        'type': 'requisition',
+        'valid': true,
+        'tests': {
+          'No time out': true
+        },
+        'name': 'AmqpReq',
+        'time': {
+          'totalTime': 25,
+          'startTime': '2018-05-28T23:00:07.485Z',
+          'endTime': '2018-05-28T23:00:07.510Z',
+          'timeout': 3000,
+          'hasTimedOut': false
+        },
+        'subscriptions': [
+          {
+            'name': 'AmqpSubs',
+            'type': 'amqp',
+            'tests': {
+              'Able to connect': true,
+              'works': true,
+              'Message received': true,
+              'No time out': true
             },
-            startEvent: {
-                publisher: {
-                    name: 'amqpPublisher',
-                    valid: true,
-                    publishTime: '2018-05-17T01:40:58.996Z',
-                    type: 'amqp'
-                }
-            },
-            subscriptions: [
-                {
-                    name: 'AmqpSubs',
-                    valid: true,
-                    tests: {
-                        'works': true,
-                        'Message received': true,
-                        'No time out': true
-                    },
-                    connectionTime: '2018-05-17T01:40:58.988Z',
-                    messageReceivedTime: '2018-05-17T01:40:58.996Z',
-                    type: 'amqp',
-                }
-            ],
-            time: {
-              totalTime: 25,
-              startTime: '2018-05-17T01:40:58.972Z',
-              endTime: '2018-05-17T01:40:58.997Z',
-              timeout: 3000,
-            }
+            'valid': true,
+            'connectionTime': '2018-05-28T23:00:07.494Z',
+            'messageReceivedTime': '2018-05-28T23:00:07.510Z'
+          }
+        ],
+        'startEvent': {
+          'publisher': {
+            'name': 'AmqpPub',
+            'valid': true,
+            'type': 'amqp',
+            'tests': {},
+            'publishTime': '2018-05-28T23:00:07.496Z'
+          }
         }
+      }
     ]
-};
+  };
 
 export class EnqueuerClient extends EventEmitter {
 
