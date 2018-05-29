@@ -86,7 +86,7 @@ export class EnqueuerClient extends EventEmitter {
     //   })
     //   .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
     //   .catch(err => console.error(`Error sending/receiving message to/from enqueuer: ${err}`));
-      this.emit('response', result);
+    this.emit('response', result);
   }
 
   private addErrorEventListener = () => {

@@ -12,18 +12,19 @@
   },
   "dependencies": {
     "enqueuer": "^1.0.6",
-    "jest": "^23.0.1",
     "npm": "^6.0.0",
-    "ts-jest": "^22.4.6",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.0.2",
+    "@types/jest": "^22.2.3",
     "electron": "^1.7.6",
     "electron-devtools-installer": "^2.2.0",
     "electron-forge": "4.0.2",
     "electron-prebuilt-compile": "1.7.6",
+    "jest": "^23.0.1",
+    "ts-jest": "^22.4.6",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   },
