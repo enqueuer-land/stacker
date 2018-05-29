@@ -4,14 +4,17 @@
   "description": "Asynchronous messaging communication testing UI tool",
   "main": "src/main.ts",
   "scripts": {
-    "all": "npm run lint && npm run make",
-    "start": "node_modules/.bin/electron .",
+    "all": "npm run lint && npm test && npm start",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
+    "test": "jest",
+    "start": "node_modules/.bin/electron .",
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
     "enqueuer": "^1.0.6",
+    "jest": "^23.0.1",
     "npm": "^6.0.0",
+    "ts-jest": "^22.4.6",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
   },
@@ -28,5 +31,18 @@
   "license": "MIT",
   "config": {
     "forge": "./forge.config.js"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }

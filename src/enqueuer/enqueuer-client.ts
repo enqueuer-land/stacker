@@ -2,8 +2,8 @@ import { spawn, ChildProcess } from 'child_process';
 import { EventEmitter } from 'events';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
-import { EnqueuerResponseServer } from './enqueuer-response-server';
 import { EnqueuerResponserServerUds } from './enqueuer-response-server-uds';
+import { EnqueuerResponseServer } from './enqueuer-responser-server';
 
 const result: ResultModel = {
   'type': 'runnable',
@@ -59,10 +59,10 @@ export class EnqueuerClient extends EventEmitter {
   private enqueuer: ChildProcess;
   private responseServer: EnqueuerResponseServer;
 
-  public constructor(runnable: RunnableModel, responseServer: EnqueuerResponseServer = new EnqueuerResponserServerUds()) {
+  public constructor(runnable: RunnableModel) {
     super();
     this.runnable = runnable;
-    this.responseServer = responseServer;
+    this.responseServer = new EnqueuerResponserServerUds();
     this.startEnqueuer();
   }
 
