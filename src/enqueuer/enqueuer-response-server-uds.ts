@@ -1,7 +1,8 @@
 import * as net from 'net';
 import * as fs from 'fs';
+import { EnqueuerResponseServer } from './enqueuer-responser-server';
 
-export class EnqueuerResponseServer {
+export class EnqueuerResponserServerUds implements EnqueuerResponseServer {
     private server: any;
     private path: string;
 

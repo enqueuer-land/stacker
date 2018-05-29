@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
 import { EnqueuerResponseServer } from './enqueuer-response-server';
+import { EnqueuerResponserServerUds } from './enqueuer-response-server-uds';
 
 const result: ResultModel = {
   'type': 'runnable',
@@ -58,10 +59,10 @@ export class EnqueuerClient extends EventEmitter {
   private enqueuer: ChildProcess;
   private responseServer: EnqueuerResponseServer;
 
-  public constructor(runnable: RunnableModel) {
+  public constructor(runnable: RunnableModel, responseServer: EnqueuerResponseServer = new EnqueuerResponserServerUds()) {
     super();
     this.runnable = runnable;
-    this.responseServer = new EnqueuerResponseServer();
+    this.responseServer = responseServer;
     this.startEnqueuer();
   }
 
@@ -78,7 +79,7 @@ export class EnqueuerClient extends EventEmitter {
     //TODO: enqueue a message
     console.log('Writing message to enqueuer');
     // this.responseServer.connect()
-    //   .then(() => {      
+    //   .then(() => {
     //     this.enqueuer.stdin.write(JSON.stringify(this.runnable) + '\r\n');
     //     this.enqueuer.stdin.end();
     //     return this.responseServer.receiveMessage()
