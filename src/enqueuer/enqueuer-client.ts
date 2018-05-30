@@ -17,21 +17,24 @@ export class EnqueuerClient extends EventEmitter {
     public constructor(runnableModel: RunnableModel) {
         super();
         this.runnableModel = runnableModel;
-        this.responseServer = new EnqueuerResponserServerMock();
-        // this.responseServer = new EnqueuerResponserServerUds();
-        this.messageSender = new EnqueuerMessageSenderMock();
-        // this.messageSender = new EnqueuerMessageSenderStandardInput();
+        // this.responseServer = new EnqueuerResponserServerMock();
+        this.responseServer = new EnqueuerResponserServerUds();
+        // this.messageSender = new EnqueuerMessageSenderMock();
+        this.messageSender = new EnqueuerMessageSenderStandardInput();
 
         this.registerEventListeners();
     }
 
-    public send = (): void => {
-        console.log('Writing message to enqueuer');
-        this.responseServer.connect()
+    public async send(): Promise<boolean | void> {
+        return await this.responseServer.connect()
             .then(() => this.messageSender.publish(this.runnableModel))
             .then(() => this.responseServer.receiveMessage())
             .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
-            .catch(err => console.error(`Error sending/receiving message to/from enqueuer: ${err}`));
+            .catch(err => {
+                const errorMessage = `Error sending/receiving message to/from enqueuer: ${err}`;
+                // console.error(errorMessage)
+                this.emit('error', err);
+            });
     }
 
     private addErrorEventListener = () => {
