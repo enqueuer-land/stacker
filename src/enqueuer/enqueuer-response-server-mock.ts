@@ -60,6 +60,7 @@ export class EnqueuerResponserServerMock implements EnqueuerResponseServer {
     }
 
     public unsubscribe(): void {
+        return;
     }
 
 }
