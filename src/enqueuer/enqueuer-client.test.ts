@@ -1,12 +1,11 @@
 import { EnqueuerClient } from './enqueuer-client';
 import { RunnableModel } from './models/inputs/runnable-model';
-import { EnqueuerResponserServerUds } from './enqueuer-response-server-uds';
 import { EnqueuerMessageSenderStandardInput } from './enqueuer-message-sender-standard-input';
 import { ResultModel } from './models/outputs/result-model';
+import { EnqueuerResponserReceiverUds } from './enqueuer-response-receiver-uds';
 
-jest.mock('./enqueuer-response-server-uds');
+jest.mock('./enqueuer-response-receiver-uds');
 jest.mock('./enqueuer-message-sender-standard-input');
-
 
 let runnableModel: RunnableModel = {
     'runnableVersion': '01.00.00',
@@ -51,7 +50,7 @@ let runnableModel: RunnableModel = {
 describe('EnqueuerClient', () => {
     it('Should send "error" event when fails to connect', done => {
 
-        EnqueuerResponserServerUds.mockImplementation(() => {
+        EnqueuerResponserReceiverUds.mockImplementation(() => {
             return {
                 connect: () => {
                     return Promise.reject('Connection Error Message');
@@ -69,7 +68,7 @@ describe('EnqueuerClient', () => {
 
     it('Should send "error" event when fails to publish', done => {
 
-        EnqueuerResponserServerUds.mockImplementation(() => {
+        EnqueuerResponserReceiverUds.mockImplementation(() => {
             return { connect: () => { return Promise.resolve(); } };
         });
 
@@ -89,7 +88,7 @@ describe('EnqueuerClient', () => {
 
     it('Should send "error" event when fails to receive message', done => {
 
-        EnqueuerResponserServerUds.mockImplementation(() => {
+        EnqueuerResponserReceiverUds.mockImplementation(() => {
             return {
                 connect: () => { return Promise.resolve(); },
                 receiveMessage: () => { return Promise.reject("Receive Message Error Message"); }
@@ -159,7 +158,7 @@ describe('EnqueuerClient', () => {
             ]
         };
 
-        EnqueuerResponserServerUds.mockImplementation(() => {
+        EnqueuerResponserReceiverUds.mockImplementation(() => {
             return {
                 connect: () => { return Promise.resolve(); },
                 receiveMessage: () => {

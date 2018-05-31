@@ -1,7 +1,7 @@
-import { EnqueuerResponseServer } from './enqueuer-responser-server';
 import { ResultModel } from './models/outputs/result-model';
+import { EnqueuerResponseReceiver } from './enqueuer-responser-receiver';
 
-export class EnqueuerResponserServerMock implements EnqueuerResponseServer {
+export class EnqueuerResponseReceiverMock implements EnqueuerResponseReceiver {
 
     private result: ResultModel = {
         'type': 'runnable',
@@ -20,8 +20,7 @@ export class EnqueuerResponserServerMock implements EnqueuerResponseServer {
                     'totalTime': 25,
                     'startTime': '2018-05-28T23:00:07.485Z',
                     'endTime': '2018-05-28T23:00:07.510Z',
-                    'timeout': 3000,
-                    'hasTimedOut': false
+                    'timeout': 3000
                 },
                 'subscriptions': [
                     {
