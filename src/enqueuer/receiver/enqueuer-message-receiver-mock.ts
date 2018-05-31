@@ -1,4 +1,4 @@
-import { ResultModel } from './models/outputs/result-model';
+import { ResultModel } from '../models/outputs/result-model';
 import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
 
 export class EnqueuerMessageReceiverMock implements EnqueuerMessageReceiver {

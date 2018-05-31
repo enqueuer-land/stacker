@@ -1,14 +1,10 @@
 import { EnqueuerMessageSender } from './enqueuer-message-sender';
 import * as net from 'net';
-import { RunnableModel } from './models/inputs/runnable-model';
+import { RunnableModel } from '../models/inputs/runnable-model';
 
 export class EnqueuerMessageSenderUds implements EnqueuerMessageSender {
 
-    private path: string;
-
-    constructor() {
-        this.path = 'enqueuer-message-sender';
-    }
+    private readonly path: string = 'enqueuer-message-sender';
 
     public publish(runnableModel: RunnableModel): Promise<void> {
         return new Promise((resolve, reject) => {

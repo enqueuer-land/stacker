@@ -5,7 +5,7 @@ export class EnqueuerRunnerSpawn extends EnqueuerRunner {
     private enqueuer: ChildProcess;
 
     public async start(): Promise<void> {
-        console.log('Starting enqueuer');
+        // console.log('Starting enqueuer');
         this.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         // this.enqueuer = spawn('node', ['../enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
 
