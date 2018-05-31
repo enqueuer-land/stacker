@@ -23,5 +23,8 @@
         "indentSize": 4,
         "tabSize": 4
     },
-    "exclude": ["node_modules", "**/*.test.ts"]    
+    "exclude": ["node_modules", "**/*.test.ts"],
+    "files": [
+        "vue.d.ts"
+    ]
 }
