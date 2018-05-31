@@ -7,7 +7,7 @@ export class EnqueuerMessageReceiverUds implements EnqueuerMessageReceiver {
     private path: string;
 
     constructor() {
-        this.path = 'enqueuer-response-server';
+        this.path = 'enqueuer-message-receiver';
     }
 
     public receiveMessage(): Promise<string> {

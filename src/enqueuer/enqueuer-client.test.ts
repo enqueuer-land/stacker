@@ -1,11 +1,13 @@
 import { EnqueuerClient } from './enqueuer-client';
 import { RunnableModel } from './models/inputs/runnable-model';
-import { EnqueuerMessageSenderStandardInput } from './enqueuer-message-sender-standard-input';
 import { ResultModel } from './models/outputs/result-model';
+import { EnqueuerRunnerSpawn } from './enqueuer-runner-spawn';
 import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
+import { EnqueuerMessageSenderUds } from './enqueuer-message-sender-uds';
 
+jest.mock('./enqueuer-runner-spawn');
 jest.mock('./enqueuer-message-receiver-uds');
-jest.mock('./enqueuer-message-sender-standard-input');
+jest.mock('./enqueuer-message-sender-uds');
 
 let runnableModel: RunnableModel = {
     'runnableVersion': '01.00.00',
@@ -47,6 +49,14 @@ let runnableModel: RunnableModel = {
     ]
 };
 
+EnqueuerRunnerSpawn.mockImplementation(() => {
+    return {
+        start: () => {
+            return Promise.resolve();
+        }
+    };
+});
+
 describe('EnqueuerClient', () => {
     it('Should send "error" event when fails to connect', done => {
 
@@ -57,7 +67,7 @@ describe('EnqueuerClient', () => {
                 }
             };
         });
-        EnqueuerMessageSenderStandardInput.mockImplementation(() => {
+        EnqueuerMessageSenderUds.mockImplementation(() => {
             return { on: (eventName: string, callback: any) => { } };
         });
 
@@ -72,7 +82,7 @@ describe('EnqueuerClient', () => {
             return { connect: () => { return Promise.resolve(); } };
         });
 
-        EnqueuerMessageSenderStandardInput.mockImplementation(() => {
+        EnqueuerMessageSenderUds.mockImplementation(() => {
             return {
                 publish: (RunnableModel: RunnableModel) => {
                     return Promise.reject('Publish Error Message');
@@ -95,7 +105,7 @@ describe('EnqueuerClient', () => {
             };
         });
 
-        EnqueuerMessageSenderStandardInput.mockImplementation(() => {
+        EnqueuerMessageSenderUds.mockImplementation(() => {
             return {
                 publish: (RunnableModel: RunnableModel) => {
                     return Promise.resolve();
@@ -127,8 +137,7 @@ describe('EnqueuerClient', () => {
                         'totalTime': 25,
                         'startTime': '2018-05-28T23:00:07.485Z',
                         'endTime': '2018-05-28T23:00:07.510Z',
-                        'timeout': 3000,
-                        'hasTimedOut': false
+                        'timeout': 3000
                     },
                     'subscriptions': [
                         {
@@ -167,7 +176,7 @@ describe('EnqueuerClient', () => {
             };
         });
 
-        EnqueuerMessageSenderStandardInput.mockImplementation(() => {
+        EnqueuerMessageSenderUds.mockImplementation(() => {
             return {
                 publish: (RunnableModel: RunnableModel) => {
                     return Promise.resolve();

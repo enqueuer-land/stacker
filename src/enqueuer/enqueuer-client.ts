@@ -1,34 +1,45 @@
 import { EventEmitter } from 'events';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
+import { EnqueuerRunner } from './enqueuer-runner';
 import { EnqueuerMessageSender } from './enqueuer-message-sender';
-import { EnqueuerMessageSenderStandardInput } from './enqueuer-message-sender-standard-input';
-import { EnqueuerMessageSenderMock } from './enqueuer-message-sender-mock';
 import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
+import { EnqueuerRunnerSpawn } from './enqueuer-runner-spawn';
+import { EnqueuerMessageSenderUds } from './enqueuer-message-sender-uds';
 import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
+import { EnqueuerRunnerMock } from './enqueuer-runner-mock';
+import { EnqueuerMessageSenderMock } from './enqueuer-message-sender-mock';
 import { EnqueuerMessageReceiverMock } from './enqueuer-message-receiver-mock';
 
 export class EnqueuerClient extends EventEmitter {
 
     private runnableModel: RunnableModel;
-    private messageSender: EnqueuerMessageSender;
-    private responseServer: EnqueuerMessageReceiver;
+    private runner: EnqueuerRunner;
+    private sender: EnqueuerMessageSender;
+    private receiver: EnqueuerMessageReceiver;
 
     public constructor(runnableModel: RunnableModel) {
         super();
-        this.runnableModel = runnableModel;
-        // this.responseServer = new EnqueuerMessageReceiverMock();
-        this.responseServer = new EnqueuerMessageReceiverUds();
-        this.messageSender = new EnqueuerMessageSenderMock();
-        this.messageSender = new EnqueuerMessageSenderStandardInput();
 
-        this.registerEventListeners();
+        this.runnableModel = runnableModel;
+
+        this.runner = new EnqueuerRunnerSpawn();
+        this.receiver = new EnqueuerMessageReceiverUds();
+        this.sender = new EnqueuerMessageSenderUds();
+
+        // this.runner = new EnqueuerRunnerMock();
+        // this.receiver = new EnqueuerMessageReceiverMock();
+        // this.sender = new EnqueuerMessageSenderMock();
+
+        this.runner.start()
+            .then(() => this.registerEventListeners())
+            .catch((err) => {/*console.error(err)*/ });
     }
 
     public async send(): Promise<boolean | void> {
-        return await this.responseServer.connect()
-            .then(() => this.messageSender.publish(this.runnableModel))
-            .then(() => this.responseServer.receiveMessage())
+        return await this.receiver.connect()
+            .then(() => this.sender.publish(this.runnableModel))
+            .then(() => this.receiver.receiveMessage())
             .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
             .catch(err => {
                 const errorMessage = `Error sending/receiving message to/from enqueuer: ${err}`;
@@ -38,15 +49,15 @@ export class EnqueuerClient extends EventEmitter {
     }
 
     private addErrorEventListener = () => {
-        this.messageSender.on('error', (error: Error) => this.emit('error', error));
+        this.runner.on('error', (error: Error) => this.emit('error', error))
     }
 
     private addExitEventListener = () => {
-        this.messageSender.on('exit', (statusCode: number) => this.emit('exit', statusCode));
+        this.runner.on('exit', (statusCode: number) => this.emit('exit', statusCode));
     }
 
     private addLogEventListener = () => {
-        this.messageSender.on('log', (data: string) => this.emit('log', data));
+        this.runner.on('log', (data: string) => this.emit('log', data));
     }
 
     private registerEventListeners() {

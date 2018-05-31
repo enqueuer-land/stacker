@@ -2,10 +2,11 @@ requisitions:
   run-mode:
     daemon:
         -
-            type: standard-input
+            type: uds
+            path: enqueuer-message-sender
 outputs:
     -
         type: uds
-        path: enqueuer-response-server
+        path: enqueuer-message-receiver
 
 log-level: warn
