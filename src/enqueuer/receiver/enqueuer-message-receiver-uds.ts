@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
 
 export class EnqueuerMessageReceiverUds implements EnqueuerMessageReceiver {
+    public static readonly path: string = 'enqueuer-message-receiver';
     private server: any;
-    private readonly path = 'enqueuer-message-receiver';
 
     public receiveMessage(): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -27,9 +27,9 @@ export class EnqueuerMessageReceiverUds implements EnqueuerMessageReceiver {
     public connect(): Promise<void> {
         return new Promise((resolve) => {
             try {
-                fs.unlink(this.path, () => {
+                fs.unlink(EnqueuerMessageReceiverUds.path, () => {
                     this.server = net.createServer()
-                        .listen(this.path, () => resolve());
+                        .listen(EnqueuerMessageReceiverUds.path, () => resolve());
                 });
             } catch (err) {
                 return Promise.reject(err);

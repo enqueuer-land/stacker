@@ -4,18 +4,20 @@ import { RunnableModel } from '../models/inputs/runnable-model';
 
 export class EnqueuerMessageSenderUds implements EnqueuerMessageSender {
 
-    private readonly path: string = 'enqueuer-message-sender';
+    public static readonly path: string = 'enqueuer-message-sender';
 
     public publish(runnableModel: RunnableModel): Promise<void> {
         return new Promise((resolve, reject) => {
-            const client = net.createConnection(this.path)
+            const client = net.createConnection(EnqueuerMessageSenderUds.path)
                 .on('connect', () => {
-                    client.write(JSON.stringify(runnableModel));
-                    resolve()
+                    if (client.write(JSON.stringify(runnableModel)))
+                        resolve();
+                    else
+                        reject("Error publishing message to uds server");
                 })
-                .on('error', function (data: any) {
+                .on('error', (data: any) => {
                     reject(data);
-                })
+                });
         });
     }
 
