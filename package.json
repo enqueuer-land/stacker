@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/jest": "^22.2.3",
+    "@vue/test-utils": "^1.0.0-beta.16",
     "electron": "^1.7.6",
     "electron-devtools-installer": "^2.2.0",
     "electron-forge": "4.0.2",

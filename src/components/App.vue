@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="main">
     <p>HTTP</p>
     
     <fieldset>
@@ -107,6 +107,7 @@
                 };
 
     export default {
+        name: 'App',
         data() {
             return {
                 enqueueResponse: null,
