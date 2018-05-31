@@ -1,7 +1,7 @@
 import { ResultModel } from './models/outputs/result-model';
-import { EnqueuerResponseReceiver } from './enqueuer-responser-receiver';
+import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
 
-export class EnqueuerResponseReceiverMock implements EnqueuerResponseReceiver {
+export class EnqueuerMessageReceiverMock implements EnqueuerMessageReceiver {
 
     private result: ResultModel = {
         'type': 'runnable',

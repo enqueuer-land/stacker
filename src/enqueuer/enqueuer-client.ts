@@ -4,21 +4,21 @@ import { ResultModel } from './models/outputs/result-model';
 import { EnqueuerMessageSender } from './enqueuer-message-sender';
 import { EnqueuerMessageSenderStandardInput } from './enqueuer-message-sender-standard-input';
 import { EnqueuerMessageSenderMock } from './enqueuer-message-sender-mock';
-import { EnqueuerResponseReceiver } from './enqueuer-responser-receiver';
-import { EnqueuerResponserReceiverUds } from './enqueuer-response-receiver-uds';
-// import { EnqueuerResponseReceiverMock } from './enqueuer-response-receiver-mock';
+import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
+import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
+import { EnqueuerMessageReceiverMock } from './enqueuer-message-receiver-mock';
 
 export class EnqueuerClient extends EventEmitter {
 
     private runnableModel: RunnableModel;
     private messageSender: EnqueuerMessageSender;
-    private responseServer: EnqueuerResponseReceiver;
+    private responseServer: EnqueuerMessageReceiver;
 
     public constructor(runnableModel: RunnableModel) {
         super();
         this.runnableModel = runnableModel;
-        // this.responseServer = new EnqueuerResponseReceiverMock();
-        this.responseServer = new EnqueuerResponserReceiverUds();
+        // this.responseServer = new EnqueuerMessageReceiverMock();
+        this.responseServer = new EnqueuerMessageReceiverUds();
         this.messageSender = new EnqueuerMessageSenderMock();
         this.messageSender = new EnqueuerMessageSenderStandardInput();
 

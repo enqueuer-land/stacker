@@ -1,8 +1,8 @@
 import * as net from 'net';
 import * as fs from 'fs';
-import { EnqueuerResponseReceiver } from './enqueuer-responser-receiver';
+import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
 
-export class EnqueuerResponserReceiverUds implements EnqueuerResponseReceiver {
+export class EnqueuerMessageReceiverUds implements EnqueuerMessageReceiver {
     private server: any;
     private path: string;
 

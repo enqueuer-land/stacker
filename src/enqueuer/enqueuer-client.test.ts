@@ -2,9 +2,9 @@ import { EnqueuerClient } from './enqueuer-client';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { EnqueuerMessageSenderStandardInput } from './enqueuer-message-sender-standard-input';
 import { ResultModel } from './models/outputs/result-model';
-import { EnqueuerResponserReceiverUds } from './enqueuer-response-receiver-uds';
+import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
 
-jest.mock('./enqueuer-response-receiver-uds');
+jest.mock('./enqueuer-message-receiver-uds');
 jest.mock('./enqueuer-message-sender-standard-input');
 
 let runnableModel: RunnableModel = {
@@ -50,7 +50,7 @@ let runnableModel: RunnableModel = {
 describe('EnqueuerClient', () => {
     it('Should send "error" event when fails to connect', done => {
 
-        EnqueuerResponserReceiverUds.mockImplementation(() => {
+        EnqueuerMessageReceiverUds.mockImplementation(() => {
             return {
                 connect: () => {
                     return Promise.reject('Connection Error Message');
@@ -68,7 +68,7 @@ describe('EnqueuerClient', () => {
 
     it('Should send "error" event when fails to publish', done => {
 
-        EnqueuerResponserReceiverUds.mockImplementation(() => {
+        EnqueuerMessageReceiverUds.mockImplementation(() => {
             return { connect: () => { return Promise.resolve(); } };
         });
 
@@ -88,7 +88,7 @@ describe('EnqueuerClient', () => {
 
     it('Should send "error" event when fails to receive message', done => {
 
-        EnqueuerResponserReceiverUds.mockImplementation(() => {
+        EnqueuerMessageReceiverUds.mockImplementation(() => {
             return {
                 connect: () => { return Promise.resolve(); },
                 receiveMessage: () => { return Promise.reject("Receive Message Error Message"); }
@@ -158,7 +158,7 @@ describe('EnqueuerClient', () => {
             ]
         };
 
-        EnqueuerResponserReceiverUds.mockImplementation(() => {
+        EnqueuerMessageReceiverUds.mockImplementation(() => {
             return {
                 connect: () => { return Promise.resolve(); },
                 receiveMessage: () => {
