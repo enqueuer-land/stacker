@@ -26,7 +26,8 @@
     "jest": "^23.0.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "vue-jest": "^2.6.0"
   },
   "author": "Virgs",
   "license": "MIT",
@@ -35,7 +36,13 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "globals": {
+      "vue-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
     },
     "testRegex": ".*\\.test\\.ts$",
     "moduleFileExtensions": [
@@ -43,7 +50,8 @@
       "tsx",
       "js",
       "jsx",
-      "json"
+      "json",
+      "vue"
     ]
   }
 }
