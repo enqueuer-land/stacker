@@ -1,15 +1,15 @@
 import { EventEmitter } from 'events';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
-import { EnqueuerRunner } from './enqueuer-runner';
-import { EnqueuerMessageSender } from './enqueuer-message-sender';
-import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
-import { EnqueuerRunnerSpawn } from './enqueuer-runner-spawn';
-import { EnqueuerMessageSenderUds } from './enqueuer-message-sender-uds';
-import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
-import { EnqueuerRunnerMock } from './enqueuer-runner-mock';
-import { EnqueuerMessageSenderMock } from './enqueuer-message-sender-mock';
-import { EnqueuerMessageReceiverMock } from './enqueuer-message-receiver-mock';
+import { EnqueuerRunner } from './runner/enqueuer-runner';
+import { EnqueuerMessageSender } from './sender/enqueuer-message-sender';
+import { EnqueuerMessageReceiver } from './receiver/enqueuer-message-receiver';
+import { EnqueuerRunnerSpawn } from './runner/enqueuer-runner-spawn';
+import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
+import { EnqueuerMessageReceiverUds } from './receiver/enqueuer-message-receiver-uds';
+import { EnqueuerRunnerMock } from './runner/enqueuer-runner-mock';
+import { EnqueuerMessageSenderMock } from './sender/enqueuer-message-sender-mock';
+import { EnqueuerMessageReceiverMock } from './receiver/enqueuer-message-receiver-mock';
 
 export class EnqueuerClient extends EventEmitter {
 
@@ -24,12 +24,12 @@ export class EnqueuerClient extends EventEmitter {
         this.runnableModel = runnableModel;
 
         this.runner = new EnqueuerRunnerSpawn();
-        this.receiver = new EnqueuerMessageReceiverUds();
         this.sender = new EnqueuerMessageSenderUds();
+        this.receiver = new EnqueuerMessageReceiverUds();
 
         // this.runner = new EnqueuerRunnerMock();
-        // this.receiver = new EnqueuerMessageReceiverMock();
         // this.sender = new EnqueuerMessageSenderMock();
+        // this.receiver = new EnqueuerMessageReceiverMock();
 
         this.runner.start()
             .then(() => this.registerEventListeners())

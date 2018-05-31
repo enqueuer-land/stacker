@@ -28,5 +28,4 @@ export class EnqueuerRunnerSpawn extends EnqueuerRunner {
         this.enqueuer.stdout.on('log', (data: string) => this.emit('log', data));
     }
 
-
 }

@@ -1,13 +1,13 @@
 import { EnqueuerClient } from './enqueuer-client';
 import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
-import { EnqueuerRunnerSpawn } from './enqueuer-runner-spawn';
-import { EnqueuerMessageReceiverUds } from './enqueuer-message-receiver-uds';
-import { EnqueuerMessageSenderUds } from './enqueuer-message-sender-uds';
+import { EnqueuerRunnerSpawn } from './runner/enqueuer-runner-spawn';
+import { EnqueuerMessageReceiverUds } from './receiver/enqueuer-message-receiver-uds';
+import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
 
-jest.mock('./enqueuer-runner-spawn');
-jest.mock('./enqueuer-message-receiver-uds');
-jest.mock('./enqueuer-message-sender-uds');
+jest.mock('./runner/enqueuer-runner-spawn');
+jest.mock('./receiver/enqueuer-message-receiver-uds');
+jest.mock('./sender/enqueuer-message-sender-uds');
 
 let runnableModel: RunnableModel = {
     'runnableVersion': '01.00.00',
