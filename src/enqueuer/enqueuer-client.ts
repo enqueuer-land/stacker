@@ -36,7 +36,6 @@ export class EnqueuerClient extends EventEmitter {
     public send(): Promise<boolean | void> {
         return this.receiver.connect()
             .then(() => this.sender.publish(this.runnableModel))
-            .then(() => console.log('published'))
             .then(() => this.receiver.receiveMessage())
             .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
             .catch(err => {

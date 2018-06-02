@@ -39,10 +39,18 @@ export class EnqueuerRunnerSpawn extends EnqueuerRunner {
 
 
     private static startSingleRunner(): ChildProcess {
-        const enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
+        const isJest = process.argv[1].match(/[\\/]jest/) != null;
+        const enqueuer = isJest ?
+            spawn('ls')
+            :
+            spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         // EnqueuerRunnerSpawn.enqueuer = await spawn('node', ['../enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         console.log(`Starting enqueuer ${enqueuer.pid}`);
-        ipcRenderer.send('enqueuerChild', enqueuer);
+        if (ipcRenderer) {
+            ipcRenderer.send('enqueuerChild', enqueuer);
+        } else {
+            console.error("Error emitting enqueuerChild pid");
+        }
         console.log(`Enqueuer started`);
 
         enqueuer.on('exit', (statusCode: number) => {

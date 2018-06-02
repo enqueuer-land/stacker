@@ -6,7 +6,7 @@
   "scripts": {
     "all": "npm run lint && npm test && npm start",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "node_modules/.bin/electron .",
     "make": "node_modules/.bin/electron-forge make"
   },

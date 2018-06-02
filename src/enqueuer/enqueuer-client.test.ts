@@ -4,6 +4,8 @@ import { ResultModel } from './models/outputs/result-model';
 import { EnqueuerRunnerSpawn } from './runner/enqueuer-runner-spawn';
 import { EnqueuerMessageReceiverUds } from './receiver/enqueuer-message-receiver-uds';
 import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
+import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
+import { ipcRenderer } from 'electron';
 
 jest.mock('./runner/enqueuer-runner-spawn');
 jest.mock('./receiver/enqueuer-message-receiver-uds');
