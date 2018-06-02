@@ -22,10 +22,7 @@ const createWindow = async () => {
         await installExtension(VUEJS_DEVTOOLS);
         window.webContents.openDevTools({ mode: 'bottom' });
     }
-    window.on('closed', () => {
-        console.log('window closed');
-        window = null;
-    });
+
     let enqueuer = null;
     window.on('close', () => {
         if (!isNullOrUndefined(enqueuer)) {
@@ -40,12 +37,12 @@ const createWindow = async () => {
         window.webContents.send('close');
         window = null;
     });
+
     ipcMain.on('enqueuerChild', (event, newEnqueuer) => {
         console.log("Enqueuer pid: " + newEnqueuer.pid);
         enqueuer = newEnqueuer;
     });
 };
-
 
 app.on('ready', createWindow);
 

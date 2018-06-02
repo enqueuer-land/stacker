@@ -2,7 +2,7 @@
   "name": "stacker",
   "version": "1.0.0",
   "description": "Asynchronous messaging communication testing UI tool",
-  "main": "src/main.ts",
+  "main": "src/electron.ts",
   "scripts": {
     "all": "npm run lint && npm test && npm start",
     "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
