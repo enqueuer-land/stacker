@@ -30,15 +30,13 @@ export class EnqueuerClient extends EventEmitter {
         // this.runner = new EnqueuerRunnerMock();
         // this.sender = new EnqueuerMessageSenderMock();
         // this.receiver = new EnqueuerMessageReceiverMock();
-
-        this.runner.start()
-            .then(() => this.registerEventListeners())
-            .catch((err) => {/*console.error(err)*/ });
+        this.runner.start().then(() => this.registerEventListeners())
     }
 
-    public async send(): Promise<boolean | void> {
-        return await this.receiver.connect()
+    public send(): Promise<boolean | void> {
+        return this.receiver.connect()
             .then(() => this.sender.publish(this.runnableModel))
+            .then(() => console.log('published'))
             .then(() => this.receiver.receiveMessage())
             .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
             .catch(err => {

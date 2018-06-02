@@ -1,6 +1,7 @@
-import {app, BrowserWindow} from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
-import {enableLiveReload} from 'electron-compile';
+import { enableLiveReload } from 'electron-compile';
+import { isNullOrUndefined } from 'util';
 
 const isDevMode = process.execPath.match(/[\\/]electron/);
 if (isDevMode) {
@@ -19,13 +20,32 @@ const createWindow = async () => {
     // window.loadURL(`file://${__dirname}/example.html`);
     if (isDevMode) {
         await installExtension(VUEJS_DEVTOOLS);
-        window.webContents.openDevTools({mode: 'bottom'});
+        window.webContents.openDevTools({ mode: 'bottom' });
     }
-
     window.on('closed', () => {
+        console.log('window closed');
         window = null;
     });
+    let enqueuer = null;
+    window.on('close', () => {
+        if (!isNullOrUndefined(enqueuer)) {
+            try {
+                console.log('killing enqueuer: ' + enqueuer.pid);
+                process.kill(enqueuer.pid);
+                enqueuer = null;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        window.webContents.send('close');
+        window = null;
+    });
+    ipcMain.on('enqueuerChild', (event, newEnqueuer) => {
+        console.log("Enqueuer pid: " + newEnqueuer.pid);
+        enqueuer = newEnqueuer;
+    });
 };
+
 
 app.on('ready', createWindow);
 

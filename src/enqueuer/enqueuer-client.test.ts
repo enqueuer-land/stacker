@@ -51,6 +51,9 @@ let runnableModel: RunnableModel = {
 
 EnqueuerRunnerSpawn.mockImplementation(() => {
     return {
+        on: (eventName: string, callback: any) => {
+            return Promise.resolve();
+        },
         start: () => {
             return Promise.resolve();
         }
