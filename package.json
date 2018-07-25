@@ -11,7 +11,7 @@
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
-    "enqueuer": "^1.0.8",
+    "enqueuer": "^1.0.14",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
   },
@@ -26,7 +26,7 @@
     "jest": "^23.0.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2",
+    "typescript": "^2.9.2",
     "vue-jest": "^2.6.0"
   },
   "author": "Virgs",

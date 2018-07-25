@@ -2,9 +2,9 @@
     <div id="main">
         <p>HTTP</p>
 
-        <EnqueuerInput></EnqueuerInput>
-        <EnqueuerOutput></EnqueuerOutput>
-
+        <EnqueuerInput v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>
+        <!--<EnqueuerInput v-on:onChange="inputChanged" v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>-->
+        {{runnable.runnables[0].startEvent.publisher}}
         <p>
             <input type="button" name="send" value="Send" v-on:click="callEnqueuer" />
         </p>
@@ -22,9 +22,17 @@
     import { RunnableModel } from './enqueuer/models/inputs/runnable-model';
     import { ResultModel } from './enqueuer/models/outputs/result-model';
     import * as EnqueuerInput from './components/EnqueuerInput.vue';
-    import * as EnqueuerOutput from './components/EnqueuerOutput.vue';
+    import {PublisherModel} from "./enqueuer/models/inputs/publisher-model";
 
-    let runnable: RunnableModel = {
+    export default {
+        name: 'App',
+        components: {
+            EnqueuerInput
+        },
+        data() {
+            return {
+                enqueueResponse: null,
+                runnable: {
                     'runnableVersion': '01.00.00',
                     'name': 'runnableHttp',
                     'id': 'randomIdFixedInRunnable',
@@ -33,51 +41,21 @@
                         {
                             'timeout': 30000,
                             'name': 'HttpTitle',
-                            'subscriptions': [
-                                {
-                                    'type': 'http-server',
-                                    'name': 'HttpSubscriptionTitle',
-                                    'endpoint': '/enqueuer',
-                                    'port': 23075,
-                                    'method': 'POST',
-                                    'response': {
-                                        'status': 200
-                                    },
-                                    'timeout': 10000
-                                }
-                            ],
+                            'subscriptions': [],
                             'startEvent': {
                                 'publisher': {
-                                    'type': 'http-client',
-                                    'name': 'HttpPublisherClientTitle',
-                                    'url': 'http://localhost:23075/enqueuer',
-                                    'method': 'POST',
-                                    'payload': {
-                                        'enqueuer': 'virgs'
-                                    },
-                                    'headers': {
-                                        'content-type': 'application/json'
-                                    }
+
                                 }
                             }
                         }
                     ]
-                };
-
-    export default {
-        name: 'App',
-        components: {
-            EnqueuerInput,
-            EnqueuerOutput
-        },
-        data() {
-            return {
-                enqueueResponse: null
+                }
             }
         },
         methods: {
             callEnqueuer: function (this) {
-                const enqueuer = new EnqueuerClient(runnable);
+                console.log('callEnqueuer')
+                const enqueuer: EnqueuerClient = new EnqueuerClient(this.runnable);
                 enqueuer.on('response', (response: ResultModel) => {
                         this.enqueueResponse = JSON.stringify(response, null, 4);
                         console.log(`response: ${JSON.stringify(response, null, 4)}`)
@@ -86,6 +64,11 @@
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
                 enqueuer.on('log', (response: Error) => console.log(`error: ${response}`));
                 enqueuer.send();
+            },
+            inputChanged: function (input: PublisherModel) {
+                let requisitionModel = this.runnable.runnables[0] as RequisitionModel;
+                requisitionModel.startEvent.publisher = input;
+                console.log(input)
             }
         }
     }

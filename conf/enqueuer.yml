@@ -1,12 +1,11 @@
-requisitions:
-  run-mode:
-    daemon:
-        -
-            type: uds
-            path: enqueuer-message-sender
-outputs:
+run-mode:
+  daemon:
     -
-        type: uds
-        path: enqueuer-message-receiver
+      type: uds
+      path: /tmp/in.sock
+outputs:
+  -
+    type: uds
+    path: /tmp/out.sock
 
 log-level: warn

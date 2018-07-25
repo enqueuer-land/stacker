@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { EnqueuerMessageReceiver } from './enqueuer-message-receiver';
 
 export class EnqueuerMessageReceiverUds implements EnqueuerMessageReceiver {
-    public static readonly path: string = 'enqueuer-message-receiver';
+    public static readonly path: string = '/tmp/out.sock';
     private server: any;
 
     public receiveMessage(): Promise<string> {

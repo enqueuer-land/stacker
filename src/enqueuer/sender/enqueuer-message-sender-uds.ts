@@ -4,7 +4,7 @@ import { RunnableModel } from '../models/inputs/runnable-model';
 
 export class EnqueuerMessageSenderUds implements EnqueuerMessageSender {
 
-    public static readonly path: string = 'enqueuer-message-sender';
+    public static readonly path: string = '/tmp/in.sock';
 
     public publish(runnableModel: RunnableModel): Promise<void> {
         return new Promise((resolve, reject) => {
