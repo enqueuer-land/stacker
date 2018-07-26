@@ -1,5 +1,5 @@
-<template v-on:mounted="emitChanges" v-on:change="emitChanges" v-on:init="emitChanges" v-on:create="emitChanges" v-on:load="emitChanges">
-    <div id="enqueuer-input" v-on:mounted="emitChanges" v-on:change="emitChanges" v-on:init="emitChanges" v-on:create="emitChanges" v-on:load="emitChanges">
+<template>
+    <div id="enqueuer-input" v-on:change="emitChanges" >
         <fieldset>
             <legend>Input</legend>
             <label>Name</label><input type="text" name="input-name" v-model="name"/> <br/>
@@ -17,10 +17,7 @@
                 <textarea name="prePublishing" rows="4" cols="50" v-model="prePublishing" ></textarea>
             </p>
 
-            <p>
-                <label>OnMessageReceived</label><br/>
-                <textarea name="onMessageReceived" rows="4" cols="50" v-model="onMessageReceived"></textarea>
-            </p>
+            <OnMessageReceived v-model="onMessageReceived"></OnMessageReceived>
 
             <p v-if="type == 'http-client'">
                 <label>Method</label>
@@ -36,9 +33,13 @@
 
 <script lang="ts">
     import {PublisherModel} from "../enqueuer/models/inputs/publisher-model";
+    import * as OnMessageReceived from './forms/OnMessageReceived';
 
     export default {
         name: 'EnqueuerInput',
+        components: {
+            OnMessageReceived
+        },
         mounted() {
             this.$emit("input", JSON.parse(JSON.stringify(this.$data)));
         },
@@ -47,7 +48,7 @@
                     type: "http-client",
                     name: "",
                     url: "https://github.com/lopidio/enqueuer",
-                    onMessageReceived: 'test[\'It is online\'] = JSON.parse(message).statusCode == 200',
+                    onMessageReceived: null,
                     payload: '',
                     prePublishing: '',
                     method: 'get'

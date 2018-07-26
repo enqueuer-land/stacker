@@ -2,12 +2,12 @@
     <div id="main">
         <p>HTTP</p>
 
-        <EnqueuerInput v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>
-        <!--<EnqueuerInput v-on:onChange="inputChanged" v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>-->
-        {{runnable.runnables[0].startEvent.publisher}}
         <p>
-            <input type="button" name="send" value="Send" v-on:click="callEnqueuer" />
+            <input type="button" name="send" value="Send" v-on:click="sendClick" />
         </p>
+        <EnqueuerInput v-model="input" ></EnqueuerInput>
+        <!--<EnqueuerInput v-on:onChange="inputChanged" v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>-->
+        {{input}}
 
         <fieldset>
             <legend>Response</legend>
@@ -32,7 +32,12 @@
         data() {
             return {
                 enqueueResponse: null,
-                runnable: {
+                input: null
+            }
+        },
+        methods: {
+            sendClick: function (this) {
+                let runnable = {
                     'runnableVersion': '01.00.00',
                     'name': 'runnableHttp',
                     'id': 'randomIdFixedInRunnable',
@@ -41,21 +46,15 @@
                         {
                             'timeout': 30000,
                             'name': 'HttpTitle',
-                            'subscriptions': [],
+                            subscriptions: [],
                             'startEvent': {
-                                'publisher': {
-
-                                }
+                                'publisher': this.input
                             }
                         }
                     ]
                 }
-            }
-        },
-        methods: {
-            callEnqueuer: function (this) {
-                console.log('callEnqueuer')
-                const enqueuer: EnqueuerClient = new EnqueuerClient(this.runnable);
+
+                const enqueuer: EnqueuerClient = new EnqueuerClient(runnable);
                 enqueuer.on('response', (response: ResultModel) => {
                         this.enqueueResponse = JSON.stringify(response, null, 4);
                         console.log(`response: ${JSON.stringify(response, null, 4)}`)
