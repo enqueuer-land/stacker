@@ -36,6 +36,7 @@
         },
         methods: {
             sendClick: function (this) {
+                this.input.payload = "";
                 console.log(`input: ${JSON.stringify(this.input)}`)
                 let runnable = {
                     'runnableVersion': '01.00.00',

@@ -1,62 +1,52 @@
 <template>
-    <div >
-        <fieldset>
+    <div id="http-client">
+        <fieldset >
             <legend>Input</legend>
-            <label>Name</label><input type="text" name="input-name" v-model="name"/> <br/>
-            <p>
-                <label>IPC protocol</label>
-                <select name="type" v-model="type" >
-                    <option value="http-client">HTTP</option>
-                    <option value="amqp">AMQP</option>
-                    <option value="mqtt">MQTT</option>
+            <label>Name</label><input type="text" name="input-name" v-model="input.name"/> <br/>
+                <label>URL</label><input type="text" name="url" v-model="input.url"/>
+                <label>Method</label>
+                <select name="method" v-model="input.method" >
+                    <option value="POST">POST</option>
+                    <option value="GET">GET</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="PATCH">PATCH</option>
                 </select>
-            </p>
-            <label>URL</label><input type="text" name="url" v-model="url"/>
             <p>
                 <label>Pre-Publishing</label><br/>
-                <textarea name="prePublishing" rows="4" cols="50" v-model="prePublishing" ></textarea>
+                <textarea name="prePublishing" rows="4" cols="50" v-model="input.prePublishing" ></textarea>
             </p>
 
             <p>
-                <label>OnMessageReceived</label><br/>
-                <textarea name="onMessageReceived" rows="4" cols="50" v-model="onMessageReceived"></textarea>
+                <label>Payload</label><br/>
+                <textarea name="payload" rows="4" cols="50" v-model="input.payload"></textarea>
             </p>
 
-            <p v-if="type == 'http-client'">
-                <label>Method</label>
-                <select name="method" v-model="method" >
-                    <option value="post">POST</option>
-                    <option value="get">GET</option>
-                    <option value="put">PUT</option>
-                </select>
-            </p>
+            <OnMessageReceived v-model="input.onMessageReceived" default="test['It is online'] = JSON.parse(message).statusCode == 200"></OnMessageReceived>
         </fieldset>
     </div>
 </template>
 
 <script lang="ts">
-    import {PublisherModel} from "../enqueuer/models/inputs/publisher-model";
+    import * as OnMessageReceived from '../forms/OnMessageReceived';
 
     export default {
-        name: 'EnqueuerInput',
+        name: 'HttpClient',
+        components: {
+            OnMessageReceived
+        },
         mounted() {
-            this.$emit("input", JSON.parse(JSON.stringify(this.$data)));
+            this.$emit("input", this.input);
         },
         data() {
             return {
-                    type: "http-client",
-                    name: "",
-                    url: "https://github.com/lopidio/enqueuer",
-                    onMessageReceived: 'test[\'It is online\'] = JSON.parse(message).statusCode == 200',
-                    payload: '',
-                    prePublishing: '',
-                    method: 'get'
-            }
-        },
-        methods: {
-            emitChanges() {
-//                this.$emit("onChange", JSON.parse(JSON.stringify(this.$data)));
-                this.$emit("input", JSON.parse(JSON.stringify(this.$data)));
+                input: {
+                    name:"anyName",
+                    payload:"",
+                    method: "GET",
+                    url: "http://github.com",
+                    type: "http-client"
+                }
             }
         }
     }
