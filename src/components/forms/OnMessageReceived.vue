@@ -1,26 +1,25 @@
 <template>
     <div>
         <label>OnMessageReceived</label><br/>
-        <textarea name="onMessageReceived" rows="4" cols="50" v-model="value" v-on:change="emitChanges" ></textarea>
+        <textarea name="onMessageReceived" rows="4" cols="50" v-model="code" placeholder="js code"></textarea>
     </div>
 </template>
 
 <script lang="ts">
-
     export default {
         name: 'OnMessageReceived',
+        props: ['default'],
         mounted() {
-            this.$emit("input", this.value);
+            this.code = this.default;
         },
         data() {
             return {
-                value: 'test[\'It is online\'] = JSON.parse(message).statusCode == 200'
+                code: this.value
             }
         },
-        methods: {
-            emitChanges() {
-//                this.$emit("onChange", JSON.parse(JSON.stringify(this.$data)));
-                this.$emit("input", this.value);
+        watch: {
+            code(val) {
+                this.$emit('input', val);
             }
         }
     }

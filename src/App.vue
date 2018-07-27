@@ -6,8 +6,7 @@
             <input type="button" name="send" value="Send" v-on:click="sendClick" />
         </p>
         <EnqueuerInput v-model="input" ></EnqueuerInput>
-        <!--<EnqueuerInput v-on:onChange="inputChanged" v-model="runnable.runnables[0].startEvent.publisher" ></EnqueuerInput>-->
-        {{input}}
+        <pre>{{input}}</pre>
 
         <fieldset>
             <legend>Response</legend>
@@ -37,6 +36,7 @@
         },
         methods: {
             sendClick: function (this) {
+                console.log(`input: ${JSON.stringify(this.input)}`)
                 let runnable = {
                     'runnableVersion': '01.00.00',
                     'name': 'runnableHttp',
@@ -63,11 +63,6 @@
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
                 enqueuer.on('log', (response: Error) => console.log(`error: ${response}`));
                 enqueuer.send();
-            },
-            inputChanged: function (input: PublisherModel) {
-                let requisitionModel = this.runnable.runnables[0] as RequisitionModel;
-                requisitionModel.startEvent.publisher = input;
-                console.log(input)
             }
         }
     }
