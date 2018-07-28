@@ -1,30 +1,24 @@
 <template>
     <div>
         <fieldset>
-            <HttpUrl v-model="input.url" default="http://github.com"></HttpUrl>
-            <HttpMethod v-model="input.method" default="GET"></HttpMethod>
+            <MqttBroker v-model="input.brokerAddress" default="mqtt://iot.eclipse.org" />
             <Payload v-model="input.payload" default=""></Payload>
             <PrePublishing v-model="input.prePublishing" default="test['PrePublishing'] = true"></PrePublishing>
-            <OnMessageReceived v-model="input.onMessageReceived" default="test['It is online'] = JSON.parse(message).statusCode == 200"></OnMessageReceived>
         </fieldset>
     </div>
 </template>
 
 <script lang="ts">
-    import * as OnMessageReceived from '../forms/OnMessageReceived';
     import * as PrePublishing from '../forms/PrePublishing';
     import * as Payload from '../forms/Payload';
-    import * as HttpUrl from '../forms/HttpUrl';
-    import * as HttpMethod from '../forms/HttpMethod';
+    import * as MqttBroker from '../forms/MqttBroker';
 
     export default {
         name: 'HttpClient',
         components: {
-            OnMessageReceived,
             PrePublishing,
             Payload,
-            HttpMethod,
-            HttpUrl
+            MqttBroker,
         },
         mounted() {
             this.$emit("input", this.input);
@@ -33,7 +27,7 @@
             return {
                 input: {
                     name:"anyName",
-                    type: "http-client"
+                    type: "mqtt"
                 }
             }
         }
