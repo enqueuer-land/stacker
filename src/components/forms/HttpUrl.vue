@@ -1,13 +1,13 @@
 <template>
     <div>
-        <label>OnMessageReceived</label><br/>
-        <textarea rows="4" cols="50" v-model="code" placeholder="js code"></textarea>
+        <label>Url</label>
+        <input rows="4" cols="50" type="text" v-model="code" placeholder="http://localhost:80" />
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'OnMessageReceived',
+        name: 'HttpUrl',
         props: ['default'],
         mounted() {
             this.code = this.default;

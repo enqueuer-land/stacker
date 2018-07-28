@@ -1,13 +1,20 @@
 <template>
     <div>
-        <label>OnMessageReceived</label><br/>
-        <textarea rows="4" cols="50" v-model="code" placeholder="js code"></textarea>
+        <label>Method</label>
+        <select v-model="code" placeholder="HttpMethod">
+            <option value="POST">POST</option>
+            <option value="GET">GET</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+            <option value="PATCH">PATCH</option>
+        </select>
+
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'OnMessageReceived',
+        name: 'HttpUrl',
         props: ['default'],
         mounted() {
             this.code = this.default;
