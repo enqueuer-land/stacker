@@ -10,7 +10,6 @@
                     <option value="mqtt">MQTT</option>
                 </select>
             </p>
-            {{publisher}}
             <HttpClient v-if="type == 'http-client'" v-model="publisher"/>
         </fieldset>
     </div>
@@ -37,9 +36,7 @@
         data() {
             return {
                 type: "http-client",
-                publisher: {
-
-                }
+                publisher: null
             }
         }
     }

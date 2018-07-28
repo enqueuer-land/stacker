@@ -2,10 +2,9 @@
     <div id="http-client">
         <fieldset >
             <legend>Input</legend>
-            <label>Name</label><input type="text" name="input-name" v-model="input.name"/> <br/>
-                <label>URL</label><input type="text" name="url" v-model="input.url"/>
+                <label>URL</label><input type="text" v-model="input.url"/>
                 <label>Method</label>
-                <select name="method" v-model="input.method" >
+                <select v-model="input.method" >
                     <option value="POST">POST</option>
                     <option value="GET">GET</option>
                     <option value="PUT">PUT</option>
@@ -14,12 +13,12 @@
                 </select>
             <p>
                 <label>Pre-Publishing</label><br/>
-                <textarea name="prePublishing" rows="4" cols="50" v-model="input.prePublishing" ></textarea>
+                <textarea rows="4" cols="50" v-model="input.prePublishing" ></textarea>
             </p>
 
             <p>
                 <label>Payload</label><br/>
-                <textarea name="payload" rows="4" cols="50" v-model="input.payload"></textarea>
+                <textarea rows="4" cols="50" v-model="input.payload"></textarea>
             </p>
 
             <OnMessageReceived v-model="input.onMessageReceived" default="test['It is online'] = JSON.parse(message).statusCode == 200"></OnMessageReceived>

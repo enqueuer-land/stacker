@@ -1,27 +1,23 @@
 <template>
     <div id="main">
-        <p>HTTP</p>
-
         <p>
             <input type="button" name="send" value="Send" v-on:click="sendClick" />
         </p>
         <EnqueuerInput v-model="input" ></EnqueuerInput>
         <pre>{{input}}</pre>
 
-        <fieldset>
+        <!--<fieldset>-->
             <legend>Response</legend>
+            <pre>{{this.enqueuerResponse}}</pre>
             <textarea name="response" rows="40" cols="50"  v-model="enqueueResponse"></textarea>
-        </fieldset>
+        <!--</fieldset>-->
     </div>
 </template>
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import { RequisitionModel } from './enqueuer/models/inputs/requisition-model';
-    import { RunnableModel } from './enqueuer/models/inputs/runnable-model';
     import { ResultModel } from './enqueuer/models/outputs/result-model';
     import * as EnqueuerInput from './components/EnqueuerInput.vue';
-    import {PublisherModel} from "./enqueuer/models/inputs/publisher-model";
 
     export default {
         name: 'App',
@@ -37,6 +33,7 @@
         methods: {
             sendClick: function (this) {
                 this.input.payload = "";
+                this.input.name = "fixed";
                 console.log(`input: ${JSON.stringify(this.input)}`)
                 let runnable = {
                     'runnableVersion': '01.00.00',
