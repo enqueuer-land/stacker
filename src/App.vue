@@ -1,7 +1,7 @@
 <template>
     <div id="main">
         <p>
-            <input type="button" name="send" value="Send" v-on:click="sendClick" />
+            <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
         </p>
         <EnqueuerInput v-model="input" ></EnqueuerInput>
         <pre>{{input}}</pre>

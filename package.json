@@ -11,7 +11,10 @@
     "make": "node_modules/.bin/electron-forge make"
   },
   "dependencies": {
+    "bootstrap": "^4.1.3",
     "enqueuer": "^1.0.14",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.1.0",
     "vue": "^2.4.4",
     "vueify": "^9.4.1"
   },
