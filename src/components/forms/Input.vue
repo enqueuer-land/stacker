@@ -1,14 +1,14 @@
 <template>
     <div>
-        <label>BrokerAddress</label>
-        <input rows="4" cols="50" type="text" v-model="code" placeholder="mqtt://iot.eclipse.org" />
+        <label>{{label}}</label>
+        <input rows="4" cols="50" type="text" v-model="code" placeholder="this.code" />
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'MqttBroker',
-        props: ['default'],
+        name: 'Input',
+        props: ['default', 'label'],
         mounted() {
             this.code = this.default;
         },
