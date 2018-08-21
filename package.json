@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.3",
-    "enqueuer": "^2.1.7",
+    "enqueuer": "^3.0.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.1.0",
     "vue": "^2.4.4",
