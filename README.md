@@ -1,5 +1,5 @@
 # stacker
-[![Build Status](https://travis-ci.org/lopidio/stacker.svg?branch=develop)](https://travis-ci.org/lopidio/stacker)
+[![Build Status](https://travis-ci.org/lopidio/stacker.svg?branch=develop)](https://travis-ci.org/lopidio/stacker) [![Greenkeeper badge](https://badges.greenkeeper.io/lopidio/stacker.svg)](https://greenkeeper.io/)
 
 Stacker is a desktop application with the sole purpose of create and display [enqueuer](https://github.com/lopidio/enqueuer)'s stuff;
 
