@@ -1,7 +1,9 @@
-export interface PublisherModel {
+import {Finishable} from '../events/finishable';
+import {Initializable} from '../events/initializable';
+import {MessageReceiver} from '../events/message-receiver';
+
+export interface PublisherModel extends Finishable, Initializable, MessageReceiver {
     type: string;
-    onMessageReceived?: string;
-    prePublishing?: string;
     name: string;
 
     [propName: string]: any;

@@ -43,7 +43,7 @@ export class EnqueuerRunnerSpawn extends EnqueuerRunner {
         const enqueuer = isJest ?
             spawn('ls')
             :
-            spawn('node', ['node_modules/enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
+            spawn('node', ['node_modules/enqueuer/js/index.js', 'conf/enqueuer.yml']);
         // EnqueuerRunnerSpawn.enqueuer = await spawn('node', ['../enqueuer/js/index.js', '--config-file', 'conf/enqueuer.yml']);
         console.log(`Starting enqueuer ${enqueuer.pid}`);
         if (ipcRenderer) {

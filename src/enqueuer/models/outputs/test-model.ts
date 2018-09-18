@@ -1,3 +1,5 @@
 export interface TestModel {
-    readonly [name: string]: boolean;
+    description: string;
+    valid: boolean;
+    name: string;
 }

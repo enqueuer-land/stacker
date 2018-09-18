@@ -1,7 +1,11 @@
 import { TestModel } from './test-model';
 
 export interface ReportModel {
-    readonly name: string;
-    readonly valid: boolean;
-    readonly tests?: TestModel;
+    name: string;
+    valid: boolean;
+    tests: TestModel[];
+}
+
+export function checkValidation(reportModel: ReportModel): boolean {
+    return reportModel.tests.every((test) => test.valid);
 }

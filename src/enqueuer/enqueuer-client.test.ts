@@ -3,8 +3,8 @@ import { RunnableModel } from './models/inputs/runnable-model';
 import { ResultModel } from './models/outputs/result-model';
 import { EnqueuerRunnerSpawn } from './runner/enqueuer-runner-spawn';
 import { EnqueuerMessageReceiverUds } from './receiver/enqueuer-message-receiver-uds';
-import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
-import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
+import { EnqueuerMessageSenderUds } from './communicator/enqueuer-message-communicator-uds';
+import { EnqueuerMessageSenderUds } from './communicator/enqueuer-message-communicator-uds';
 import { ipcRenderer } from 'electron';
 
 jest.mock('./runner/enqueuer-runner-spawn');

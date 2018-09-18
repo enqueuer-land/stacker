@@ -1,11 +1,11 @@
 run-mode:
-  daemon:
-    -
-      type: uds
-      path: /tmp/in.sock
-outputs:
-  -
-    type: uds
-    path: /tmp/out.sock
+  single-run:
+    name: examples
+    files:
+      - conf/requisition.json
 
-log-level: warn
+log-level: info
+
+outputs:
+  - type: file
+    filename: out/file.json

@@ -1,7 +1,8 @@
 import { ReportModel } from './report-model';
 
 export interface SubscriptionModel extends ReportModel {
-    readonly type: string;
-    readonly connectionTime?: Date | string;
-    readonly messageReceivedTime?: Date | string;
+    type: string;
+    messageReceived?: any;
+    connectionTime?: Date | string;
+    messageReceivedTime?: Date | string;
 }

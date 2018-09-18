@@ -1,43 +1,43 @@
 import { EventEmitter } from 'events';
-import { RunnableModel } from './models/inputs/runnable-model';
-import { ResultModel } from './models/outputs/result-model';
 import { EnqueuerRunner } from './runner/enqueuer-runner';
-import { EnqueuerMessageSender } from './sender/enqueuer-message-sender';
-import { EnqueuerMessageReceiver } from './receiver/enqueuer-message-receiver';
+import { EnqueuerMessageCommunicator } from './communicator/enqueuer-message-communicator';
 import { EnqueuerRunnerSpawn } from './runner/enqueuer-runner-spawn';
-import { EnqueuerMessageSenderUds } from './sender/enqueuer-message-sender-uds';
-import { EnqueuerMessageReceiverUds } from './receiver/enqueuer-message-receiver-uds';
+import { EnqueuerMessageCommunicatorUds } from './communicator/enqueuer-message-communicator-uds';
 import { EnqueuerRunnerMock } from './runner/enqueuer-runner-mock';
-import { EnqueuerMessageSenderMock } from './sender/enqueuer-message-sender-mock';
-import { EnqueuerMessageReceiverMock } from './receiver/enqueuer-message-receiver-mock';
+import { EnqueuerMessageCommunicatorMock } from './communicator/enqueuer-message-communicator-mock';
+import * as input from "./models/inputs/requisition-model";
+import * as output from "./models/outputs/requisition-model";
+import {EnqueuerMessageCommunicatorHttp} from "./communicator/enqueuer-message-communicator-http";
+import {EnqueuerMessageCommunicatorSingleRun} from "./communicator/enqueuer-message-communicator-single-run";
 
 export class EnqueuerClient extends EventEmitter {
 
-    private runnableModel: RunnableModel;
+    private requisition: input.RequisitionModel;
     private runner: EnqueuerRunner;
-    private sender: EnqueuerMessageSender;
-    private receiver: EnqueuerMessageReceiver;
+    private sender: EnqueuerMessageCommunicator;
 
-    public constructor(runnableModel: RunnableModel) {
+    public constructor(requisition: input.RequisitionModel) {
         super();
 
-        this.runnableModel = runnableModel;
+        this.requisition = requisition;
 
-        this.runner = new EnqueuerRunnerSpawn();
-        this.sender = new EnqueuerMessageSenderUds();
-        this.receiver = new EnqueuerMessageReceiverUds();
+        // this.runner = new EnqueuerRunnerSpawn();
+        // this.sender = new EnqueuerMessageCommunicatorHttp();
+        // this.sender = new EnqueuerMessageCommunicatorUds();
+        this.sender = new EnqueuerMessageCommunicatorSingleRun();
+        // this.registerEventListeners();
 
         // this.runner = new EnqueuerRunnerMock();
-        // this.sender = new EnqueuerMessageSenderMock();
-        // this.receiver = new EnqueuerMessageReceiverMock();
-        this.runner.start().then(() => this.registerEventListeners())
+        // this.sender = new EnqueuerMessageCommunicatorMock();
+        // this.runner.start().then(() => this.registerEventListeners())
     }
 
     public send(): Promise<boolean | void> {
-        return this.receiver.connect()
-            .then(() => this.sender.publish(this.runnableModel))
-            .then(() => this.receiver.receiveMessage())
-            .then((data: string) => this.emit('response', JSON.parse(data) as ResultModel))
+        return this.sender.publish(this.requisition)
+            .then((data: output.RequisitionModel) => {
+                console.log(`Enqueuer client got data`);
+                this.emit('response', data)
+            })
             .catch(err => {
                 const errorMessage = `Error sending/receiving message to/from enqueuer: ${err}`;
                 // console.error(errorMessage)
