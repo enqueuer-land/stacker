@@ -11,9 +11,10 @@ export class EnqueuerMessageCommunicatorSingleRun implements EnqueuerMessageComm
 
     public publish(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
         return new Promise((resolve) => {
+            fs.unlinkSync(EnqueuerMessageCommunicatorSingleRun.output);
             fs.writeFileSync(EnqueuerMessageCommunicatorSingleRun.input, JSON.stringify(requisitionModel));
 
-            const tester = spawn('enqueuer',  ['conf/enqueuer.yml']);
+            /*const tester = */spawn('enqueuer',  ['conf/enqueuer.yml']);
             // tester.stdout.on('data', (data: string) => console.log('tester: ' + data));
 
             let interval = setInterval(() => {

@@ -1,5 +1,5 @@
 import {EnqueuerMessageCommunicator} from './enqueuer-message-communicator';
-import request from 'request';
+import * as request from 'request';
 import * as input from "../models/inputs/requisition-model";
 import * as output from "../models/outputs/requisition-model";
 
@@ -10,16 +10,16 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
     private headers: any;
     private body: any;
     private timeout: number;
-    private response: any;
 
     public constructor() {
-        this.url = 'http://localhost:23023';
-        this.method = 'POST';
+        this.url = 'http://localhost:23023/requisitions';
+        this.method = 'post';
         this.headers = {};
         this.body = '';
     }
 
     public publish(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
+        this.body = requisitionModel;
         return new Promise((resolve, reject) => {
             console.log(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
             const options = this.createOptions();
@@ -29,8 +29,8 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
                     if (error) {
                         reject('Http request error: ' + error);
                     } else {
-                        this.response = response;
-                        resolve(this.response);
+                        const body = JSON.parse(response.body);
+                        resolve(body);
                     }
                 });
         });

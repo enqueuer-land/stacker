@@ -1,0 +1,5 @@
+run-mode:
+    daemon:
+        -   type: http-server
+
+log-level: warn
