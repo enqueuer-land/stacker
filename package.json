@@ -26,7 +26,7 @@
     "electron": "^1.7.6",
     "electron-devtools-installer": "^2.2.0",
     "electron-forge": "4.0.2",
-    "electron-prebuilt-compile": "1.7.6",
+    "electron-prebuilt-compile": "3.0.0",
     "jest": "^23.0.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.7.0",
