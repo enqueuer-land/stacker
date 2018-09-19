@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 import { isNullOrUndefined } from 'util';
+import {ChildProcess} from 'child_process';
 
 const isDevMode = process.execPath.match(/[\\/]electron/);
 if (isDevMode) {
@@ -23,7 +24,7 @@ const createWindow = async () => {
         window.webContents.openDevTools({ mode: 'bottom' });
     }
 
-    let enqueuer = null;
+    let enqueuer: ChildProcess | null = null;
     window.on('close', () => {
         if (!isNullOrUndefined(enqueuer)) {
             try {
@@ -34,15 +35,19 @@ const createWindow = async () => {
                 console.error(err);
             }
         }
-        window.webContents.send('close');
+        if (window) {
+            window.webContents.send('close');
+        }
         window = null;
     });
 
-    ipcMain.on('enqueuerChild', (event, newEnqueuer) => {
+    ipcMain.on('enqueuerChild', (event: any, newEnqueuer: ChildProcess) => {
         console.log("Enqueuer pid: " + newEnqueuer.pid);
         enqueuer = newEnqueuer;
     });
 };
+
+
 
 app.on('ready', createWindow);
 

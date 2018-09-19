@@ -49,11 +49,10 @@
                 enqueuer.on('response', (response: RequisitionModel) => {
                         delete response.requisitions[0].startEvent.publisher.messageReceived;
                         this.enqueueResponse = JSON.stringify(response, null, 4);
-//                        console.log(`response: ${JSON.stringify(response, null, 4)}`)
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
-                enqueuer.on('log', (response: Error) => console.log(`error: ${response}`));
+                enqueuer.on('log', (response: Error) => console.log(`log: ${response}`));
                 enqueuer.send().then((success) => {
                     console.log(`Sending result: ${success}`)
                 });

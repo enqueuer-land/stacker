@@ -9,14 +9,14 @@ export class EnqueuerClient extends EventEmitter {
 
     private requisition: input.RequisitionModel;
     private sender: EnqueuerMessageCommunicator;
-    private eventEmitter: any;
+    // private eventEmitter: any;
 
     public constructor(requisition: input.RequisitionModel) {
         super();
 
         this.requisition = requisition;
 
-        this.eventEmitter = EnqueuerRunnerSpawn.start()
+        /*this.eventEmitter = */EnqueuerRunnerSpawn.start()
         this.sender = new EnqueuerMessageCommunicatorHttp();
         // this.sender = new EnqueuerMessageCommunicatorUds();
         // this.sender = new EnqueuerMessageCommunicatorSingleRun();
@@ -40,15 +40,18 @@ export class EnqueuerClient extends EventEmitter {
     }
 
     private addErrorEventListener = () => {
-        this.eventEmitter.on('error', (error: Error) => this.emit('error', error))
+        // this.eventEmitter.on('error', (error: Error) => this.emit('error', error))
+        EnqueuerRunnerSpawn.addErrorEventListener((error: any) => this.emit('error', error));
     }
 
     private addExitEventListener = () => {
-        this.eventEmitter.on('exit', (statusCode: number) => this.emit('exit', statusCode));
+        EnqueuerRunnerSpawn.addExitEventListener(() => this.emit('exit'));
+        // this.eventEmitter.on('exit', (statusCode: number) => this.emit('exit', statusCode));
     }
 
     private addLogEventListener = () => {
-        this.eventEmitter.on('log', (data: string) => this.emit('log', data));
+        EnqueuerRunnerSpawn.addLogEventListener((data: any) => this.emit('log', data));
+        // this.eventEmitter.on('log', (data: string) => this.emit('log', data));
     }
 
     private registerEventListeners() {

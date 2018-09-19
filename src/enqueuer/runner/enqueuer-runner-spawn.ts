@@ -2,70 +2,65 @@ import {ipcRenderer} from 'electron';
 import {ChildProcess, spawn} from 'child_process';
 import {EventEmitter} from 'events';
 
+const isJest = process.argv[1].match(/[\\/]jest/) != null;
+
 export class EnqueuerRunnerSpawn extends EventEmitter {
+    private static enqueuer: ChildProcess = EnqueuerRunnerSpawn.startSingleRunner();
 
-    private static enqueuer?: ChildProcess;//EnqueuerRunnerSpawn.startSingleRunner();
-
-    public static start(): any {
+    public static start(): ChildProcess {
         if (EnqueuerRunnerSpawn.enqueuer) {
             console.log('It\'s started');
-            return EnqueuerRunnerSpawn.enqueuer;
         } else {
-            return EnqueuerRunnerSpawn.startSingleRunner();
+            // return EnqueuerRunnerSpawn.startSingleRunner();
         }
+        return EnqueuerRunnerSpawn.enqueuer;
     }
 
-    private static addErrorEventListener = (self: ChildProcess): void => {
-        const errorFunction = (error: Error) => self.emit('error', error);
-        self.on('error', errorFunction);
-        self.stderr.on('data', errorFunction);
+    public static addErrorEventListener(cb: any): void {
+        // const errorFunction = (error: Error) => self.emit('error', error);
+        EnqueuerRunnerSpawn.enqueuer.on('error', cb);//(error: Error) => cb(error));
+        EnqueuerRunnerSpawn.enqueuer.stderr.on('data', (error: Error) => cb(error));
     }
 
-    private static addExitEventListener = (self: ChildProcess) => {
-        self.on('exit', (statusCode: number) => {
-            self.emit('exit', statusCode)
-        });
+    public static addExitEventListener(cb: any): void {
+        EnqueuerRunnerSpawn.enqueuer.once('exit', (statusCode: number) => cb(statusCode));
     }
 
-    private static addLogEventListener = (self: ChildProcess) => {
-        self.stdout.on('data', (data: string) => self.emit('log', data));
+    public static addLogEventListener(cb: any): void {
+        EnqueuerRunnerSpawn.enqueuer.stdout.on('data', (data: string) => cb(data));
+        EnqueuerRunnerSpawn.enqueuer.stdout.on('data', (data: string) => console.log(data));
     }
 
     private static startSingleRunner() {
-        const isJest = process.argv[1].match(/[\\/]jest/) != null;
-        const enqueuer = isJest ?
-            spawn('ls')
-            :
-            spawn('node', ['node_modules/enqueuer/js/index.js', 'conf/daemon.yml']);
-        console.log(`Starting enqueuer ${enqueuer.pid}`);
+        if (isJest) {
+            EnqueuerRunnerSpawn.enqueuer = spawn('ls')
+        } else {
+            EnqueuerRunnerSpawn.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', 'conf/daemon.yml']);
+        }
+        this.tellStartToElectron(EnqueuerRunnerSpawn.enqueuer);
+
+        console.log(`Enqueuer ${EnqueuerRunnerSpawn.enqueuer.pid} started`);
+        EnqueuerRunnerSpawn.enqueuer.once('exit', (statusCode: number) => EnqueuerRunnerSpawn.restartEnqueuer(statusCode));
+        return EnqueuerRunnerSpawn.enqueuer;
+    }
+
+    private static tellStartToElectron(enqueuer: ChildProcess) {
         if (ipcRenderer) {
             ipcRenderer.send('enqueuerChild', enqueuer);
         } else {
-            console.error("Error emitting enqueuerChild pid");
+            console.error("Error emitting enqueuerChild to electron window");
         }
-
-        let sleep = (millisecondsToWait: number): void => {
-            const waitTill = new Date(new Date().getTime() + millisecondsToWait);
-            while (waitTill > new Date()) {
-                //wait
-            }
-        };
-        sleep(1000);
-
-        console.log(`Enqueuer started`);
-        EnqueuerRunnerSpawn.addExitEventListener(enqueuer);
-        EnqueuerRunnerSpawn.addLogEventListener(enqueuer);
-        EnqueuerRunnerSpawn.addErrorEventListener(enqueuer);
-
-        enqueuer.on('exit', (statusCode: number) => {
-            console.log(`Enqueuer ${enqueuer.pid} died: ${statusCode}`);
-            // console.log(`Restarting`);
-            delete EnqueuerRunnerSpawn.enqueuer;
-            // EnqueuerRunnerSpawn.startSingleRunner();
-        });
-
-        EnqueuerRunnerSpawn.enqueuer = enqueuer;
-        return enqueuer;
     }
+
+    private static restartEnqueuer(statusCode: number): void {
+        console.log(`Enqueuer ${EnqueuerRunnerSpawn.enqueuer.pid} died: ${statusCode}`);
+        delete EnqueuerRunnerSpawn.enqueuer;
+        if (!statusCode) {
+            console.log(`Restarting enqueuer`);
+            EnqueuerRunnerSpawn.startSingleRunner();
+        } else {
+            console.log(`No restarting enqueuer`);
+        }
+    };
 
 }
