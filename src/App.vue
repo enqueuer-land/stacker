@@ -40,14 +40,12 @@
                     'timeout': 30000,
                     'name': 'HttpTitle',
                     subscriptions: [],
-                    'startEvent': {
-                        'publisher': this.input
-                    }
+                    publishers: [this.input]
                 }
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
-                        delete response.requisitions[0].startEvent.publisher.messageReceived;
+                        delete response.requisitions[0].publishers[0].messageReceived;
                         this.enqueueResponse = JSON.stringify(response, null, 4);
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
