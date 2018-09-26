@@ -28,7 +28,7 @@
     "electron-forge": "4.0.2",
     "electron-prebuilt-compile": "1.7.6",
     "jest": "^23.0.1",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^23.10.0",
     "tslint": "^5.7.0",
     "typescript": "^2.9.2",
     "vue-jest": "^2.6.0"
