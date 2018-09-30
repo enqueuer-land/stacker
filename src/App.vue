@@ -50,7 +50,7 @@
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
-                enqueuer.on('log', (response: Error) => console.log(`log: ${response}`));
+//                enqueuer.on('log', (response: Error) => console.log(`log: ${response}`));
                 enqueuer.send().then((success) => {
                     console.log(`Sending result: ${success}`)
                 });

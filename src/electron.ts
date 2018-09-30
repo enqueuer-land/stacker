@@ -42,12 +42,10 @@ const createWindow = async () => {
     });
 
     ipcMain.on('enqueuerChild', (event: any, newEnqueuer: ChildProcess) => {
-        console.log("Enqueuer pid: " + newEnqueuer.pid);
+        console.log('Enqueuer pid: ' + newEnqueuer.pid);
         enqueuer = newEnqueuer;
     });
 };
-
-
 
 app.on('ready', createWindow);
 

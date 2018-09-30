@@ -18,7 +18,7 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
 
     public static addErrorEventListener(cb: any): void {
         // const errorFunction = (error: Error) => self.emit('error', error);
-        EnqueuerRunnerSpawn.enqueuer.on('error', cb);//(error: Error) => cb(error));
+        EnqueuerRunnerSpawn.enqueuer.on('error', cb);
         EnqueuerRunnerSpawn.enqueuer.stderr.on('data', (error: Error) => cb(error));
     }
 
@@ -33,7 +33,7 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
 
     private static startSingleRunner() {
         if (isJest) {
-            EnqueuerRunnerSpawn.enqueuer = spawn('ls')
+            EnqueuerRunnerSpawn.enqueuer = spawn('ls');
         } else {
             EnqueuerRunnerSpawn.enqueuer = spawn('node', ['node_modules/enqueuer/js/index.js', 'conf/daemon.yml']);
         }
@@ -48,7 +48,7 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
         if (ipcRenderer) {
             ipcRenderer.send('enqueuerChild', enqueuer);
         } else {
-            console.error("Error emitting enqueuerChild to electron window");
+            console.error('Error emitting enqueuerChild to electron window');
         }
     }
 
@@ -61,6 +61,6 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
         } else {
             console.log(`No restarting enqueuer`);
         }
-    };
+    }
 
 }
