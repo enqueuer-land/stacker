@@ -3,7 +3,7 @@
         <p>
             <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
         </p>
-        <EnqueuerInput v-model="input" ></EnqueuerInput>
+        <Publishers v-model="input" ></Publishers>
         <!--<pre>{{input}}</pre>-->
 
         <!--<fieldset>-->
@@ -16,13 +16,13 @@
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import * as EnqueuerInput from './components/EnqueuerInput.vue';
+    import * as Publishers from './components/publishers/Publishers.vue';
     import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
 
     export default {
         name: 'App',
         components: {
-            EnqueuerInput
+            Publishers
         },
         data() {
             return {

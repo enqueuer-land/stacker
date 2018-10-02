@@ -1,24 +1,24 @@
 <template>
     <div>
         <fieldset>
-            <Input v-model="input.brokerAddress" label="Address" default="mqtt://iot.eclipse.org" />
-            <Input v-model="input.topic" label="Topic" default="stacker/topic/default" />
+            <HttpUrl v-model="input.url" default="http://github.com"></HttpUrl>
+            <HttpMethod v-model="input.method" default="GET"></HttpMethod>
             <Payload v-model="input.payload" default=""></Payload>
         </fieldset>
     </div>
 </template>
 
 <script lang="ts">
-    import * as PrePublishing from '../forms/PrePublishing';
-    import * as Payload from '../forms/Payload';
-    import * as Input from '../forms/Input';
+    import * as Payload from '../../forms/Payload';
+    import * as HttpUrl from '../../forms/HttpUrl';
+    import * as HttpMethod from '../../forms/HttpMethod';
 
     export default {
         name: 'HttpClient',
         components: {
-            PrePublishing,
             Payload,
-            Input,
+            HttpMethod,
+            HttpUrl
         },
         mounted() {
             this.$emit("input", this.input);
@@ -27,7 +27,7 @@
             return {
                 input: {
                     name:"anyName",
-                    type: "mqtt"
+                    type: "http-client"
                 }
             }
         }

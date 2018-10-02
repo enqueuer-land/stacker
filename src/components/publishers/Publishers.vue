@@ -4,27 +4,26 @@
             <label>IPC protocol</label>
             <select name="type" v-on:change="ipcChanged" v-model="type">
                 <option value="amqp">AMQP</option>
-                <option value="mqtt">MQTT</option>
                 <option value="http-client">HTTP</option>
             </select>
         </p>
         <HttpClient v-if="type === 'http-client'" v-model="http"/>
         <Amqp v-if="type === 'amqp'" v-model="http"/>
-        <Mqtt v-if="type === 'mqtt'" v-model="mqtt"/>
+        <Event label="On Message Received"/>
     </div>
 </template>
 
 <script lang="ts">
-    import * as HttpClient from "./publishers/HttpClient";
-    import * as Mqtt from "./publishers/Mqtt";
-    import * as Amqp from "./publishers/Amqp";
+    import * as HttpClient from "./amqp/HttpClient";
+    import * as Amqp from "./amqp/Amqp";
+    import * as Event from "../events/Event";
 
     export default {
         name: 'EnqueuerInput',
         components: {
+            Event,
             HttpClient,
             Amqp,
-            Mqtt,
         },
         mounted() {
             this.$emit("input", this.publisher);
@@ -39,7 +38,6 @@
         data() {
             return {
                 type: "amqp",
-                mqtt: {},
                 amqp: {},
                 http: {},
                 publisher: {}

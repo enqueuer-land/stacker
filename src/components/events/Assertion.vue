@@ -1,13 +1,14 @@
 <template>
     <div>
-        <label>PrePublishing</label><br/>
-        <textarea rows="4" cols="50" v-model="code" placeholder="js code"></textarea>
+        <label>Assertion</label><br/>
+        <input rows="4" cols="50" type="text" placeholder="expect" />
+        <input rows="4" cols="50" type="text" placeholder="toBeEqualTo" />
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'PrePublishing',
+        name: 'assertion',
         props: ['default'],
         mounted() {
             this.code = this.default;

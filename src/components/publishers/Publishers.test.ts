@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import EnqueuerInput from './EnqueuerInput.vue'
+import EnqueuerInput from './Publishers.vue'
 
 describe('EnqueuerInput.vue', () => {
     it('renders component as supposed to', () => {

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import EnqueuerOutput from './EnqueuerOutput.vue'
+import EnqueuerOutput from './Subscriptions.vue'
 
 describe('EnqueuerOutput.vue', () => {
     it('renders component as supposed to', () => {

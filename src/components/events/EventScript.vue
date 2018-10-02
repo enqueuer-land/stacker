@@ -1,20 +1,20 @@
 <template>
     <div>
-        <label>OnMessageReceived</label><br/>
-        <textarea rows="4" cols="50" v-model="code" placeholder="js code"></textarea>
+        <label>Script</label><br/>
+        <textarea rows="4" cols="50" v-model="script" placeholder="js code"></textarea>
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'OnMessageReceived',
+        name: 'EventScript',
         props: ['default'],
         mounted() {
-            this.code = this.default;
+            this.script = this.default;
         },
         data() {
             return {
-                code: this.value
+                script: this.value
             }
         },
         watch: {
