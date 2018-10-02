@@ -4,7 +4,7 @@
             <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
         </p>
         <EnqueuerInput v-model="input" ></EnqueuerInput>
-        <pre>{{input}}</pre>
+        <!--<pre>{{input}}</pre>-->
 
         <!--<fieldset>-->
             <legend>Response</legend>

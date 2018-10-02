@@ -1,22 +1,21 @@
 <template>
     <div>
         <fieldset>
-            <Input v-model="input.brokerAddress" label="Address" default="mqtt://iot.eclipse.org" />
-            <Input v-model="input.topic" label="Topic" default="stacker/topic/default" />
+            <Input v-model="input.host" label="Host" default="localhost" />
+            <Input v-model="input.port" label="Port" default="5672" />
+            <Input v-model="input.routingKey" label="Routing Key" default="ENQUEUER.REPORT" />
             <Payload v-model="input.payload" default=""></Payload>
         </fieldset>
     </div>
 </template>
 
 <script lang="ts">
-    import * as PrePublishing from '../forms/PrePublishing';
     import * as Payload from '../forms/Payload';
     import * as Input from '../forms/Input';
 
     export default {
         name: 'HttpClient',
         components: {
-            PrePublishing,
             Payload,
             Input,
         },
@@ -26,8 +25,7 @@
         data() {
             return {
                 input: {
-                    name:"anyName",
-                    type: "mqtt"
+                    type: "amqp"
                 }
             }
         }

@@ -9,6 +9,7 @@
             </select>
         </p>
         <HttpClient v-if="type === 'http-client'" v-model="http"/>
+        <Amqp v-if="type === 'amqp'" v-model="http"/>
         <Mqtt v-if="type === 'mqtt'" v-model="mqtt"/>
     </div>
 </template>
@@ -16,11 +17,13 @@
 <script lang="ts">
     import * as HttpClient from "./publishers/HttpClient";
     import * as Mqtt from "./publishers/Mqtt";
+    import * as Amqp from "./publishers/Amqp";
 
     export default {
         name: 'EnqueuerInput',
         components: {
             HttpClient,
+            Amqp,
             Mqtt,
         },
         mounted() {
@@ -35,7 +38,7 @@
         },
         data() {
             return {
-                type: "mqtt",
+                type: "amqp",
                 mqtt: {},
                 amqp: {},
                 http: {},
