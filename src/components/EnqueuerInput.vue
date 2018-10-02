@@ -8,8 +8,8 @@
                 <option value="http-client">HTTP</option>
             </select>
         </p>
-        <HttpClient v-if="type == 'http-client'" v-model="http"/>
-        <Mqtt v-if="type == 'mqtt'" v-model="mqtt"/>
+        <HttpClient v-if="type === 'http-client'" v-model="http"/>
+        <Mqtt v-if="type === 'mqtt'" v-model="mqtt"/>
     </div>
 </template>
 
@@ -37,6 +37,7 @@
             return {
                 type: "mqtt",
                 mqtt: {},
+                amqp: {},
                 http: {},
                 publisher: {}
             }

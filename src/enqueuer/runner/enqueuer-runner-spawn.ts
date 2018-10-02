@@ -28,7 +28,7 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
 
     public static addLogEventListener(cb: any): void {
         EnqueuerRunnerSpawn.enqueuer.stdout.on('data', (data: string) => cb(data));
-        EnqueuerRunnerSpawn.enqueuer.stdout.on('data', (data: string) => console.log(data));
+        //EnqueuerRunnerSpawn.enqueuer.stdout.on('data', (data: any) => console.log(data.toString()));
     }
 
     private static startSingleRunner() {

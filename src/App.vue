@@ -16,7 +16,6 @@
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import { ResultModel } from './enqueuer/models/outputs/result-model';
     import * as EnqueuerInput from './components/EnqueuerInput.vue';
     import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
 
@@ -33,7 +32,7 @@
         },
         methods: {
             sendClick: function (this) {
-                this.input.payload = "";
+                // this.input.payload = "";
                 this.input.name = "fixed";
                 console.log(`input: ${JSON.stringify(this.input)}`)
                 let requisition = {

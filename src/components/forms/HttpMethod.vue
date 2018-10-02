@@ -25,7 +25,7 @@
             }
         },
         watch: {
-            code(val) {
+            code: function (val) {
                 this.$emit('input', val);
             }
         }
