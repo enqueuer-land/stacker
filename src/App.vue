@@ -3,7 +3,8 @@
         <p>
             <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
         </p>
-        <Publishers v-model="input" ></Publishers>
+        <Publisher v-model="publisher" ></Publisher>
+        <Subscription v-model="subscription" ></Subscription>
         <!--<pre>{{input}}</pre>-->
 
         <!--<fieldset>-->
@@ -16,30 +17,32 @@
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import * as Publishers from './components/publishers/Publishers.vue';
+    import * as Publisher from './components/publishers/Publisher.vue';
     import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
+    import * as Subscription from "./components/subscriptions/Subscription";
 
     export default {
         name: 'App',
         components: {
-            Publishers
+            Subscription,
+            Publisher
         },
         data() {
             return {
                 enqueueResponse: null,
-                input: null
+                subscription: null,
+                publisher: null
             }
         },
         methods: {
             sendClick: function (this) {
-                // this.input.payload = "";
-                this.input.name = "fixed";
-                console.log(`input: ${JSON.stringify(this.input)}`)
+                console.log(`publisher: ${JSON.stringify(this.publisher)}`)
+                console.log(`subscription: ${JSON.stringify(this.subscription)}`)
                 let requisition = {
                     'timeout': 30000,
                     'name': 'HttpTitle',
-                    subscriptions: [],
-                    publishers: [this.input]
+                    subscriptions: [this.subscription],
+                    publishers: [this.publisher]
                 }
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
@@ -51,7 +54,7 @@
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
 //                enqueuer.on('log', (response: Error) => console.log(`log: ${response}`));
                 enqueuer.send().then((success) => {
-                    console.log(`Sending result: ${success}`)
+                    // console.log(`Sending result: ${success}`)
                 });
             }
         }

@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Assertion>assertions</Assertion>
+        <label>Assertions</label><br/>
+        <div>
+            <Assertion>assertions</Assertion>
+        </div>
     </div>
 </template>
 

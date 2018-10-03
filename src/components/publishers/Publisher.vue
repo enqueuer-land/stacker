@@ -14,12 +14,12 @@
 </template>
 
 <script lang="ts">
-    import * as HttpClient from "./amqp/HttpClient";
+    import * as HttpClient from "./http/HttpClient";
     import * as Amqp from "./amqp/Amqp";
     import * as Event from "../events/Event";
 
     export default {
-        name: 'EnqueuerInput',
+        name: 'Publisher',
         components: {
             Event,
             HttpClient,
