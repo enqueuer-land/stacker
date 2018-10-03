@@ -16,7 +16,7 @@
 
 <script lang="ts">
     import * as Amqp from "./amqp/Amqp";
-    import * as Event from "../events/Event";
+    import * as Event from "../event/Event";
 
     export default {
         name: 'Subscription',

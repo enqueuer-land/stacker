@@ -3,7 +3,7 @@
         <p>
             <label>IPC protocol</label>
             <select name="type" v-model="type">
-                <!--<option value="amqp">AMQP</option>-->
+                <option value="amqp">AMQP (not working)</option>
                 <option value="http">HTTP</option>
             </select>
         </p>
@@ -15,7 +15,7 @@
 <script lang="ts">
     import * as Http from "./http/Http";
     import * as Amqp from "./amqp/Amqp";
-    import * as Event from "../events/Event";
+    import * as Event from "../event/Event";
 
     export default {
         name: 'Publisher',

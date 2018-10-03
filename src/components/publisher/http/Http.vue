@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../forms/TextArea';
-    import * as Input from '../../forms/Input';
-    import * as Event from '../../events/Event';
+    import * as TextArea from '../../form/TextArea';
+    import * as Input from '../../form/Input';
+    import * as Event from '../../event/Event';
 
     export default {
         name: 'HttpClient',

@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../forms/TextArea';
-    import * as Input from '../../forms/Input';
+    import * as TextArea from '../../form/TextArea';
+    import * as Input from '../../form/Input';
 
     export default {
         name: 'Amqp',

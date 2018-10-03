@@ -16,7 +16,7 @@
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import * as Publisher from './components/publishers/Publisher.vue';
+    import * as Publisher from './components/publisher/Publisher.vue';
     import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
 
     export default {
@@ -33,7 +33,6 @@
         },
         methods: {
             sendClick: function (this) {
-                console.log(`publisher: ${JSON.stringify(this.publisher, null, 2)}`);
                 let requisition = {
                     'timeout': 10000,
                     'name': 'Stacker',
@@ -43,7 +42,7 @@
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
-                        delete response.requisitions[0].publishers[0].messageReceived.body;
+                        delete response.requisitions[0].publishers[0].messageReceived;
                         this.enqueueResponse = JSON.stringify(response, null, 4);
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));

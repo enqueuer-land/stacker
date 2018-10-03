@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-    import * as Input from '../forms/Input';
+    import * as Input from '../form/Input';
 
     export default {
         name: 'assertion',

@@ -59,7 +59,7 @@ export class EnqueuerRunnerSpawn extends EventEmitter {
             console.log(`Restarting enqueuer`);
             EnqueuerRunnerSpawn.startSingleRunner();
         } else {
-            console.log(`No restarting enqueuer`);
+            console.log(`Not restarting enqueuer`);
         }
     }
 
