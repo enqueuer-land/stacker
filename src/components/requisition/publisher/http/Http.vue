@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../form/TextArea';
-    import * as Input from '../../form/Input';
+    import * as TextArea from '../../../form/TextArea';
+    import * as Input from '../../../form/Input';
     import * as Event from '../../event/Event';
 
     export default {

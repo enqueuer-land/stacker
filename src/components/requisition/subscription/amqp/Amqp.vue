@@ -2,14 +2,13 @@
     <fieldset>
         <Input v-model="input.options.host" label="Host" default="localhost" />
         <Input v-model="input.options.port" label="Port" default="5672" />
-        <Input v-model="input.routingKey" label="Routing Key" default="enqueuer.default.exchange" />
-        <TextArea v-model="input.payload" default=""></TextArea>
+        <Input v-model="input.queueName" label="Queue Name" default="enqueuer.default.exchange" />
     </fieldset>
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../form/TextArea';
-    import * as Input from '../../form/Input';
+    import * as TextArea from '../../../form/TextArea';
+    import * as Input from '../../../form/Input';
 
     export default {
         name: 'Amqp',

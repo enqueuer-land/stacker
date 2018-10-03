@@ -16,7 +16,7 @@
 
 <script lang="ts">
     import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import * as Publisher from './components/publisher/Publisher.vue';
+    import * as Publisher from './components/requisition/publisher/Publisher.vue';
     import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
 
     export default {
