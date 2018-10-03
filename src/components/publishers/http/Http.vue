@@ -1,6 +1,6 @@
 <template>
     <fieldset>
-        <Input v-model="input.url" label="URL" />
+        <Input v-model="input.url" label="URL" :default="input.url"/>
         <label>Method</label>
         <select v-model="input.method">
             <option value="POST">POST</option>
@@ -10,8 +10,8 @@
             <option value="PATCH">PATCH</option>
         </select>
         <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
-        <Event v-model="input.onMessageReceived"/>
-        <!--<Event v-model="onInit"/>-->
+        <Event v-model="input.onMessageReceived" label="On Message Received"/>
+        <!--<Event v-model="input.onInit" label="onInit"/>-->
         <!--<Event v-model="onFinish"/>-->
     </fieldset>
 </template>

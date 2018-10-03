@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Assertion v-for="(assertion, index) of assertions" v-model="assertions[index]"/>
+        <Assertion v-for="(assertion, index) of assertions" v-model="assertions[index]" :init="assertion"/>
     </div>
 </template>
 
