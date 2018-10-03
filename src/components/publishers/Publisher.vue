@@ -40,7 +40,6 @@
                 this.$emit('input', val);
             },
             http(val) {
-                console.log(`Publisher (HTTP): ${JSON.stringify(val)}`);
                 this.$emit('input', val);
             }
         }

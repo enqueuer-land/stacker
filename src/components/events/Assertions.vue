@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Assertion v-for="assertion in assertions" />
+        <Assertion v-for="(assertion, index) of assertions" v-model="assertions[index]"/>
     </div>
 </template>
 
@@ -11,17 +11,27 @@
         name: 'Assertions',
         components: {Assertion},
         mounted() {
-            // this.code = this.default;
+            this.$emit("input", this.$data);
         },
         data() {
             return {
-                assertions: [{}, {}]
+                assertions: [
+                    {
+                        expect: 'statusCode',
+                        toBeEqualTo: 200
+                    },
+                    {
+                        expect: 'request.uri.port',
+                        toBeEqualTo: 80
+                    }]
             };
         },
         watch: {
-            assertions(val) {
-                console.log(val)
+            assertions: {
+                handler(after, before) {
+                    this.$emit("input", this.assertions);
+                }
             }
         }
-    }
+    };
 </script>

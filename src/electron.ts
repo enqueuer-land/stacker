@@ -14,8 +14,8 @@ let window: Electron.BrowserWindow | null;
 const createWindow = async () => {
     window = new BrowserWindow({
         darkTheme: true,
-        width: 1024,
-        height: 768
+        width: 1624,
+        height: 1000
     });
     window.loadURL(`file://${__dirname}/index.jade`);
     // window.loadURL(`file://${__dirname}/example.html`);
@@ -60,6 +60,8 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
+    console.log('activate window');
+
     if (window === null) {
         createWindow();
     }

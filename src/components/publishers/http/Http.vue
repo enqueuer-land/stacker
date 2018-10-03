@@ -10,8 +10,8 @@
             <option value="PATCH">PATCH</option>
         </select>
         <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
-        <Event v-model="input.onInit"/>
-        <!--<Event v-model="onMessageReceived"/>-->
+        <Event v-model="input.onMessageReceived"/>
+        <!--<Event v-model="onInit"/>-->
         <!--<Event v-model="onFinish"/>-->
     </fieldset>
 </template>
@@ -29,19 +29,18 @@
             Input
         },
         mounted() {
-            // this.input.method = 'GET';
             this.$emit("input", this.input);
         },
         data() {
             return {
                 input: {
                     type: 'http',
-                    url: '',
+                    url: 'http://google.com',
                     payload: 'payload value',
-                    onInit: {},
+                    onInit: null,
                     onMessageReceived: null,
                     onFinish: null,
-                    method: 'POST'
+                    method: 'GET'
                 }
             }
         }
