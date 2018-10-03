@@ -1,11 +1,11 @@
 <template>
-    <div >
-        <Publisher v-model="publisher" ></Publisher>
+    <div>
+        <Publisher v-model="publisher" />
     </div>
 </template>
 
 <script lang="ts">
-    import * as Publisher from './components/publisher/Publisher.vue';
+    import * as Publisher from './publisher/Publisher.vue';
 
     export default {
         name: 'App',
@@ -14,10 +14,22 @@
         },
         data() {
             return {
-                requisition: [this.publisher],
+                requisition: {
+                    timeout: 10000,
+                    name: 'Stacker',
+                    subscriptions: [],
+                    publishers: null
+                },
                 publisher: null
             }
         },
+        watch: {
+            publisher(val) {
+                this.requisition.publishers = [val];
+                this.$emit('input', this.requisition);
+
+            }
+        }
     }
 </script>
 

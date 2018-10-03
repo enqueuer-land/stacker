@@ -3,8 +3,7 @@
         <p>
             <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
         </p>
-        <Publisher v-model="publisher" ></Publisher>
-        <!--<pre>{{input}}</pre>-->
+        <Requisition v-model="requisition" ></Requisition>
 
         <!--<fieldset>-->
             <legend>Response</legend>
@@ -15,32 +14,26 @@
 </template>
 
 <script lang="ts">
-    import { EnqueuerClient } from './enqueuer/enqueuer-client';
-    import * as Publisher from './components/requisition/publisher/Publisher.vue';
-    import {RequisitionModel} from "./enqueuer/models/outputs/requisition-model";
+    import { EnqueuerClient } from '../enqueuer/enqueuer-client';
+    import * as Requisition from './requisition/Requisition';
+    import {RequisitionModel} from "../enqueuer/models/outputs/requisition-model";
 
     export default {
         name: 'App',
         components: {
-            Publisher
+            Requisition
         },
         data() {
             return {
                 enqueueResponse: null,
-                subscription: null,
-                publisher: null
+                requisition: null
             }
         },
         methods: {
             sendClick: function (this) {
-                let requisition = {
-                    'timeout': 10000,
-                    'name': 'Stacker',
-                    subscriptions: [],
-                    publishers: [this.publisher]
-                };
+                console.log(`Requisition: ${JSON.stringify(this.requisition)}`);
 
-                const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
+                const enqueuer: EnqueuerClient = new EnqueuerClient(this.requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
                         delete response.requisitions[0].publishers[0].messageReceived;
                         this.enqueueResponse = JSON.stringify(response, null, 4);
