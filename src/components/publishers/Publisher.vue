@@ -2,19 +2,18 @@
     <div id="enqueuer-input">
         <p>
             <label>IPC protocol</label>
-            <select name="type" v-on:change="ipcChanged" v-model="type">
-                <option value="amqp">AMQP</option>
-                <option value="http-client">HTTP</option>
+            <select name="type" v-model="type">
+                <!--<option value="amqp">AMQP</option>-->
+                <option value="http">HTTP</option>
             </select>
         </p>
-        <HttpClient v-if="type === 'http-client'" v-model="http"/>
-        <Amqp v-if="type === 'amqp'" v-model="http"/>
-        <Event label="On Message Received"/>
+        <Http v-if="type === 'http'" v-model="http"/>
+        <Amqp v-if="type === 'amqp'" v-model="amqp"/>
     </div>
 </template>
 
 <script lang="ts">
-    import * as HttpClient from "./http/HttpClient";
+    import * as Http from "./http/Http";
     import * as Amqp from "./amqp/Amqp";
     import * as Event from "../events/Event";
 
@@ -22,22 +21,15 @@
         name: 'Publisher',
         components: {
             Event,
-            HttpClient,
+            Http,
             Amqp,
         },
         mounted() {
             this.$emit("input", this.publisher);
         },
-        methods: {
-            ipcChanged: function(value) {
-                this.type = value.target.value;
-                this.publisher.type = this.type;
-                console.log(value.target.value);
-            }
-        },
         data() {
             return {
-                type: "amqp",
+                type: "http",
                 amqp: {},
                 http: {},
                 publisher: {}
@@ -48,6 +40,7 @@
                 this.$emit('input', val);
             },
             http(val) {
+                console.log(`Publisher (HTTP): ${JSON.stringify(val)}`);
                 this.$emit('input', val);
             }
         }

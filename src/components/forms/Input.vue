@@ -1,7 +1,7 @@
 <template>
     <div>
         <label>{{label}}</label>
-        <input rows="4" cols="50" type="text" v-model="code" placeholder="this.code" />
+        <input rows="4" cols="50" type="text" v-model="code" placeholder="this.label" />
     </div>
 </template>
 

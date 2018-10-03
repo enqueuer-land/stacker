@@ -1,9 +1,6 @@
 <template>
     <div>
-        <label>Assertions</label><br/>
-        <div>
-            <Assertion>assertions</Assertion>
-        </div>
+        <Assertion v-for="assertion in assertions" />
     </div>
 </template>
 
@@ -18,12 +15,12 @@
         },
         data() {
             return {
-                // code: this.value
-            }
+                assertions: [{}, {}]
+            };
         },
         watch: {
-            code(val) {
-                // this.$emit('input', val);
+            assertions(val) {
+                console.log(val)
             }
         }
     }

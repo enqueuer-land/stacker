@@ -1,7 +1,7 @@
 <template>
     <div>
         <label>Script</label><br/>
-        <textarea rows="4" cols="50" v-model="script" placeholder="js code"></textarea>
+        <textarea rows="1" cols="100" v-model="script" placeholder="js code"></textarea>
     </div>
 </template>
 
@@ -18,7 +18,7 @@
             }
         },
         watch: {
-            code(val) {
+            script(val) {
                 this.$emit('input', val);
             }
         }

@@ -9,49 +9,41 @@ export class EnqueuerClient extends EventEmitter {
 
     private requisition: input.RequisitionModel;
     private sender: EnqueuerMessageCommunicator;
-    // private eventEmitter: any;
 
     public constructor(requisition: input.RequisitionModel) {
         super();
 
         this.requisition = requisition;
 
-        /*this.eventEmitter = */EnqueuerRunnerSpawn.start();
+        EnqueuerRunnerSpawn.start();
         this.sender = new EnqueuerMessageCommunicatorHttp();
-        // this.sender = new EnqueuerMessageCommunicatorUds();
-        // this.sender = new EnqueuerMessageCommunicatorSingleRun();
         this.registerEventListeners();
-
-        // this.eventEmitter = new EnqueuerRunnerMock();
-        // this.sender = new EnqueuerMessageCommunicatorMock();
-        // this.eventEmitter.start().then(() => this.registerEventListeners())
     }
 
-    public send(): Promise<boolean | void> {
+    public send(): Promise<boolean> {
         return this.sender.publish(this.requisition)
             .then((data: output.RequisitionModel) => {
                 console.log(`Enqueuer client got data: ${Object.keys(data)}`);
                 this.emit('response', data);
+                return true;
             })
             .catch(err => {
                 const errorMessage = `Error sending/receiving message to/from enqueuer: ${err}`;
                 this.emit('error', errorMessage);
+                return false;
             });
     }
 
-    private addErrorEventListener = () => {
-        // this.eventEmitter.on('error', (error: Error) => this.emit('error', error))
+    private addErrorEventListener() {
         EnqueuerRunnerSpawn.addErrorEventListener((error: any) => this.emit('error', error));
     }
 
-    private addExitEventListener = () => {
+    private addExitEventListener() {
         EnqueuerRunnerSpawn.addExitEventListener(() => this.emit('exit'));
-        // this.eventEmitter.on('exit', (statusCode: number) => this.emit('exit', statusCode));
     }
 
-    private addLogEventListener = () => {
+    private addLogEventListener() {
         EnqueuerRunnerSpawn.addLogEventListener((data: any) => this.emit('log', data));
-        // this.eventEmitter.on('log', (data: string) => this.emit('log', data));
     }
 
     private registerEventListeners() {

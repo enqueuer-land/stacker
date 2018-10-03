@@ -2,8 +2,8 @@
     <div>
         <fieldset>
             <label>{{label}}</label>
-            <EventScript></EventScript>
-            <Assertions ></Assertions>
+            <EventScript v-model="script"></EventScript>
+            <Assertions v-model="assertions"></Assertions>
         </fieldset>
     </div>
 </template>
@@ -18,12 +18,20 @@
         props: ['label'],
         data() {
             return {
-                code: this.value
+                input: {
+                },
+                script: '',
+                assertions: []
             }
         },
         watch: {
-            code(val) {
-                this.$emit('input', val);
+            script(val) {
+                this.input.script = val;
+                this.$emit('input', this.input);
+            },
+            assertions(val) {
+                this.input.assertions = val;
+                this.$emit('input', this.input);
             }
         }
     }

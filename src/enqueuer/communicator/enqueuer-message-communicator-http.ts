@@ -5,23 +5,21 @@ import * as output from '../models/outputs/requisition-model';
 
 export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunicator {
 
-    private url: string;
-    private method: string;
-    private headers: any;
+    private readonly url: string;
+    private readonly method: string;
     private body: any;
     private timeout: number;
 
     public constructor() {
         this.url = 'http://localhost:23023/requisitions';
         this.method = 'post';
-        this.headers = {};
         this.body = '';
     }
 
     public publish(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
         this.body = requisitionModel;
         return new Promise((resolve, reject) => {
-            console.log(`Hitting (${this.method.toUpperCase()}) - ${this.url}`);
+            console.log(`Hitting enqueuer (${this.method.toUpperCase()}) - ${this.url}`);
             const options = this.createOptions();
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             request(options,
@@ -41,7 +39,7 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
             url: this.url,
             method: this.method,
             timeout: this.timeout,
-            headers: this.headers
+            headers: {}
         };
         options.data = options.body = this.handleObjectPayload();
         if (this.method.toUpperCase() != 'GET') {

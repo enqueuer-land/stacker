@@ -1,15 +1,17 @@
 <template>
-    <div id="subscription">
-        <p>
-            <label>IPC protocol</label>
-            <select name="type" v-on:change="ipcChanged" v-model="type">
-                <option value="amqp">AMQP</option>
-                <option value="http-client">HTTP</option>
-            </select>
-        </p>
-        <Amqp v-if="type === 'amqp'" v-model="http"/>
-        <Event label="On Message Received"/>
-    </div>
+    <span class="border">
+        <div id="subscription">
+            <p>
+                <label>IPC protocol</label>
+                <select name="type" v-on:change="ipcChanged" v-model="type">
+                    <option value="amqp">AMQP</option>
+                </select>
+            </p>
+            <Amqp v-if="type === 'amqp'" v-model="amqp"/>
+            <Event v-model="onMessageReceived" label="On Message Received"/>
+        </div>
+    </span>
+
 </template>
 
 <script lang="ts">
@@ -45,6 +47,10 @@
                 this.$emit('input', val);
             },
             http(val) {
+                this.$emit('input', val);
+            },
+            onMessageReceived(val) {
+                console.log(`Subs event: ${val}`);
                 this.$emit('input', val);
             }
         }
