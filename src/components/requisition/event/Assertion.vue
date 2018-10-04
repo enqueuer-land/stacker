@@ -1,30 +1,31 @@
 <template>
-    <div>
+        <div class="input-group row">
+            <div class="col-6 row">
 
-        <div class="input-group">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">{{currentExpectation}}
-            </button>
-            <a class="dropdown-menu">
-                <a class="dropdown-item" v-for="(item) of Object.keys(available)"
-                   v-on:click="setExpectation(item)">{{item}}</a>
-            </a>
-            <input label="value" v-model="firstValue" type="text"
-                   aria-label="Text input with dropdown button">
+                <button class="btn btn-outline-secondary dropdown-toggle col-4" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">{{currentExpectation}}
+                </button>
+                <a class="dropdown-menu">
+                    <a class="dropdown-item" v-for="(item) of Object.keys(available)"
+                       v-on:click="setExpectation(item)">{{item}}</a>
+                </a>
+                <input class="col-8" label="value" v-model="firstValue" type="text"
+                       aria-label="Text input with dropdown button">
 
-            <div v-if="availableCriteria" class="input-group-append">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+
+            </div>
+            <div v-if="availableCriteria" class="input-group-append col-6 row">
+                <button class="btn btn-outline-secondary dropdown-toggle col-4" type="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">{{currentCriterium}}
                 </button>
                 <a class="dropdown-menu">
                     <a class="dropdown-item" v-for="(item) of availableCriteria"
                        v-on:click="setCriteria(item)">{{item}}</a>
                 </a>
-                <input label="value" v-model="secondValue" type="text"
+                <input class="col-8" label="value" v-model="secondValue" type="text"
                        aria-label="Text input with dropdown button">
             </div>
         </div>
-    </div>
 </template>
 
 <script lang="ts">
