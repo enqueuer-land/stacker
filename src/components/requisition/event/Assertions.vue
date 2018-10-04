@@ -1,7 +1,11 @@
 <template>
-    <div>
-        <Assertion v-for="(assertion, index) of assertions" v-model="assertions[index]" :init="assertion"/>
-    </div>
+    <span class="border-1">
+        <button type="button" v-on:click="addClick" class="btn btn-success">+</button>
+        <div v-for="(assertion, index) of assertions">
+            <Assertion v-model="assertions[index]" :init="assertion" />
+            <button type="button" v-on:click="removeClick(index)" class="btn btn-danger">-</button>
+        </div>
+    </span>
 </template>
 
 <script lang="ts">
@@ -19,19 +23,26 @@
                     {
                         expect: 'statusCode',
                         toBeEqualTo: 200
-                    },
-                    {
-                        expect: 'request.uri.port',
-                        toBeEqualTo: 80
                     }]
             };
         },
         watch: {
-            assertions: {
-                handler(after, before) {
-                    this.$emit("input", this.assertions);
-                }
+            assertions() {
+                this.$emit("input", this.assertions);
+            }
+        },
+        methods: {
+            addClick: function (this) {
+                this.assertions.push(
+                    {
+                        expect: 'request.uri.port',
+                        toBeEqualTo: 80
+                    });
+            },
+            removeClick: function (index) {
+                this.assertions.splice(index, 1);
             }
         }
+
     };
 </script>
