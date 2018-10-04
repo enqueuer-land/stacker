@@ -8,12 +8,11 @@
                     <a class="dropdown-item" v-for="(current) of methods" v-on:click="methodSelect(current)">{{current}}</a>
                 </div>
             </div>
-            <input v-model="input.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
+            <input v-model="input.endpoint" label="Endpoint" type="text" class="form-control" aria-label="Text input with dropdown button" >
+            <input v-model="input.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
         </div>
 
         <br/>
-        <label>Payload</label>
-        <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -81,7 +80,9 @@
             return {
                 input: {
                     type: 'http',
-                    url: 'http://localhost:22222/stacker',
+                    endpoint: '/stacker',
+                    port: 22222,
+                    timeout: 1000,
                     payload: 'payload value',
                     onInit: null,
                     onMessageReceived: null,

@@ -2,8 +2,6 @@
     <div>
 
 
-
-
         <div class="accordion">
             <div class="card">
                 <div class="card-header" id="publisherHeading">
@@ -21,6 +19,23 @@
             </div>
         </div>
         
+        <div class="accordion">
+            <div class="card">
+                <div class="card-header" id="subscriptionHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">
+                            Subscription
+                        </button>
+                    </h5>
+                </div>
+                <div id="subscriptionOneCollapse" class="collapse" aria-labelledby="subscriptionHeading">
+                    <div class="card-body">
+                        <Subscription v-model="subscription" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         
         
     </div>
@@ -28,11 +43,13 @@
 
 <script lang="ts">
     import * as Publisher from './publisher/Publisher.vue';
+    import * as Subscription from './subscription/Subsription';
 
     export default {
         name: 'App',
         components: {
-            Publisher
+            Publisher,
+            Subscription
         },
         data() {
             return {
@@ -40,14 +57,20 @@
                     timeout: 10000,
                     name: 'Stacker',
                     subscriptions: [],
-                    publishers: null
+                    publishers: []
                 },
-                publisher: null
+                publisher: null,
+                subscription: null
             }
         },
         watch: {
             publisher(val) {
                 this.requisition.publishers = [val];
+                this.$emit('input', this.requisition);
+
+            },
+            subscription(val) {
+                this.requisition.subscriptions = [val];
                 this.$emit('input', this.requisition);
 
             }

@@ -18,24 +18,21 @@
 </template>
 
 <script lang="ts">
-    import * as Http from "./http/Http";
-    import * as Amqp from "./amqp/Amqp";
-
+    import * as Http from './http/Http';
     export default {
         name: 'Publisher',
         components: {
-            Http,
-            Amqp,
+            Http
         },
         mounted() {
-            this.$emit("input", this.publisher);
+            this.$emit("input", this.subscription);
         },
         data() {
             return {
                 type: "HTTP",
                 amqp: {},
                 http: {},
-                publisher: {},
+                subscription: {},
                 protocols: ['HTTP', 'AMQP']
             };
         },
