@@ -31,6 +31,7 @@
         },
         methods: {
             sendClick: function (this) {
+                this.enqueueResponse = '';
                 console.log(`Requisition: ${JSON.stringify(this.requisition)}`);
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(this.requisition);

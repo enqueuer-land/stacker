@@ -67,9 +67,11 @@
         watch: {
             firstValue(val) {
                 this.input[this.currentExpectation] = val;
+                this.$emit("input", this.input);
             },
             secondValue(val) {
-                this.input[this.currentCriterium] = this.secondValue;
+                this.input[this.currentCriterium] = val;
+                this.$emit("input", this.input);
             }
         },
         methods: {
@@ -85,6 +87,7 @@
                         this.input[this.currentCriterium] = this.secondValue;
                     }
                 }
+                this.$emit("input", this.input);
             },
             setCriteria(criterium) {
                 delete this.input[this.currentCriterium];
@@ -92,6 +95,7 @@
                 if (this.currentCriterium) {
                     this.input[this.currentCriterium] = this.secondValue;
                 }
+                this.$emit("input", this.input);
             }
         }
     };

@@ -1,10 +1,13 @@
 <template>
     <span class="border-1">
         <button type="button" v-on:click="addClick" class="btn btn-success">+</button>
-        <div v-for="(assertion, index) of assertions">
-            <Assertion v-model="assertions[index]" :init="assertion" />
-            <button type="button" v-on:click="removeClick(index)" class="btn btn-danger">-</button>
-        </div>
+
+            <div v-for="(assertion, index) of assertions" class="row">
+                <div class="col-11" >
+                    <Assertion v-model="assertions[index]" :init="assertion" />
+                </div>
+                <button type="button" v-on:click="removeClick(index)" class="btn btn-danger col-1">-</button>
+            </div>
     </span>
 </template>
 
