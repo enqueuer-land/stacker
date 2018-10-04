@@ -13,16 +13,19 @@
 
 
         <Http v-if="type === 'HTTP'" v-model="http"/>
-        <!--<Amqp v-if="type === 'AMQP'" v-model="amqp"/>-->
+        <Amqp v-if="type === 'AMQP'" v-model="amqp"/>
     </fieldset>
 </template>
 
 <script lang="ts">
     import * as Http from './Http';
+    import * as Amqp from './Amqp';
+
     export default {
         name: 'Publisher',
         components: {
-            Http
+            Http,
+            Amqp
         },
         mounted() {
             this.$emit("input", this.subscription);
@@ -37,7 +40,7 @@
             };
         },
         watch: {
-            mqtt(val) {
+            amqp(val) {
                 this.$emit('input', val);
             },
             http(val) {

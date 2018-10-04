@@ -3,8 +3,7 @@
         <label>Payload</label>
         <input v-model="input.option.host" label="Host" type="text" class="form-control" aria-label="Text input with dropdown button" >
         <input v-model="input.option.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <input v-model="input.routingKey" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <TextArea v-model="input.payload" />
+        <input v-model="input.queueName" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -18,6 +17,20 @@
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         <Event v-model="input.onInit"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            On Message Received
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <Event v-model="input.onMessageReceived"/>
                     </div>
                 </div>
             </div>
@@ -62,9 +75,9 @@
                         host: 'localhost',
                         port: 5672,
                     },
-                    routingKey: 'default.exchange',
-                    payload: 'payload value',
+                    queueName: 'default.exchange',
                     onInit: null,
+                    onMessageReceived: null,
                     onFinish: null,
                 },
                 methods: ['GET', 'POST', 'PUT', 'HEAD']
