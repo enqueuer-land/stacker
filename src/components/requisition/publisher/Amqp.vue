@@ -1,19 +1,10 @@
 <template>
     <fieldset>
-        <div class="input-group">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">{{input.method}}</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" v-for="(current) of methods" v-on:click="methodSelect(current)">{{current}}</a>
-                </div>
-            </div>
-            <input v-model="input.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        </div>
-
-        <br/>
         <label>Payload</label>
-        <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
+        <input v-model="input.option.host" label="Host" type="text" class="form-control" aria-label="Text input with dropdown button" >
+        <input v-model="input.option.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
+        <input v-model="input.routingKey" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
+        <TextArea v-model="input.payload" />
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -63,12 +54,12 @@
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../../form/TextArea';
-    import * as Input from '../../../form/Input';
-    import * as Event from '../../event/Event';
+    import * as TextArea from '../../form/TextArea';
+    import * as Input from '../../form/Input';
+    import * as Event from '../event/Event';
 
     export default {
-        name: 'HttpClient',
+        name: 'Amqp',
         components: {
             Event,
             TextArea,
@@ -80,20 +71,18 @@
         data() {
             return {
                 input: {
-                    type: 'http',
-                    url: 'http://localhost:22222/stacker',
+                    type: 'amqp',
+                    option: {
+                        host: 'localhost',
+                        port: 5672,
+                    },
+                    routingKey: 'default.exchange.routing.key',
                     payload: 'payload value',
                     onInit: null,
                     onMessageReceived: null,
                     onFinish: null,
-                    method: 'POST'
                 },
                 methods: ['GET', 'POST', 'PUT', 'HEAD']
-            }
-        },
-        methods: {
-            methodSelect(method) {
-                this.input.method = method;
             }
         }
     }

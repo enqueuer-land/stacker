@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-    import * as Http from './http/Http';
+    import * as Http from './Http';
     export default {
         name: 'Publisher',
         components: {

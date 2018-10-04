@@ -8,13 +8,12 @@
                     <a class="dropdown-item" v-for="(current) of methods" v-on:click="methodSelect(current)">{{current}}</a>
                 </div>
             </div>
-            <input v-model="input.endpoint" label="Endpoint" type="text" class="form-control" aria-label="Text input with dropdown button" >
-            <input v-model="input.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
+            <input v-model="input.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
         </div>
-        <div class="row">
-            <input v-model="input.response.status" label="StatusCode" type="text" class="form-control col-2" aria-label="Text input with dropdown button" >
-            <TextArea v-model="input.response.payload"/>
-        </div>
+
+        <br/>
+        <label>Payload</label>
+        <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -64,9 +63,9 @@
 </template>
 
 <script lang="ts">
-    import * as TextArea from '../../../form/TextArea';
-    import * as Input from '../../../form/Input';
-    import * as Event from '../../event/Event';
+    import * as TextArea from '../../form/TextArea';
+    import * as Input from '../../form/Input';
+    import * as Event from '../event/Event';
 
     export default {
         name: 'HttpClient',
@@ -82,13 +81,8 @@
             return {
                 input: {
                     type: 'http',
-                    endpoint: '/stacker',
-                    port: 22222,
-                    timeout: 1000,
-                    response: {
-                        status: 200,
-                        payload: 'response'
-                    },
+                    url: 'http://localhost:22222/stacker',
+                    payload: 'payload value',
                     onInit: null,
                     onMessageReceived: null,
                     onFinish: null,
