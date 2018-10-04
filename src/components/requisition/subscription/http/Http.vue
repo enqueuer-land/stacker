@@ -11,8 +11,10 @@
             <input v-model="input.endpoint" label="Endpoint" type="text" class="form-control" aria-label="Text input with dropdown button" >
             <input v-model="input.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
         </div>
-
-        <br/>
+        <div class="row">
+            <input v-model="input.response.status" label="StatusCode" type="text" class="form-control col-2" aria-label="Text input with dropdown button" >
+            <TextArea v-model="input.response.payload"/>
+        </div>
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -83,13 +85,16 @@
                     endpoint: '/stacker',
                     port: 22222,
                     timeout: 1000,
-                    payload: 'payload value',
+                    response: {
+                        status: 200,
+                        payload: 'response'
+                    },
                     onInit: null,
                     onMessageReceived: null,
                     onFinish: null,
                     method: 'POST'
                 },
-                methods: ['GET', 'POST', 'PUT']
+                methods: ['GET', 'POST', 'PUT', 'HEAD']
             }
         },
         methods: {

@@ -50,7 +50,7 @@
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(this.requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
-                        delete response.requisitions[0].publishers[0].messageReceived;
+                        // delete response.requisitions[0].publishers[0].messageReceived;
                         this.enqueueResponse = JSON.stringify(response, null, 4);
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));

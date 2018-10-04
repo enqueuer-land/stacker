@@ -88,7 +88,7 @@
                     onFinish: null,
                     method: 'POST'
                 },
-                methods: ['GET', 'POST', 'PUT']
+                methods: ['GET', 'POST', 'PUT', 'HEAD']
             }
         },
         methods: {

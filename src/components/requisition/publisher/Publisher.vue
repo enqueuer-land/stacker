@@ -2,7 +2,7 @@
     <fieldset id="enqueuer-input">
         <div class="input-group">
             <div class="input-group-append">
-                <label>Protocol</label>
+                <legend>Protocol</legend>
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">{{type}}</button>
                 <div class="dropdown-menu">
