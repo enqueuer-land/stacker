@@ -1,14 +1,18 @@
 <template>
     <fieldset>
-        <Input v-model="input.url" label="URL" :default="input.url"/>
-        <label>Method</label>
-        <select v-model="input.method">
-            <option value="POST">POST</option>
-            <option value="GET">GET</option>
-            <option value="PUT">PUT</option>
-            <option value="DELETE">DELETE</option>
-            <option value="PATCH">PATCH</option>
-        </select>
+        <div class="input-group">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">{{input.method}}</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" v-for="(current) of methods" v-on:click="methodSelect(current)">{{current}}</a>
+                </div>
+            </div>
+            <input v-model="input.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
+        </div>
+
+        <br/>
+        <label>Payload</label>
         <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
         <Event v-model="input.onMessageReceived" label="On Message Received"/>
         <!--<Event v-model="input.onInit" label="onInit"/>-->
@@ -40,8 +44,14 @@
                     onInit: null,
                     onMessageReceived: null,
                     onFinish: null,
-                    method: 'GET'
-                }
+                    method: 'POST'
+                },
+                methods: ['GET', 'POST', 'PUT']
+            }
+        },
+        methods: {
+            methodSelect(method) {
+                this.input.method = method;
             }
         }
     }

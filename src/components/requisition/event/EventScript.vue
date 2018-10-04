@@ -1,13 +1,16 @@
 <template>
     <div>
         <label>Script</label><br/>
-        <textarea rows="1" cols="100" v-model="script" placeholder="js code"></textarea>
+        <TextArea v-model="script" />
     </div>
 </template>
 
 <script lang="ts">
+    import * as TextArea from '../../form/TextArea';
+
     export default {
         name: 'EventScript',
+        components: {TextArea},
         props: ['default'],
         mounted() {
             this.script = this.default;

@@ -1,15 +1,13 @@
 <template>
-    <div id="enqueuer-input">
-        <p>
-            <label>IPC protocol</label>
-            <select name="type" v-model="type">
-                <option value="amqp">AMQP (not working)</option>
-                <option value="http">HTTP</option>
-            </select>
-        </p>
+    <fieldset id="enqueuer-input">
+        <label>IPC protocol</label>
+        <select name="type" v-model="type">
+            <option value="amqp">AMQP (not working)</option>
+            <option value="http">HTTP</option>
+        </select>
         <Http v-if="type === 'http'" v-model="http"/>
         <Amqp v-if="type === 'amqp'" v-model="amqp"/>
-    </div>
+    </fieldset>
 </template>
 
 <script lang="ts">
@@ -33,7 +31,7 @@
                 amqp: {},
                 http: {},
                 publisher: {}
-            }
+            };
         },
         watch: {
             mqtt(val) {
@@ -44,5 +42,5 @@
             }
         }
 
-    }
+    };
 </script>

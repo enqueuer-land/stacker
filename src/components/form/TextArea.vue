@@ -1,7 +1,6 @@
 <template>
     <div>
-        <label>Payload</label><br/>
-        <textarea rows="4" cols="50" v-model="code" placeholder="payload"></textarea>
+        <textarea class="text-left; form-control" v-model="code" placeholder="payload"></textarea>
     </div>
 </template>
 
