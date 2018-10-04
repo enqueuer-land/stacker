@@ -1,6 +1,28 @@
 <template>
     <div>
-        <Publisher v-model="publisher" />
+
+
+
+
+        <div class="accordion">
+            <div class="card">
+                <div class="card-header" id="publisherHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">
+                            Publisher
+                        </button>
+                    </h5>
+                </div>
+                <div id="publisherOneCollapse" class="collapse" aria-labelledby="publisherHeading">
+                    <div class="card-body">
+                        <Publisher v-model="publisher" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
     </div>
 </template>
 

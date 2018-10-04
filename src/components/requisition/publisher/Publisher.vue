@@ -1,8 +1,8 @@
 <template>
     <fieldset id="enqueuer-input">
-        <label>IPC protocol</label>
         <div class="input-group">
             <div class="input-group-append">
+                <label>Protocol</label>
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">{{type}}</button>
                 <div class="dropdown-menu">
@@ -13,7 +13,7 @@
 
 
         <Http v-if="type === 'HTTP'" v-model="http"/>
-        <Amqp v-if="type === 'AMQP'" v-model="amqp"/>
+        <!--<Amqp v-if="type === 'AMQP'" v-model="amqp"/>-->
     </fieldset>
 </template>
 
