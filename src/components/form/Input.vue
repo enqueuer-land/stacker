@@ -1,7 +1,11 @@
 <template>
     <div>
-        <label>{{label}}</label>
-        <input type="text" class="form-control" v-model="code" placeholder="insert something">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">{{label}}</span>
+            </div>
+            <input type="text" class="form-control" placeholder="label" aria-label="Username" aria-describedby="basic-addon1" v-model="code" >
+        </div>
     </div>
 </template>
 

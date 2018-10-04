@@ -1,7 +1,29 @@
 <template>
     <div>
-        <Input v-model="input.expect" label="Expect" :default="input.expect"/>
-        <Input v-model="input.toBeEqualTo" label="ToBeEqualTo" :default="input.toBeEqualTo"/>
+
+        <div class="input-group">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">{{currentExpectation}}
+            </button>
+            <a class="dropdown-menu">
+                <a class="dropdown-item" v-for="(item) of Object.keys(available)"
+                   v-on:click="setExpectation(item)">{{item}}</a>
+            </a>
+            <input label="value" v-model="firstValue" type="text"
+                   aria-label="Text input with dropdown button">
+
+            <div v-if="availableCriteria" class="input-group-append">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">{{currentCriterium}}
+                </button>
+                <a class="dropdown-menu">
+                    <a class="dropdown-item" v-for="(item) of availableCriteria"
+                       v-on:click="setCriteria(item)">{{item}}</a>
+                </a>
+                <input label="value" v-model="secondValue" type="text"
+                       aria-label="Text input with dropdown button">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -15,15 +37,62 @@
         },
         props: ['init'],
         data() {
+
+            const available = {
+                expect: ['toBeEqualTo', 'toBeGreaterThan', 'toBeGreaterThanOrEqualTo', 'toBeLessThan', 'toBeLessThanOrEqualTo', 'toContain'],
+                expectToBeUndefined: null,
+                expectToBeDefined: null
+            };
+
+            const firstValue = 'statusCode';
+            const secondValue = 200;
+            const initialValue = {};
+            let currentExpectation = Object.keys(available)[0];
+            initialValue[currentExpectation] = firstValue;
+            let currentCriterium = available[currentExpectation][0];
+            initialValue[currentCriterium] = secondValue;
             return {
-                input: {
-                    expect: this.init.expect,
-                    toBeEqualTo: this.init.toBeEqualTo
-                }
-            }
+                input: initialValue,
+                firstValue: firstValue,
+                secondValue: secondValue,
+                currentExpectation: currentExpectation,
+                currentCriterium: currentCriterium,
+                available: available,
+                availableCriteria: available[currentExpectation]
+            };
         },
         mounted() {
             this.$emit("input", this.input);
+        },
+        watch: {
+            firstValue(val) {
+                this.input[this.currentExpectation] = val;
+            },
+            secondValue(val) {
+                this.input[this.currentCriterium] = this.secondValue;
+            }
+        },
+        methods: {
+            setExpectation(expectation) {
+                this.currentExpectation = expectation;
+                this.input = {};
+                this.input[this.currentExpectation] = this.firstValue;
+                this.availableCriteria = this.available[this.currentExpectation];
+                this.currentCriterium = null;
+                if (this.availableCriteria) {
+                    this.currentCriterium = this.availableCriteria[0];
+                    if (this.currentCriterium) {
+                        this.input[this.currentCriterium] = this.secondValue;
+                    }
+                }
+            },
+            setCriteria(criterium) {
+                delete this.input[this.currentCriterium];
+                this.currentCriterium = criterium;
+                if (this.currentCriterium) {
+                    this.input[this.currentCriterium] = this.secondValue;
+                }
+            }
         }
-    }
+    };
 </script>
