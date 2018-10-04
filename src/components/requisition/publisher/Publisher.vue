@@ -1,12 +1,19 @@
 <template>
     <fieldset id="enqueuer-input">
         <label>IPC protocol</label>
-        <select name="type" v-model="type">
-            <option value="amqp">AMQP (not working)</option>
-            <option value="http">HTTP</option>
-        </select>
-        <Http v-if="type === 'http'" v-model="http"/>
-        <Amqp v-if="type === 'amqp'" v-model="amqp"/>
+        <div class="input-group">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">{{type}}</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" v-for="protocol of protocols" v-on:click="type=protocol">{{protocol}}</a>
+                </div>
+            </div>
+        </div>
+
+
+        <Http v-if="type === 'HTTP'" v-model="http"/>
+        <Amqp v-if="type === 'AMQP'" v-model="amqp"/>
     </fieldset>
 </template>
 
@@ -27,10 +34,11 @@
         },
         data() {
             return {
-                type: "http",
+                type: "HTTP",
                 amqp: {},
                 http: {},
-                publisher: {}
+                publisher: {},
+                protocols: ['HTTP', 'AMQP']
             };
         },
         watch: {

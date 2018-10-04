@@ -1,7 +1,6 @@
 <template>
     <div>
         <fieldset>
-            <label>{{label}}</label>
             <EventScript v-model="script"></EventScript>
             <Assertions v-model="assertions"></Assertions>
         </fieldset>
@@ -15,7 +14,6 @@
     export default {
         name: 'Event',
         components: {Assertions, EventScript},
-        props: ['label'],
         data() {
             return {
                 input: {

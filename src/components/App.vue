@@ -1,15 +1,15 @@
 <template>
-    <div id="main">
-        <p>
-            <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
-        </p>
-        <Requisition v-model="requisition" ></Requisition>
+    <div>
+        <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
+        <div id="main" class="row">
+            <Requisition class="col-6" v-model="requisition" ></Requisition>
 
-        <!--<fieldset>-->
-            <legend>Response</legend>
-            <pre>{{this.enqueuerResponse}}</pre>
-            <textarea name="response" rows="40" cols="100"  v-model="enqueueResponse"></textarea>
-        <!--</fieldset>-->
+            <fieldset class="col-6">
+                <legend>Response</legend>
+                <pre>{{this.enqueuerResponse}}</pre>
+                <textarea name="response" rows="40" cols="100"  v-model="enqueueResponse"></textarea>
+            </fieldset>
+        </div>
     </div>
 </template>
 

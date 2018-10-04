@@ -12,7 +12,6 @@
                 <input class="col-8" label="value" v-model="firstValue" type="text"
                        aria-label="Text input with dropdown button">
 
-
             </div>
             <div v-if="availableCriteria" class="input-group-append col-6 row">
                 <button class="btn btn-outline-secondary dropdown-toggle col-4" type="button" data-toggle="dropdown"
@@ -41,8 +40,10 @@
 
             const available = {
                 expect: ['toBeEqualTo', 'toBeGreaterThan', 'toBeGreaterThanOrEqualTo', 'toBeLessThan', 'toBeLessThanOrEqualTo', 'toContain'],
+                expectToBeDefined: null,
                 expectToBeUndefined: null,
-                expectToBeDefined: null
+                expectToBeTruthy: null,
+                expectToBeFalsy: null
             };
 
             const firstValue = 'statusCode';
