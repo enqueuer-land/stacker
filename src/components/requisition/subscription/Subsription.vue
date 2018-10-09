@@ -1,14 +1,13 @@
 <template>
     <fieldset id="enqueuer-input">
         <div class="input-group">
-            <div class="input-group-append">
-                <label>Protocol</label>
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">{{type}}</button>
+            <div>
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{type}}</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" v-for="protocol of protocols" v-on:click="type=protocol">{{protocol}}</a>
                 </div>
             </div>
+            <p class="h3 input-group-append">Protocol</p>
         </div>
 
 

@@ -13,7 +13,7 @@
                     <Requisition v-model="requisition" v-on:sendClick="sendClick"></Requisition>
                 </div>
                 <div class="col-6">
-                    <p class="h3 lead">Response Stacker</p>
+                    <p class="h3 lead">Response: {{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
                     <pre><code>{{this.enqueuerResponse}}</code></pre>
                 </div>
             </div>
@@ -44,8 +44,8 @@
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
-                        // delete response.requisitions[0].publishers[0].messageReceived;
-                        this.enqueuerResponse = JSON.stringify(response.requisitions[0], null, 4);
+                        //Removes the stacker requisition layer 'http daemon input' stuff
+                        this.enqueuerResponse = response.requisitions[0];
                     });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
