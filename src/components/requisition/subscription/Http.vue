@@ -1,5 +1,7 @@
 <template>
     <fieldset>
+        <input type="text" class="form-control" v-model="input.name" placeholder="Subscription name">
+
         <div class="input-group">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
@@ -89,6 +91,7 @@
             return {
                 input: {
                     type: 'http',
+                    name: 'Subscription name',
                     endpoint: '/stacker',
                     port: 22222,
                     timeout: 1000,

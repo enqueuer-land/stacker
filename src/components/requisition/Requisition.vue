@@ -12,7 +12,8 @@
                 <div class="card-header" id="publisherHeading">
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">
-                            Publisher {{ publisher? publisher.type: ''}}
+                            <span class="badge badge-primary">{{(publisher && publisher.type) ? publisher.type.toUpperCase(): ''}}</span>
+                            {{(publisher) ? publisher.name: 'Publisher'}}
                         </button>
                     </h5>
                 </div>
@@ -29,7 +30,8 @@
                 <div class="card-header" id="subscriptionHeading">
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">
-                            Subscription {{ subscription? subscription.type: ''}}
+                            <span class="badge badge-primary">{{(subscription && subscription.type) ? subscription.type.toUpperCase(): ''}}</span>
+                            {{(subscription) ? subscription.name: 'Subscription'}}
                         </button>
                     </h5>
                 </div>

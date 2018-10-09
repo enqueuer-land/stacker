@@ -1,6 +1,7 @@
 <template>
     <fieldset>
-        <label>Payload</label>
+        <input type="text" class="form-control" v-model="input.name" placeholder="Subscription name">
+
         <input v-model="input.option.host" label="Host" type="text" class="form-control" aria-label="Text input with dropdown button" >
         <input v-model="input.option.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
         <input v-model="input.queueName" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
@@ -75,6 +76,7 @@
                         host: 'localhost',
                         port: 5672,
                     },
+                    name: 'Subscription name',
                     queueName: 'default.exchange',
                     onInit: null,
                     onMessageReceived: null,
