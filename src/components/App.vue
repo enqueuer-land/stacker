@@ -13,10 +13,11 @@
                     <Requisition v-model="requisition" v-on:sendClick="sendClick"></Requisition>
                 </div>
                 <div class="col-6">
-                    <p class="h3 lead">Response: {{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
-                    <p class="h5" >Valid</p>
-                    <p class="h5" :class="enqueuerResponse ? (enqueuerResponse.valid? 'text-success' : 'text-danger'): ''">{{this.enqueuerResponse ? this.enqueuerResponse.valid: ''}}</p>
-                    <p class="h5">Time: {{this.enqueuerResponse ? this.enqueuerResponse.time.totalTime: ''}}</p>
+
+
+                        <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
+                        <p class="h5" :class="enqueuerResponse ? (enqueuerResponse.valid? 'text-success' : 'text-danger'): ''">{{this.enqueuerResponse ? this.resultMessage: ''}}</p>
+
                     <pre><code>{{this.enqueuerResponse}}</code></pre>
                 </div>
             </div>
@@ -29,6 +30,7 @@
     import { EnqueuerClient } from '../enqueuer/enqueuer-client';
     import * as Requisition from './requisition/Requisition';
     import {RequisitionModel} from "../enqueuer/models/outputs/requisition-model";
+    import {TestsCounter} from "../enqueuer/tests-counter";
 
     export default {
         name: 'App',
@@ -38,7 +40,8 @@
         data() {
             return {
                 enqueuerResponse: '',
-                requisition: null
+                requisition: null,
+                resultMessage: null
             }
         },
         methods: {
@@ -49,7 +52,13 @@
                 enqueuer.on('response', (response: RequisitionModel) => {
                         //Removes the stacker requisition layer 'http daemon input' stuff
                         this.enqueuerResponse = response.requisitions[0];
-                    });
+
+                        const testsCounter = new TestsCounter(this.enqueuerResponse);
+                        const testsNumber = testsCounter.getTestsNumber();
+                        let passingTestsNumber = testsNumber - testsCounter.getFailingTestsNumber();
+                        let percentage = testsCounter.getPercentage();
+                        this.resultMessage = `${passingTestsNumber}/${testsNumber} - (${percentage}%) - ${this.enqueuerResponse.time.totalTime}ms`;
+                });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
 //                enqueuer.on('log', (response: Error) => console.log(`log: ${response}`));
@@ -61,5 +70,16 @@
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
+    .http {
+        color: #ffffff;
+        background-color: #271d94;
+        padding-right: 0.6em;
+        padding-left: 0.6em;
+        border-radius: 10rem;
+    }
+    .amqp {
+        color: #ffffff;
+        background-color: #1d9427;
+    }
 </style>

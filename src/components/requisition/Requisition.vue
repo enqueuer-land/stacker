@@ -88,15 +88,5 @@
 </script>
 
 <style lang="css" scoped>
-    .http {
-        color: #ffffff;
-        background-color: #271d94;
-        padding-right: 0.6em;
-        padding-left: 0.6em;
-        border-radius: 10rem;
-    }
-    .amqp {
-        color: #ffffff;
-        background-color: #1d9427;
-    }
+
 </style>
