@@ -10,10 +10,7 @@
 
             <div class="col-10 row">
                 <div class="col-6">
-                    <p class="h3 lead">Requisition Stacker</p>
-                    <button type="button" name="send" v-on:click="sendClick" class="btn btn-success">Send</button>
-                    <Requisition v-model="requisition" ></Requisition>
-
+                    <Requisition v-model="requisition" v-on:sendClick="sendClick"></Requisition>
                 </div>
                 <div class="col-6">
                     <p class="h3 lead">Response Stacker</p>
@@ -42,11 +39,10 @@
             }
         },
         methods: {
-            sendClick: function (this) {
-                this.enqueuerResponse = '';
-                console.log(`Requisition: ${JSON.stringify(this.requisition)}`);
+            sendClick: function (requisition)  {
+                console.log(`Requisition: ${JSON.stringify(requisition)}`);
 
-                const enqueuer: EnqueuerClient = new EnqueuerClient(this.requisition);
+                const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
                         // delete response.requisitions[0].publishers[0].messageReceived;
                         this.enqueuerResponse = JSON.stringify(response.requisitions[0], null, 4);

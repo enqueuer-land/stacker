@@ -1,6 +1,13 @@
 <template>
     <div>
-
+        <div class="row">
+            <div class="col-10">
+                <p class="h3 lead">Requisition {{requisition.name}}</p>
+            </div>
+            <div class="col-2">
+                <button type="button" name="send" v-on:click="$emit('sendClick', requisition)" class="btn btn-primary float-right">Send</button>
+            </div>
+        </div>
 
         <div class="accordion">
             <div class="card">
