@@ -11,7 +11,6 @@
             </div>
         </div>
 
-
         <Http v-if="type === 'HTTP'" v-model="http"/>
         <Amqp v-if="type === 'AMQP'" v-model="amqp"/>
     </fieldset>

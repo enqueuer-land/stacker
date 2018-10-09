@@ -1,7 +1,7 @@
 {
   "name": "stacker",
   "version": "0.0.1",
-  "description": "Asynchronous messaging communication testing UI tool",
+  "description": "Polyglot flow GUI client",
   "main": "src/electron.ts",
   "scripts": {
     "all": "npm run lint && npm test && npm start",
