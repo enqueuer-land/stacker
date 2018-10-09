@@ -1,7 +1,9 @@
 <template>
     <div>
         <label>Script</label><br/>
-        <TextArea v-model="script" />
+        <pre>
+            <TextArea v-model="script"/>
+        </pre>
     </div>
 </template>
 
@@ -18,12 +20,12 @@
         data() {
             return {
                 script: this.value
-            }
+            };
         },
         watch: {
             script(val) {
                 this.$emit('input', val);
             }
         }
-    }
+    };
 </script>

@@ -44,8 +44,8 @@
                 expectToBeFalsy: null
             };
 
-            const firstValue = 'statusCode';
-            const secondValue = 200;
+            const firstValue = '';
+            const secondValue = '';
             const initialValue = {};
             let currentExpectation = Object.keys(available)[0];
             initialValue[currentExpectation] = firstValue;

@@ -1,24 +1,28 @@
 import {RequisitionModel} from './models/outputs/requisition-model';
 import {TestModel} from './models/outputs/test-model';
 
-export class TestsCounter {
-    private totalTests: number = 0;
-    private failingTests: number = 0;
+export class TestsAnalyzer {
+    private failingTests: TestModel[] = [];
+    private passingTests: TestModel[] = [];
 
     public constructor(report: RequisitionModel) {
         this.findRequisitions([report]);
     }
 
-    public getTestsNumber() {
-        return this.totalTests;
+    public getTestsNumber(): number {
+        return this.failingTests.length + this.passingTests.length;
     }
 
-    public getFailingTestsNumber() {
+    public getPassingTests(): TestModel[] {
+        return this.passingTests;
+    }
+
+    public getFailingTests(): TestModel[] {
         return this.failingTests;
     }
 
     public getPercentage(): number {
-        let percentage = Math.trunc(10000 * (this.totalTests - this.failingTests) / this.totalTests) / 100;
+        let percentage = Math.trunc(10000 * this.passingTests.length / this.getTestsNumber()) / 100;
         if (isNaN(percentage)) {
             percentage = 100;
         }
@@ -45,8 +49,13 @@ export class TestsCounter {
     }
 
     private sumTests(tests: TestModel[]): void {
-        this.failingTests += tests.filter(test => !test.valid).length;
-        this.totalTests += tests.length;
+        tests.forEach(test => {
+            if (test.valid) {
+                this.passingTests.push(test);
+            } else {
+                this.failingTests.push(test);
+            }
+        });
     }
 
 }

@@ -19,7 +19,7 @@
                 <div class="col-6">
                     <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
                     <p class="h5"
-                       :class="enqueuerResponse ? (enqueuerResponse.valid? 'text-success' : 'text-danger'): ''">
+                       :class="enqueuerResponse ? (enqueuerResponse.length === 0? 'text-success' : 'text-danger'): ''">
                         {{this.enqueuerResponse ? this.resultMessage: ''}}</p>
                     <pre><code>{{this.enqueuerResponse}}</code></pre>
                 </div>
@@ -33,7 +33,7 @@
     import {EnqueuerClient} from '../enqueuer/enqueuer-client';
     import * as Requisition from './requisition/Requisition';
     import {RequisitionModel} from "../enqueuer/models/outputs/requisition-model";
-    import {TestsCounter} from "../enqueuer/tests-counter";
+    import {TestsAnalyzer} from "../enqueuer/tests-analyzer";
 
     export default {
         name: 'App',
@@ -54,13 +54,15 @@
                 const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
                 enqueuer.on('response', (response: RequisitionModel) => {
                     //Removes the stacker requisition layer 'http daemon input' stuff
-                    this.enqueuerResponse = response.requisitions[0];
+                    const enqueuerResponse = response.requisitions[0];
 
-                    const testsCounter = new TestsCounter(this.enqueuerResponse);
+                    const testsCounter = new TestsAnalyzer(enqueuerResponse);
                     const testsNumber = testsCounter.getTestsNumber();
-                    let passingTestsNumber = testsNumber - testsCounter.getFailingTestsNumber();
+                    let passingTestsNumber = testsCounter.getPassingTests().length;
                     let percentage = testsCounter.getPercentage();
-                    this.resultMessage = `${passingTestsNumber}/${testsNumber} - (${percentage}%) - ${this.enqueuerResponse.time.totalTime}ms`;
+                    this.resultMessage = `${passingTestsNumber}/${testsNumber} - (${percentage}%) - ${enqueuerResponse.time.totalTime}ms`;
+
+                    this.enqueuerResponse = testsCounter.getFailingTests().map(test => test.description).join('\n') || [];
                 });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
