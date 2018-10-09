@@ -11,10 +11,17 @@
             <input v-model="input.endpoint" label="Endpoint" type="text" class="form-control" aria-label="Text input with dropdown button" >
             <input v-model="input.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
         </div>
-        <div class="row">
-            <input v-model="input.response.status" label="StatusCode" type="text" class="form-control col-2" aria-label="Text input with dropdown button" >
+        <div>
+            <p class="h5">Response</p>
+            <div class="input-group mb-3">
+                <p class="h5 form-control">Status Code</p>
+                <div class="input-group-append">
+                    <input v-model="input.response.status" placeholder="Status Code" type="text" >
+                </div>
+            </div>
             <TextArea v-model="input.response.payload"/>
         </div>
+
 
         <div class="accordion" id="accordionExample">
             <div class="card">
