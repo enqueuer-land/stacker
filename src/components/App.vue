@@ -14,6 +14,9 @@
                 </div>
                 <div class="col-6">
                     <p class="h3 lead">Response: {{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
+                    <p class="h5" >Valid</p>
+                    <p class="h5" :class="enqueuerResponse ? (enqueuerResponse.valid? 'text-success' : 'text-danger'): ''">{{this.enqueuerResponse ? this.enqueuerResponse.valid: ''}}</p>
+                    <p class="h5">Time: {{this.enqueuerResponse ? this.enqueuerResponse.time.totalTime: ''}}</p>
                     <pre><code>{{this.enqueuerResponse}}</code></pre>
                 </div>
             </div>
@@ -59,7 +62,4 @@
 </script>
 
 <style lang="css" scoped>
-    html {
-        overflow: auto;
-    }
 </style>

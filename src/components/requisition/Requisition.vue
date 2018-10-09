@@ -12,7 +12,8 @@
                 <div class="card-header" id="publisherHeading">
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">
-                            <span class="badge badge-primary">{{(publisher && publisher.type) ? publisher.type.toUpperCase(): ''}}</span>
+                            <i class="fa fa-chevron-circle-right" ></i>
+                            <span class="badge" :class="publisher ? publisher.type: ''">{{(publisher && publisher.type) ? publisher.type.toUpperCase(): ''}}</span>
                             {{(publisher) ? publisher.name: 'Publisher'}}
                         </button>
                     </h5>
@@ -30,7 +31,8 @@
                 <div class="card-header" id="subscriptionHeading">
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">
-                            <span class="badge badge-primary">{{(subscription && subscription.type) ? subscription.type.toUpperCase(): ''}}</span>
+                            <i class="fa fa-chevron-circle-left" ></i>
+                            <span class="badge" :class="subscription ? subscription.type: ''">{{(subscription && subscription.type) ? subscription.type.toUpperCase(): ''}}</span>
                             {{(subscription) ? subscription.name: 'Subscription'}}
                         </button>
                     </h5>
@@ -86,7 +88,15 @@
 </script>
 
 <style lang="css" scoped>
-    .hello {
-        padding-top: 75px;
+    .http {
+        color: #ffffff;
+        background-color: #271d94;
+        padding-right: 0.6em;
+        padding-left: 0.6em;
+        border-radius: 10rem;
+    }
+    .amqp {
+        color: #ffffff;
+        background-color: #1d9427;
     }
 </style>
