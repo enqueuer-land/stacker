@@ -1,7 +1,7 @@
 <template>
     <div id="main" class="container-fluid">
         <div class="wrapper">
-            <SideBar :requisitions="requisitions" v-on:selectedRequisition="selectRequisition"></SideBar>
+            <SideBar v-on:requisitionSelected="selectRequisition"></SideBar>
 
             <!-- Page Content Holder -->
             <div v-if="selectedRequisition" id="content" class="container-fluid">
@@ -39,7 +39,6 @@
         data() {
             return {
                 selectedRequisition: null,
-                requisitions: [],
                 enqueuerResponse: '',
                 resultMessage: null
             };

@@ -26,24 +26,24 @@
             </div>
         </div>
         
-        <div class="accordion">
-            <div class="card">
-                <div class="card-header" id="subscriptionHeading">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">
-                            <i class="fa fa-chevron-circle-left" ></i>
-                            <span class="badge" :class="subscription ? subscription.type: ''">{{subscription ? subscription.type: ''}}</span>
-                            {{(subscription) ? subscription.name: 'Subscription'}}
-                        </button>
-                    </h5>
-                </div>
-                <div id="subscriptionOneCollapse" class="collapse" aria-labelledby="subscriptionHeading">
-                    <div class="card-body">
+        <!--<div class="accordion">-->
+            <!--<div class="card">-->
+                <!--<div class="card-header" id="subscriptionHeading">-->
+                    <!--<h5 class="mb-0">-->
+                        <!--<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">-->
+                            <!--<i class="fa fa-chevron-circle-left" ></i>-->
+                            <!--<span class="badge" :class="subscription ? subscription.type: ''">{{subscription ? subscription.type: ''}}</span>-->
+                            <!--{{(subscription) ? subscription.name: 'Subscription'}}-->
+                        <!--</button>-->
+                    <!--</h5>-->
+                <!--</div>-->
+                <!--<div id="subscriptionOneCollapse" class="collapse" aria-labelledby="subscriptionHeading">-->
+                    <!--<div class="card-body">-->
                         <Subscription v-model="subscription" />
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         
         
         

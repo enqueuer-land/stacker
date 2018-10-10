@@ -17,9 +17,10 @@
 
             </li>
 
-            <li v-for="(requisition, index) of this.requisitions">
+            <li v-for="(requisition, index) of requisitions">
                 <div class="form-inline">
-                    <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"   v-on:click="$emit('selectedRequisition', requisition)"  >
+                    <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                       v-on:click="$emit('requisitionSelected', requisition)">
                         {{requisition.name}}
                     </a>
                     <button type="button" class="btn btn-danger input-group-append"
@@ -31,7 +32,9 @@
                     <li class="mb-1">
                         <div class="form-inline">
                             <a class="btn-publisher">Publishers</a>
-                            <button type="button" class="btn btn-outline-primary input-group-append">+</button>
+                            <button type="button" class="btn btn-outline-primary input-group-append"
+                                    v-on:click="addPublisher(requisition)">+
+                            </button>
                         </div>
                         <ul class="list-unstyled components">
                             <li v-for="publisher of requisition.publishers">
@@ -84,10 +87,24 @@
         components: {
             Requisition
         },
-        props: ['requisitions'],
+        data() {
+            return {
+                requisitions: []
+            };
+        },
+        mounted() {
+            console.log(JSON.stringify(this.requisitions));
+        },
         methods: {
             addRequisition: function () {
                 this.requisitions.push({});
+            },
+            addPublisher: function (requisition) {
+                console.log(JSON.stringify(requisition));
+                if (!requisition.publisher) {
+                    requisition.publisher = [];
+                }
+                requisition.publisher.push({});
             },
             removeRequisition: function (index) {
                 this.requisitions.splice(index, 1);
