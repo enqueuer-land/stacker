@@ -30,6 +30,7 @@
         props: ['init'],
         data() {
             return {
+                synchronous: true,
                 methods: ['GET', 'POST', 'PUT', 'HEAD']
             }
         }

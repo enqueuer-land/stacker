@@ -24,7 +24,7 @@
                 <td>{{test.hierarchy.filter((test, index) => index > 0).join(': ')}}</td>
                 <td>{{test.test.name}}</td>
                 <td>{{test.test.description}}</td>
-                <td :class="test.test.valid? 'text-success' : 'text-danger'">{{test.test.valid}}</td>
+                <td :class="test.test.valid? 'table-success' : 'table-danger'">{{test.test.valid}}</td>
             </tr>
             </tbody>
         </table>
