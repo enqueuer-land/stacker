@@ -54,13 +54,13 @@
             };
         },
         watch: {
-            selectedComponent() {
-                console.log(JSON.stringify(this.selectedComponent));
-            }
+            // selectedComponent() {
+                // console.log(JSON.stringify(this.selectedComponent));
+            // }
         },
         methods: {
             componentSelected: function (componentSelected) {
-                console.log(JSON.stringify(componentSelected));
+                // console.log(JSON.stringify(componentSelected));
                 this.selectedComponent = componentSelected;
             },
             sendClick: function () {

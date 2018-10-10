@@ -3,17 +3,17 @@
         <div class="input-group">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">{{input.method}}</button>
+                        aria-haspopup="true" aria-expanded="false">{{init.method}}</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" v-for="(current) of methods" v-on:click="methodSelect(current)">{{current}}</a>
+                    <a class="dropdown-item" v-for="(current) of methods" v-on:click="init.method=current">{{current}}</a>
                 </div>
             </div>
-            <input v-model="input.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
+            <input v-model="init.url" label="URL" type="text" class="form-control" aria-label="Text input with dropdown button" >
         </div>
 
         <br/>
         <label>Payload</label>
-        <TextArea v-if="input.method !== 'GET'" v-model="input.payload" />
+        <TextArea v-if="init.method !== 'GET'" v-model="init.payload" />
 
         <div class="accordion" id="accordionExample">
             <div class="card">
@@ -26,7 +26,7 @@
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <Event v-model="input.onInit"/>
+                        <Event v-model="init.onInit"/>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                        <Event v-model="input.onMessageReceived"/>
+                        <Event v-model="init.onMessageReceived"/>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <Event v-model="input.onFinish"/>
+                        <Event v-model="init.onFinish"/>
                     </div>
                 </div>
             </div>
@@ -74,26 +74,10 @@
             TextArea,
             Input
         },
-        mounted() {
-            this.$emit("input", this.input);
-        },
+        props: ['init'],
         data() {
             return {
-                input: {
-                    type: 'http',
-                    url: 'http://localhost:22222/stacker',
-                    payload: 'payload value',
-                    onInit: null,
-                    onMessageReceived: null,
-                    onFinish: null,
-                    method: 'POST'
-                },
                 methods: ['GET', 'POST', 'PUT', 'HEAD']
-            }
-        },
-        methods: {
-            methodSelect(method) {
-                this.input.method = method;
             }
         }
     }

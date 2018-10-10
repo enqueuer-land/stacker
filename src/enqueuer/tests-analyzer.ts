@@ -29,27 +29,26 @@ export class TestsAnalyzer {
         return percentage;
     }
 
-    private findRequisitions(reports: RequisitionModel[] = []) {
+    private findRequisitions(reports: RequisitionModel[] = [], prefix: string = '') {
         reports.forEach((requisition: RequisitionModel) => {
-            this.findRequisitions(requisition.requisitions);
-            this.findTests(requisition);
+            let hierarchy = prefix + '=>' + requisition.name;
+            this.findRequisitions(requisition.requisitions, hierarchy);
+            this.findTests(requisition, hierarchy);
         });
     }
 
-    private findTests(requisition: RequisitionModel) {
-        this.sumTests(requisition.tests);
-        if (requisition.subscriptions) {
-            requisition.subscriptions
-                .forEach(subscription => this.sumTests(subscription.tests));
-        }
-        if (requisition.publishers) {
-            requisition.publishers
-                .forEach(publisher => this.sumTests(publisher.tests));
-        }
+    private findTests(requisition: RequisitionModel, hierarchy: string) {
+        this.sumTests(requisition.tests, hierarchy + '=>' + requisition.name);
+
+        (requisition.subscriptions || [])
+                .forEach(subscription => this.sumTests(subscription.tests, hierarchy + '=>' + subscription.name));
+        (requisition.publishers || [])
+                .forEach(publisher => this.sumTests(publisher.tests, hierarchy + '=>' + publisher.name));
     }
 
-    private sumTests(tests: TestModel[]): void {
+    private sumTests(tests: TestModel[], hierarchy: string): void {
         tests.forEach(test => {
+            console.log(`Test found: ${hierarchy} => ${JSON.stringify(test)}`);
             if (test.valid) {
                 this.passingTests.push(test);
             } else {

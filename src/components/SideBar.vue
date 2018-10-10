@@ -96,9 +96,9 @@
                 requisitions: []
             };
         },
-        mounted() {
-            console.log(JSON.stringify(this.requisitions));
-        },
+        // mounted() {
+        //     console.log(JSON.stringify(this.requisitions));
+        // },
         methods: {
             createRequisition: function() {
                 return {
@@ -115,7 +115,7 @@
             createPublisher: function(requisition) {
                 return {
                     type: 'http',
-                    method: 'get',
+                    method: 'GET',
                     url: 'http://google.com',
                     onInit: undefined,
                     onFinish: undefined,

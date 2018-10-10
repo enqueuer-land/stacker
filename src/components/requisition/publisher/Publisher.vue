@@ -13,8 +13,8 @@
             <p class="h3 input-group-append">Protocol</p>
         </div>
 
-        <Http v-if="init.type.toUpperCase() === 'HTTP'" v-model="http"/>
-        <Amqp v-if="init.type.toUpperCase() === 'AMQP'" v-model="amqp"/>
+        <Http v-if="init.type.toUpperCase() === 'HTTP'" :init="http"/>
+        <!--<Amqp v-if="init.type.toUpperCase() === 'AMQP'" v-model="amqp"/>-->
     </fieldset>
 </template>
 
@@ -29,6 +29,10 @@
             Amqp
         },
         props: ['init'],
+        mounted() {
+            this.http = this.init;
+            this.amqp = this.init;
+        },
         data() {
             return {
                 amqp: {},
