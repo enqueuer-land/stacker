@@ -104,7 +104,7 @@
                 return {
                     timeout: 1000,
                     iterations: undefined,
-                    initialDelay: 0,
+                    delay: 0,
                     onInit: undefined,
                     onFinish: undefined,
                     name: 'Requisition #' + this.requisitions.length,

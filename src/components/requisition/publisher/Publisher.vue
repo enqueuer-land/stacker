@@ -14,14 +14,11 @@
             </div>
         </div>
 
-
         <ul id="clothing-nav" class="nav nav-tabs" role="tablist">
-
             <li class="nav-item"><a class="nav-link active" :href="'#' + init.type.toUpperCase()" role="tab" data-toggle="tab">{{init.type.toUpperCase()}}</a></li>
             <li class="nav-item"><a class="nav-link" href="#on-init" role="tab" data-toggle="tab">OnInit</a></li>
-            <li v-if="init.type.toUpperCase() == 'HTTP'" class="nav-item"><a class="nav-link" href="#on-message-received" role="tab" data-toggle="tab">OnMessageReceived</a></li>
+            <li v-if="init.type.toUpperCase() === 'HTTP'" class="nav-item"><a class="nav-link" href="#on-message-received" role="tab" data-toggle="tab">OnMessageReceived</a></li>
             <li class="nav-item"><a class="nav-link" href="#on-finish" role="tab" data-toggle="tab">OnFinish</a></li>
-
         </ul>
 
         <!-- Content Panel -->
@@ -31,7 +28,7 @@
                 <Http v-if="init.type.toUpperCase() === 'HTTP'" :init="http"/>
             </div>
             <div role="tabpanel" class="tab-pane fade show active" id="AMQP">
-                <Amqp :init="amqp"/>
+                <Amqp v-if="init.type.toUpperCase() === 'AMQP'" :init="amqp"/>
             </div>
 
             <div role="tabpanel" class="tab-pane fade" id="on-init">
@@ -64,7 +61,6 @@
         mounted() {
             this.http = this.init;
             this.amqp = this.init;
-            console.log('Publisher mounted: ' + this.init.synchronous)
         },
         data() {
             return {

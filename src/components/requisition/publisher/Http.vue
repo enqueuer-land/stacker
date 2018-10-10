@@ -12,8 +12,10 @@
         </div>
 
         <br/>
-        <label>Payload</label>
-        <TextArea v-if="init.method !== 'GET'" v-model="init.payload" />
+        <div v-if="init.method !== 'GET'">
+            <label>Payload</label>
+            <TextArea v-model="init.payload" />
+        </div>
     </fieldset>
 </template>
 
