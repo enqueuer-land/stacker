@@ -13,25 +13,49 @@
                     <li v-for="requisition of requisitions" >
                         <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{requisition.name}}</a>
                         <ul class="collapse list-unstyled" id="requisition">
-                            <li v-for="publisher of requisition.publishers" >
-                                <h5 class="mb-1">
-                                    <button class="btn btn-publisher " type="button" data-toggle="collapse" data-target="#publisherOneCollapse">
-                                        <i class="fa fa-chevron-right" ></i>
-                                        <span class="badge" :class="publisher.type">{{publisher.type}}</span>
-                                        {{publisher.name}}
-                                    </button>
-                                </h5>
+                            <li class="mb-1">
+                                <div class="form-inline">
+                                    <a class="btn-publisher">Publishers</a>
+                                    <button type="button" class="btn btn-outline-primary input-group-append">+</button>
+                                </div>
+                                <ul class="list-unstyled components">
+                                    <li v-for="publisher of requisition.publishers" >
+                                        <h5 class="mb-0 form-inline">
+                                            <button class="btn btn-publisher input-group" type="button" data-toggle="collapse" data-target="#publisherOneCollapse">
+                                                <i class="fa fa-chevron-right" ></i>
+                                                <span class="badge" :class="publisher.type">{{publisher.type}}</span>
+                                                {{publisher.name}}
+                                            </button>
+                                            <button type="button" class="btn btn-danger input-group-append">-</button>
+                                        </h5>
+                                    </li>
+                                </ul>
                             </li>
-                            <!--<li class="line"></li>-->
-                            <li v-for="subscription of requisition.subscriptions" >
-                                <h5 class="mb-1">
-                                    <button class="btn btn-subscription" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse">
-                                        <i class="fa fa-chevron-left" ></i>
-                                        <span class="badge" :class="subscription.type">{{subscription.type}}</span>
-                                        {{subscription.name}}
-                                    </button>
-                                </h5>
+                            <li class="mb-1">
+                                <div class="form-inline">
+                                    <a class="btn-subscription">Subscriptions</a>
+                                    <button type="button" class="btn btn-outline-primary input-group-append">+</button>
+                                </div>
+
+                                <ul class="list-unstyled components">
+                                    <li v-for="subscription of requisition.subscriptions" >
+                                        <h5 class="mb-0 form-inline">
+                                            <button class="btn btn-subscription input-group" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse">
+                                                <i class="fa fa-chevron-left" ></i>
+                                                <span class="badge" :class="subscription.type">{{subscription.type}}</span>
+                                                {{subscription.name}}
+                                            </button>
+                                            <button type="button" class="btn btn-danger input-group-append">-</button>
+                                        </h5>
+                                    </li>
+                                </ul>
                             </li>
+
+
+
+
+
+
                         </ul>
                     </li>
                 </ul>
