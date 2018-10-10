@@ -1,26 +1,25 @@
 
 export class TestsAnalyzer {
-    private failingTests: any = [];
-    private passingTests: any = [];
+    private tests: any = [];
 
     public constructor(report: any) {
         this.findRequisitions([report], []);
     }
 
-    public getTestsNumber(): number {
-        return this.failingTests.length + this.passingTests.length;
+    public getTests(): any[] {
+        return this.tests;
     }
 
     public getPassingTests(): any[] {
-        return this.passingTests;
+        return this.tests.filter(test => test.test.valid);
     }
 
     public getFailingTests(): any[] {
-        return this.failingTests;
+        return this.tests.filter(test => !test.test.valid);
     }
 
     public getPercentage(): number {
-        let percentage = Math.trunc(10000 * this.passingTests.length / this.getTestsNumber()) / 100;
+        let percentage = Math.trunc(10000 * this.getPassingTests().length / this.getTests().length) / 100;
         if (isNaN(percentage)) {
             percentage = 100;
         }
@@ -44,13 +43,7 @@ export class TestsAnalyzer {
     }
 
     private sumTests(tests: any[], hierarchy: string[]): void {
-        tests.forEach(test => {
-            if (test.valid) {
-                this.passingTests.push({test, hierarchy: hierarchy});
-            } else {
-                this.failingTests.push({test, hierarchy: hierarchy});
-            }
-        });
+        tests.forEach(test => this.tests.push({test, hierarchy: hierarchy}));
     }
 
 }

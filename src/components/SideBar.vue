@@ -103,7 +103,7 @@
             createRequisition: function() {
                 return {
                     timeout: 1000,
-                    iterations: 1,
+                    iterations: undefined,
                     initialDelay: 0,
                     onInit: undefined,
                     onFinish: undefined,
