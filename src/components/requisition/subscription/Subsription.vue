@@ -1,18 +1,20 @@
 <template>
     <fieldset id="enqueuer-input">
         <div class="input-group">
+            <p class="h3 input-group">Subscription</p>
+            <input type="text" class="form-control" v-model="init.name" placeholder="Subscription name">
+
             <div>
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{type}}</button>
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{init.type.toUpperCase()}}</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" v-for="protocol of protocols" v-on:click="type=protocol">{{protocol}}</a>
+                    <a class="dropdown-item" v-for="protocol of protocols" v-on:click="init.type=protocol">{{protocol}}</a>
                 </div>
             </div>
             <p class="h3 input-group-append">Protocol</p>
         </div>
 
-
-        <Http v-if="type === 'HTTP'" v-model="http"/>
-        <Amqp v-if="type === 'AMQP'" v-model="amqp"/>
+        <Http v-if="init.type.toUpperCase() === 'HTTP'" v-model="http"/>
+        <Amqp v-if="init.type.toUpperCase() === 'AMQP'" v-model="amqp"/>
     </fieldset>
 </template>
 
@@ -26,15 +28,11 @@
             Http,
             Amqp
         },
-        mounted() {
-            this.$emit("input", this.subscription);
-        },
+        props: ['init'],
         data() {
             return {
-                type: "HTTP",
                 amqp: {},
                 http: {},
-                subscription: {},
                 protocols: ['HTTP', 'AMQP']
             };
         },

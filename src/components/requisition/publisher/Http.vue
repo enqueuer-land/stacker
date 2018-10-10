@@ -1,7 +1,5 @@
 <template>
     <fieldset>
-        <input type="text" class="form-control" v-model="input.name" placeholder="Publisher name">
-
         <div class="input-group">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
@@ -82,7 +80,6 @@
         data() {
             return {
                 input: {
-                    name: 'Publisher name',
                     type: 'http',
                     url: 'http://localhost:22222/stacker',
                     payload: 'payload value',

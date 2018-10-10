@@ -63,10 +63,10 @@
                 console.log(JSON.stringify(componentSelected));
                 this.selectedComponent = componentSelected;
             },
-            sendClick: function (requisition) {
-                console.log(`Requisition: ${JSON.stringify(requisition)}`);
+            sendClick: function () {
+                console.log(`Requisition: ${JSON.stringify(this.selectedComponent.value)}`);
 
-                const enqueuer: EnqueuerClient = new EnqueuerClient(requisition);
+                const enqueuer: EnqueuerClient = new EnqueuerClient(this.selectedComponent.value);
                 enqueuer.on('response', (response: RequisitionModel) => {
                     //Removes the stacker requisition layer 'http daemon input' stuff
                     const enqueuerResponse = response.requisitions[0];

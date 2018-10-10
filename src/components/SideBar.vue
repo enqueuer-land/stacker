@@ -55,7 +55,8 @@
                     <li class="mb-1">
                         <div class="form-inline">
                             <a class="btn-subscription">Subscriptions</a>
-                            <button type="button" class="btn btn-outline-primary input-group-append">+</button>
+                            <button type="button" class="btn btn-outline-primary input-group-append"
+                                    v-on:click="addSubscription(requisition)">+</button>
                         </div>
 
                         <ul class="list-unstyled components">
@@ -69,7 +70,7 @@
                                               :class="subscription.type">{{subscription.type}}</span>
                                         {{subscription.name}}
                                     </button>
-                                    <button type="button" class="btn btn-danger input-group-append">-</button>
+                                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removeSubscription(requisition.publishers, index)">-</button>
                                 </h5>
                             </li>
                         </ul>
@@ -104,8 +105,8 @@
                     timeout: 1000,
                     iterations: 1,
                     initialDelay: 0,
-                    onInit: null,
-                    onFinish: null,
+                    onInit: undefined,
+                    onFinish: undefined,
                     name: 'Requisition #' + this.requisitions.length,
                     subscriptions: [],
                     publishers: []
@@ -114,9 +115,20 @@
             createPublisher: function(requisition) {
                 return {
                     type: 'http',
-                    onInit: null,
-                    onFinish: null,
+                    method: 'get',
+                    url: 'http://google.com',
+                    onInit: undefined,
+                    onFinish: undefined,
                     name: 'Publisher #' + requisition.publishers.length,
+                };
+            },
+            createSubscription: function(requisition) {
+                return {
+                    type: 'http',
+                    onInit: undefined,
+                    onMessageReceived: undefined,
+                    onFinish: undefined,
+                    name: 'Subscription #' + requisition.subscriptions.length,
                 };
             },
             addRequisition: function () {
@@ -127,7 +139,12 @@
                     requisition.publishers = [];
                 }
                 requisition.publishers.push(this.createPublisher(requisition));
-                console.log(JSON.stringify(`Adding publisher: ${JSON.stringify(requisition)}`));
+            },
+            addSubscription: function (requisition) {
+                if (!requisition.subscriptions) {
+                    requisition.subscriptions = [];
+                }
+                requisition.subscriptions.push(this.createSubscription(requisition));
             },
             removeRequisition: function (index) {
                 this.requisitions.splice(index, 1);
@@ -135,6 +152,9 @@
             removePublisher: function (publishers, index) {
                 publishers.splice(index, 1);
             },
+            removeSubscription: function (subscriptions, index) {
+                subscriptions.splice(index, 1);
+            }
         }
     };
 </script>

@@ -26,18 +26,13 @@
         name: 'Publisher',
         components: {
             Http,
-            Amqp,
+            Amqp
         },
         props: ['init'],
-        mounted() {
-            console.log(`Publisher mounted: ${JSON.stringify(this.init)}`)
-        },
         data() {
             return {
-                // type: "HTTP",
                 amqp: {},
                 http: {},
-                publisher: {},
                 protocols: ['HTTP', 'AMQP']
             };
         },

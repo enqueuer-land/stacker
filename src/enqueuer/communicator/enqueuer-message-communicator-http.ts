@@ -27,6 +27,7 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
                     if (error) {
                         reject('Http request error: ' + error);
                     } else {
+                        console.log(`Enqueuer response: ${response.body.substr(0, 100)}`);
                         const body = JSON.parse(response.body);
                         resolve(body);
                     }
