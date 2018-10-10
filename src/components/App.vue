@@ -9,9 +9,24 @@
                 </div>
 
                 <ul class="list-unstyled components">
-                    <!--<p>Requisitions</p>-->
-                    <li v-for="requisition of requisitions" >
-                        <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{requisition.name}}</a>
+                    <li>
+                        <!--<p>Requisitions</p>-->
+                        <div class="form-inline">
+                            <a >Requisitions</a>
+                            <button type="button" class="btn btn-outline-primary input-group-append" v-on:click="addRequisition">+</button>
+                        </div>
+
+                    </li>
+
+
+                    <li v-for="(requisition, index) of requisitions">
+                        <div class="form-inline">
+                            <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                {{requisition.name}}
+                            </a>
+                                <button type="button" class="btn btn-danger input-group-append" v-on:click="removeRequisition(index)">-</button>
+                        </div>
+
                         <ul class="collapse list-unstyled" id="requisition">
                             <li class="mb-1">
                                 <div class="form-inline">
@@ -19,10 +34,11 @@
                                     <button type="button" class="btn btn-outline-primary input-group-append">+</button>
                                 </div>
                                 <ul class="list-unstyled components">
-                                    <li v-for="publisher of requisition.publishers" >
+                                    <li v-for="publisher of requisition.publishers">
                                         <h5 class="mb-0 form-inline">
-                                            <button class="btn btn-publisher input-group" type="button" data-toggle="collapse" data-target="#publisherOneCollapse">
-                                                <i class="fa fa-chevron-right" ></i>
+                                            <button class="btn btn-publisher input-group" type="button"
+                                                    data-toggle="collapse" data-target="#publisherOneCollapse">
+                                                <i class="fa fa-chevron-right"></i>
                                                 <span class="badge" :class="publisher.type">{{publisher.type}}</span>
                                                 {{publisher.name}}
                                             </button>
@@ -38,11 +54,13 @@
                                 </div>
 
                                 <ul class="list-unstyled components">
-                                    <li v-for="subscription of requisition.subscriptions" >
+                                    <li v-for="subscription of requisition.subscriptions">
                                         <h5 class="mb-0 form-inline">
-                                            <button class="btn btn-subscription input-group" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse">
-                                                <i class="fa fa-chevron-left" ></i>
-                                                <span class="badge" :class="subscription.type">{{subscription.type}}</span>
+                                            <button class="btn btn-subscription input-group" type="button"
+                                                    data-toggle="collapse" data-target="#subscriptionOneCollapse">
+                                                <i class="fa fa-chevron-left"></i>
+                                                <span class="badge"
+                                                      :class="subscription.type">{{subscription.type}}</span>
                                                 {{subscription.name}}
                                             </button>
                                             <button type="button" class="btn btn-danger input-group-append">-</button>
@@ -50,10 +68,6 @@
                                     </li>
                                 </ul>
                             </li>
-
-
-
-
 
 
                         </ul>
@@ -94,40 +108,18 @@
         },
         data() {
             return {
-                // requisitions: [
-                //     {
-                //         name: 'Requisition name',
-                //         publishers: [{
-                //                 type: 'amqp',
-                //                 name: 'random name'
-                //             },
-                //             {
-                //                 type: 'http',
-                //                 name: 'other random name'
-                //             }
-                //         ],
-                //         subscriptions: [
-                //             {
-                //                 type: 'http',
-                //                 name: 'random 123 name'
-                //             },
-                //             {
-                //                 type: 'amqp',
-                //                 name: '123 random name'
-                //             },
-                //             {
-                //                 type: 'mqtt',
-                //                 name: 'mqtt 123 random name'
-                //             }
-                //         ]
-                //     }
-                // ],
-                requisitions: [],
+                requisitions: [{}],
                 enqueuerResponse: '',
                 resultMessage: null
             };
         },
         methods: {
+            addRequisition: function() {
+                this.requisitions.push({});
+            },
+            removeRequisition: function(index) {
+                this.requisitions.splice(index, 1);
+            },
             sendClick: function (requisition) {
                 console.log(`Requisition: ${JSON.stringify(requisition)}`);
 
@@ -158,12 +150,16 @@
 <style lang="css">
     .btn-subscription {
         color: #ffffff;
-        background-color: #3aae6f;
+        background-color: transparent;
+        border-color: #3aae6f;
     }
+
     .btn-publisher {
         color: #ffffff;
-        background-color: #ae3a6f;
+        background-color: transparent;
+        border-color: #ae3a6f;
     }
+
     .http {
         text-transform: uppercase;
         color: #ffffff;
@@ -178,11 +174,13 @@
         color: #ffffff;
         background-color: #1d9427;
     }
+
     .mqtt {
         text-transform: uppercase;
         color: #ffffff;
         background-color: #943282;
     }
+
     /*
         DEMO STYLE
     */
@@ -247,6 +245,7 @@
         font-size: 1.1em;
         display: block;
     }
+
     #sidebar ul li a:hover {
         color: #ae0927;
         background: #fff;
@@ -255,15 +254,6 @@
     #sidebar ul li.active > a, a[aria-expanded="true"] {
         color: #fff;
         background: #19184f;
-    }
-
-
-    .dropdown-toggle::after {
-        display: block;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
     }
 
     ul ul a {
@@ -280,37 +270,4 @@
         margin-bottom: 5px;
     }
 
-    /* ---------------------------------------------------
-        MEDIAQUERIES
-    ----------------------------------------------------- */
-    @media (max-width: 768px) {
-        #sidebar {
-            margin-left: -250px;
-            transform: rotateY(90deg);
-        }
-        #sidebar.active {
-            margin-left: 0;
-            transform: none;
-        }
-        #sidebarCollapse span:first-of-type,
-        #sidebarCollapse span:nth-of-type(2),
-        #sidebarCollapse span:last-of-type {
-            transform: none;
-            opacity: 1;
-            margin: 5px auto;
-        }
-        #sidebarCollapse.active span {
-            margin: 0 auto;
-        }
-        #sidebarCollapse.active span:first-of-type {
-            transform: rotate(45deg) translate(2px, 2px);
-        }
-        #sidebarCollapse.active span:nth-of-type(2) {
-            opacity: 0;
-        }
-        #sidebarCollapse.active span:last-of-type {
-            transform: rotate(-45deg) translate(1px, -1px);
-        }
-
-    }
 </style>
