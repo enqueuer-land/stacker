@@ -1,15 +1,19 @@
 <template>
     <div id="main" class="container-fluid">
         <div class="wrapper">
-            <SideBar v-on:requisitionSelected="selectRequisition"></SideBar>
+            <SideBar v-on:componentSelected="componentSelected"></SideBar>
 
             <!-- Page Content Holder -->
-            <div v-if="selectedRequisition" id="content" class="container-fluid">
+            <div id="content" class="container-fluid">
                 <div class="row">
                     <div class="col-6">
-                        <Requisition v-model="selectedRequisition" v-on:sendClick="sendClick"></Requisition>
+                        <!--Stage-->
+                        <Requisition v-if="selectedComponent.type == 'requisition'" :init="selectedComponent.value" v-on:sendClick="sendClick" />
+                        <Publisher v-if="selectedComponent.type == 'publisher'" :init="selectedComponent.value" />
+                        <Subscription v-if="selectedComponent.type == 'subscription'" :init="selectedComponent.value" />
                     </div>
                     <div class="col-6">
+                        <!--Result-->
                         <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
                         <p class="h5"
                            :class="enqueuerResponse ? (enqueuerResponse.length === 0? 'text-success' : 'text-danger'): ''">
@@ -29,24 +33,35 @@
     import {RequisitionModel} from "../enqueuer/models/outputs/requisition-model";
     import {TestsAnalyzer} from "../enqueuer/tests-analyzer";
     import * as SideBar from './SideBar';
+    import * as Publisher from './requisition/publisher/Publisher';
+    import * as Subscription from './requisition/subscription/Subsription';
 
     export default {
         name: 'App',
         components: {
+            Publisher,
+            Subscription,
             SideBar,
             Requisition
         },
         data() {
             return {
-                selectedRequisition: null,
+                selectedComponent: {
+
+                },
                 enqueuerResponse: '',
                 resultMessage: null
             };
         },
+        watch: {
+            selectedComponent() {
+                console.log(JSON.stringify(this.selectedComponent));
+            }
+        },
         methods: {
-            selectRequisition: function (requisition) {
-                console.log(JSON.stringify(requisition));
-                this.selectedRequisition = requisition;
+            componentSelected: function (componentSelected) {
+                console.log(JSON.stringify(componentSelected));
+                this.selectedComponent = componentSelected;
             },
             sendClick: function (requisition) {
                 console.log(`Requisition: ${JSON.stringify(requisition)}`);

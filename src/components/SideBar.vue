@@ -20,7 +20,7 @@
             <li v-for="(requisition, index) of requisitions">
                 <div class="form-inline">
                     <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
-                       v-on:click="$emit('requisitionSelected', requisition)">
+                       v-on:click="$emit('componentSelected', {type: 'requisition', value: requisition})">
                         {{requisition.name}}
                     </a>
                     <button type="button" class="btn btn-danger input-group-append"
@@ -40,12 +40,14 @@
                             <li v-for="publisher of requisition.publishers">
                                 <h5 class="mb-0 form-inline">
                                     <button class="btn btn-publisher input-group" type="button"
-                                            data-toggle="collapse" data-target="#publisherOneCollapse">
+                                            data-toggle="collapse" data-target="#publisherOneCollapse"
+                                            v-on:click="$emit('componentSelected', {type: 'publisher', value: publisher})"
+                                        >
                                         <i class="fa fa-chevron-right"></i>
                                         <span class="badge" :class="publisher.type">{{publisher.type}}</span>
                                         {{publisher.name}}
                                     </button>
-                                    <button type="button" class="btn btn-danger input-group-append">-</button>
+                                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removePublisher(requisition.publishers, index)">-</button>
                                 </h5>
                             </li>
                         </ul>
@@ -60,7 +62,8 @@
                             <li v-for="subscription of requisition.subscriptions">
                                 <h5 class="mb-0 form-inline">
                                     <button class="btn btn-subscription input-group" type="button"
-                                            data-toggle="collapse" data-target="#subscriptionOneCollapse">
+                                            data-toggle="collapse" data-target="#subscriptionOneCollapse"
+                                            v-on:click="$emit('componentSelected', {type: 'subscription', value: subscription})">
                                         <i class="fa fa-chevron-left"></i>
                                         <span class="badge"
                                               :class="subscription.type">{{subscription.type}}</span>
@@ -96,19 +99,42 @@
             console.log(JSON.stringify(this.requisitions));
         },
         methods: {
+            createRequisition: function() {
+                return {
+                    timeout: 1000,
+                    iterations: 1,
+                    initialDelay: 0,
+                    onInit: null,
+                    onFinish: null,
+                    name: 'Requisition #' + this.requisitions.length,
+                    subscriptions: [],
+                    publishers: []
+                };
+            },
+            createPublisher: function(requisition) {
+                return {
+                    type: 'http',
+                    onInit: null,
+                    onFinish: null,
+                    name: 'Publisher #' + requisition.publishers.length,
+                };
+            },
             addRequisition: function () {
-                this.requisitions.push({});
+                this.requisitions.push(this.createRequisition());
             },
             addPublisher: function (requisition) {
-                console.log(JSON.stringify(requisition));
-                if (!requisition.publisher) {
-                    requisition.publisher = [];
+                if (!requisition.publishers) {
+                    requisition.publishers = [];
                 }
-                requisition.publisher.push({});
+                requisition.publishers.push(this.createPublisher(requisition));
+                console.log(JSON.stringify(`Adding publisher: ${JSON.stringify(requisition)}`));
             },
             removeRequisition: function (index) {
                 this.requisitions.splice(index, 1);
-            }
+            },
+            removePublisher: function (publishers, index) {
+                publishers.splice(index, 1);
+            },
         }
     };
 </script>

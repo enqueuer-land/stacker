@@ -1,31 +1,32 @@
 <template>
     <div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" v-model="requisition.name" placeholder="Requisition name">
+            <p class="h3 input-group-append">Requisition</p>
+            <input type="text" class="form-control" v-model="init.name" placeholder="Requisition name">
             <div class="input-group-append">
                 <button type="button" name="send" v-on:click="$emit('sendClick', requisition)" class="btn btn-outline-primary">Send</button>
             </div>
         </div>
 
-        <div class="accordion">
-            <div class="card">
-                <div class="card-header" id="publisherHeading">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">
-                            <i class="fa fa-chevron-circle-right" ></i>
-                            <span class="badge" :class="publisher ? publisher.type: ''">{{publisher ? publisher.type: ''}}</span>
-                            {{(publisher) ? publisher.name: 'Publisher'}}
-                        </button>
-                    </h5>
-                </div>
-                <div id="publisherOneCollapse" class="collapse" aria-labelledby="publisherHeading">
-                    <div class="card-body">
-                        <Publisher v-model="publisher" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        <!--<div class="accordion">-->
+            <!--<div class="card">-->
+                <!--<div class="card-header" id="publisherHeading">-->
+                    <!--<h5 class="mb-0">-->
+                        <!--<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">-->
+                            <!--<i class="fa fa-chevron-circle-right" ></i>-->
+                            <!--<span class="badge" :class="publisher ? publisher.type: ''">{{publisher ? publisher.type: ''}}</span>-->
+                            <!--{{(publisher) ? publisher.name: 'Publisher'}}-->
+                        <!--</button>-->
+                    <!--</h5>-->
+                <!--</div>-->
+                <!--<div id="publisherOneCollapse" class="collapse" aria-labelledby="publisherHeading">-->
+                    <!--<div class="card-body">-->
+                        <!--<Publisher v-model="publisher" />-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!---->
         <!--<div class="accordion">-->
             <!--<div class="card">-->
                 <!--<div class="card-header" id="subscriptionHeading">-->
@@ -39,7 +40,7 @@
                 <!--</div>-->
                 <!--<div id="subscriptionOneCollapse" class="collapse" aria-labelledby="subscriptionHeading">-->
                     <!--<div class="card-body">-->
-                        <Subscription v-model="subscription" />
+                        <!--<Subscription v-model="subscription" />-->
                     <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
@@ -60,19 +61,32 @@
             Publisher,
             Subscription
         },
+        props: ['init'],
+        mounted() {
+            // this.name = this.init.name;
+            // this.timeout = this.init.timeout;
+            // this.iterations = this.init.iterations;
+            // this.initialDelay = this.init.initialDelay;
+            // this.onInit = this.init.onInit;
+            // this.onFinish = this.init.onFinish;
+            // this.subscriptions = this.init.subscribtions;
+            // this.publishers = this.init.publishers;
+          
+        },
         data() {
             return {
-                requisition: {
-                    timeout: 10000,
-                    name: 'Requisition Name',
-                    subscriptions: [],
-                    publishers: []
-                },
-                publisher: null,
-                subscription: null
+                // name : this.init.name,
+                timeout : this.init.timeout,
+                iterations : this.init.iterations,
+                initialDelay : this.init.initialDelay,
+                onInit : this.init.onInit,
+                onFinish : this.init.onFinish,
+                subscriptions : this.init.subscribtions,
+                publishers : this.init.publishers
             }
         },
         watch: {
+
             publisher(val) {
                 this.requisition.publishers = [val];
                 this.$emit('input', this.requisition);
