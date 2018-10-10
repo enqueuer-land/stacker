@@ -13,7 +13,7 @@
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#publisherOneCollapse" aria-expanded="true" aria-controls="publisherOneCollapse">
                             <i class="fa fa-chevron-circle-right" ></i>
-                            <span class="badge" :class="publisher ? publisher.type: ''">{{(publisher && publisher.type) ? publisher.type.toUpperCase(): ''}}</span>
+                            <span class="badge" :class="publisher ? publisher.type: ''">{{publisher ? publisher.type: ''}}</span>
                             {{(publisher) ? publisher.name: 'Publisher'}}
                         </button>
                     </h5>
@@ -32,7 +32,7 @@
                     <h5 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse" aria-expanded="true" aria-controls="subscriptionOneCollapse">
                             <i class="fa fa-chevron-circle-left" ></i>
-                            <span class="badge" :class="subscription ? subscription.type: ''">{{(subscription && subscription.type) ? subscription.type.toUpperCase(): ''}}</span>
+                            <span class="badge" :class="subscription ? subscription.type: ''">{{subscription ? subscription.type: ''}}</span>
                             {{(subscription) ? subscription.name: 'Subscription'}}
                         </button>
                     </h5>
@@ -64,7 +64,7 @@
             return {
                 requisition: {
                     timeout: 10000,
-                    name: '',
+                    name: 'Requisition Name',
                     subscriptions: [],
                     publishers: []
                 },

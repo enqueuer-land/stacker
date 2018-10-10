@@ -9,24 +9,28 @@
                 </div>
 
                 <ul class="list-unstyled components">
-                    <p>Requisition</p>
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="#">Home 1</a>
+                    <!--<p>Requisitions</p>-->
+                    <li v-for="requisition of requisitions" >
+                        <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{requisition.name}}</a>
+                        <ul class="collapse list-unstyled" id="requisition">
+                            <li v-for="publisher of requisition.publishers" >
+                                <h5 class="mb-1">
+                                    <button class="btn btn-publisher " type="button" data-toggle="collapse" data-target="#publisherOneCollapse">
+                                        <i class="fa fa-chevron-right" ></i>
+                                        <span class="badge" :class="publisher.type">{{publisher.type}}</span>
+                                        {{publisher.name}}
+                                    </button>
+                                </h5>
                             </li>
-                            <li>
-                                <a href="#">Home 3</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li>
-                                <a href="#">Another requisition</a>
+                            <!--<li class="line"></li>-->
+                            <li v-for="subscription of requisition.subscriptions" >
+                                <h5 class="mb-1">
+                                    <button class="btn btn-subscription" type="button" data-toggle="collapse" data-target="#subscriptionOneCollapse">
+                                        <i class="fa fa-chevron-left" ></i>
+                                        <span class="badge" :class="subscription.type">{{subscription.type}}</span>
+                                        {{subscription.name}}
+                                    </button>
+                                </h5>
                             </li>
                         </ul>
                     </li>
@@ -37,7 +41,7 @@
             <div id="content" class="container-fluid">
                 <div class="row">
                     <div class="col-6">
-                        <Requisition v-model="requisition" v-on:sendClick="sendClick"></Requisition>
+                        <Requisition v-model="requisitions[0]" v-on:sendClick="sendClick"></Requisition>
                     </div>
                     <div class="col-6">
                         <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
@@ -66,8 +70,36 @@
         },
         data() {
             return {
+                // requisitions: [
+                //     {
+                //         name: 'Requisition name',
+                //         publishers: [{
+                //                 type: 'amqp',
+                //                 name: 'random name'
+                //             },
+                //             {
+                //                 type: 'http',
+                //                 name: 'other random name'
+                //             }
+                //         ],
+                //         subscriptions: [
+                //             {
+                //                 type: 'http',
+                //                 name: 'random 123 name'
+                //             },
+                //             {
+                //                 type: 'amqp',
+                //                 name: '123 random name'
+                //             },
+                //             {
+                //                 type: 'mqtt',
+                //                 name: 'mqtt 123 random name'
+                //             }
+                //         ]
+                //     }
+                // ],
+                requisitions: [],
                 enqueuerResponse: '',
-                requisition: null,
                 resultMessage: null
             };
         },
@@ -100,7 +132,16 @@
 </script>
 
 <style lang="css">
+    .btn-subscription {
+        color: #ffffff;
+        background-color: #3aae6f;
+    }
+    .btn-publisher {
+        color: #ffffff;
+        background-color: #ae3a6f;
+    }
     .http {
+        text-transform: uppercase;
         color: #ffffff;
         background-color: #271d94;
         padding-right: 0.6em;
@@ -109,8 +150,14 @@
     }
 
     .amqp {
+        text-transform: uppercase;
         color: #ffffff;
         background-color: #1d9427;
+    }
+    .mqtt {
+        text-transform: uppercase;
+        color: #ffffff;
+        background-color: #943282;
     }
     /*
         DEMO STYLE
@@ -136,13 +183,6 @@
         transition: all 0.3s;
     }
 
-    .line {
-        width: 100%;
-        height: 1px;
-        border-bottom: 1px dashed #ddd;
-        margin: 40px 0;
-    }
-
     /* ---------------------------------------------------
         SIDEBAR STYLE
     ----------------------------------------------------- */
@@ -161,11 +201,6 @@
         color: #fff;
         transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
         transform-origin: bottom left;
-    }
-
-    #sidebar.active {
-        margin-left: -250px;
-        transform: rotateY(100deg);
     }
 
     #sidebar .sidebar-header {
@@ -189,13 +224,13 @@
         display: block;
     }
     #sidebar ul li a:hover {
-        color: #2d28ae;
+        color: #ae0927;
         background: #fff;
     }
 
     #sidebar ul li.active > a, a[aria-expanded="true"] {
         color: #fff;
-        background: #2d28ae;
+        background: #19184f;
     }
 
 
@@ -210,7 +245,7 @@
     ul ul a {
         font-size: 0.9em !important;
         padding-left: 30px !important;
-        background: #2d28d3;
+        background: #d3d03f;
     }
 
     ul.CTAs a {
