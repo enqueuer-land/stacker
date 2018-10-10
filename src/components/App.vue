@@ -12,13 +12,9 @@
                         <Publisher v-if="selectedComponent.type == 'publisher'" :init="selectedComponent.value" />
                         <Subscription v-if="selectedComponent.type == 'subscription'" :init="selectedComponent.value" />
                     </div>
+
                     <div class="col-6">
-                        <!--Result-->
-                        <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
-                        <p class="h5"
-                           :class="enqueuerResponse ? (enqueuerResponse.length === 0? 'text-success' : 'text-danger'): ''">
-                            {{this.enqueuerResponse ? this.resultMessage: ''}}</p>
-                        <pre><code>{{this.enqueuerResponse}}</code></pre>
+                        <Response :enqueuerResponse="this.enqueuerResponse"/>
                     </div>
                 </div>
             </div>
@@ -35,10 +31,12 @@
     import * as SideBar from './SideBar';
     import * as Publisher from './requisition/publisher/Publisher';
     import * as Subscription from './requisition/subscription/Subsription';
+    import * as Response from './Response';
 
     export default {
         name: 'App',
         components: {
+            Response,
             Publisher,
             Subscription,
             SideBar,
@@ -49,8 +47,7 @@
                 selectedComponent: {
 
                 },
-                enqueuerResponse: '',
-                resultMessage: null
+                enqueuerResponse: ''
             };
         },
         watch: {
@@ -69,15 +66,7 @@
                 const enqueuer: EnqueuerClient = new EnqueuerClient(this.selectedComponent.value);
                 enqueuer.on('response', (response: RequisitionModel) => {
                     //Removes the stacker requisition layer 'http daemon input' stuff
-                    const enqueuerResponse = response.requisitions[0];
-
-                    const testsCounter = new TestsAnalyzer(enqueuerResponse);
-                    const testsNumber = testsCounter.getTestsNumber();
-                    let passingTestsNumber = testsCounter.getPassingTests().length;
-                    let percentage = testsCounter.getPercentage();
-                    this.resultMessage = `${enqueuerResponse.name}: ${passingTestsNumber}/${testsNumber} - (${percentage}%) - ${enqueuerResponse.time.totalTime}ms`;
-
-                    this.enqueuerResponse = testsCounter.getFailingTests().map(test => test.description).join('\n') || [];
+                    this.enqueuerResponse = response.requisitions[0];
                 });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
