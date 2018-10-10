@@ -1,16 +1,13 @@
 import {EventEmitter} from 'events';
-import {EnqueuerMessageCommunicator} from './communicator/enqueuer-message-communicator';
 import {EnqueuerRunnerSpawn} from './runner/enqueuer-runner-spawn';
-import * as input from './models/inputs/requisition-model';
-import * as output from './models/outputs/requisition-model';
 import {EnqueuerMessageCommunicatorHttp} from './communicator/enqueuer-message-communicator-http';
 
 export class EnqueuerClient extends EventEmitter {
 
-    private requisition: input.RequisitionModel;
-    private sender: EnqueuerMessageCommunicator;
+    private requisition: any;
+    private sender: EnqueuerMessageCommunicatorHttp;
 
-    public constructor(requisition: input.RequisitionModel) {
+    public constructor(requisition: any) {
         super();
 
         this.requisition = requisition;
@@ -22,7 +19,7 @@ export class EnqueuerClient extends EventEmitter {
 
     public send(): Promise<boolean> {
         return this.sender.publish(this.requisition)
-            .then((data: output.RequisitionModel) => {
+            .then((data: any) => {
                 console.log(`Enqueuer client got data: ${Object.keys(data)}`);
                 this.emit('response', data);
                 return true;

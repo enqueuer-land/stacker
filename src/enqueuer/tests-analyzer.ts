@@ -1,23 +1,21 @@
-import {RequisitionModel} from './models/outputs/requisition-model';
-import {TestModel} from './models/outputs/test-model';
 
 export class TestsAnalyzer {
-    private failingTests: TestModel[] = [];
-    private passingTests: TestModel[] = [];
+    private failingTests: any = [];
+    private passingTests: any = [];
 
-    public constructor(report: RequisitionModel) {
-        this.findRequisitions([report]);
+    public constructor(report: any) {
+        this.findRequisitions([report], []);
     }
 
     public getTestsNumber(): number {
         return this.failingTests.length + this.passingTests.length;
     }
 
-    public getPassingTests(): TestModel[] {
+    public getPassingTests(): any[] {
         return this.passingTests;
     }
 
-    public getFailingTests(): TestModel[] {
+    public getFailingTests(): any[] {
         return this.failingTests;
     }
 
@@ -29,30 +27,28 @@ export class TestsAnalyzer {
         return percentage;
     }
 
-    private findRequisitions(reports: RequisitionModel[] = [], prefix: string = '') {
-        reports.forEach((requisition: RequisitionModel) => {
-            let hierarchy = prefix + '=>' + requisition.name;
-            this.findRequisitions(requisition.requisitions, hierarchy);
-            this.findTests(requisition, hierarchy);
+    private findRequisitions(reports: any[] = [], hierarchy: string[]) {
+        reports.forEach((requisition: any) => {
+            this.findRequisitions(requisition.requisitions, hierarchy.concat(requisition.name));
+            this.findTests(requisition, hierarchy.concat(requisition.name));
         });
     }
 
-    private findTests(requisition: RequisitionModel, hierarchy: string) {
-        this.sumTests(requisition.tests, hierarchy + '=>' + requisition.name);
+    private findTests(requisition: any, hierarchy: string[]) {
+        this.sumTests(requisition.tests, hierarchy.concat(requisition.name));
 
         (requisition.subscriptions || [])
-                .forEach(subscription => this.sumTests(subscription.tests, hierarchy + '=>' + subscription.name));
+                .forEach((subscription: any) => this.sumTests(subscription.tests, hierarchy.concat(subscription.name)));
         (requisition.publishers || [])
-                .forEach(publisher => this.sumTests(publisher.tests, hierarchy + '=>' + publisher.name));
+                .forEach((publisher: any) => this.sumTests(publisher.tests, hierarchy.concat(publisher.name)));
     }
 
-    private sumTests(tests: TestModel[], hierarchy: string): void {
+    private sumTests(tests: any[], hierarchy: string[]): void {
         tests.forEach(test => {
-            console.log(`Test found: ${hierarchy} => ${JSON.stringify(test)}`);
             if (test.valid) {
-                this.passingTests.push(test);
+                this.passingTests.push({test, hierarchy: hierarchy});
             } else {
-                this.failingTests.push(test);
+                this.failingTests.push({test, hierarchy: hierarchy});
             }
         });
     }

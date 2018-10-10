@@ -7,7 +7,7 @@
             <div>
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{init.type.toUpperCase()}}</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" v-for="protocol of protocols" v-on:click="init.type=protocol">{{protocol}}</a>
+                    <a class="dropdown-item" v-for="protocol of protocols" v-on:click="init.type=protocol">{{protocol.toUpperCase()}}</a>
                 </div>
             </div>
             <p class="h3 input-group-append">Protocol</p>
@@ -37,7 +37,7 @@
             return {
                 amqp: {},
                 http: {},
-                protocols: ['HTTP', 'AMQP']
+                protocols: ['http', 'amqp']
             };
         },
         watch: {

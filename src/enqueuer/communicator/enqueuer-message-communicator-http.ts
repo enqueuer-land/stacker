@@ -1,9 +1,6 @@
-import {EnqueuerMessageCommunicator} from './enqueuer-message-communicator';
 import * as request from 'request';
-import * as input from '../models/inputs/requisition-model';
-import * as output from '../models/outputs/requisition-model';
 
-export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunicator {
+export class EnqueuerMessageCommunicatorHttp {
 
     private readonly url: string;
     private readonly method: string;
@@ -16,7 +13,7 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
         this.body = '';
     }
 
-    public publish(requisitionModel: input.RequisitionModel): Promise<output.RequisitionModel> {
+    public publish(requisitionModel: any): Promise<any> {
         this.body = requisitionModel;
         return new Promise((resolve, reject) => {
             console.log(`Hitting enqueuer (${this.method.toUpperCase()}) - ${this.url}`);
@@ -27,7 +24,7 @@ export class EnqueuerMessageCommunicatorHttp implements EnqueuerMessageCommunica
                     if (error) {
                         reject('Http request error: ' + error);
                     } else {
-                        console.log(`Enqueuer response: ${response.body.substr(0, 100)}`);
+                        console.log(`Enqueuer response: ${response.body.substr(0, 150)}`);
                         const body = JSON.parse(response.body);
                         resolve(body);
                     }
