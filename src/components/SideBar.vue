@@ -8,10 +8,10 @@
 
         <ul class="list-unstyled components">
             <li>
-                <div class="input-group mb-3">
+                <div class="input-group mb-1">
                     <label class="form-control">Requisitions</label>
                     <div class="input-group-append">
-                        <button type="button" v-on:click="addRequisition" class="btn btn-outline-primary" >
+                        <button type="button" v-on:click="addRequisition" class="btn btn-outline-primary">
                             <i class="fa fa-plus-circle"></i>
                         </button>
                     </div>
@@ -19,12 +19,13 @@
             </li>
 
             <li v-for="(requisition, index) of requisitions">
-                <div class="input-group mb-3">
+                <div class="input-group mb-1">
                     <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="form-control"
                        v-on:click="$emit('componentSelected', {type: 'requisition', value: requisition})">
                         {{requisition.name}}
                     </a>
-                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removeRequisition(index)">
+                    <button type="button" class="btn btn-danger input-group-append"
+                            v-on:click="removeRequisition(index)">
                         <i class="fa fa-minus-circle"></i>
                     </button>
                 </div>
@@ -32,48 +33,64 @@
 
                 <ul class="collapse list-unstyled" id="requisition">
                     <li class="mb-1">
-                        <div class="form-inline">
-                            <a class="btn-publisher">Publishers</a>
-                            <button type="button" class="btn btn-outline-primary input-group-append"
-                                    v-on:click="addPublisher(requisition)">+
-                            </button>
+                        <div class="input-group mb-1">
+                            <label class="form-control">Publishers</label>
+                            <div class="input-group-append">
+                                <button type="button" v-on:click="addPublisher(requisition)"
+                                        class="btn btn-outline-primary">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
                         </div>
+
                         <ul class="list-unstyled components">
                             <li v-for="publisher of requisition.publishers">
-                                <h5 class="mb-0 form-inline">
-                                    <button class="btn btn-publisher input-group" type="button"
+
+
+                                <div class="input-group mb-0">
+                                    <button class="btn btn-publisher form-control input-group" type="button"
                                             data-toggle="collapse" data-target="#publisherOneCollapse"
-                                            v-on:click="$emit('componentSelected', {type: 'publisher', value: publisher})"
-                                        >
-                                        <i class="fa fa-chevron-right"></i>
-                                        <span class="badge" :class="publisher.type">{{publisher.type}}</span>
+                                            v-on:click="$emit('componentSelected', {type: 'publisher', value: publisher})">
+                                        <span class="badge input-group-prepend"
+                                              :class="publisher.type">{{publisher.type}}</span>
                                         {{publisher.name}}
                                     </button>
-                                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removePublisher(requisition.publishers, index)">-</button>
-                                </h5>
+                                    <button type="button" class="btn btn-danger input-group-append"
+                                            v-on:click="removePublisher(requisition.publishers, index)">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </button>
+                                </div>
+
+
                             </li>
                         </ul>
                     </li>
                     <li class="mb-1">
-                        <div class="form-inline">
-                            <a class="btn-subscription">Subscriptions</a>
-                            <button type="button" class="btn btn-outline-primary input-group-append"
-                                    v-on:click="addSubscription(requisition)">+</button>
-                        </div>
 
+                        <div class="input-group mb-1">
+                            <label class="form-control">Subscriptions</label>
+                            <div class="input-group-append">
+                                <button type="button" v-on:click="addSubscription(requisition)"
+                                        class="btn btn-outline-primary">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
                         <ul class="list-unstyled components">
                             <li v-for="subscription of requisition.subscriptions">
-                                <h5 class="mb-0 form-inline">
-                                    <button class="btn btn-subscription input-group" type="button"
+                                <div class="input-group mb-0">
+                                    <button class="btn btn-subscription form-control input-group" type="button"
                                             data-toggle="collapse" data-target="#subscriptionOneCollapse"
                                             v-on:click="$emit('componentSelected', {type: 'subscription', value: subscription})">
-                                        <i class="fa fa-chevron-left"></i>
-                                        <span class="badge"
+                                        <span class="badge input-group-prepend"
                                               :class="subscription.type">{{subscription.type}}</span>
                                         {{subscription.name}}
                                     </button>
-                                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removeSubscription(requisition.publishers, index)">-</button>
-                                </h5>
+                                    <button type="button" class="btn btn-danger input-group-append"
+                                            v-on:click="removeSubscription(requisition.subscriptions, index)">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </button>
+                                </div>
                             </li>
                         </ul>
                     </li>
@@ -99,7 +116,7 @@
             };
         },
         methods: {
-            createRequisition: function(id) {
+            createRequisition: function (id) {
                 let requisition = {
                     timeout: 1000,
                     iterations: undefined,
@@ -113,7 +130,7 @@
                 this.$emit('componentSelected', {type: 'requisition', value: requisition});
                 return requisition;
             },
-            createPublisher: function(requisition) {
+            createPublisher: function (requisition) {
                 let publisher = {
                     type: 'http',
                     method: 'GET',
@@ -125,7 +142,7 @@
                 this.$emit('componentSelected', {type: 'publisher', value: publisher});
                 return publisher;
             },
-            createSubscription: function(requisition) {
+            createSubscription: function (requisition) {
                 let subscription = {
                     type: 'http',
                     onInit: undefined,
@@ -225,7 +242,6 @@
     /* ---------------------------------------------------
         SIDEBAR STYLE
     ----------------------------------------------------- */
-
 
     #sidebar {
         background: #19184f;
