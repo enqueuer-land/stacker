@@ -1,10 +1,31 @@
 <template>
     <fieldset>
         <label>Payload</label>
-        <input v-model="this.option.host" label="Host" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <input v-model="this.option.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <input v-model="init.routingKey" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
         <TextArea v-model="init.payload" />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Host Address</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Host Address" v-model="option.host">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Host Port</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Host Port" v-model="option.port">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Exchange</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Exchange" v-model="exchange">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Routing Key</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Routing Key" v-model="routingKey">
+        </div>
     </fieldset>
 </template>
 
@@ -21,11 +42,17 @@
         props: ['init'],
         data: function () {
             return {
+                type: 'amqp',
                 option: {
                     host: 'localhost',
-                    port: 5672
-                }
+                    port: 5672,
+                },
+                exchange: 'exchange',
+                routingKey: 'routingKey'
             }
+        },
+        updated() {
+            this.$emit('input', this.$data);
         }
     }
 </script>

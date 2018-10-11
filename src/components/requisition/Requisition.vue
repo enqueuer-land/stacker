@@ -4,7 +4,7 @@
             <input type="text" class="form-control" v-model="init.name" placeholder="Requisition name">
             <div class="input-group-append">
                 <button type="button" name="send" v-on:click="$emit('sendClick', requisition)"
-                        class="btn btn-outline-primary">Send
+                        class="btn btn-outline-primary">RUN!
                 </button>
             </div>
         </div>

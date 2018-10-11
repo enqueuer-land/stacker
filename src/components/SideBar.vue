@@ -8,25 +8,27 @@
 
         <ul class="list-unstyled components">
             <li>
-                <div class="form-inline">
-                    <a>Requisitions</a>
-                    <button type="button" class="btn btn-outline-primary input-group-append"
-                            v-on:click="addRequisition">+
-                    </button>
+                <div class="input-group mb-3">
+                    <label class="form-control">Requisitions</label>
+                    <div class="input-group-append">
+                        <button type="button" v-on:click="addRequisition" class="btn btn-outline-primary" >
+                            <i class="fa fa-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
-
             </li>
 
             <li v-for="(requisition, index) of requisitions">
-                <div class="form-inline">
-                    <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                <div class="input-group mb-3">
+                    <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="form-control"
                        v-on:click="$emit('componentSelected', {type: 'requisition', value: requisition})">
                         {{requisition.name}}
                     </a>
-                    <button type="button" class="btn btn-danger input-group-append"
-                            v-on:click="removeRequisition(index)">-
+                    <button type="button" class="btn btn-danger input-group-append" v-on:click="removeRequisition(index)">
+                        <i class="fa fa-minus-circle"></i>
                     </button>
                 </div>
+
 
                 <ul class="collapse list-unstyled" id="requisition">
                     <li class="mb-1">
@@ -224,16 +226,8 @@
         SIDEBAR STYLE
     ----------------------------------------------------- */
 
-    .wrapper {
-        display: flex;
-        width: 100%;
-        align-items: stretch;
-        perspective: 1500px;
-    }
 
     #sidebar {
-        min-width: 250px;
-        max-width: 250px;
         background: #19184f;
         color: #fff;
         transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);

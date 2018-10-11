@@ -1,11 +1,11 @@
 <template>
     <div id="main" class="container-fluid">
-        <div class="wrapper">
-            <SideBar v-on:componentSelected="componentSelected"></SideBar>
+        <div class="row">
+            <SideBar class="col-3" v-on:componentSelected="componentSelected"/>
 
             <!-- Page Content Holder -->
-            <div id="content" class="container-fluid">
-                <div class="row wrapper">
+            <div id="content" class="container-fluid col-9">
+                <div class="row">
                     <div class="col-6">
                         <div class="stage-header">
                             <h3>{{selectedComponent.type}}</h3>
@@ -82,6 +82,13 @@
 </script>
 
 <style lang="css">
+    .wrapper {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        perspective: 1500px;
+    }
+
     .stage-header {
         color: #fff;
         padding: 20px;

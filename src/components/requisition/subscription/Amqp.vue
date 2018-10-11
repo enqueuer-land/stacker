@@ -1,9 +1,35 @@
 <template>
     <fieldset>
-        <input v-model="input.option.host" label="Host" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <input v-model="input.option.port" label="Port" type="text" class="form-control" aria-label="Text input with dropdown button" >
-        <input v-model="input.queueName" label="Routing Key" type="text" class="form-control" aria-label="Text input with dropdown button" >
-
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Host Address</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Host Address" v-model="option.host">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Host Port</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Host Port" v-model="option.port">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Exchange</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Exchange" v-model="exchange">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Routing Key</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Routing Key" v-model="routingKey">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Queue Name</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Queue Name" v-model="queueName">
+        </div>
     </fieldset>
 </template>
 
@@ -17,23 +43,16 @@
             TextArea,
             Input
         },
-        mounted() {
-            this.$emit("input", this.input);
-        },
         data() {
             return {
-                input: {
                     type: 'amqp',
                     option: {
                         host: 'localhost',
                         port: 5672,
                     },
-                    queueName: 'default.exchange',
-                    onInit: null,
-                    onMessageReceived: null,
-                    onFinish: null,
-                },
-                methods: ['GET', 'POST', 'PUT', 'HEAD']
+                    queueName: 'queue',
+                    exchange: 'exchange',
+                    routingKey: 'routingKey'
             }
         }
     }
