@@ -1,12 +1,12 @@
 <template>
     <div id="main" class="container-fluid">
-        <div class="row">
+        <div class="row wrapper">
             <SideBar class="col-3" v-on:componentSelected="componentSelected"/>
 
             <!-- Page Content Holder -->
-            <div id="content" class="container-fluid col-9">
+            <div class="col-9">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 border border-primary">
                         <div class="stage-header">
                             <h3>{{selectedComponent.type}}</h3>
                         </div>
@@ -87,6 +87,7 @@
         width: 100%;
         align-items: stretch;
         perspective: 1500px;
+        height: 100vh;
     }
 
     .stage-header {

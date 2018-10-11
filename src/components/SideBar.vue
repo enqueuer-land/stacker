@@ -20,7 +20,7 @@
 
             <li v-for="(requisition, index) of requisitions">
                 <div class="input-group mb-1">
-                    <a href="#requisition" data-toggle="collapse" aria-expanded="false" class="form-control"
+                    <a :href="'#' + requisition.id" data-toggle="collapse" aria-expanded="false" class="form-control"
                        v-on:click="$emit('componentSelected', {type: 'requisition', value: requisition})">
                         {{requisition.name}}
                     </a>
@@ -31,7 +31,7 @@
                 </div>
 
 
-                <ul class="collapse list-unstyled" id="requisition">
+                <ul class="collapse list-unstyled" :id="requisition.id">
                     <li class="mb-1">
                         <div class="input-group mb-1">
                             <label class="form-control">Publishers</label>
@@ -125,7 +125,8 @@
                     onFinish: undefined,
                     name: 'Requisition #' + id,
                     subscriptions: [],
-                    publishers: []
+                    publishers: [],
+                    id: 'id' + new Date().getTime()
                 };
                 this.$emit('componentSelected', {type: 'requisition', value: requisition});
                 return requisition;
