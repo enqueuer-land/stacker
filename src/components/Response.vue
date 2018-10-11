@@ -1,8 +1,11 @@
 <template>
     <div>
         <!--Result-->
-        <p class="h3 lead">{{this.enqueuerResponse ? this.enqueuerResponse.name: ''}}</p>
-        <table v-if="enqueuerResponse" class="table table-striped table-hover">
+        <div class="response-header">
+            <h3>{{this.response.name}}</h3>
+        </div>
+
+        <table v-if="response" class="table table-striped table-hover">
             <thead class="thead-dark">
             <tr>
                 <th>Hierarchy</th>
@@ -15,7 +18,7 @@
             <tr>
                 <th></th>
                 <th></th>
-                <th></th>
+                <th>{{summary}}</th>
                 <th>{{totalTime}}ms</th>
             </tr>
             </tfoot>
@@ -31,18 +34,19 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 
     import {TestsAnalyzer} from '../enqueuer/tests-analyzer';
 
     export default {
         name: 'Response',
         props: [
-          'enqueuerResponse'
+            'enqueuerResponse'
         ],
         data() {
             return {
                 display: {},
+                response: {},
                 resultTable: null,
                 summary: null,
                 totalTime: null,
@@ -50,14 +54,26 @@
         },
         watch: {
             enqueuerResponse() {
-                const testsCounter = new TestsAnalyzer(this.enqueuerResponse);
+                this.response = this.enqueuerResponse.requisitions[0];
+                const testsCounter = new TestsAnalyzer(this.response);
                 const tests = testsCounter.getTests();
                 let passingTestsNumber = testsCounter.getPassingTests().length;
                 let percentage = testsCounter.getPercentage();
-                this.summary = `${this.enqueuerResponse.name}: ${passingTestsNumber}/${tests.length} - (${percentage}%)`;
-                this.totalTime = this.enqueuerResponse.time.totalTime;
+                console.log(`Total time: ${JSON.stringify(this.response.time)}`);
+                this.summary = `${passingTestsNumber}/${tests.length} - (${percentage}%)`;
+                this.totalTime = this.response.time.totalTime;
                 this.resultTable = tests;
             }
         }
     };
 </script>
+<style>
+    .response-header {
+        color: #fff;
+        padding: 20px;
+        background: #2d28d3;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+</style>

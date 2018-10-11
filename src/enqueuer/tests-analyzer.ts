@@ -1,4 +1,3 @@
-
 export class TestsAnalyzer {
     private tests: any = [];
 

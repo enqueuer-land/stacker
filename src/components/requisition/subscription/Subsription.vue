@@ -1,7 +1,6 @@
 <template>
     <fieldset id="enqueuer-input">
         <div class="input-group">
-            <p class="h3 input-group">Subscription</p>
             <input type="text" class="form-control" v-model="init.name" placeholder="Subscription name">
 
             <div>
@@ -10,7 +9,6 @@
                     <a class="dropdown-item" v-for="protocol of protocols" v-on:click="init.type=protocol">{{protocol}}</a>
                 </div>
             </div>
-            <p class="h3 input-group-append">Protocol</p>
         </div>
 
         <Http v-if="init.type.toUpperCase() === 'HTTP'" v-model="http"/>

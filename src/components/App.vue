@@ -5,8 +5,12 @@
 
             <!-- Page Content Holder -->
             <div id="content" class="container-fluid">
-                <div class="row">
+                <div class="row wrapper">
                     <div class="col-6">
+                        <div class="stage-header">
+                            <h3>{{selectedComponent.type}}</h3>
+                        </div>
+
                         <!--Stage-->
                         <Requisition v-if="selectedComponent.type == 'requisition'" :init="selectedComponent.value" v-on:sendClick="sendClick" />
                         <Publisher v-if="selectedComponent.type == 'publisher'" :init="selectedComponent.value" />
@@ -26,8 +30,6 @@
 <script lang="ts">
     import {EnqueuerClient} from '../enqueuer/enqueuer-client';
     import * as Requisition from './requisition/Requisition';
-    import {RequisitionModel} from "../enqueuer/models/outputs/requisition-model";
-    import {TestsAnalyzer} from "../enqueuer/tests-analyzer";
     import * as SideBar from './SideBar';
     import * as Publisher from './requisition/publisher/Publisher';
     import * as Subscription from './requisition/subscription/Subsription';
@@ -64,9 +66,9 @@
                 console.log(`Requisition: ${JSON.stringify(this.selectedComponent.value)}`);
 
                 const enqueuer: EnqueuerClient = new EnqueuerClient(this.selectedComponent.value);
-                enqueuer.on('response', (response: RequisitionModel) => {
+                enqueuer.on('response', (response: any) => {
                     //Removes the stacker requisition layer 'http daemon input' stuff
-                    this.enqueuerResponse = response.requisitions[0];
+                    this.enqueuerResponse = response;
                 });
                 enqueuer.on('exit', (response: number) => console.log(`exit: ${response}`));
                 enqueuer.on('error', (response: Error) => console.error(`error: ${response}`));
@@ -80,6 +82,14 @@
 </script>
 
 <style lang="css">
+    .stage-header {
+        color: #fff;
+        padding: 20px;
+        background: #19184f;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
     .btn-subscription {
         color: #ffffff;
         background-color: transparent;

@@ -93,27 +93,26 @@
         },
         data() {
             return {
-                requisitions: []
+                requisitions: [this.createRequisition(0)]
             };
         },
-        // mounted() {
-        //     console.log(JSON.stringify(this.requisitions));
-        // },
         methods: {
-            createRequisition: function() {
-                return {
+            createRequisition: function(id) {
+                let requisition = {
                     timeout: 1000,
                     iterations: undefined,
                     delay: 0,
                     onInit: undefined,
                     onFinish: undefined,
-                    name: 'Requisition #' + this.requisitions.length,
+                    name: 'Requisition #' + id,
                     subscriptions: [],
                     publishers: []
                 };
+                this.$emit('componentSelected', {type: 'requisition', value: requisition});
+                return requisition;
             },
             createPublisher: function(requisition) {
-                return {
+                let publisher = {
                     type: 'http',
                     method: 'GET',
                     url: 'http://google.com',
@@ -121,18 +120,22 @@
                     onFinish: undefined,
                     name: 'Publisher #' + requisition.publishers.length,
                 };
+                this.$emit('componentSelected', {type: 'publisher', value: publisher});
+                return publisher;
             },
             createSubscription: function(requisition) {
-                return {
+                let subscription = {
                     type: 'http',
                     onInit: undefined,
                     onMessageReceived: undefined,
                     onFinish: undefined,
                     name: 'Subscription #' + requisition.subscriptions.length,
                 };
+                this.$emit('componentSelected', {type: 'subscription', value: subscription});
+                return subscription;
             },
             addRequisition: function () {
-                this.requisitions.push(this.createRequisition());
+                this.requisitions.push(this.createRequisition(this.requisitions.length));
             },
             addPublisher: function (requisition) {
                 if (!requisition.publishers) {
