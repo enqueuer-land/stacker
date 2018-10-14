@@ -33,7 +33,7 @@
     "ts-jest": "^22.4.6",
     "tslint": "^5.7.0",
     "typescript": "^2.9.2",
-    "vue-jest": "^2.6.0"
+    "vue-jest": "^3.0.0"
   },
   "author": "Virgs",
   "license": "MIT",
