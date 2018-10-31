@@ -1,20 +1,31 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app" class="container-fluid">
+        <div class="row no-gutters">
+            <div class="col-3">
+                <SideBar/>
+            </div>
+            <div class="row col no-gutters">
+                <div class="col">
+                    <h3>Stage</h3>
+                </div>
+                <div class="col">
+                    <h3>Result</h3>
+                </div>
+            </div>
+        </div>
     </div>
-    <router-view/>
-  </div>
 </template>
 
+<script>
+    import SideBar from "./components/SideBar";
+
+    export default {
+        components: {SideBar}
+    }
+</script>
+
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #app {
+    }
 </style>
