@@ -1,63 +1,46 @@
 {
   "name": "stacker",
-  "version": "0.0.1",
-  "description": "Polyglot flow GUI client",
-  "main": "src/electron.ts",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "all": "npm run lint && npm test && npm start",
-    "lint": "node_modules/.bin/tslint --project tsconfig.json --force",
-    "test": "jest --forceExit",
-    "start": "node_modules/.bin/electron .",
-    "make": "node_modules/.bin/electron-forge make"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "bootstrap": "^4.1.3",
-    "enqueuer": "^3.5.13",
-    "node-sass": "^4.9.2",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.4.4",
-    "vueify": "^9.4.1"
+    "vue": "^2.5.17"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.0.2",
-    "@types/jest": "^23.3.3",
-    "@types/request": "^2.47.1",
-    "@vue/test-utils": "^1.0.0-beta.16",
-    "electron": "^1.8.8",
-    "electron-devtools-installer": "^2.2.0",
-    "electron-forge": "4.0.2",
-    "electron-prebuilt-compile": "^1.7.6",
-    "jest": "^23.0.1",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.4",
-    "ts-jest": "^22.4.6",
-    "tslint": "^5.7.0",
-    "typescript": "^2.9.2",
-    "vue-jest": "^2.6.0"
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-0",
+    "vue-template-compiler": "^2.5.17"
   },
-  "author": "Virgs",
-  "license": "MIT",
-  "config": {
-    "forge": "./forge.config.js"
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
   },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
-    },
-    "globals": {
-      "vue-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    },
-    "testRegex": ".*\\.test\\.ts$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "vue"
-    ]
-  }
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
