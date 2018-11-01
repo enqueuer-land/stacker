@@ -1,10 +1,10 @@
 <template>
-    <div id="app" class="container-fluid">
+    <div id="app" class="container-fluid pr-0 pl-0">
         <div class="row no-gutters">
             <div class="col-3">
                 <SideBar/>
             </div>
-            <div class="col">
+            <div class="col" style="background-color: #2b2b2b; border-left: 1px solid #4d4d4d">
                 <h3>Stage</h3>
             </div>
             <div class="col">
@@ -22,8 +22,15 @@
     }
 </script>
 
-
 <style>
-    #app {
+    :root {
+        --requisition-color: #e8bf57;
+        --publisher-color: #a9524a;;
+        --subscription-color: #589df6;
     }
+
+    .stacker-header {
+        height: 150px;
+    }
+
 </style>

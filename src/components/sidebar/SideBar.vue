@@ -19,7 +19,8 @@ export default {
 
 <style scoped>
     .side-bar {
-        border: 2px red solid;
         height: 100vh;
+        background-color: #2b2b2b;
     }
+
 </style>
