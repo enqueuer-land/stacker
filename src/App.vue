@@ -4,13 +4,11 @@
             <div class="col-3">
                 <SideBar/>
             </div>
-            <div class="row col no-gutters">
-                <div class="col">
-                    <h3>Stage</h3>
-                </div>
-                <div class="col">
-                    <h3>Result</h3>
-                </div>
+            <div class="col">
+                <h3>Stage</h3>
+            </div>
+            <div class="col">
+                <h3>Result</h3>
             </div>
         </div>
     </div>
