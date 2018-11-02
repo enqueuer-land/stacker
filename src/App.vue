@@ -4,11 +4,15 @@
             <div class="col-3">
                 <SideBar/>
             </div>
-            <div class="col" style="background-color: #2b2b2b; border-left: 1px solid #4d4d4d">
-                <h3>Stage</h3>
+            <div class="col" style="border-left: 1px solid #4d4d4d; background-color: #2b2b2b;">
+                <div class="col stacker-header" style="color: gray">
+                    <h3>Stage</h3>
+                </div>
             </div>
-            <div class="col">
-                <h3>Result</h3>
+            <div class="col" style="border-left: 1px solid #4d4d4d; background-color: #2b2b2b;">
+                <div class="col stacker-header" style="color: gray">
+                    <h3>Result</h3>
+                </div>
             </div>
         </div>
     </div>
@@ -31,6 +35,12 @@
 
     .stacker-header {
         height: 150px;
+        background-color: #141414;
+    }
+
+    .stacker {
+        height: 150px;
+        background-color: #2b2b2b;
     }
 
 </style>
