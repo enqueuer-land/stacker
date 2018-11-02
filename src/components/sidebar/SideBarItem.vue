@@ -111,17 +111,6 @@
         /*border-left: 8px solid;*/
     }
 
-    .text-publisher {
-        color: var(--publisher-color)
-    }
-
-    .text-requisition {
-        color: var(--requisition-color);
-    }
-    .text-subscription {
-        color: var(--subscription-color);
-    }
-
     .side-bar-item > a:hover {
         /*background-color: #323232;*/
         color: white;

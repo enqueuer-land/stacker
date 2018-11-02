@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
     import SideBarItem from "./SideBarItem";
 
     export default {
