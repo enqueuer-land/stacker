@@ -1,7 +1,7 @@
 <template>
     <div class="result">
-        <result-header></result-header>
-        <result-tree></result-tree>
+        <result-header />
+        <result-tree />
     </div>
 </template>
 
