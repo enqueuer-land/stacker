@@ -13,7 +13,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name">{{action.name}}</a>
+                            <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name" @click="action.click">{{action.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -23,15 +23,21 @@
 </template>
 
 <script>
+    import $store from "../../store";
+
     export default {
         name: 'SideBarHeader',
         data: function () {
             return {
                 mouseIsOver: false,
                 actions: [{
-                    name: "Open requisition"
+                    name: "Open requisition",
+                    click: () => {}
                 }, {
-                    name: "Add requisition"
+                    name: "Add requisition",
+                    click: () => {
+                        $store.commit('addRequisition');
+                    }
                 }]
             }
         },

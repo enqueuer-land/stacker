@@ -526,6 +526,21 @@ export default new Vuex.Store({
                 }]
         }
     },
-    mutations: {},
+    mutations: {
+        addRequisition (state, parent) {
+            const requisition = {
+                id: generateId(),
+                name: 'New Requisition',
+                publishers: [],
+                subscriptions: [],
+                requisitions: []
+            };
+            if (parent !== null && parent !== undefined) {
+                parent.requisitions.push(requisition);
+            } else {
+                state.requisitions.push(requisition);
+            }
+        }
+    },
     actions: {}
 })

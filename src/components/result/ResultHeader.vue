@@ -9,8 +9,8 @@
                          style="max-width: 100%; max-height: 100%; height: 120px; width: auto">
                 </div>
             </div>
-            <div class="row no-gutters pl-2" id="moreOptions">
-                <div class="col-8 align-self-center">
+            <div v-if="$store.state.result" class="row no-gutters pl-2" id="moreOptions">
+                <div class="col-10 align-self-center">
                     <div class="row">
                         <div class="col-1 align-self-center">
                             <a href="#">
@@ -20,21 +20,23 @@
                                    class="material-icons">highlight_off</i>
                             </a>
                         </div>
-                        <div :class="testNumberClass">
-                            {{tests.getPassingTests().length}} of {{tests.getTests().length}} tests passing
-                            ({{tests.getPercentage()}}%)
+                        <div :class="nameClass" style="text-align: left">
+                            {{$store.state.result.name}}
+                        </div>
+                        <div :class="testNumberClass" style="text-align: right">
+                            {{tests.getPassingTests().length}}/{{tests.getTests().length}} - ({{tests.getPercentage()}}%)
                         </div>
                         <div :class="timeClass">
                             {{printTime()}}
                         </div>
                     </div>
                 </div>
-                <div class="offset-1"></div>
-                <div class="col-1 pr-0" v-show="mouseIsOver">
+                <!--<div class="offset-1"></div>-->
+                <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
                     <!--<a href="#" style="color: white">-->
                     <!--<i class="material-icons">check_circle_outline</i>-->
                     <!--</a>-->
-                </div>
+                <!--</div>-->
                 <div class="col-1 pr-0" v-show="mouseIsOver">
                     <!--<a href="#" style="color: white">-->
                     <!--<i class="material-icons">highlight_off</i>-->
@@ -80,7 +82,17 @@
             testNumberClass: function () {
                 return {
                     'tag': true,
+                    'col-4': true,
+                    'align-self-center': true,
+                    'passing-test-color': this.tests.isValid(),
+                    'failing-test-color': !this.tests.isValid()
+                }
+            },
+            nameClass: function () {
+                return {
+                    'nameStyle': true,
                     'col': true,
+                    'pl-4': true,
                     'align-self-center': true,
                     'passing-test-color': this.tests.isValid(),
                     'failing-test-color': !this.tests.isValid()
@@ -90,7 +102,7 @@
                 return {
                     'time': true,
                     'align-self-center': true,
-                    'col-3': true
+                    'col-2': true
                 };
             },
 
@@ -104,20 +116,22 @@
         },
         methods: {
             printTime: function () {
-                let totalTime = $store.state.result.time.totalTime;
-                const ms = totalTime % 1000;
-                let result = ms + 'ms';
-                if (totalTime >= 1000) {
-                    let seconds = Math.trunc(totalTime / 1000);
-                    result = seconds + 's' + ms + 'ms';
-                    if (seconds >= 60) {
-                        const minutes = Math.trunc(seconds / 60);
-                        seconds = seconds % 60;
-                        result = minutes + 'm' + seconds + 's' + result;
-                    }
+                if ($store.state.result) {
+                    let totalTime = $store.state.result.time.totalTime;
+                    const ms = totalTime % 1000;
+                    let result = ms + 'ms';
+                    if (totalTime >= 1000) {
+                        let seconds = Math.trunc(totalTime / 1000);
+                        result = seconds + 's' + ms + 'ms';
+                        if (seconds >= 60) {
+                            const minutes = Math.trunc(seconds / 60);
+                            seconds = seconds % 60;
+                            result = minutes + 'm' + seconds + 's' + result;
+                        }
 
+                    }
+                    return result;
                 }
-                return result;
             }
         }
     }
@@ -130,7 +144,7 @@
     }
 
     .passing-result-header {
-        border-top: 8px var(--passing-test-color) solid;
+        border-right: 8px var(--passing-test-color) solid;
         border-left: 8px var(--passing-test-color) solid;
     }
 
@@ -150,6 +164,11 @@
         font-size: 0.8em;
         font-weight: bold;
         text-align: right;
+    }
+
+    .nameStyle {
+        font-weight: bold;
+        text-align: left;
     }
 
     .time {
