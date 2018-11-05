@@ -1,5 +1,5 @@
 <template>
-    <div class="result-header stacker-header"
+    <div :class="resultHeader"
          @mouseover="mouseIsOver = true"
          @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none;">
@@ -9,8 +9,8 @@
                          style="max-width: 100%; max-height: 100%; height: 120px; width: auto">
                 </div>
             </div>
-            <div class="row no-gutters" id="moreOptions">
-                <div class="col-6 align-self-center">
+            <div class="row no-gutters pl-2" id="moreOptions">
+                <div class="col-8 align-self-center">
                     <div class="row">
                         <div class="col-1 align-self-center">
                             <a href="#">
@@ -21,24 +21,24 @@
                             </a>
                         </div>
                         <div :class="testNumberClass">
-                            {{tests.getPassingTests().length}} of {{tests.getTests().length}} tests
+                            {{tests.getPassingTests().length}} of {{tests.getTests().length}} tests passing
                             ({{tests.getPercentage()}}%)
                         </div>
                         <div :class="timeClass">
-                            {{$store.state.result.time.totalTime}}ms
+                            {{printTime()}}
                         </div>
                     </div>
                 </div>
-                <div class="offset-3"></div>
+                <div class="offset-1"></div>
                 <div class="col-1 pr-0" v-show="mouseIsOver">
-                    <a href="#" style="color: white">
-                        <i class="material-icons">check_circle_outline</i>
-                    </a>
+                    <!--<a href="#" style="color: white">-->
+                    <!--<i class="material-icons">check_circle_outline</i>-->
+                    <!--</a>-->
                 </div>
                 <div class="col-1 pr-0" v-show="mouseIsOver">
-                    <a href="#" style="color: white">
-                        <i class="material-icons">highlight_off</i>
-                    </a>
+                    <!--<a href="#" style="color: white">-->
+                    <!--<i class="material-icons">highlight_off</i>-->
+                    <!--</a>-->
                 </div>
                 <div class="col-1" v-show="mouseIsOver">
                     <a href="#" style="color: white">
@@ -46,14 +46,14 @@
                     </a>
                 </div>
                 <!--<div class="col-1" v-show="mouseIsOver">-->
-                    <!--<div class="dropdown dropleft">-->
-                        <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
-                            <!--<i class="material-icons">more_vert</i>-->
-                        <!--</a>-->
-                        <!--<div class="dropdown-menu">-->
-                            <!--<a class="dropdown-item" href="#" v-for="action in actions" :key="action.name">{{action.name}}</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--<div class="dropdown dropleft">-->
+                <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
+                <!--<i class="material-icons">more_vert</i>-->
+                <!--</a>-->
+                <!--<div class="dropdown-menu">-->
+                <!--<a class="dropdown-item" href="#" v-for="action in actions" :key="action.name">{{action.name}}</a>-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</div>-->
             </div>
         </a>
@@ -90,16 +90,48 @@
                 return {
                     'time': true,
                     'align-self-center': true,
-                    'col-4': true
+                    'col-3': true
                 };
+            },
+
+            resultHeader: function() {
+                return {
+                    'stacker-header': true,
+                    'passing-result-header': this.tests.isValid(),
+                    'failing-result-header': !this.tests.isValid()
+                };
+            }
+        },
+        methods: {
+            printTime: function () {
+                let totalTime = $store.state.result.time.totalTime;
+                const ms = totalTime % 1000;
+                let result = ms + 'ms';
+                if (totalTime >= 1000) {
+                    let seconds = Math.trunc(totalTime / 1000);
+                    result = seconds + 's' + ms + 'ms';
+                    if (seconds >= 60) {
+                        const minutes = Math.trunc(seconds / 60);
+                        seconds = seconds % 60;
+                        result = minutes + 'm' + seconds + 's' + result;
+                    }
+
+                }
+                return result;
             }
         }
     }
 </script>
 
 <style scoped>
-    .result-header {
+    .failing-result-header {
+        border-left: 8px var(--failing-test-color) solid;
+        border-right: 8px var(--failing-test-color) solid;
+    }
 
+    .passing-result-header {
+        border-top: 8px var(--passing-test-color) solid;
+        border-left: 8px var(--passing-test-color) solid;
     }
 
     .dropdown-toggle::before {
