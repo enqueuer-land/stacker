@@ -21,7 +21,6 @@
                         <i style="color: var(--requisition-color)" class="material-icons">folder</i>
                     </a>
                 </div>
-
             </div>
             <div class="col align-self-center">
                 {{item.name}}

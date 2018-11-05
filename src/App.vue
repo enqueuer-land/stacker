@@ -55,6 +55,7 @@
     .stacker-header {
         height: 150px;
         background-color: #141414;
+        border: 1px solid #4d4d4d
     }
 
     .stacker {

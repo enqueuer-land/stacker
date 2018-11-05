@@ -1,12 +1,10 @@
-export default class ShallowTestsAnalyzer {
-    constructor(report) {
+export default class TestsSummary {
+    constructor() {
         this.tests = [];
-        if (report) {
-            this.addTest(report.tests);
-        }
     }
     addTest(tests) {
         this.tests = this.tests.concat(tests);
+        return this;
     }
     getTests() {
         return this.tests;

@@ -182,6 +182,16 @@ export default new Vuex.Store({
                     "valid": true,
                     "name": "Some stuff",
                     "description": "Description"
+                },
+                {
+                    "valid": true,
+                    "name": "Some stuff",
+                    "description": "Description"
+                },
+                {
+                    "valid": true,
+                    "name": "Some stuff",
+                    "description": "Description"
                 }
 
             ],
@@ -285,7 +295,7 @@ export default new Vuex.Store({
             "time": {
                 "startTime": "2018-11-02T17:19:26.162Z",
                 "endTime": "2018-11-02T17:19:26.213Z",
-                "totalTime": 51,
+                "totalTime": 51011,
                 "timeout": 3000
             },
             requisitions: [{
@@ -400,7 +410,120 @@ export default new Vuex.Store({
                     "totalTime": 51,
                     "timeout": 3000
                 }
-            }]
+            },
+                {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has timed out"
+                        }
+                    ],
+                    "name": "Requisition #1",
+                    "subscriptions": [
+                        {
+                            "name": "Subscription #0",
+                            "type": "https-server",
+                            "tests": [
+                                {
+                                    "name": "Https payload",
+                                    "valid": true,
+                                    "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-11-02T17:19:26.179Z",
+                            "messageReceived": {
+                                "headers": {
+                                    "content-type": "application/json",
+                                    "content-length": "23",
+                                    "host": "localhost:4430",
+                                    "connection": "close"
+                                },
+                                "params": {},
+                                "query": {},
+                                "body": "{\n  \"https\": \"works!\"\n}"
+                            }
+                        }
+                    ],
+                    "publishers": [
+                        {
+                            "name": "publisher description",
+                            "valid": true,
+                            "type": "https-client",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "Status Code",
+                                    "valid": true,
+                                    "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+                                },
+                                {
+                                    "name": "Body",
+                                    "valid": true,
+                                    "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+                                },
+                                {
+                                    "name": "Response message received",
+                                    "valid": true,
+                                    "description": "Response message was received"
+                                }
+                            ],
+                            "publishTime": "2018-11-02T17:19:26.212Z",
+                            "messageReceived": {
+                                "statusCode": 200,
+                                "body": "https",
+                                "headers": {
+                                    "x-powered-by": "Express",
+                                    "access-control-allow-origin": "*",
+                                    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+                                    "content-type": "text/html; charset=utf-8",
+                                    "content-length": "5",
+                                    "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+                                    "date": "Fri, 02 Nov 2018 17:19:26 GMT",
+                                    "connection": "close"
+                                },
+                                "request": {
+                                    "uri": {
+                                        "protocol": "https:",
+                                        "slashes": true,
+                                        "auth": null,
+                                        "host": "localhost:4430",
+                                        "port": "4430",
+                                        "hostname": "localhost",
+                                        "hash": null,
+                                        "search": null,
+                                        "query": null,
+                                        "pathname": "/enqueuer",
+                                        "path": "/enqueuer",
+                                        "href": "https://localhost:4430/enqueuer"
+                                    },
+                                    "method": "post",
+                                    "headers": {
+                                        "content-type": "application/json",
+                                        "Content-Length": 23
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "time": {
+                        "startTime": "2018-11-02T17:19:26.162Z",
+                        "endTime": "2018-11-02T17:19:26.213Z",
+                        "totalTime": 51,
+                        "timeout": 3000
+                    }
+                }]
         }
     },
     mutations: {},

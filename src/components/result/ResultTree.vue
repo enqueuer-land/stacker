@@ -1,19 +1,21 @@
 <template>
     <div class="result-tree">
         <ul class="list-unstyled">
-            <result-node :node="$store.state.result"/>
+            <!--<result-requisition :requisition="$store.state.result"/>-->
+            <result-deep-tests :node="$store.state.result"/>
         </ul>
     </div>
 </template>
 
 <script>
-    import ResultNode from './ResultNode';
+    // import ResultRequisition from './ResultRequisition';
+    import ResultDeepTests from "./ResultDeepTests";
 
     export default {
-        //
         name: 'ResultTree',
         components: {
-            ResultNode
+            ResultDeepTests,
+            // ResultRequisition
         }
     }
 </script>
