@@ -183,12 +183,12 @@ export default new Vuex.Store({
             "valid": false,
             "tests": [
                 {
-                    "valid": false,
+                    "valid": true,
                     "name": "No time out",
                     "description": "Requisition has not timed out"
                 },
                 {
-                    "valid": true,
+                    "valid": false,
                     "name": "Some stuff",
                     "description": "Description"
                 },
@@ -204,7 +204,7 @@ export default new Vuex.Store({
                 }
 
             ],
-            "name": "Requisition #0",
+            "name": "Requisition Giant name and stuff #0",
             "subscriptions": [
                 {
                     "name": "Subscription #0",

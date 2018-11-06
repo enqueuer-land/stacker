@@ -9,30 +9,31 @@
                          style="max-width: 100%; max-height: 100%; height: 120px; width: auto">
                 </div>
             </div>
-            <div v-if="$store.state.result" class="row no-gutters" id="moreOptions">
-                <div class="col-10 align-self-center">
+            <div v-if="$store.state.result" class="row no-gutters">
+                <div class="col-11 align-self-center">
                     <div class="row no-gutters">
-                        <div class="col-1 align-self-center" style="padding-left: 2px">
-                            <a href="#">
-                                <i v-show="tests.isValid()" style="color: var(--passing-test-color)"
-                                   class="material-icons">check_circle_outline</i>
-                                <i v-show="!tests.isValid()" style="color: var(--failing-test-color)"
-                                   class="material-icons">highlight_off</i>
-                            </a>
-                        </div>
+                        <!--<div class="col-1 align-self-center" style="padding-left: 2px">-->
+                        <!--<a href="#">-->
+                        <!--<i v-show="tests.isValid()" style="color: var(&#45;&#45;passing-test-color)"-->
+                        <!--class="material-icons">check_circle_outline</i>-->
+                        <!--<i v-show="!tests.isValid()" style="color: var(&#45;&#45;failing-test-color)"-->
+                        <!--class="material-icons">highlight_off</i>-->
+                        <!--</a>-->
+                        <!--</div>-->
                         <div :class="nameClass" style="text-align: left">
                             {{$store.state.result.name}}
                         </div>
-                        <div class="col-4 row">
+                        <div class="col-3 row">
                             <div :class="['title', 'align-self-center']">
                                 Tests:
                             </div>
                             <div :class="testNumberClass" style="margin-left: 3px; text-align: left;">
-                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} - ({{tests.getPercentage()}}%)
+                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
+                                ({{Math.trunc(tests.getPercentage())}}%)
                             </div>
-                        <!--<div :class="testNumberClass" style="text-align: right">-->
+                            <!--<div :class="testNumberClass" style="text-align: right">-->
                         </div>
-                        <div class="col-3 row">
+                        <div class="col-2 row pl-2">
                             <div :class="['title', 'align-self-center']">
                                 Time:
                             </div>
@@ -45,20 +46,25 @@
                 </div>
                 <!--<div class="offset-1"></div>-->
                 <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
-                    <!--<a href="#" style="color: white">-->
-                    <!--<i class="material-icons">check_circle_outline</i>-->
-                    <!--</a>-->
+                <!--<a href="#" style="color: white">-->
+                <!--<i class="material-icons">check_circle_outline</i>-->
+                <!--</a>-->
                 <!--</div>-->
-                <div class="col-1 pr-0" v-show="mouseIsOver">
-                    <!--<a href="#" style="color: white">-->
-                    <!--<i class="material-icons">highlight_off</i>-->
-                    <!--</a>-->
-                </div>
-                <div class="col-1" v-show="mouseIsOver">
-                    <a href="#" style="color: white">
-                        <i class="material-icons">save</i>
+                <div class="col-1">
+                    <a v-show="mouseIsOver" id="moreOptions" class="pl-4" href="#" style="color: white;">
+                        <i style="max-width: 100%; max-height: 100%; width: auto" class="material-icons">more_vert</i>
                     </a>
                 </div>
+                <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
+                <!--<a href="#" style="color: white">-->
+                <!--<i class="material-icons">highlight_off</i>-->
+                <!--</a>-->
+                <!--<div class="col-1" v-show="mouseIsOver">-->
+                <!--<a href="#" style="color: white">-->
+                    <!--<i class="material-icons">save</i>-->
+                <!--</a>-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--<div class="col-1" v-show="mouseIsOver">-->
                 <!--<div class="dropdown dropleft">-->
                 <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
@@ -112,11 +118,10 @@
                 return {
                     'time': true,
                     'align-self-center': true
-
                 };
             },
 
-            resultHeader: function() {
+            resultHeader: function () {
                 return {
                     'stacker-header': true,
                     'passing-result-header': this.tests.isValid(),
@@ -166,8 +171,9 @@
         display: none !important;
     }
 
-    #moreOptions a :hover {
-        color: var(--passing-test-color);
+    #moreOptions :hover {
+        color: var(--stacker-header-background-color);
+        background-color: var(--stacker-background-alternative-color);
     }
 
     .tag {
