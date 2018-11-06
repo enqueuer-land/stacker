@@ -1,18 +1,18 @@
 <template>
     <div class="result-tree">
         <ul class="list-unstyled">
-            <result-deep-tests :node="$store.state.result"/>
+            <result-flatten-tests :node="$store.state.result"/>
         </ul>
     </div>
 </template>
 
 <script>
-    import ResultDeepTests from "./ResultDeepTests";
+    import ResultFlattenTests from "./ResultFlattenTests";
 
     export default {
         name: 'ResultTree',
         components: {
-            ResultDeepTests
+            ResultFlattenTests
         }
     }
 </script>

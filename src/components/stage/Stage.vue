@@ -1,6 +1,6 @@
 <template>
     <div class="stage">
-        <stage-header :component="$store.state.requisitions[0]"/>
+        <stage-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>
     </div>
 </template>
 

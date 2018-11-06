@@ -6,180 +6,181 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        sideBarSelectedItems: [],
-        requisitions: [
-            {
-                parent: {
-                    name: 'firstParent',
-                    parent: {
-                        name: 'secondParent',
-                        parent: {
-                            name: 'thirdParent'
-                        }
-                    }
-                },
-                id: generateId(),
-                name: 'first',
-                publishers: [
-                    {
-                        id: generateId(),
-                        name: 'leaf p01',
-                        type: "HTTP"
-                    },
-                    {
-                        id: generateId(),
-                        name: 'leaf p02',
-                        type: "AMQP"
-                    }
-                ],
-                subscriptions: [
-                    {
-                        id: generateId(),
-                        name: 'leaf s01',
-                        type: "ZEROMQ"
-                    },
-                    {
-                        id: generateId(),
-                        name: 'leaf s02',
-                        type: "KAFKA"
-                    }
-                ],
-                requisitions: [
-                    {
-                        id: generateId(),
-                        name: 'first-first',
-                        publishers: [
-                            {
-                                id: generateId(),
-                                name: 'leaf p11',
-                                type: "HTTP"
-                            }
-                        ],
-                        subscriptions: [
-                            {
-                                id: generateId(),
-                                name: 'leaf s11',
-                                type: "AMQP"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf s12',
-                                type: "SQS"
-                            }
-                        ]
-                    },
-                    {
-                        id: generateId(),
-                        name: 'first-second',
-                        publishers: [
-                            {
-                                id: generateId(),
-                                name: 'leaf p21',
-                                type: "AMQP"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf p22',
-                                type: "MQTT"
-                            }
-                        ],
-                        subscriptions: [
-                            {
-                                id: generateId(),
-                                name: 'leaf s21',
-                                type: "ZEROMQ"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf s22',
-                                type: "SQS"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: generateId(),
-                name: 'second',
-                publishers: [
-                    {
-                        id: generateId(),
-                        name: 'leaf p01',
-                        type: "HTTP"
-                    },
-                    {
-                        id: generateId(),
-                        name: 'leaf p02',
-                        type: "AMQP"
-                    }
-                ],
-                subscriptions: [
-                    {
-                        id: generateId(),
-                        name: 'leaf s01',
-                        type: "ZEROMQ"
-                    },
-                    {
-                        id: generateId(),
-                        name: 'leaf s02',
-                        type: "KAFKA"
-                    }
-                ],
-                requisitions: [
-                    {
-                        id: generateId(),
-                        name: 'first-first',
-                        publishers: [
-                            {
-                                id: generateId(),
-                                name: 'leaf p11',
-                                type: "HTTP"
-                            }
-                        ],
-                        subscriptions: [
-                            {
-                                id: generateId(),
-                                name: 'leaf s11',
-                                type: "AMQP"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf s12',
-                                type: "SQS"
-                            }
-                        ]
-                    },
-                    {
-                        id: generateId(),
-                        name: 'first-second',
-                        publishers: [
-                            {
-                                id: generateId(),
-                                name: 'leaf p21',
-                                type: "AMQP"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf p22',
-                                type: "MQTT"
-                            }
-                        ],
-                        subscriptions: [
-                            {
-                                id: generateId(),
-                                name: 'leaf s21',
-                                type: "ZEROMQ"
-                            },
-                            {
-                                id: generateId(),
-                                name: 'leaf s22',
-                                type: "SQS"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
+        sideBarSelectedItem: null,
+        requisitions: [],
+        // requisitions: [
+        //     {
+        //         parent: {
+        //             name: 'firstParent',
+        //             parent: {
+        //                 name: 'secondParent',
+        //                 parent: {
+        //                     name: 'thirdParent'
+        //                 }
+        //             }
+        //         },
+        //         id: generateId(),
+        //         name: 'first',
+        //         publishers: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf p01',
+        //                 type: "HTTP"
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf p02',
+        //                 type: "AMQP"
+        //             }
+        //         ],
+        //         subscriptions: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf s01',
+        //                 type: "ZEROMQ"
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf s02',
+        //                 type: "KAFKA"
+        //             }
+        //         ],
+        //         requisitions: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'first-first',
+        //                 publishers: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p11',
+        //                         type: "HTTP"
+        //                     }
+        //                 ],
+        //                 subscriptions: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s11',
+        //                         type: "AMQP"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s12',
+        //                         type: "SQS"
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'first-second',
+        //                 publishers: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p21',
+        //                         type: "AMQP"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p22',
+        //                         type: "MQTT"
+        //                     }
+        //                 ],
+        //                 subscriptions: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s21',
+        //                         type: "ZEROMQ"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s22',
+        //                         type: "SQS"
+        //                     }
+        //                 ]
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         id: generateId(),
+        //         name: 'second',
+        //         publishers: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf p01',
+        //                 type: "HTTP"
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf p02',
+        //                 type: "AMQP"
+        //             }
+        //         ],
+        //         subscriptions: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf s01',
+        //                 type: "ZEROMQ"
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'leaf s02',
+        //                 type: "KAFKA"
+        //             }
+        //         ],
+        //         requisitions: [
+        //             {
+        //                 id: generateId(),
+        //                 name: 'first-first',
+        //                 publishers: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p11',
+        //                         type: "HTTP"
+        //                     }
+        //                 ],
+        //                 subscriptions: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s11',
+        //                         type: "AMQP"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s12',
+        //                         type: "SQS"
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 id: generateId(),
+        //                 name: 'first-second',
+        //                 publishers: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p21',
+        //                         type: "AMQP"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf p22',
+        //                         type: "MQTT"
+        //                     }
+        //                 ],
+        //                 subscriptions: [
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s21',
+        //                         type: "ZEROMQ"
+        //                     },
+        //                     {
+        //                         id: generateId(),
+        //                         name: 'leaf s22',
+        //                         type: "SQS"
+        //                     }
+        //                 ]
+        //             }
+        //         ]
+        //     }
+        // ],
         result: {
             "valid": false,
             "tests": [
@@ -537,29 +538,68 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        addRequisition (state, parent) {
+        addRequisition(state, parent) {
             const requisition = {
                 id: generateId(),
                 name: 'New Requisition',
                 publishers: [],
                 subscriptions: [],
-                requisitions: []
+                requisitions: [],
+                component: "requisition"
             };
             if (parent !== null && parent !== undefined) {
                 parent.requisitions.push(requisition);
+                requisition.parent = parent;
             } else {
                 state.requisitions.push(requisition);
             }
+            state.sideBarSelectedItem = requisition.id;
         },
-        sideBarItemSelected (state, item) {
-            const itemId = item.id;
-            if (state.sideBarSelectedItems.find((id) => id === itemId)) {
-                state.sideBarSelectedItems = state.sideBarSelectedItems.filter((id) => id !== itemId);
-                item.selected = false;
-            } else {
-                state.sideBarSelectedItems.push(itemId);
-                item.selected = true;
+        addPublisher(state, parent) {
+            const publisher = {
+                id: generateId(),
+                name: 'New Publisher',
+                type: "HTTP",
+                parent: parent,
+                component: "publisher"
+            };
+            parent.publishers.push(publisher);
+            state.sideBarSelectedItem = publisher.id;
+        },
+        addSubscription(state, parent) {
+            const subscription = {
+                id: generateId(),
+                name: 'New Subscription',
+                type: "HTTP",
+                parent: parent,
+                component: "subscription"
+            };
+            parent.subscriptions.push(subscription);
+            state.sideBarSelectedItem = subscription.id;
+        },
+        deleteComponent(state, item) {
+            if (state.sideBarSelectedItem === item.id) {
+                state.sideBarSelectedItem = null;
             }
+            if (item.parent) {
+                item.parent.requisitions = item.parent.requisitions.filter(requisition => requisition.id !== item.id);
+                item.parent.publishers = item.parent.publishers.filter(publisher => publisher.id !== item.id);
+                item.parent.subscriptions = item.parent.subscriptions.filter(subscription => subscription.id !== item.id);
+            } else {
+                state.requisitions = state.requisitions.filter(requisition => requisition.id !== item.id);
+            }
+            if (item.subscriptions) {
+                item.subscriptions = item.subscriptions.filter(subscription => subscription.id !== item.id);
+            }
+            if (item.publishers) {
+                item.publishers = item.publishers.filter(publisher => publisher.id !== item.id);
+            }
+            if (item.requisitions) {
+                item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
+            }
+        },
+        sideBarItemSelected(state, item) {
+            state.sideBarSelectedItem = item.id;
         }
     },
     actions: {}

@@ -1,8 +1,8 @@
 <template>
-    <div :class="resultDeepTestsItem">
+    <div :class="resultFlattenTestsItem">
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + id">
-                <div class="result-deep-tests-item-header">
+                <div class="result-flatten-tests-item-header">
                     <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
                         <div class="col align-self-center">
                             <a href="#noPlace">
@@ -27,24 +27,11 @@
                     <ul class="list-unstyled">
                         <li>
                             <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                                <!--<div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(&#45;&#45;index-color)">-->
-                                    <!--Desc.-->
-                                <!--</div>-->
                                 <div class="align-self-center col pl-1" style="font-size: 0.8em">
                                     {{test.description}}
                                 </div>
                             </a>
                         </li>
-                        <!--<li>-->
-                            <!--<a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">-->
-                                <!--<div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(&#45;&#45;index-color)">-->
-                                    <!--Path-->
-                                <!--</div>-->
-                                <!--<div class="align-self-center col" style="font-size: 0.8em">-->
-                                    <!--{{test.hierarchy.join(' › ')}}-->
-                                <!--</div>-->
-                            <!--</a>-->
-                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -56,7 +43,7 @@
     import {generateId} from '../../tests/id-generator';
 
     export default {
-        name: 'ResultDeepTestsItem',
+        name: 'ResultFlattenTestsItem',
         components: {},
         props: {
             test: {},
@@ -85,10 +72,10 @@
                     'col': true
                 }
             },
-            resultDeepTestsItem: function () {
+            resultFlattenTestsItem: function () {
                 return {
-                    'valid-result-deep-tests-item': this.test.valid,
-                    'invalid-result-deep-tests-item': !this.test.valid,
+                    'valid-result-flatten-tests-item': this.test.valid,
+                    'invalid-result-flatten-tests-item': !this.test.valid,
                     'mb-0 mt-0': true
                 }
             }
@@ -97,27 +84,27 @@
 </script>
 
 <style scoped>
-    .valid-result-deep-tests-item {
+    .valid-result-flatten-tests-item {
         background-color: var(--stacker-background-color);
         border-top: 1px var(--passing-test-color) solid;
         border-left: 8px var(--passing-test-color) solid;
         border-right: 8px var(--passing-test-color) solid;
     }
 
-    .invalid-result-deep-tests-item {
+    .invalid-result-flatten-tests-item {
         background-color: var(--stacker-background-color);
         border-top: 1px var(--failing-test-color) solid;
         border-left: 8px var(--failing-test-color) solid;
         border-right: 8px var(--failing-test-color) solid;
     }
 
-    .result-deep-tests-item-header {
+    .result-flatten-tests-item-header {
         height: 100%;
         padding-left: 1px;
         background-color: var(--stacker-background-color);
     }
 
-    .result-deep-tests-item-header a {
+    .result-flatten-tests-item-header a {
         color: var(--index-color);
         height: inherit;
     }

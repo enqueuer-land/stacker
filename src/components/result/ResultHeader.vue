@@ -11,15 +11,7 @@
             </div>
             <div v-if="$store.state.result" class="row no-gutters">
                 <div class="col-11 align-self-center">
-                    <div class="row no-gutters">
-                        <!--<div class="col-1 align-self-center" style="padding-left: 2px">-->
-                        <!--<a href="#">-->
-                        <!--<i v-show="tests.isValid()" style="color: var(&#45;&#45;passing-test-color)"-->
-                        <!--class="material-icons">check_circle_outline</i>-->
-                        <!--<i v-show="!tests.isValid()" style="color: var(&#45;&#45;failing-test-color)"-->
-                        <!--class="material-icons">highlight_off</i>-->
-                        <!--</a>-->
-                        <!--</div>-->
+                    <div class="row no-gutters" style="height: 30px">
                         <div :class="nameClass" style="text-align: left">
                             {{$store.state.result.name}}
                         </div>
@@ -31,7 +23,6 @@
                                 {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </div>
-                            <!--<div :class="testNumberClass" style="text-align: right">-->
                         </div>
                         <div class="col-2 row pl-2">
                             <div :class="['title', 'align-self-center']">
@@ -40,19 +31,13 @@
                             <div :class="timeClass" style="margin-left: 3px; text-align: left;">
                                 {{printTime()}}
                             </div>
-                            <!--<div :class="testNumberClass" style="text-align: right">-->
                         </div>
                     </div>
                 </div>
-                <!--<div class="offset-1"></div>-->
-                <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
-                <!--<a href="#" style="color: white">-->
-                <!--<i class="material-icons">check_circle_outline</i>-->
-                <!--</a>-->
-                <!--</div>-->
                 <div class="col-1">
                     <div class="dropdown dropleft">
-                        <a v-show="mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#" data-toggle="dropdown" style="color: white">
+                        <a v-show="mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#"
+                           data-toggle="dropdown" style="color: white">
                             <i class="material-icons">more_vert</i>
                         </a>
                         <div class="dropdown-menu">
@@ -61,34 +46,13 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
-                <!--<a href="#" style="color: white">-->
-                <!--<i class="material-icons">highlight_off</i>-->
-                <!--</a>-->
-                <!--<div class="col-1" v-show="mouseIsOver">-->
-                <!--<a href="#" style="color: white">-->
-                <!--<i class="material-icons">save</i>-->
-                <!--</a>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-1" v-show="mouseIsOver">-->
-                <!--<div class="dropdown dropleft">-->
-                    <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
-                        <!--<i class="material-icons">more_vert</i>-->
-                    <!--</a>-->
-                    <!--<div class="dropdown-menu">-->
-                        <!--<a class="dropdown-item" href="#" v-for="action in actions"-->
-                           <!--:key="action.name">{{action.name}}</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
             </div>
         </a>
     </div>
 </template>
 <script>
 
-    import DeepTestsSummary from "../../tests/deep-tests-summary";
+    import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import $store from "../../store";
 
     export default {
@@ -96,7 +60,7 @@
         components: {},
         data: function () {
             return {
-                tests: new DeepTestsSummary().addTest($store.state.result),
+                tests: new FlattenTestsSummary().addTest($store.state.result),
                 mouseIsOver: false,
                 actions: [{
                     name: "Save"

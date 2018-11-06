@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <input type="text" class="form-control btn-outline-secondary" style="background-color: transparent"
+                <input type="text" class="form-control" style="background-color: transparent; color: white"
                        placeholder="Requisition name">
                 <div class="input-group-append">
                     <button class="btn"
@@ -34,17 +34,6 @@
                 </li>
             </ul>
         </div>
-        <div class="row">
-            <div class="tab-content">
-                <div v-for="(tab, index) in tabs" :key="index"
-                     :class="['tab-pane fade', index === 0 ? 'show active' : '']" :id="tab.name" role="tabpanel"
-                     style="color: white">{{tab.name}}
-                </div>
-                <!--<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Blalala</div>-->
-                <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">fasfsaf</div>-->
-                <!--<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">oisdpofi</div>-->
-            </div>
-        </div>
     </div>
 </template>
 
@@ -69,8 +58,8 @@
         },
         methods: {
             getBreadCrumbs: function () {
-                let breadCrumbs = [];
-                let current = this.component;
+                let breadCrumbs = [{name: ''}];
+                let current = this.component.parent;
                 while (current !== undefined) {
                     breadCrumbs.unshift(current);
                     current = current.parent;
@@ -108,7 +97,7 @@
 
     #tabs a:hover {
         color: white;
-        border-left: 8px var(--requisition-color) solid;
+        /*border-left: 8px var(--requisition-color) solid;*/
     }
 
     .tab-selected {

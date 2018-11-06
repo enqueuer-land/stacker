@@ -1,6 +1,6 @@
 import TestsSummary from "./tests-summary";
 
-export default class DeepTestsSummary {
+export default class FlattenTestsSummary {
     constructor() {
         this.testSummary = new TestsSummary();
     }
