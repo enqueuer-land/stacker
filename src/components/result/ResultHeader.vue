@@ -11,8 +11,8 @@
             </div>
             <div v-if="$store.state.result" class="row no-gutters" id="moreOptions">
                 <div class="col-10 align-self-center">
-                    <div class="row">
-                        <div class="col-1 align-self-center" style="padding-left: 17px">
+                    <div class="row no-gutters">
+                        <div class="col-1 align-self-center" style="padding-left: 2px">
                             <a href="#">
                                 <i v-show="tests.isValid()" style="color: var(--passing-test-color)"
                                    class="material-icons">check_circle_outline</i>
@@ -23,11 +23,23 @@
                         <div :class="nameClass" style="text-align: left">
                             {{$store.state.result.name}}
                         </div>
-                        <div :class="testNumberClass" style="text-align: right">
-                            {{tests.getPassingTests().length}}/{{tests.getTests().length}} - ({{tests.getPercentage()}}%)
+                        <div class="col-4 row">
+                            <div :class="['title', 'align-self-center']">
+                                Tests:
+                            </div>
+                            <div :class="testNumberClass" style="margin-left: 3px; text-align: left;">
+                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} - ({{tests.getPercentage()}}%)
+                            </div>
+                        <!--<div :class="testNumberClass" style="text-align: right">-->
                         </div>
-                        <div :class="timeClass">
-                            {{printTime()}}
+                        <div class="col-3 row">
+                            <div :class="['title', 'align-self-center']">
+                                Time:
+                            </div>
+                            <div :class="timeClass" style="margin-left: 3px; text-align: left;">
+                                {{printTime()}}
+                            </div>
+                            <!--<div :class="testNumberClass" style="text-align: right">-->
                         </div>
                     </div>
                 </div>
@@ -82,7 +94,6 @@
             testNumberClass: function () {
                 return {
                     'tag': true,
-                    'col-4': true,
                     'align-self-center': true,
                     'passing-test-color': this.tests.isValid(),
                     'failing-test-color': !this.tests.isValid()
@@ -91,8 +102,7 @@
             nameClass: function () {
                 return {
                     'nameStyle': true,
-                    'col': true,
-                    'pl-4': true,
+                    'col pl-2': true,
                     'align-self-center': true,
                     'passing-test-color': this.tests.isValid(),
                     'failing-test-color': !this.tests.isValid()
@@ -101,8 +111,8 @@
             timeClass: function () {
                 return {
                     'time': true,
-                    'align-self-center': true,
-                    'col-2': true
+                    'align-self-center': true
+
                 };
             },
 
@@ -161,8 +171,7 @@
     }
 
     .tag {
-        font-size: 0.8em;
-        font-weight: bold;
+        font-size: 0.7em;
         text-align: right;
     }
 
@@ -171,11 +180,18 @@
         text-align: left;
     }
 
-    .time {
-        font-size: 0.8em;
+    .title {
+        font-size: 0.7em;
         text-align: right;
         font-weight: lighter;
         color: var(--index-color);
+    }
+
+    .time {
+        font-size: 0.7em;
+        text-align: right;
+        font-weight: lighter;
+        color: var(--passing-test-color);
     }
 
 </style>
