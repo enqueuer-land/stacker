@@ -34,13 +34,13 @@ export default class DeepTestsSummary {
         if (node === undefined || node === null) {
             return;
         }
-        let updatedHierarchy = node.name ? hierarchy.concat(node.name) : hierarchy;
         Object.keys(node).forEach(key => {
             let value = node[key];
             if (key === 'tests') {
-                this.sumTests(value, updatedHierarchy)
+                this.sumTests(value, hierarchy)
             }
             else if (typeof value === 'object') {
+                let updatedHierarchy = hierarchy.concat(node);
                 this.findTests(value, updatedHierarchy);
             }
         });

@@ -30,6 +30,10 @@
         props: {
             node: {},
             index: {}
+        },
+        data: function() {
+            return {
+            }
         }
     }
 </script>

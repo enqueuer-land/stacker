@@ -1,6 +1,7 @@
 <template>
     <div :class="sideBarItemClass">
         <a class="row no-gutters" href="#" style="text-decoration: none"
+           @click="$store.commit('sideBarItemSelected', item)"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
             >
@@ -81,9 +82,12 @@
             sideBarItemClass: function() {
                 return {
                     'side-bar-item': true,
-                    'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
-                    'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
-                    'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
+                    // 'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
+                    // 'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
+                    // 'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
+                    'requisition-side-bar-selected': this.isRequisition && $store.state.sideBarSelectedItems.find((item) => item === this.item.id),
+                    'publisher-side-bar-selected': this.isPublisher &&  $store.state.sideBarSelectedItems.find((item) => item === this.item.id),
+                    'subscription-side-bar-selected': this.isSubscription && this.selected,
                 }
             },
             tagClass: function() {
@@ -117,6 +121,21 @@
     .side-bar-item {
         border-bottom: 1px solid var(--stacker-background-alternative-color);
         background-color: var(--stacker-background-color);
+    }
+
+    .requisition-side-bar-selected {
+        color: white;
+        border-left: 8px var(--requisition-color) solid;
+    }
+
+    .publisher-side-bar-selected {
+        color: white;
+        border-left: 8px var(--publisher-color) solid;
+    }
+
+    .subscription-side-bar-selected {
+        color: white;
+        border-left: 8px var(--subscription-color) solid;
     }
 
     .requisition-side-bar-hover {

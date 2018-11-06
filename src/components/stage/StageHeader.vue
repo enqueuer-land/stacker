@@ -10,24 +10,40 @@
                 <input type="text" class="form-control btn-outline-secondary" style="background-color: transparent"
                        placeholder="Requisition name">
                 <div class="input-group-append">
-                    <button class="btn" style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent" type="button">Run</button>
+                    <button class="btn"
+                            style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
+                            type="button">Run
+                    </button>
                 </div>
             </div>
         </div>
         <div class="row">
-                <ol class="breadcrumb mb-0 pl-0" style="background-color: transparent">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']" v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a :class="[colorClass]" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
-                    </li>
-                </ol>
+            <ol class="breadcrumb mb-0 pl-0" style="background-color: transparent">
+                <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
+                    v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
+                    <a :class="[colorClass]" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
+                </li>
+            </ol>
         </div>
         <div class="row">
-            <ul class="nav" id="tabs">
+            <ul class="nav" id="tabs" role="tablist">
                 <li class="nav-item" v-for="(tab, index) in tabs" :key="index">
-                    <a :class="[colorClass, 'nav-link pb-1', index === 0 ? 'show' : '']" href="#">{{tab}}</a>
+                    <a :class="[colorClass, 'nav-link pb-1', tabSelectedIndex === index ? 'tab-selected' : '']" data-toggle="tab" role="tab"
+                       @click="tabSelectedIndex = index"
+                       :href="'#' + tab.name">{{tab.name}}</a>
                 </li>
             </ul>
-
+        </div>
+        <div class="row">
+            <div class="tab-content">
+                <div v-for="(tab, index) in tabs" :key="index"
+                     :class="['tab-pane fade', index === 0 ? 'show active' : '']" :id="tab.name" role="tabpanel"
+                     style="color: white">{{tab.name}}
+                </div>
+                <!--<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Blalala</div>-->
+                <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">fasfsaf</div>-->
+                <!--<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">oisdpofi</div>-->
+            </div>
         </div>
     </div>
 </template>
@@ -41,11 +57,18 @@
         },
         data: function () {
             return {
-                tabs: ["General", "onInit", "onFinish"]
+                tabSelectedIndex: 0,
+                tabs: [{
+                    name: "General"
+                }, {
+                    name: "onInit"
+                }, {
+                    name: "onFinish"
+                }]
             }
         },
         methods: {
-            getBreadCrumbs: function() {
+            getBreadCrumbs: function () {
                 let breadCrumbs = [];
                 let current = this.component;
                 while (current !== undefined) {
@@ -53,7 +76,7 @@
                     current = current.parent;
                 }
                 return breadCrumbs;
-            }
+            },
         },
         computed: {
             colorClass: function () {
@@ -75,7 +98,7 @@
 
     .breadcrumb-item::before {
         /*display: none !important;*/
-        content: ' › ';
+        content: '›';
     }
 
     .breadcrumb-item a:hover {
@@ -88,7 +111,7 @@
         border-left: 8px var(--requisition-color) solid;
     }
 
-    #tabs a:focus {
+    .tab-selected {
         color: white;
         border-left: 8px var(--requisition-color) solid;
         background-color: var(--stacker-background-color);

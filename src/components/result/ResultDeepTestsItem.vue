@@ -11,8 +11,8 @@
                             </a>
                         </div>
                         <div class="col-11 align-self-center ml-1 row">
-                            <div class="col-5 align-self-center" style="font-size: 0.7em; text-align: left">
-                                {{test.hierarchy.filter((_, index) => index > 0).join(' › ')}}
+                            <div class="col-5 align-self-center pl-0" style="font-size: 0.7em; text-align: left">
+                                {{test.hierarchy.filter((_, index) => index > 0).map(item => item.name).join(' › ')}}
                             </div>
                             {{ ' ' + test.name}}
                         </div>
@@ -27,10 +27,10 @@
                     <ul class="list-unstyled">
                         <li>
                             <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                                <div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(--index-color)">
-                                    Desc.
-                                </div>
-                                <div class="align-self-center col" style="font-size: 0.8em">
+                                <!--<div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(&#45;&#45;index-color)">-->
+                                    <!--Desc.-->
+                                <!--</div>-->
+                                <div class="align-self-center col pl-1" style="font-size: 0.8em">
                                     {{test.description}}
                                 </div>
                             </a>

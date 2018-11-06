@@ -52,6 +52,10 @@
         text-align: center;
     }
 
+    .dropdown-toggle > i:hover {
+        color: var(--stacker-background-alternative-color);
+    }
+
     .dropdown-toggle::after {
         display: none !important;
     }

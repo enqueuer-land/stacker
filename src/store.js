@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        sideBarSelectedItems: [],
         requisitions: [
             {
                 parent: {
@@ -548,6 +549,16 @@ export default new Vuex.Store({
                 parent.requisitions.push(requisition);
             } else {
                 state.requisitions.push(requisition);
+            }
+        },
+        sideBarItemSelected (state, item) {
+            const itemId = item.id;
+            if (state.sideBarSelectedItems.find((id) => id === itemId)) {
+                state.sideBarSelectedItems = state.sideBarSelectedItems.filter((id) => id !== itemId);
+                item.selected = false;
+            } else {
+                state.sideBarSelectedItems.push(itemId);
+                item.selected = true;
             }
         }
     },
