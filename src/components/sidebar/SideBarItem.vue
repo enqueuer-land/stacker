@@ -6,7 +6,7 @@
             >
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
                         <i class="material-icons">more_vert</i>
                     </a>
                     <div class="dropdown-menu">
@@ -63,7 +63,10 @@
                 });
                 actions.push({
                     name: "Add subscription",
-                    click: () => {}
+                    click: () => {
+                        // eslint-disable-next-line
+                        return console.log("Add subscription");
+                    }
                 });
             }
             return {
@@ -78,6 +81,9 @@
             sideBarItemClass: function() {
                 return {
                     'side-bar-item': true,
+                    'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
+                    'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
+                    'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
                 }
             },
             tagClass: function() {
@@ -107,19 +113,30 @@
 </script>
 
 <style scoped>
+
     .side-bar-item {
         border-bottom: 1px solid var(--stacker-background-alternative-color);
         background-color: var(--stacker-background-color);
     }
 
-    .side-bar-item > a:hover {
+    .requisition-side-bar-hover {
         color: white;
-        border-left: 4px solid;
+        border-left: 8px var(--requisition-color) solid;
     }
 
-    .side-bar-item a {
-        color: #bababa;
-        height: inherit;
+    .publisher-side-bar-hover {
+        color: white;
+        border-left: 8px var(--publisher-color) solid;
+    }
+
+    .subscription-side-bar-hover {
+        color: white;
+        border-left: 8px var(--subscription-color) solid;
+    }
+
+    .side-bar-item > a {
+        color: var(--index-color);
+        /*height: inherit;*/
     }
 
     /*.side-bar-item a:active {*/

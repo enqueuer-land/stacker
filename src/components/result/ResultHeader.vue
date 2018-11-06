@@ -51,9 +51,15 @@
                 <!--</a>-->
                 <!--</div>-->
                 <div class="col-1">
-                    <a v-show="mouseIsOver" id="moreOptions" class="pl-4" href="#" style="color: white;">
-                        <i style="max-width: 100%; max-height: 100%; width: auto" class="material-icons">more_vert</i>
-                    </a>
+                    <div class="dropdown dropleft">
+                        <a v-show="mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#" data-toggle="dropdown" style="color: white">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" v-for="action in actions"
+                               :key="action.name">{{action.name}}</a>
+                        </div>
+                    </div>
                 </div>
                 <!--<div class="col-1 pr-0" v-show="mouseIsOver">-->
                 <!--<a href="#" style="color: white">-->
@@ -61,18 +67,19 @@
                 <!--</a>-->
                 <!--<div class="col-1" v-show="mouseIsOver">-->
                 <!--<a href="#" style="color: white">-->
-                    <!--<i class="material-icons">save</i>-->
+                <!--<i class="material-icons">save</i>-->
                 <!--</a>-->
                 <!--</div>-->
                 <!--</div>-->
                 <!--<div class="col-1" v-show="mouseIsOver">-->
                 <!--<div class="dropdown dropleft">-->
-                <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
-                <!--<i class="material-icons">more_vert</i>-->
-                <!--</a>-->
-                <!--<div class="dropdown-menu">-->
-                <!--<a class="dropdown-item" href="#" v-for="action in actions" :key="action.name">{{action.name}}</a>-->
-                <!--</div>-->
+                    <!--<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">-->
+                        <!--<i class="material-icons">more_vert</i>-->
+                    <!--</a>-->
+                    <!--<div class="dropdown-menu">-->
+                        <!--<a class="dropdown-item" href="#" v-for="action in actions"-->
+                           <!--:key="action.name">{{action.name}}</a>-->
+                    <!--</div>-->
                 <!--</div>-->
                 <!--</div>-->
             </div>
@@ -172,8 +179,7 @@
     }
 
     #moreOptions :hover {
-        color: var(--stacker-header-background-color);
-        background-color: var(--stacker-background-alternative-color);
+        color: var(--stacker-background-alternative-color);
     }
 
     .tag {

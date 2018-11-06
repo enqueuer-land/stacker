@@ -10,8 +10,11 @@
                                 <i v-show="!test.valid" style="color: var(--failing-test-color)" class="material-icons">highlight_off</i>
                             </a>
                         </div>
-                        <div class="col-10 align-self-center ml-1">
-                            {{test.name}}
+                        <div class="col-11 align-self-center ml-1 row">
+                            <div class="col-5 align-self-center" style="font-size: 0.7em; text-align: left">
+                                {{test.hierarchy.filter((_, index) => index > 0).join(' › ')}}
+                            </div>
+                            {{ ' ' + test.name}}
                         </div>
                         <div :class="indexClass">
                             #{{index}}
@@ -24,7 +27,7 @@
                     <ul class="list-unstyled">
                         <li>
                             <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                                <div class="col-1 align-self-center pl-1" style="font-size: 0.6em; text-align: left; color: #868686">
+                                <div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(--index-color)">
                                     Desc.
                                 </div>
                                 <div class="align-self-center col" style="font-size: 0.8em">
@@ -32,16 +35,16 @@
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                                <div class="col-1 align-self-center pl-1" style="font-size: 0.6em; text-align: left; color: #868686">
-                                    Path
-                                </div>
-                                <div class="align-self-center col" style="font-size: 0.8em">
-                                    {{test.hierarchy.join(' › ')}}
-                                </div>
-                            </a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">-->
+                                <!--<div class="col-1 align-self-center pl-1" style="font-size: 0.7em; text-align: left; color: var(&#45;&#45;index-color)">-->
+                                    <!--Path-->
+                                <!--</div>-->
+                                <!--<div class="align-self-center col" style="font-size: 0.8em">-->
+                                    <!--{{test.hierarchy.join(' › ')}}-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
@@ -98,12 +101,14 @@
         background-color: var(--stacker-background-color);
         border-top: 1px var(--passing-test-color) solid;
         border-left: 8px var(--passing-test-color) solid;
+        border-right: 8px var(--passing-test-color) solid;
     }
 
     .invalid-result-deep-tests-item {
         background-color: var(--stacker-background-color);
         border-top: 1px var(--failing-test-color) solid;
         border-left: 8px var(--failing-test-color) solid;
+        border-right: 8px var(--failing-test-color) solid;
     }
 
     .result-deep-tests-item-header {
@@ -113,17 +118,17 @@
     }
 
     .result-deep-tests-item-header a {
-        color: #bababa;
+        color: var(--index-color);
         height: inherit;
     }
 
     a:hover {
         color: white;
-        border-left: 4px solid;
+        /*border-left: 4px solid;*/
     }
 
     a {
-        color: #bababa;
+        color: var(--index-color);
     }
 
     .even-class {

@@ -48,11 +48,15 @@ export default class DeepTestsSummary {
 
     sumTests(tests, hierarchy) {
         tests.forEach(test => {
-            let clone = {
-                ...test,
-                hierarchy: hierarchy
-            };
-            this.testSummary.addTest(clone)
+            if (test.valid !== undefined &&
+                test.description !== undefined &&
+                test.name !== undefined) {
+                let clone = {
+                    ...test,
+                    hierarchy: hierarchy
+                };
+                this.testSummary.addTest(clone)
+            }
         });
     }
 }

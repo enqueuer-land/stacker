@@ -10,7 +10,7 @@
                 <input type="text" class="form-control btn-outline-secondary" style="background-color: transparent"
                        placeholder="Requisition name">
                 <div class="input-group-append">
-                    <button class="btn" style="background-color: var(--requisition-color);" type="button">Run</button>
+                    <button class="btn" style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent" type="button">Run</button>
                 </div>
             </div>
         </div>

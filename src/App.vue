@@ -32,7 +32,7 @@
         --passing-test-color: #42ba84;
         --failing-test-color: #a9524a;
         --information-color: #7ed221;
-        --index-color: #868686;
+        --index-color: #a8a8a8;
         --stacker-header-background-color: #141414;
         --stacker-background-color: #2b2b2b;
         --stacker-background-alternative-color: #4d4d4d;

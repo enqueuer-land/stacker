@@ -4,10 +4,10 @@
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
             <div class="row">
-                <header class="col-10">
+                <header class="col-11 pr-0">
                     Stacker
                 </header>
-                <div class="col-1 align-self-end">
+                <div class="col-1 align-self-end pl-0 stacker-header.height">
                     <div v-show="mouseIsOver" class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
                             <i class="material-icons">more_vert</i>
