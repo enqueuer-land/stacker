@@ -89,9 +89,9 @@
                     'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
                     'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
                     'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
-                    'requisition-side-bar-selected': this.isRequisition && this.$store.state.sideBarSelectedItem === this.item.id,
-                    'publisher-side-bar-selected': this.isPublisher && this.$store.state.sideBarSelectedItem === this.item.id,
-                    'subscription-side-bar-selected': this.isSubscription && this.$store.state.sideBarSelectedItem === this.item.id,
+                    'requisition-side-bar-selected': this.isRequisition && this.$store.state.sideBarSelectedItem.id === this.item.id,
+                    'publisher-side-bar-selected': this.isPublisher && this.$store.state.sideBarSelectedItem.id === this.item.id,
+                    'subscription-side-bar-selected': this.isSubscription && this.$store.state.sideBarSelectedItem.id === this.item.id,
                 }
             },
             tagClass: function() {

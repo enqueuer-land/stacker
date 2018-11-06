@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-header stacker-header container-fluid">
+    <div class="stage-requisition-header stacker-header container-fluid">
         <div class="row">
             <div :class="[colorClass, 'pl-2 pt-1']" style="font-size: 0.8em">
                 Name
@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <input type="text" class="form-control" style="background-color: transparent; color: white"
+                <input v-model="component.name" type="text" class="form-control" style="background-color: transparent; color: white"
                        placeholder="Requisition name">
                 <div class="input-group-append">
                     <button class="btn"
@@ -40,7 +40,7 @@
 <script>
 
     export default {
-        name: 'StageHeader',
+        name: 'StageRequisitionHeader',
         props: {
             component: {}
         },
@@ -78,7 +78,7 @@
 </script>
 
 <style scoped>
-    .stage-header {
+    .stage-requisition-header {
 
     }
 

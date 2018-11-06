@@ -553,7 +553,7 @@ export default new Vuex.Store({
             } else {
                 state.requisitions.push(requisition);
             }
-            state.sideBarSelectedItem = requisition.id;
+            state.sideBarSelectedItem = requisition;
         },
         addPublisher(state, parent) {
             const publisher = {
@@ -564,7 +564,7 @@ export default new Vuex.Store({
                 component: "publisher"
             };
             parent.publishers.push(publisher);
-            state.sideBarSelectedItem = publisher.id;
+            state.sideBarSelectedItem = publisher;
         },
         addSubscription(state, parent) {
             const subscription = {
@@ -575,7 +575,7 @@ export default new Vuex.Store({
                 component: "subscription"
             };
             parent.subscriptions.push(subscription);
-            state.sideBarSelectedItem = subscription.id;
+            state.sideBarSelectedItem = subscription;
         },
         deleteComponent(state, item) {
             if (state.sideBarSelectedItem === item.id) {
@@ -599,7 +599,7 @@ export default new Vuex.Store({
             }
         },
         sideBarItemSelected(state, item) {
-            state.sideBarSelectedItem = item.id;
+            state.sideBarSelectedItem = item;
         }
     },
     actions: {}

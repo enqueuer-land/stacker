@@ -11,7 +11,7 @@
                         <SideBarNode v-for="(requisition, index) in node.requisitions" :index="index" :key="requisition.id"
                                      :node="requisition"/>
                         <SideBarItem v-for="(publisher, index) in node.publishers" :index="index" :key="publisher.id" :item="publisher"/>
-                        <SideBarItem v-for="(subscription, index) in node.subscriptions" :index="index" :key="subscription.id"/>
+                        <SideBarItem v-for="(subscription, index) in node.subscriptions" :index="index" :key="subscription.id" :item="subscription"/>
                     </ul>
                 </div>
             </div>
@@ -50,16 +50,10 @@
         padding-left: 6px;
         background-color: var(--stacker-background-color);
         border-top: 1px var(--index-color) solid;
-        /*border-left: 8px var(--requisition-color) solid;*/
-        /*border-bottom: 2px solid var(--stacker-background-color);*/
     }
 
     .side-bar-node-active {
-        /*padding-left: 6px;*/
-        /*background-color: var(--stacker-background-color);*/
-        /*border-top: 1px var(--requisition-color) solid;*/
         border-left: 8px var(--index-color) solid;
-        /*border-bottom: 2px solid var(--stacker-background-color);*/
     }
 
 </style>

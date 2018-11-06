@@ -1,16 +1,16 @@
 <template>
     <div class="stage">
-        <stage-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>
+        <stage-requisition-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>
     </div>
 </template>
 
 <script>
-import StageHeader from "./StageHeader";
+import StageRequisitionHeader from "./StageRequisitionHeader";
 
 export default {
     name: 'Stage',
     components: {
-        StageHeader
+        StageRequisitionHeader
     }
 }
 </script>
