@@ -4,7 +4,7 @@
             <div class="col-3">
                 <SideBar/>
             </div>
-            <div class="col" style="border-left: 1px solid #4d4d4d; background-color: #2b2b2b;">
+            <div class="col" style="border-left: 1px solid var(--stacker-background-alternative-color); background-color: var(--stacker-background-color);">
                 <div class="col stacker-header" style="color: gray">
                     <h3>Stage</h3>
                 </div>
@@ -32,6 +32,8 @@
         --subscription-color: #589df6;
         --passing-test-color: #42ba84;
         --failing-test-color: #a9524a;
+        --stacker-background-color: #2b2b2b;
+        --stacker-background-alternative-color: #4d4d4d;
 
     }
 
@@ -55,11 +57,11 @@
     .stacker-header {
         height: 150px;
         background-color: #141414;
-        border: 1px solid #4d4d4d
+        border: 1px solid var(--stacker-background-alternative-color)
     }
 
     .stacker {
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
     }
 
 </style>

@@ -9,10 +9,10 @@
                          style="max-width: 100%; max-height: 100%; height: 120px; width: auto">
                 </div>
             </div>
-            <div v-if="$store.state.result" class="row no-gutters pl-2" id="moreOptions">
+            <div v-if="$store.state.result" class="row no-gutters" id="moreOptions">
                 <div class="col-10 align-self-center">
                     <div class="row">
-                        <div class="col-1 align-self-center">
+                        <div class="col-1 align-self-center"style="padding-left: 17px">
                             <a href="#">
                                 <i v-show="tests.isValid()" style="color: var(--passing-test-color)"
                                    class="material-icons">check_circle_outline</i>

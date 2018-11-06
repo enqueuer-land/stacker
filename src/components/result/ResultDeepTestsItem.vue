@@ -95,26 +95,21 @@
 
 <style scoped>
     .valid-result-deep-tests-item {
-        border-bottom: 1px solid #4d4d4d;
-        padding-left: 6px;
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
         border-top: 1px var(--passing-test-color) solid;
         border-left: 8px var(--passing-test-color) solid;
     }
 
     .invalid-result-deep-tests-item {
-        border-bottom: 1px solid #4d4d4d;
-        padding-left: 6px;
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
         border-top: 1px var(--failing-test-color) solid;
         border-left: 8px var(--failing-test-color) solid;
     }
 
     .result-deep-tests-item-header {
-        height: 30px;
-        border-bottom: 1px solid #4d4d4d;
+        height: 100%;
         padding-left: 1px;
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
     }
 
     .result-deep-tests-item-header a {
@@ -133,16 +128,16 @@
 
     .even-class {
         height: 30px;
-        border-bottom: 1px solid #4d4d4d;
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
         padding-left: 1px;
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
     }
 
     .odd-class {
         height: 30px;
-        border-bottom: 1px solid #2b2b2b;
+        border-bottom: 1px solid var(--stacker-background-color);
         padding-left: 1px;
-        background-color: #4d4d4d;
+        background-color: var(--stacker-background-alternative-color);
     }
 
     .index-class {

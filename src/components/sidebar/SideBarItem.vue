@@ -110,15 +110,12 @@
 <style scoped>
     .side-bar-item {
         height: 30px;
-        /*border-top: 1px solid #4d4d4d;*/
-        border-bottom: 1px solid #4d4d4d;
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
         padding-left: 1px;
-        background-color: #2b2b2b;
-        /*border-left: 8px solid;*/
+        background-color: var(--stacker-background-color);
     }
 
     .side-bar-item > a:hover {
-        /*background-color: #323232;*/
         color: white;
         border-left: 4px solid;
     }

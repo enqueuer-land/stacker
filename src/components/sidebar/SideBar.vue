@@ -20,7 +20,7 @@ export default {
 <style scoped>
     .side-bar {
         height: 100vh;
-        background-color: #2b2b2b;
+        background-color: var(--stacker-background-color);
     }
 
 </style>
