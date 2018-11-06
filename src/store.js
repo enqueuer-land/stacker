@@ -8,6 +8,15 @@ export default new Vuex.Store({
     state: {
         requisitions: [
             {
+                parent: {
+                    name: 'firstParent',
+                    parent: {
+                        name: 'secondParent',
+                        parent: {
+                            name: 'thirdParent'
+                        }
+                    }
+                },
                 id: generateId(),
                 name: 'first',
                 publishers: [

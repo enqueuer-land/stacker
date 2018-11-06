@@ -4,10 +4,8 @@
             <div class="col-3">
                 <SideBar/>
             </div>
-            <div class="col" style="border-left: 1px solid var(--stacker-background-alternative-color); background-color: var(--stacker-background-color);">
-                <div class="col stacker-header" style="color: gray">
-                    <h3>Stage</h3>
-                </div>
+            <div class="col">
+                <stage/>
             </div>
             <div class="col" style="border-left: 1px solid #4d4d4d">
                 <Result/>
@@ -19,9 +17,10 @@
 <script>
     import SideBar from "./components/sidebar/SideBar";
     import Result from "./components/result/Result";
+    import Stage from "./components/stage/Stage";
 
     export default {
-        components: {Result, SideBar}
+        components: {Stage, Result, SideBar}
     }
 </script>
 
@@ -32,18 +31,21 @@
         --subscription-color: #589df6;
         --passing-test-color: #42ba84;
         --failing-test-color: #a9524a;
+        --information-color: #7ed221;
+        --index-color: #868686;
+        --stacker-header-background-color: #141414;
         --stacker-background-color: #2b2b2b;
         --stacker-background-alternative-color: #4d4d4d;
 
     }
 
-    .text-publisher {
+    .publisher-color {
         color: var(--publisher-color)
     }
-    .text-requisition {
+    .requisition-color {
         color: var(--requisition-color);
     }
-    .text-subscription {
+    .subscription-color {
         color: var(--subscription-color);
     }
     .passing-test-color {
@@ -56,7 +58,7 @@
 
     .stacker-header {
         height: 150px;
-        background-color: #141414;
+        background-color: var(--stacker-header-background-color);
         border: 1px solid var(--stacker-background-alternative-color)
     }
 

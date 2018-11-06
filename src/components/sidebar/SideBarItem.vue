@@ -48,6 +48,7 @@
             let actions = [];
             actions.push({
                 name: "Delete",
+                click: () => {}
             });
             if (isRequisition) {
                 actions.push({
@@ -55,7 +56,6 @@
                     click: () => {
                         $store.commit('addRequisition', this.item);
                     }
-
                 });
                 actions.push({
                     name: "Add publisher",
@@ -78,16 +78,15 @@
             sideBarItemClass: function() {
                 return {
                     'side-bar-item': true,
-                    node: this.isRequisition
                 }
             },
             tagClass: function() {
                 return {
                     pr2: true,
                     'align-self-center': true,
-                    'text-requisition': this.isRequisition,
-                    'text-publisher': this.isPublisher,
-                    'text-subscription': this.isSubscription,
+                    'requisition-color': this.isRequisition,
+                    'publisher-color': this.isPublisher,
+                    'subscription-color': this.isSubscription,
                     'tag': true,
                     'pr-1': true
                 }
@@ -97,9 +96,9 @@
                     pr2: true,
                     'align-self-center': true,
                     'col-2': true,
-                    'text-requisition': this.isRequisition,
-                    'text-publisher': this.isPublisher,
-                    'text-subscription': this.isSubscription,
+                    'requisition-color': this.isRequisition,
+                    'publisher-color': this.isPublisher,
+                    'subscription-color': this.isSubscription,
                     'tag': true
                 };
             }
@@ -109,9 +108,7 @@
 
 <style scoped>
     .side-bar-item {
-        height: 30px;
         border-bottom: 1px solid var(--stacker-background-alternative-color);
-        padding-left: 1px;
         background-color: var(--stacker-background-color);
     }
 
@@ -134,13 +131,9 @@
     }
 
     .tag {
-        font-size: 0.8em;
+        font-size: 0.6em;
         text-transform: uppercase;
         font-weight: bold;
-    }
-
-    .node {
-        background-color: #1e1e1e;
     }
 
 </style>

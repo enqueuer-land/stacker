@@ -1,5 +1,5 @@
 <template>
-    <div class="side-bar-node mb-0 mt-0">
+    <div class="side-bar-node mb-0 mt-0 pl-1">
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + node.id">
                 <SideBarItem :item="node" :index="index" tag="REQ"/>

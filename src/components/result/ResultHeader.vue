@@ -12,7 +12,7 @@
             <div v-if="$store.state.result" class="row no-gutters" id="moreOptions">
                 <div class="col-10 align-self-center">
                     <div class="row">
-                        <div class="col-1 align-self-center"style="padding-left: 17px">
+                        <div class="col-1 align-self-center" style="padding-left: 17px">
                             <a href="#">
                                 <i v-show="tests.isValid()" style="color: var(--passing-test-color)"
                                    class="material-icons">check_circle_outline</i>
@@ -175,7 +175,7 @@
         font-size: 0.8em;
         text-align: right;
         font-weight: lighter;
-        color: darkgray;
+        color: var(--index-color);
     }
 
 </style>

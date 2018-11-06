@@ -143,7 +143,7 @@
     .index-class {
         font-size: 0.7em;
         text-align: center;
-        color: #868686;
+        color: var(--index-color);
     }
 
 </style>
