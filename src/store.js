@@ -538,7 +538,7 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        addRequisition(state, parent) {
+        addRequisition(state, payload) {
             const requisition = {
                 id: generateId(),
                 name: 'New Requisition',
@@ -547,37 +547,59 @@ export default new Vuex.Store({
                 requisitions: [],
                 component: "requisition"
             };
-            if (parent !== null && parent !== undefined) {
-                parent.requisitions.push(requisition);
-                requisition.parent = parent;
+            if (payload.parent !== null && payload.parent !== undefined) {
+                payload.parent.requisitions.push(requisition);
+                requisition.parent = payload.parent;
             } else {
                 state.requisitions.push(requisition);
             }
             state.sideBarSelectedItem = requisition;
+            payload.router.push({
+                name: requisition.component,
+                params: {
+                    id: requisition.id,
+                    component: requisition
+                }
+            });
         },
-        addPublisher(state, parent) {
+        addPublisher(state, payload) {
             const publisher = {
                 id: generateId(),
                 name: 'New Publisher',
                 type: "HTTP",
-                parent: parent,
+                parent: payload.parent,
                 component: "publisher"
             };
-            parent.publishers.push(publisher);
+            payload.parent.publishers.push(publisher);
             state.sideBarSelectedItem = publisher;
+            payload.router.push({
+                name: publisher.component,
+                params: {
+                    id: publisher.id,
+                    component: publisher
+                }
+            });
         },
-        addSubscription(state, parent) {
+        addSubscription(state, payload) {
             const subscription = {
                 id: generateId(),
                 name: 'New Subscription',
                 type: "HTTP",
-                parent: parent,
+                parent: payload.parent,
                 component: "subscription"
             };
-            parent.subscriptions.push(subscription);
+            payload.parent.subscriptions.push(subscription);
             state.sideBarSelectedItem = subscription;
+            payload.router.push({
+                name: subscription.component,
+                params: {
+                    id: subscription.id,
+                    component: subscription
+                }
+            });
         },
-        deleteComponent(state, item) {
+        deleteComponent(state, payload) {
+            const item = payload.item;
             if (state.sideBarSelectedItem === item.id) {
                 state.sideBarSelectedItem = null;
             }
@@ -597,9 +619,18 @@ export default new Vuex.Store({
             if (item.requisitions) {
                 item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
             }
+            item.deleted = true;
         },
-        sideBarItemSelected(state, item) {
-            state.sideBarSelectedItem = item;
+        sideBarItemSelected(state, payload) {
+            state.sideBarSelectedItem = payload.item;
+            payload.router.push({
+                name: payload.item.component,
+                params: {
+                    id: payload.item.id,
+                    component: payload.item
+                }
+            });
+
         }
     },
     actions: {}

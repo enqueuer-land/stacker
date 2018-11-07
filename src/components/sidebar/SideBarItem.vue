@@ -1,7 +1,7 @@
 <template>
     <div :class="sideBarItemClass">
         <a class="row no-gutters" href="#" style="text-decoration: none"
-           @click="$store.commit('sideBarItemSelected', item)"
+           @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
             >
@@ -50,26 +50,27 @@
             actions.push({
                 name: "Delete",
                 click: () => {
-                    this.$store.commit('deleteComponent', this.item);
+                    this.$store.commit('deleteComponent', {item: this.item, router: this.$router});
                 }
             });
             if (isRequisition) {
                 actions.push({
                     name: "Add requisition",
                     click: () => {
-                        this.$store.commit('addRequisition', this.item);
+                        // e.stopPropagation();
+                        this.$store.commit('addRequisition', {parent: this.item, router: this.$router});
                     }
                 });
                 actions.push({
                     name: "Add publisher",
                     click: () => {
-                        this.$store.commit('addPublisher', this.item);
+                        this.$store.commit('addPublisher', {parent: this.item, router: this.$router});
                     }
                 });
                 actions.push({
                     name: "Add subscription",
                     click: () => {
-                        this.$store.commit('addSubscription', this.item);
+                        this.$store.commit('addSubscription', {parent: this.item, router: this.$router});
                     }
                 });
             }
@@ -81,6 +82,11 @@
                 isPublisher: tag.toUpperCase().startsWith('PUB'),
                 isSubscription: tag.toUpperCase().startsWith('SUB'),
             }
+        },
+        methods: {
+            itemSelected: function () {
+                this.$store.commit('sideBarItemSelected', {item: this.item, router: this.$router});
+            },
         },
         computed: {
             sideBarItemClass: function() {

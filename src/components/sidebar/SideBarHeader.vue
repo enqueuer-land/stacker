@@ -36,7 +36,7 @@
                 }, {
                     name: "Add requisition",
                     click: () => {
-                        $store.commit('addRequisition');
+                        $store.commit('addRequisition', {router: this.$router});
                     }
                 }]
             }

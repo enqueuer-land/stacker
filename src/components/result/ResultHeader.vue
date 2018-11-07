@@ -64,6 +64,8 @@
                 mouseIsOver: false,
                 actions: [{
                     name: "Save"
+                },{
+                    name: "Flatten tests"
                 }]
             }
         },

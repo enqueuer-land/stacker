@@ -1,18 +1,19 @@
 <template>
     <div class="stage">
-        <stage-requisition-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>
+        <stage-event/>
+        <!--<stage-requisition-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>-->
+        <!--<router-view />-->
+        <!--<router-view name="body" />-->
+        <!--<router-view name="stage-body"></router-view>-->
     </div>
 </template>
 
 <script>
-import StageRequisitionHeader from "./StageRequisitionHeader";
-
-export default {
-    name: 'Stage',
-    components: {
-        StageRequisitionHeader
+    import StageEvent from "./StageEvent";
+    export default {
+        name: 'Stage',
+        components: {StageEvent}
     }
-}
 </script>
 
 <style scoped>
