@@ -1,20 +1,25 @@
 <template>
     <div>
-        <div class="stage-requisition-header stacker-header container-fluid">
+        <div class="stage-header stacker-header container-fluid">
             <div class="row">
                 <div :class="[colorClass, 'pl-2 pt-1']" style="font-size: 0.8em">
                     Name
                 </div>
             </div>
             <div class="row">
-                <div class="input-group mb-1 ml-2 mr-2">
-                    <input v-model="component.name" type="text" class="form-control" style="background-color: transparent; color: white"
-                           placeholder="Requisition name">
+                <div class="input-group input-group-sm mb-1 ml-2 mr-2">
+                    <input type="text" class="form-control" style="background-color: transparent; color: white"
+                           placeholder="Name">
                     <div class="input-group-append">
-                        <button class="btn"
+                        <button v-if="isRequisition" class="btn"
                                 style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
                                 type="button">Run
                         </button>
+                        <button v-if="isPublisher" class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                style="border: 1px var(--publisher-color) solid; color: var(--publisher-color); background-color: transparent">HTTP</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">AMQP</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,31 +31,36 @@
                     </li>
                 </ol>
             </div>
-            <div class="row">
+            <div class="row pt-2">
                 <ul class="nav" id="tabs" role="tablist">
                     <li class="nav-item" v-for="(tab, index) in tabs" :key="index">
-                        <a :class="[colorClass, 'nav-link pb-1', tabSelectedIndex === index ? 'tab-selected' : '']" data-toggle="tab" role="tab"
+                        <a :class="[colorClass,
+                                    'nav-link pb-1',
+                                    tabSelectedIndex === index ? 'tab-selected' : '',
+                                    tabSelectedIndex === index && isRequisition ? 'border-requisition-color': '',
+                                    tabSelectedIndex === index && isPublisher   ? 'border-publisher-color': '']"
+                           data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
                            :href="'#' + tab.name">{{tab.name}}</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <router-view />
+        <router-view/>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'StageRequisitionHeader',
-        // mounted: function() {
-        //     this.tabSelected(this.tabs[0], 0);
-        // },
+        name: 'StageHeader',
         props: {
-            component: {}
+            // component: {}
         },
         data: function () {
             return {
+                component: {},
+                // isRequisition: true,
+                isPublisher: true,
                 tabSelectedIndex: 0,
                 tabs: [{
                     name: "General",
@@ -74,7 +84,7 @@
                 }
                 return breadCrumbs;
             },
-            tabSelected: function(tab, index) {
+            tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
                 this.$router.push({
                     path: this.component.id + '/' + tab.path,
@@ -83,14 +93,13 @@
                         component: this.component
                     }
                 });
-
-
             }
         },
         computed: {
             colorClass: function () {
                 return {
-                    'requisition-color': true
+                    'requisition-color': this.isRequisition,
+                    'publisher-color': this.isPublisher
                 }
             }
         }
@@ -98,7 +107,7 @@
 </script>
 
 <style scoped>
-    .stage-requisition-header {
+    .stage-header {
 
     }
 
@@ -117,17 +126,23 @@
 
     #tabs a:hover {
         color: white;
-        /*border-left: 8px var(--requisition-color) solid;*/
     }
 
     .tab-selected {
         color: white;
-        border-left: 8px var(--requisition-color) solid;
         background-color: var(--stacker-background-color);
     }
 
+    .border-requisition-color {
+        border-left: 8px var(--requisition-color) solid;
+    }
+
+    .border-publisher-color {
+        border-left: 8px var(--publisher-color) solid;
+    }
+
     .dropdown-toggle::after {
-        display: none !important;
+        /*display: none !important;*/
     }
 
 

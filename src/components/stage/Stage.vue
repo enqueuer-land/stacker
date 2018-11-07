@@ -1,5 +1,6 @@
 <template>
     <div class="stage">
+        <stage-header/>
         <stage-event/>
         <!--<stage-requisition-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>-->
         <!--<router-view />-->
@@ -10,9 +11,10 @@
 
 <script>
     import StageEvent from "./StageEvent";
+    import StageHeader from "./StageHeader";
     export default {
         name: 'Stage',
-        components: {StageEvent}
+        components: {StageHeader, StageEvent}
     }
 </script>
 

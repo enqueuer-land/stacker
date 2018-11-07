@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import StageRequisitionHeader from './components/stage/StageRequisitionHeader'
+import StageRequisitionHeader from './components/stage/StageHeader'
 import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
 
 Vue.use(Router);
@@ -12,7 +12,6 @@ export default new Router({
             component: StageRequisitionHeader,
             name: 'requisition',
             props: (route) => {
-                console.log('params: ' + route.params);
                 return route.params
             },
             children: [{

@@ -174,7 +174,7 @@
     }
 
     .tag {
-        font-size: 0.6em;
+        font-size: 0.7em;
         text-transform: uppercase;
         font-weight: bold;
     }

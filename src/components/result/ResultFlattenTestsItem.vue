@@ -11,7 +11,7 @@
                             </a>
                         </div>
                         <div class="col-11 align-self-center ml-1 row">
-                            <div class="col-5 align-self-center pl-0" style="font-size: 0.7em; text-align: left">
+                            <div class="col-5 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
                                 {{test.hierarchy.filter((_, index) => index > 0).map(item => item.name).join(' › ')}}
                             </div>
                             {{ ' ' + test.name}}
@@ -133,7 +133,7 @@
     }
 
     .index-class {
-        font-size: 0.7em;
+        font-size: 0.75em;
         text-align: center;
         color: var(--index-color);
     }
