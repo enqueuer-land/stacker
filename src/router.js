@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import StageRequisitionHeader from './components/stage/StageHeader'
 import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
+import StageEvent from './components/stage/StageEvent'
 
 Vue.use(Router);
 
@@ -13,8 +14,12 @@ export default new Router({
             children: [{
                 path: "general",
                 component: StageRequisitionGeneral
-            }],
-
+            },
+            {
+                path: "oninit",
+                component: StageEvent,
+            }
+            ]
         },
         {
             path: "/publisher",

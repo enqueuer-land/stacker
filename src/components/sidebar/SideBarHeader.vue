@@ -3,9 +3,13 @@
             @mouseover="mouseIsOver = true"
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
-            <div class="row">
+            <div class="row no-gutters">
+                <div class="col align-self-center">
+                    <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
+                         style="transform: scaleX(-1) scale(1.2) rotate(90deg);">
+                </div>
                 <header class="col align-self-center">
-                    Stacker
+                    stacker
                 </header>
             </div>
             <div class="row">
@@ -50,12 +54,12 @@
 
     header {
         height: 120px;
-        transform: scale(1, .70);
+        transform: scale(1, .65);
         font-family: 'Nova Mono', monospace;
-        font-size: 60px;
+        font-size: 100px;
         color: white;
         text-align: center;
-        letter-spacing: -6px;
+        letter-spacing: -15px;
     }
 
     .dropdown-toggle > i:hover {

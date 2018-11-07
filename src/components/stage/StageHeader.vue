@@ -58,7 +58,7 @@
                 tabSelectedIndex: 0,
                 tabs: [{
                     name: "General",
-                    path: '/requisition/general'
+                    path: 'general'
                 }, {
                     name: "onInit",
                     path: 'onInit'
@@ -89,7 +89,8 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                this.$router.push(tab.path);
+                console.log(JSON.stringify(tab));
+                this.$router.replace({path: this.$store.state.sideBarSelectedItem.component + '/' + tab.path});
             }
         },
         computed: {

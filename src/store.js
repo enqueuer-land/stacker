@@ -554,7 +554,7 @@ export default new Vuex.Store({
                 state.requisitions.push(requisition);
             }
             state.sideBarSelectedItem = requisition;
-            payload.router.push(requisition.component);
+            payload.router.push({path: requisition.component});
         },
         addPublisher(state, payload) {
             const publisher = {
@@ -613,11 +613,13 @@ export default new Vuex.Store({
             if (item.requisitions) {
                 item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
             }
-            item.deleted = true;
+            payload.router.push({path: '/'});
         },
         sideBarItemSelected(state, payload) {
+            let value = {path: payload.item.component};
+            console.log(JSON.stringify(value));
             state.sideBarSelectedItem = payload.item;
-            payload.router.push(payload.item.component);
+            payload.router.push(value);
         }
     },
     actions: {}

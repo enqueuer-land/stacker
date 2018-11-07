@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col align-self-center">
                     <img src="../../../src/assets/fullLogo3.png" class="img-fluid mx-auto rounded d-block"
-                         style="max-width: 100%; max-height: 100%; height: 120px; width: auto">
+                         style="max-width: 100%; max-height: 100%; height: 120px; width: auto; transform: scale(1.75);">
                 </div>
             </div>
             <div v-if="$store.state.result" class="row no-gutters">

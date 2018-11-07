@@ -1,5 +1,5 @@
 <template>
-    <div class="key-value-input container-fluid">
+    <div class="key-value-input container-fluid p-0">
         <a href="#" style="text-decoration: none"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
@@ -20,18 +20,18 @@
             <div class="input-group input-group-sm mb-1 ml-2 mr-2"
                  @mouseover="pair.mouseIsOver = true"
                  @mouseleave="pair.mouseIsOver = false">
-                <div class="input-group-preppend">
-                    <a href="#" style="color: var(--failing-test-color)">
-                        <i v-show="pair.mouseIsOver" @click="removePair()" class="material-icons"
-                           style="transform: scale(0.6)">highlight_off</i>
-                    </a>
-                </div>
                 <input @input="update(index, 'key', $event.target.value)" :value="pair.key" type="text"
                        class="form-control mr-1" style="background-color: transparent; color: white"
                        placeholder="key">
                 <input @input="update(index, 'value', $event.target.value)" :value="pair.value" type="text"
                        class="form-control input-group-append ml-1" style="background-color: transparent; color: white"
                        placeholder="value">
+                <div class="input-group-append">
+                    <a href="#" style="color: var(--failing-test-color)">
+                        <i v-show="pair.mouseIsOver" @click="removePair()" class="material-icons"
+                           style="transform: scale(0.6)">highlight_off</i>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'KeyValueInput',
         props: ['title'],
