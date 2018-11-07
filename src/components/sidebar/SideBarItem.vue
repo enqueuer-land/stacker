@@ -4,24 +4,24 @@
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
-            >
+        >
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
                         <i class="material-icons">more_vert</i>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name" @click="action.click">{{action.name}}</a>
+                        <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
+                           @click="action.click">{{action.name}}</a>
                     </div>
                 </div>
             </div>
             <div :class="typeClass">
-                {{item.type}}
                 <div v-show="isRequisition" class="dropdown">
-                    <a href="#">
-                        <i style="color: var(--requisition-color)" class="material-icons">folder</i>
-                        <!--<i v-if="item.selected" style="color: var(&#45;&#45;requisition-color)" class="material-icons">folder_open</i>-->
-                    </a>
+                    <i style="color: var(--requisition-color)" class="material-icons">folder</i>
+                </div>
+                <div v-show="!isRequisition">
+                    {{item.type}}
                 </div>
             </div>
             <div class="col align-self-center">
@@ -87,20 +87,23 @@
             itemSelected: function () {
                 this.$store.commit('sideBarItemSelected', {item: this.item, router: this.$router});
             },
+            isSelected: function () {
+                return this.$store.state.sideBarSelectedItem.id === this.item.id;
+            },
         },
         computed: {
-            sideBarItemClass: function() {
+            sideBarItemClass: function () {
                 return {
                     'side-bar-item': true,
                     'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
                     'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
                     'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
-                    'requisition-side-bar-selected': this.isRequisition && this.$store.state.sideBarSelectedItem.id === this.item.id,
-                    'publisher-side-bar-selected': this.isPublisher && this.$store.state.sideBarSelectedItem.id === this.item.id,
-                    'subscription-side-bar-selected': this.isSubscription && this.$store.state.sideBarSelectedItem.id === this.item.id,
+                    'requisition-side-bar-selected': this.isRequisition && this.isSelected(),
+                    'publisher-side-bar-selected': this.isPublisher && this.isSelected(),
+                    'subscription-side-bar-selected': this.isSubscription && this.isSelected(),
                 }
             },
-            tagClass: function() {
+            tagClass: function () {
                 return {
                     pr2: true,
                     'align-self-center': true,
@@ -111,7 +114,7 @@
                     'pr-1': true
                 }
             },
-            typeClass: function() {
+            typeClass: function () {
                 return {
                     pr2: true,
                     'align-self-center': true,
