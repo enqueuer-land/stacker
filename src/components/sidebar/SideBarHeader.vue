@@ -4,11 +4,11 @@
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters">
-                <div class="col align-self-center">
+                <div class="col">
                     <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
-                         style="transform: scaleX(-1) scale(1.2) rotate(90deg);">
+                         style="transform: scaleX(-1) scale(1.2) rotate(90deg); position: relative; top: 3px; left: -5px;">
                 </div>
-                <header class="col align-self-center">
+                <header id="side-bar-header" class="col" style="position: relative; left: -15px">
                     stacker
                 </header>
             </div>
@@ -52,7 +52,7 @@
 
 <style scoped>
 
-    header {
+    #side-bar-header {
         height: 120px;
         transform: scale(1, .65);
         font-family: 'Nova Mono', monospace;

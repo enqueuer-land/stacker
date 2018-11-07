@@ -613,13 +613,11 @@ export default new Vuex.Store({
             if (item.requisitions) {
                 item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
             }
-            payload.router.push({path: '/'});
+            payload.router.replace({path: '/'});
         },
         sideBarItemSelected(state, payload) {
-            let value = {path: payload.item.component};
-            console.log(JSON.stringify(value));
             state.sideBarSelectedItem = payload.item;
-            payload.router.push(value);
+            payload.router.replace({path: payload.item.component});
         }
     },
     actions: {}

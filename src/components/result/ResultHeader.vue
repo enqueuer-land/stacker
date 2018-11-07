@@ -3,11 +3,14 @@
          @mouseover="mouseIsOver = true"
          @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none;">
-            <div class="row">
-                <div class="col align-self-center">
-                    <img src="../../../src/assets/fullLogo3.png" class="img-fluid mx-auto rounded d-block"
-                         style="max-width: 100%; max-height: 100%; height: 120px; width: auto; transform: scale(1.75);">
+            <div class="row no-gutters" style="height: 120px">
+                <div class="col-3">
+                    <img src="../../../src/assets/symbol3.png"
+                         style="transform: scale(1); height: 130%; width: auto; position: relative; top: -15px">
                 </div>
+                <header :class="enqueuerClass">
+                    enqueuer
+                </header>
             </div>
             <div v-if="$store.state.result" class="row no-gutters">
                 <div class="col-11 align-self-center">
@@ -64,12 +67,20 @@
                 mouseIsOver: false,
                 actions: [{
                     name: "Save"
-                },{
+                }, {
                     name: "Flatten tests"
                 }]
             }
         },
         computed: {
+            enqueuerClass: function() {
+                return {
+                    'col-7': true,
+                    'enqueuer-style': true,
+                    'passing-test-color': this.tests.isValid(),
+                    'failing-test-color': !this.tests.isValid()
+                }
+            },
             testNumberClass: function () {
                 return {
                     'tag': true,
@@ -93,7 +104,6 @@
                     'align-self-center': true
                 };
             },
-
             resultHeader: function () {
                 return {
                     'stacker-header': true,
@@ -126,6 +136,14 @@
 </script>
 
 <style scoped>
+    .enqueuer-style {
+        transform: scale(1, .65);
+        font-family: 'Nova Mono', monospace;
+        font-size: 100px;
+        text-align: center;
+        letter-spacing: -15px;
+    }
+
     .failing-result-header {
         border-left: 8px var(--failing-test-color) solid;
         border-right: 8px var(--failing-test-color) solid;

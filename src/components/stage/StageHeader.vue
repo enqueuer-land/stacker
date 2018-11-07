@@ -90,7 +90,7 @@
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
                 console.log(JSON.stringify(tab));
-                this.$router.replace({path: this.$store.state.sideBarSelectedItem.component + '/' + tab.path});
+                this.$router.push({path: tab.path});
             }
         },
         computed: {
