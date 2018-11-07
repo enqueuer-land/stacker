@@ -3,7 +3,7 @@
             @mouseover="mouseIsOver = true"
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
-            <div class="row no-gutters">
+            <div class="row no-gutters" style="height: 80%">
                 <div class="col">
                     <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
                          style="transform: scaleX(-1) scale(1.2) rotate(90deg); position: relative; top: 3px; left: -5px;">

@@ -1,9 +1,9 @@
 <template>
     <div :class="resultHeader"
-         @mouseover="mouseIsOver = true"
-         @mouseleave="mouseIsOver = false">
-        <a href="#" style="text-decoration: none;">
-            <div class="row no-gutters" style="height: 120px">
+    >
+        <a href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
+           @mouseleave="mouseIsOver = false">
+            <div class="row no-gutters" style="height: 80%">
                 <div class="col-3">
                     <img src="../../../src/assets/symbol3.png"
                          style="transform: scale(1); height: 130%; width: auto; position: relative; top: -15px">
@@ -12,27 +12,29 @@
                     enqueuer
                 </header>
             </div>
-            <div v-if="$store.state.result" class="row no-gutters">
+            <div class="row no-gutters">
                 <div class="col-11 align-self-center">
-                    <div class="row no-gutters" style="height: 30px">
-                        <div :class="nameClass" style="text-align: left">
-                            {{$store.state.result.name}}
-                        </div>
-                        <div class="col-3 row">
-                            <div :class="['title', 'align-self-center']">
-                                Tests:
+                    <div v-if="$store.state.result">
+                        <div class="row no-gutters">
+                            <div :class="nameClass" style="text-align: left">
+                                {{$store.state.result.name}}
                             </div>
-                            <div :class="testNumberClass" style="margin-left: 3px; text-align: left;">
-                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
-                                ({{Math.trunc(tests.getPercentage())}}%)
+                            <div class="col-3 row">
+                                <div :class="['title', 'align-self-center']">
+                                    Tests:
+                                </div>
+                                <div :class="testNumberClass" style="margin-left: 3px; text-align: left;">
+                                    {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
+                                    ({{Math.trunc(tests.getPercentage())}}%)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2 row pl-2">
-                            <div :class="['title', 'align-self-center']">
-                                Time:
-                            </div>
-                            <div :class="timeClass" style="margin-left: 3px; text-align: left;">
-                                {{printTime()}}
+                            <div class="col-2 row pl-2">
+                                <div :class="['title', 'align-self-center']">
+                                    Time:
+                                </div>
+                                <div :class="timeClass" style="margin-left: 3px; text-align: left;">
+                                    {{printTime()}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
             }
         },
         computed: {
-            enqueuerClass: function() {
+            enqueuerClass: function () {
                 return {
                     'col-7': true,
                     'enqueuer-style': true,

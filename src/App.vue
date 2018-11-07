@@ -39,11 +39,12 @@
 
     }
     .dropdown-menu {
-        background-color: var(--stacker-background-alternative-color);
+        background-color: var(--index-color);
         padding-bottom: 0px;
     }
     .dropdown-item {
         color: white;
+        background-color: var(--stacker-background-alternative-color);
         border-bottom: 1px var(--stacker-background-color) solid;
     }
     .publisher-color {
