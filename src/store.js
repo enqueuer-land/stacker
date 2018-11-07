@@ -554,13 +554,7 @@ export default new Vuex.Store({
                 state.requisitions.push(requisition);
             }
             state.sideBarSelectedItem = requisition;
-            payload.router.push({
-                name: requisition.component,
-                params: {
-                    id: requisition.id,
-                    component: requisition
-                }
-            });
+            payload.router.push(requisition.component);
         },
         addPublisher(state, payload) {
             const publisher = {
@@ -623,14 +617,7 @@ export default new Vuex.Store({
         },
         sideBarItemSelected(state, payload) {
             state.sideBarSelectedItem = payload.item;
-            payload.router.push({
-                name: payload.item.component,
-                params: {
-                    id: payload.item.id,
-                    component: payload.item
-                }
-            });
-
+            payload.router.push(payload.item.component);
         }
     },
     actions: {}

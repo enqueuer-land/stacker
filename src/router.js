@@ -8,16 +8,21 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
-            path: "/requisition/:id",
+            path: "/requisition",
             component: StageRequisitionHeader,
-            name: 'requisition',
-            props: (route) => {
-                return route.params
-            },
             children: [{
                 path: "general",
                 component: StageRequisitionGeneral
             }],
+
+        },
+        {
+            path: "/publisher",
+            component: StageRequisitionHeader,
+            // children: [{
+            //     path: "general",
+            //     component: StageRequisitionGeneral
+            // }],
 
         }
         //     this generates a separate chunk (about.[hash].js) for this route

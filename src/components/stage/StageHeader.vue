@@ -8,14 +8,14 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input type="text" class="form-control" style="background-color: transparent; color: white"
+                    <input v-model="getCurrentSelected().name" type="text" class="form-control" style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div class="input-group-append">
-                        <button v-if="isRequisition" class="btn"
+                        <button v-if="isRequisition()" class="btn"
                                 style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
                                 type="button">Run
                         </button>
-                        <button v-if="isPublisher" class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                        <button v-if="isPublisher()" class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                 style="border: 1px var(--publisher-color) solid; color: var(--publisher-color); background-color: transparent">HTTP</button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">AMQP</a>
@@ -27,7 +27,7 @@
                 <ol class="breadcrumb mb-0 pl-0" style="background-color: transparent">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a :class="[colorClass]" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
                     </li>
                 </ol>
             </div>
@@ -37,34 +37,28 @@
                         <a :class="[colorClass,
                                     'nav-link pb-1',
                                     tabSelectedIndex === index ? 'tab-selected' : '',
-                                    tabSelectedIndex === index && isRequisition ? 'border-requisition-color': '',
-                                    tabSelectedIndex === index && isPublisher   ? 'border-publisher-color': '']"
+                                    tabSelectedIndex === index && isRequisition() ? 'border-requisition-color': '',
+                                    tabSelectedIndex === index && isPublisher()   ? 'border-publisher-color': '']"
                            data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
-                           :href="'#' + tab.name">{{tab.name}}</a>
+                           :href="'#'">{{tab.name}}</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <!--<router-view/>-->
+        <router-view/>
     </div>
 </template>
 
 <script>
     export default {
         name: 'StageHeader',
-        props: {
-            // component: {}
-        },
         data: function () {
             return {
-                component: {},
-                // isRequisition: true,
-                isPublisher: true,
                 tabSelectedIndex: 0,
                 tabs: [{
                     name: "General",
-                    path: 'general'
+                    path: '/requisition/general'
                 }, {
                     name: "onInit",
                     path: 'onInit'
@@ -75,9 +69,18 @@
             }
         },
         methods: {
+            getCurrentSelected: function() {
+                return this.$store.state.sideBarSelectedItem;
+            },
+            isRequisition: function() {
+                return this.getCurrentSelected().component.toUpperCase().startsWith('REQ');
+             },
+            isPublisher: function() {
+                return this.getCurrentSelected().component.toUpperCase().startsWith('PUB');
+             },
             getBreadCrumbs: function () {
                 let breadCrumbs = [{name: ''}];
-                let current = this.component.parent;
+                let current = this.getCurrentSelected().parent;
                 while (current !== undefined) {
                     breadCrumbs.unshift(current);
                     current = current.parent;
@@ -86,20 +89,14 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                this.$router.push({
-                    path: this.component.id + '/' + tab.path,
-                    params: {
-                        id: this.component.id,
-                        component: this.component
-                    }
-                });
+                this.$router.push(tab.path);
             }
         },
         computed: {
             colorClass: function () {
                 return {
-                    'requisition-color': this.isRequisition,
-                    'publisher-color': this.isPublisher
+                    'requisition-color': this.isRequisition(),
+                    'publisher-color': this.isPublisher()
                 }
             }
         }

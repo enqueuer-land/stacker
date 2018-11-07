@@ -5,10 +5,8 @@
                 <div class="result-flatten-tests-item-header">
                     <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
                         <div class="col align-self-center">
-                            <a href="#noPlace">
                                 <i v-show="test.valid" style="color: var(--passing-test-color)" class="material-icons">check_circle_outline</i>
                                 <i v-show="!test.valid" style="color: var(--failing-test-color)" class="material-icons">highlight_off</i>
-                            </a>
                         </div>
                         <div class="col-11 align-self-center ml-1 row">
                             <div class="col-5 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
