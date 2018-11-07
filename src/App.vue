@@ -38,7 +38,14 @@
         --stacker-background-alternative-color: #4d4d4d;
 
     }
-
+    .dropdown-menu {
+        background-color: var(--stacker-background-alternative-color);
+        padding-bottom: 0px;
+    }
+    .dropdown-item {
+        color: white;
+        border-bottom: 1px var(--stacker-background-color) solid;
+    }
     .publisher-color {
         color: var(--publisher-color)
     }
@@ -54,16 +61,13 @@
     .failing-test-color {
         color: var(--failing-test-color);
     }
-
-
+    .stacker {
+        background-color: var(--stacker-background-color);
+    }
     .stacker-header {
         height: 150px;
         background-color: var(--stacker-header-background-color);
         border: 1px solid var(--stacker-background-alternative-color)
-    }
-
-    .stacker {
-        background-color: var(--stacker-background-color);
     }
 
 </style>

@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group mb-1 ml-2 mr-2">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <input v-model="component.timeout" type="text" class="form-control" style="background-color: transparent; color: white"
                        placeholder="5000">
                 <div class="input-group-append">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group mb-1 ml-2 mr-2">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <input v-model="component.delay" type="text" class="form-control" style="background-color: transparent; color: white"
                        placeholder="0">
                 <div class="input-group-append">
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group mb-1 ml-2 mr-2">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <input v-model="component.iterations" type="text" class="form-control" style="background-color: transparent; color: white"
                        placeholder="1">
             </div>

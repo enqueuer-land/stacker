@@ -2,6 +2,7 @@
     <div class="stage">
         <stage-header/>
         <stage-event/>
+        <http-publisher/>
         <!--<stage-requisition-header v-if="$store.state.sideBarSelectedItem" :component="$store.state.sideBarSelectedItem"/>-->
         <!--<router-view />-->
         <!--<router-view name="body" />-->
@@ -12,9 +13,10 @@
 <script>
     import StageEvent from "./StageEvent";
     import StageHeader from "./StageHeader";
+    import HttpPublisher from "./publishers/HttpPublisher";
     export default {
         name: 'Stage',
-        components: {StageHeader, StageEvent}
+        components: {HttpPublisher, StageHeader, StageEvent}
     }
 </script>
 
