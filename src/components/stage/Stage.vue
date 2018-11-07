@@ -1,13 +1,21 @@
 <template>
     <div class="stage">
-        <router-view />
+        <key-value-input v-model="keyValue" title="Title"/>
+        <!--<router-view />-->
+        <pre style="color: white"><code>{{keyValue}}</code></pre>
     </div>
 </template>
 
 <script>
+    import KeyValueInput from "../inputs/KeyValueInput";
     export default {
         name: 'Stage',
-        components: {}
+        components: {KeyValueInput},
+        data: function() {
+            return {
+                keyValue: {}
+            }
+        }
     }
 </script>
 

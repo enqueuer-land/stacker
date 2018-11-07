@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <textarea class="form-control p-1" rows="5" placeholder="js code snippet" style="background-color: transparent; color: var(--index-color)"></textarea>
+                <textarea v-model="getSelectedItem().script" class="form-control p-1" rows="5" placeholder="js code snippet" style="background-color: transparent; color: var(--index-color)"></textarea>
             </div>
         </div>
         <div class="row">
@@ -36,7 +36,6 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
                 Store
@@ -56,14 +55,17 @@
 
     export default {
         name: 'StageEvent',
+        props: {
+            name: {}
+        },
         data: function () {
             return {
-                // component: this.$store.state.sideBarSelectedItem
             }
         },
         methods: {
-        },
-        computed: {
+            getSelectedItem: function() {
+                return this.$store.state.sideBarSelectedItem[name];
+            },
         }
     }
 </script>
