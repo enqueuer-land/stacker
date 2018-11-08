@@ -1,5 +1,5 @@
 <template>
-    <div class="assertions container-fluid px-4">
+    <div class="assertions container-fluid">
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
                 Assertions

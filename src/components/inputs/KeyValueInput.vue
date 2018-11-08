@@ -1,6 +1,6 @@
 <template>
     <div class="key-value-input container-fluid p-0">
-        <div class="row pt-1 pb-1 px-2" style="font-size: 0.8em; color: white">
+        <div class="row pt-1 px-2" style="font-size: 0.8em; color: white">
             {{title}}
         </div>
             <div class="input-group input-group-sm mb-1" v-for="(pair, index) in pairs" :key="index">

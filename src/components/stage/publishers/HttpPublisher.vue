@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="component.url" placeholder="http://github.com/lopidio/slacker" type="text" class="form-control" style="background-color: transparent; color: white">
+                <input v-model="component.url" placeholder="http://github.com/lopidio/stacker" type="text" class="form-control" style="background-color: transparent; color: white">
                 <div class="input-group-append"  style="font-size: 0.8em">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">{{method}}</button>
                     <div class="dropdown-menu">
@@ -24,7 +24,7 @@
         </div>
         <div v-if="method !== 'GET'" class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="component.payload" class="form-control p-1" rows="10" style="background-color: transparent; color: white"></textarea>
+                <textarea v-model="component.payload" class="form-control p-1" rows="10" style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
             </div>
         </div>
     </div>
