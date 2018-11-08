@@ -17,8 +17,15 @@
                 </div>
             </div>
             <div :class="typeClass">
-                <div v-show="isRequisition" class="dropdown">
-                    <i style="color: var(--requisition-color)" class="material-icons">folder</i>
+                <div v-if="isRequisition" class="dropdown">
+                    <i v-if="!opened" style="color: var(--requisition-color)" class="material-icons">folder</i>
+                    <i v-if="opened" style="color: var(--requisition-color)" class="material-icons">folder_open</i>
+                    <span v-if="!opened" style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color);">
+                        {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
+                    </span>
+                    <span v-if="opened" style="position: relative; top: -6px; left: -22px; color: var(--requisition-color);">
+                        {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
+                    </span>
                 </div>
                 <div v-show="!isRequisition">
                     {{item.type}}
@@ -40,6 +47,7 @@
     export default {
         name: 'SideBarItem',
         props: {
+            opened: {},
             index: {},
             item: {},
         },
@@ -143,16 +151,22 @@
     .requisition-side-bar-selected {
         color: white;
         border-left: 8px var(--requisition-color) solid;
+        border-top: 2px var(--requisition-color) solid;
+        border-bottom: 2px var(--requisition-color) solid;
     }
 
     .publisher-side-bar-selected {
         color: white;
         border-left: 8px var(--publisher-color) solid;
+        border-top: 2px var(--publisher-color) solid;
+        border-bottom: 2px var(--publisher-color) solid;
     }
 
     .subscription-side-bar-selected {
         color: white;
         border-left: 8px var(--subscription-color) solid;
+        border-top: 2px var(--subscription-color) solid;
+        border-bottom: 2px var(--subscription-color) solid;
     }
 
     .requisition-side-bar-hover {
