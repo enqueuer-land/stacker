@@ -6,7 +6,7 @@
             <div class="row no-gutters" style="height: 80%">
                 <div class="col">
                     <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
-                         style="transform: scaleX(-1) rotate(90deg); position: relative; top: -15%; left: -10%">
+                         style="transform: scaleX(-1) rotate(90deg); position: relative; top: -15%; left: -10%; height: 130%; width: auto">
                 </div>
                 <header id="side-bar-header" class="col" style="position: relative; left: -15px">
                     stacker

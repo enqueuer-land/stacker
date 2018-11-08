@@ -26,7 +26,7 @@
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">{{breadCrumb.name}}</a>
                     </li>
                 </ol>
             </div>
@@ -59,9 +59,6 @@
                 selectedProtocol: firstProtocol,
             }
         },
-        mounted: function() {
-            this.tabSelected(this.tabs[0], 0);
-        },
         methods: {
             refreshAvailableTabs: function(protocol) {
                 const protocolTab = {name: protocol.toUpperCase(), path: protocol};
@@ -78,7 +75,7 @@
                 this.tabs = this.refreshAvailableTabs(protocol);
             },
             getCurrentSelected: function() {
-                return this.$store.state.sideBarSelectedItem;
+                return this.$store.state.selectedItem;
             },
             getBreadCrumbs: function () {
                 let breadCrumbs = [{name: ''}];
@@ -89,12 +86,19 @@
                 }
                 return breadCrumbs;
             },
+            breadCrumbSelected: function(breadCrumb) {
+                this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
+            },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                this.$router.push({path: '/' + this.getCurrentSelected().component + '/' + tab.path});
+                this.$router.push({path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path});
             }
         },
-        computed: {
+        watch: {
+            // '$route' () {
+            //     console.log('Entered publisher');
+            //     this.tabSelectedIndex = 0;
+            // }
         }
     }
 </script>

@@ -11,9 +11,13 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
-            path: "/requisition",
+            path: "/requisition/:id",
             component: StageRequisitionHeader,
             children: [
+                {
+                    path: "",
+                    component: StageRequisitionGeneral
+                },
                 {
                     path: "general",
                     component: StageRequisitionGeneral
@@ -29,9 +33,13 @@ export default new Router({
             ]
         },
         {
-            path: "/publisher",
+            path: "/publisher/:id",
             component: StagePublisherHeader,
             children: [
+                {
+                    path: "",
+                    component: HttpPublisher
+                },
                 {
                     path: "http",
                     component: HttpPublisher

@@ -52,7 +52,7 @@
         },
         methods: {
             getComponent: function() {
-                return this.$store.state.sideBarSelectedItem
+                return this.$store.state.selectedItem
             }
         },
     }

@@ -12,9 +12,7 @@
                             <div class="col align-self-center pl-1">
                                 {{test.name}}
                             </div>
-
                             <div class="col-6 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
-
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
                                         v-for="(breadCrumb, index) in test.hierarchy.filter((_, index) => index > 0)" :key="index">

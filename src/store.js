@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        sideBarSelectedItem: null,
+        selectedItem: null,
         requisitions: [],
         requisition: {
             tabs: [
@@ -48,6 +48,27 @@ export default new Vuex.Store({
                 },
             ]
         },
+        assertions: [
+            {
+                label: 'Expect',
+                name: 'expect',
+                criteria: [
+                    {
+                        name: 'toBeEqualTo',
+                        label: 'to be',
+                    },
+                    {
+                        name: 'toBeGreaterThan',
+                        label: 'to be greater than',
+                    }
+                ]
+            },
+            {
+                label: 'Expect to be defined',
+                name: 'expectToBeDefined',
+                criteria: []
+            }
+        ],
         // requisitions: [
         //     {
         //         parent: {
@@ -579,7 +600,7 @@ export default new Vuex.Store({
     },
     mutations: {
         addRequisition(state, payload) {
-            const requisition = {
+            const newComponent = {
                 id: generateId(),
                 name: 'New Requisition',
                 publishers: [],
@@ -588,42 +609,42 @@ export default new Vuex.Store({
                 component: "requisition"
             };
             if (payload.parent !== null && payload.parent !== undefined) {
-                payload.parent.requisitions.push(requisition);
-                requisition.parent = payload.parent;
+                payload.parent.requisitions.push(newComponent);
+                newComponent.parent = payload.parent;
             } else {
-                state.requisitions.push(requisition);
+                state.requisitions.push(newComponent);
             }
-            state.sideBarSelectedItem = requisition;
-            payload.router.push({path: '/requisition'});
+            state.selectedItem = newComponent;
+            payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addPublisher(state, payload) {
-            const publisher = {
+            const newComponent = {
                 id: generateId(),
                 name: 'New Publisher',
                 type: "HTTP",
                 parent: payload.parent,
                 component: "publisher"
             };
-            payload.parent.publishers.push(publisher);
-            state.sideBarSelectedItem = publisher;
-            payload.router.push({path: '/publisher'});
+            payload.parent.publishers.push(newComponent);
+            state.selectedItem = newComponent;
+            payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addSubscription(state, payload) {
-            const subscription = {
+            const newComponent = {
                 id: generateId(),
                 name: 'New Subscription',
                 type: "HTTP",
                 parent: payload.parent,
                 component: "subscription"
             };
-            payload.parent.subscriptions.push(subscription);
-            state.sideBarSelectedItem = subscription;
-            payload.router.push({path: '/subscription'});
+            payload.parent.subscriptions.push(newComponent);
+            state.selectedItem = newComponent;
+            payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         deleteComponent(state, payload) {
             const item = payload.item;
-            if (state.sideBarSelectedItem === item.id) {
-                state.sideBarSelectedItem = null;
+            if (state.selectedItem === item.id) {
+                state.selectedItem = null;
             }
             if (item.parent) {
                 item.parent.requisitions = item.parent.requisitions.filter(requisition => requisition.id !== item.id);
@@ -643,10 +664,13 @@ export default new Vuex.Store({
             }
             payload.router.push({path: '/'});
         },
-        sideBarItemSelected(state, payload) {
-            state.sideBarSelectedItem = payload.item;
-            let newPath = '/' + payload.item.component;
-            if (!payload.route.path.startsWith(newPath)) {
+        selectItem(state, payload) {
+            const currentSelectedId = state.selectedItem.id;
+            console.log('Selecting item: ' + currentSelectedId);
+            if (currentSelectedId !== payload.item.id) {
+                state.selectedItem = payload.item;
+                let newPath = '/' + payload.item.component + '/' + payload.item.id;
+                console.log('Going to new path');
                 payload.router.push({path: newPath});
             }
         }

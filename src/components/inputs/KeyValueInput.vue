@@ -3,8 +3,7 @@
         <div class="row pt-1 pb-1 px-2" style="font-size: 0.8em; color: white">
             {{title}}
         </div>
-        <div v-for="(pair, index) in pairs" :key="index">
-            <div class="input-group input-group-sm mb-1">
+            <div class="input-group input-group-sm mb-1" v-for="(pair, index) in pairs" :key="index">
                 <input @input="update(index, 'key', $event.target.value)" :value="pair.key" type="text"
                        class="form-control" style="background-color: transparent; color: white"
                        placeholder="key">
@@ -18,7 +17,6 @@
                     </a>
                 </div>
             </div>
-        </div>
         <div class="row px-2">
             <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
                     style="background-color: white; color: var(--stacker-background-color); border-color: white"

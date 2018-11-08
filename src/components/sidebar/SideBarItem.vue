@@ -24,7 +24,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" class="col align-self-center">
+            <div id="name" :class="['col align-self-center']" :style="isSelected() ? 'color: white' : ''">
                 {{item.name}}
             </div>
             <div :class="tagClass">
@@ -85,10 +85,10 @@
         },
         methods: {
             itemSelected: function () {
-                this.$store.commit('sideBarItemSelected', {item: this.item, router: this.$router, route: this.$route});
+                this.$store.commit('selectItem', {item: this.item, router: this.$router, route: this.$route});
             },
             isSelected: function () {
-                return this.$store.state.sideBarSelectedItem.id === this.item.id;
+                return this.$store.state.selectedItem.id === this.item.id;
             },
         },
         computed: {
@@ -148,7 +148,6 @@
     .publisher-side-bar-selected {
         color: white;
         border-left: 8px var(--publisher-color) solid;
-        margin-right: 8px var(--stacker-background-color) solid;
     }
 
     .subscription-side-bar-selected {

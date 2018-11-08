@@ -3,7 +3,7 @@
         <div class="card" style="border: none; border-left: 1px solid var(--stacker-background-color)">
             <div data-toggle="collapse" :data-target="'#' + node.id"
                 @click="selected = !selected">
-                <SideBarItem :item="node" :index="index"/>
+                <SideBarItem :item="node" :index="index" :key="node.id"/>
             </div>
             <div :id="node.id" class="collapse">
                 <div class="card-body p-0 pl-2" style="background-color: var(--stacker-background-alternative-color)">

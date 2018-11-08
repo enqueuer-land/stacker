@@ -13,6 +13,7 @@
                     <div class="input-group-append">
                         <button class="btn"
                                 style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
+                                @click="runButtonClick"
                                 type="button">Run
                         </button>
                     </div>
@@ -22,7 +23,7 @@
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">{{breadCrumb.name}}</a>
                     </li>
                 </ol>
             </div>
@@ -45,6 +46,8 @@
 </template>
 
 <script>
+    import ObjectDecycler from "../../tests/object-decycler";
+
     export default {
         name: 'StageRequisitionHeader',
         mounted: function() {
@@ -56,8 +59,11 @@
             }
         },
         methods: {
+            runButtonClick: function() {
+                console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(this.getCurrentSelected())));
+            },
             getCurrentSelected: function() {
-                return this.$store.state.sideBarSelectedItem;
+                return this.$store.state.selectedItem;
             },
             getBreadCrumbs: function () {
                 let breadCrumbs = [{name: ''}];
@@ -68,10 +74,16 @@
                 }
                 return breadCrumbs;
             },
+            breadCrumbSelected: function(breadCrumb) {
+                this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
+            },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                this.$router.push({path: '/requisition/' + tab.path});
+                console.log('Req tab selected');
+                this.$router.push({path: '/requisition/' + this.getCurrentSelected().id + '/' + tab.path});
             }
+        },
+        watch: {
         }
     }
 </script>
