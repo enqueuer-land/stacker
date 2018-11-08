@@ -1,40 +1,30 @@
 <template>
-    <div class="key-value-input container-fluid p-0">
-        <a href="#" style="text-decoration: none"
-           @mouseover="mouseIsOver = true"
-           @mouseleave="mouseIsOver = false"
-        >
-            <div class="row">
-                <div class="pl-2 pr-0 align-self-center" style="width: 30px">
-                    <a v-show="mouseIsOver" href="#" style="color: white">
-                        <i @click="addPair" class="material-icons" style="transform: scale(0.6)">control_point</i>
-                    </a>
-                </div>
-                <div class="col-11 pl-0 pt-2" style="font-size: 0.8em; color: white">
-                    {{title}}
-                </div>
-
-            </div>
-        </a>
-        <div v-for="(pair, index) in pairs" :key="index" class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2"
-                 @mouseover="pair.mouseIsOver = true"
-                 @mouseleave="pair.mouseIsOver = false">
+    <div class="key-value-input container-fluid">
+        <div class="row pt-1 pb-1 px-2" style="font-size: 0.8em; color: white">
+            {{title}}
+        </div>
+        <div v-for="(pair, index) in pairs" :key="index">
+            <div class="input-group input-group-sm mb-1">
                 <input @input="update(index, 'key', $event.target.value)" :value="pair.key" type="text"
-                       class="form-control mr-1" style="background-color: transparent; color: white"
+                       class="form-control" style="background-color: transparent; color: white"
                        placeholder="key">
                 <input @input="update(index, 'value', $event.target.value)" :value="pair.value" type="text"
                        class="form-control input-group-append ml-1" style="background-color: transparent; color: white"
                        placeholder="value">
-                <div class="input-group-append">
-                    <a href="#" style="color: var(--failing-test-color)">
-                        <i v-show="pair.mouseIsOver" @click="removePair()" class="material-icons"
-                           style="transform: scale(0.6)">highlight_off</i>
+                <div class="input-group-append pl-1">
+                    <a href="#" style="color: white">
+                        <i @click="removePair(index)" class="material-icons"
+                           style="transform: scale(0.75)">highlight_off</i>
                     </a>
                 </div>
             </div>
         </div>
-
+        <div class="row px-3">
+            <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
+                    style="background-color: white; color: var(--stacker-background-color); border-color: white"
+                    @click="addPair">Add
+            </button>
+        </div>
     </div>
 </template>
 
@@ -44,36 +34,43 @@
         props: ['title'],
         data: function () {
             return {
-                mouseIsOver: false,
                 pairs: []
             }
         },
         methods: {
+            emitEvent() {
+                let mapped = {};
+                this.pairs.forEach(pair => mapped[pair.key] = pair.value);
+                this.$emit('input', mapped);
+            },
             addPair: function () {
-                if (this.pairs.every(pair => pair.key.length > 0)) {
+                if (this.canAddPair()) {
                     this.pairs.push({
                         key: '',
                         value: '',
-                        mouseIsOver: false
                     });
                 }
-                let mapped = {};
-                this.pairs.forEach(pair => mapped[pair.key] = pair.value);
-                this.$emit('input', mapped);
             },
-            removePair: function () {
-                this.pairs = this.pairs.filter(pair => !pair.mouseIsOver);
-                let mapped = {};
-                this.pairs.forEach(pair => mapped[pair.key] = pair.value);
-                this.$emit('input', mapped);
+            canAddPair: function () {
+                return this.pairs.every(pair => pair.key.length > 0);
+            },
+            removePair: function (index) {
+                console.log('removing pair');
+                this.pairs = this.pairs.filter((_, itemIndex) => itemIndex !== index);
+                this.emitEvent();
             },
             update: function (index, field, value) {
-                let mapped = {};
                 this.pairs[index][field] = value;
-                this.pairs.forEach(pair => mapped[pair.key] = pair.value);
-                this.$emit('input', mapped);
+                this.emitEvent();
             }
         },
+        computed: {
+            isAddButtonDisabled: function () {
+                return {
+                    'disabled': !this.canAddPair()
+                }
+            }
+        }
     }
 </script>
 

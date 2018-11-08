@@ -9,10 +9,19 @@
                                 <i v-show="!test.valid" style="color: var(--failing-test-color)" class="material-icons">highlight_off</i>
                         </div>
                         <div class="col-11 align-self-center ml-1 row">
-                            <div class="col-5 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
-                                {{test.hierarchy.filter((_, index) => index > 0).map(item => item.name).join(' › ')}}
+                            <div class="col align-self-center pl-1">
+                                {{test.name}}
                             </div>
-                            {{ ' ' + test.name}}
+
+                            <div class="col-6 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
+
+                                <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
+                                    <li class="breadcrumb-item"
+                                        v-for="(breadCrumb, index) in test.hierarchy.filter((_, index) => index > 0)" :key="index">
+                                        <a href="#">{{breadCrumb.name}}</a>
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                         <div :class="indexClass">
                             #{{index}}
@@ -82,6 +91,19 @@
 </script>
 
 <style scoped>
+
+    .breadcrumb-item:nth-child(1)::before {
+        display: none !important;
+    }
+
+    .breadcrumb-item::before {
+        content: '›';
+    }
+
+    .breadcrumb-item a:hover {
+        color: white;
+    }
+
     .valid-result-flatten-tests-item {
         background-color: var(--stacker-background-color);
         border-top: 1px var(--passing-test-color) solid;

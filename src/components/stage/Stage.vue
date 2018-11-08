@@ -19,4 +19,5 @@
         background-color: var(--stacker-background-color);
         border-left: 1px solid var(--stacker-background-alternative-color);
     }
+
 </style>

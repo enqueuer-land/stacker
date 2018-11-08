@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="row">
-                <ol class="breadcrumb mb-0 pl-0" style="background-color: transparent">
+                <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
                         <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#">{{breadCrumb.name}}</a>
@@ -113,13 +113,15 @@
     }
 
     .breadcrumb-item::before {
-        /*display: none !important;*/
         content: '›';
     }
 
     .breadcrumb-item a:hover {
-        /*display: none !important;*/
         color: white;
+    }
+
+    .breadcrumb-item:nth-child(1)::before {
+        display: none;
     }
 
     #tabs a:hover {

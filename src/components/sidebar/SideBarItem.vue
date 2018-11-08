@@ -24,7 +24,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div class="col align-self-center">
+            <div id="name" class="col align-self-center">
                 {{item.name}}
             </div>
             <div :class="tagClass">
@@ -134,6 +134,10 @@
     .side-bar-item {
         border-bottom: 1px solid var(--stacker-background-alternative-color);
         background-color: var(--stacker-background-color);
+    }
+
+    #name:hover {
+        color: white;
     }
 
     .requisition-side-bar-selected {
