@@ -8,6 +8,46 @@ export default new Vuex.Store({
     state: {
         sideBarSelectedItem: null,
         requisitions: [],
+        requisition: {
+            tabs: [
+                {
+                    name: 'General',
+                    path: 'general'
+                },
+                {
+                    name: 'On Initialization',
+                    path: 'onInit'
+                },
+                {
+                    name: 'On Finish',
+                    path: 'onFinish'
+                },
+            ]
+        },
+        publisher: {
+            protocols: {
+                http: {
+                    additionalTabs: [
+                        {
+                            name: 'On Message Received',
+                            path: 'onMessageReceived'
+                        },
+                    ]
+                },
+                amqp: {
+                }
+            },
+            tabs: [
+                {
+                    name: 'On Initialization',
+                    path: 'onInit'
+                },
+                {
+                    name: 'On Finish',
+                    path: 'onFinish'
+                },
+            ]
+        },
         // requisitions: [
         //     {
         //         parent: {
@@ -554,7 +594,7 @@ export default new Vuex.Store({
                 state.requisitions.push(requisition);
             }
             state.sideBarSelectedItem = requisition;
-            payload.router.push({path: requisition.component});
+            payload.router.push({path: '/requisition'});
         },
         addPublisher(state, payload) {
             const publisher = {
@@ -566,13 +606,7 @@ export default new Vuex.Store({
             };
             payload.parent.publishers.push(publisher);
             state.sideBarSelectedItem = publisher;
-            payload.router.push({
-                name: publisher.component,
-                params: {
-                    id: publisher.id,
-                    component: publisher
-                }
-            });
+            payload.router.push({path: '/publisher'});
         },
         addSubscription(state, payload) {
             const subscription = {
@@ -584,13 +618,7 @@ export default new Vuex.Store({
             };
             payload.parent.subscriptions.push(subscription);
             state.sideBarSelectedItem = subscription;
-            payload.router.push({
-                name: subscription.component,
-                params: {
-                    id: subscription.id,
-                    component: subscription
-                }
-            });
+            payload.router.push({path: '/subscription'});
         },
         deleteComponent(state, payload) {
             const item = payload.item;
@@ -613,11 +641,14 @@ export default new Vuex.Store({
             if (item.requisitions) {
                 item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
             }
-            payload.router.replace({path: '/'});
+            payload.router.push({path: '/'});
         },
         sideBarItemSelected(state, payload) {
             state.sideBarSelectedItem = payload.item;
-            payload.router.replace({path: payload.item.component});
+            let newPath = '/' + payload.item.component;
+            if (!payload.route.path.startsWith(newPath)) {
+                payload.router.push({path: newPath});
+            }
         }
     },
     actions: {}

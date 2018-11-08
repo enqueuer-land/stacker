@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-requisition container-fluid">
+    <div class="stage-requisition-general container-fluid">
         <div class="row">
             <div class="pl-3 pt-2" style="font-size: 0.8em; color: white">
                 Time out
@@ -59,7 +59,7 @@
 </script>
 
 <style scoped>
-    .stage-requisition {
+    .stage-requisition-general {
 
     }
 

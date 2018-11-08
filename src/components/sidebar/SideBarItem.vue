@@ -85,7 +85,7 @@
         },
         methods: {
             itemSelected: function () {
-                this.$store.commit('sideBarItemSelected', {item: this.item, router: this.$router});
+                this.$store.commit('sideBarItemSelected', {item: this.item, router: this.$router, route: this.$route});
             },
             isSelected: function () {
                 return this.$store.state.sideBarSelectedItem.id === this.item.id;

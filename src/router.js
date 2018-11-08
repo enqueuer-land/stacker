@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import StageRequisitionHeader from './components/stage/StageHeader'
+import StageRequisitionHeader from './components/stage/StageRequisitionHeader'
+import StagePublisherHeader from './components/stage/StagePublisherHeader'
 import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
+import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import StageEvent from './components/stage/StageEvent'
 
 Vue.use(Router);
@@ -11,23 +13,42 @@ export default new Router({
         {
             path: "/requisition",
             component: StageRequisitionHeader,
-            children: [{
-                path: "general",
-                component: StageRequisitionGeneral
-            },
-            {
-                path: "oninit",
-                component: StageEvent,
-            }
+            children: [
+                {
+                    path: "general",
+                    component: StageRequisitionGeneral
+                },
+                {
+                    path: "onInit",
+                    component: StageEvent,
+                },
+                {
+                    path: "onFinish",
+                    component: StageEvent,
+                }
             ]
         },
         {
             path: "/publisher",
-            component: StageRequisitionHeader,
-            // children: [{
-            //     path: "general",
-            //     component: StageRequisitionGeneral
-            // }],
+            component: StagePublisherHeader,
+            children: [
+                {
+                    path: "http",
+                    component: HttpPublisher
+                },
+                {
+                    path: "onInit",
+                    component: StageEvent,
+                },
+                {
+                    path: "onMessageReceived",
+                    component: StageEvent,
+                },
+                {
+                    path: "onFinish",
+                    component: StageEvent,
+                }
+            ],
 
         }
         //     this generates a separate chunk (about.[hash].js) for this route

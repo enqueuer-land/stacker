@@ -1,5 +1,5 @@
 <template>
-    <div class="key-value-input container-fluid">
+    <div class="key-value-input container-fluid p-0">
         <div class="row pt-1 pb-1 px-2" style="font-size: 0.8em; color: white">
             {{title}}
         </div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="row px-3">
+        <div class="row px-2">
             <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
                     style="background-color: white; color: var(--stacker-background-color); border-color: white"
                     @click="addPair">Add
@@ -55,7 +55,6 @@
                 return this.pairs.every(pair => pair.key.length > 0);
             },
             removePair: function (index) {
-                console.log('removing pair');
                 this.pairs = this.pairs.filter((_, itemIndex) => itemIndex !== index);
                 this.emitEvent();
             },
