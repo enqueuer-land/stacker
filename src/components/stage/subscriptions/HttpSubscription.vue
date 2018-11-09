@@ -1,23 +1,37 @@
 <template>
     <div class="http-subscription container-fluid px-4">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
-                Endpoint
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="$store.state.selectedItem.port" placeholder="8080" type="text" class="form-control col-2" style="background-color: transparent; color: white">
-                <input v-model="$store.state.selectedItem.endpoint" placeholder="/stacker" type="text" class="form-control input-group-append" style="background-color: transparent; color: white">
-                <div class="input-group-append"  style="font-size: 0.8em">
-                    <button class="btn dropdown-toggle" style="background-color: transparent; color: white; border: 1px solid white" type="button" data-toggle="dropdown">{{method}}</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="item in methods" :key="item" @click="selectMethod(item)">{{item}}</a>
+            <div class="col-2 pl-2">
+                <div class="row">
+                    <div class="pt-2 pl-3" style="font-size: 0.8em; color: white">
+                        Port
                     </div>
                 </div>
+                <div class="input-group input-group-sm mb-1">
+                    <input v-model="$store.state.selectedItem.port" placeholder="8080" type="text" class="form-control" style="background-color: transparent; color: white">
+                </div>
+            </div>
+            <div class="col pr-4">
+                <div class="row">
+                    <div class="pt-2 pl-1" style="font-size: 0.8em; color: white">
+                        Endpoint
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group input-group-sm mb-1 pl-1">
+                        <input v-model="$store.state.selectedItem.endpoint" placeholder="/stacker" type="text" class="form-control input-group-append" style="background-color: transparent; color: white">
+                        <div class="input-group-append"  style="font-size: 0.8em">
+                            <button class="btn dropdown-toggle" style="background-color: transparent; color: white; border: 1px solid white" type="button" data-toggle="dropdown">{{method}}</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" v-for="item in methods" :key="item" @click="selectMethod(item)">{{item}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <key-value-input v-model="$store.state.selectedItem.headers" title="Headers"/>
+        <key-value-input v-model="$store.state.selectedItem.response.headers" title="Headers"/>
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
                 Status Code
