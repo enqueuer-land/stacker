@@ -141,8 +141,8 @@
 <style scoped>
 
     .side-bar-item {
-        border-bottom: 1px solid var(--stacker-background-alternative-color);
-        background-color: var(--stacker-background-color);
+        border-bottom: 1px solid var(--stacker-background-color);
+        background-color: var(--stacker-header-background-color);
     }
 
     #name:hover {
@@ -162,6 +162,7 @@
         border-left: 8px var(--requisition-color) solid;
         border-top: 2px var(--requisition-color) solid;
         border-bottom: 2px var(--requisition-color) solid;
+        background-color: var(--stacker-background-color);
     }
 
     .publisher-side-bar-selected {
@@ -169,6 +170,7 @@
         border-left: 8px var(--publisher-color) solid;
         border-top: 2px var(--publisher-color) solid;
         border-bottom: 2px var(--publisher-color) solid;
+        background-color: var(--stacker-background-color);
     }
 
     .subscription-side-bar-selected {
@@ -176,6 +178,7 @@
         border-left: 8px var(--subscription-color) solid;
         border-top: 2px var(--subscription-color) solid;
         border-bottom: 2px var(--subscription-color) solid;
+        background-color: var(--stacker-background-color);
     }
 
     .requisition-side-bar-hover {

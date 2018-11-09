@@ -33,7 +33,7 @@
         data: function () {
             const pairs = [];
             Object.keys(this.value || {}).forEach(key => {
-                this.pairs.push({
+                pairs.push({
                     key: key,
                     value: this.value[key],
                 });
