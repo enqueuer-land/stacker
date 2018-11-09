@@ -1,17 +1,24 @@
 <template>
     <div class="http-subscription container-fluid px-4">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
-                Timeout
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="$store.state.selectedItem.timeout" placeholder="3000" type="text" class="form-control"
-                       style="background-color: transparent; color: white">
-                <div class="input-group-append">
-                    <span class="input-group-text">ms</span>
+            <div class="col pr-2 pt-2 pl-2">
+                <div class="row">
+                    <div class="col" style="font-size: 0.8em; color: white">
+                        Timeout
+                    </div>
                 </div>
+                <div class="row pl-2">
+                    <div class="input-group input-group-sm mb-0 pl-2">
+                        <input v-model="$store.state.selectedItem.timeout" placeholder="3000" type="text" class="form-control"
+                               style="background-color: transparent; color: white">
+                        <div class="input-group-append">
+                            <span class="input-group-text">ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col pr-4 ml-2 pt-4 pl-2">
+                <rounded-switch v-model="$store.state.selectedItem.avoidable" label="Avoidable" />
             </div>
         </div>
         <div class="row">
@@ -81,10 +88,11 @@
 <script>
 
     import KeyValueInput from "../../inputs/KeyValueInput";
+    import RoundedSwitch from "../../inputs/RoundedSwitch";
 
     export default {
         name: 'HttpSubscription',
-        components: {KeyValueInput},
+        components: {RoundedSwitch, KeyValueInput},
         data: function () {
             const methods = ["GET", "POST", "PATCH", "OPTION", "DELETE", "PUT"].sort();
             if (!this.$store.state.selectedItem.response) {
@@ -109,5 +117,4 @@
     .http-subscription {
 
     }
-
 </style>
