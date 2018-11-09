@@ -7,15 +7,15 @@
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="component.script" class="form-control p-1" rows="5"
+                <textarea v-model="$store.state.selectedItem[name].script" class="form-control p-1" rows="5"
                           placeholder="js code snippet"
                           style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
             </div>
         </div>
         <div class="row pb-1">
-            <assertions v-model="component.assertions"/>
+            <assertions v-model="$store.state.selectedItem[name].assertions"/>
         </div>
-        <key-value-input v-model="store" title="Store"/>
+        <key-value-input v-model="$store.state.selectedItem[name].store" title="Store"/>
     </div>
 </template>
 
@@ -30,64 +30,29 @@
             let splitPath = this.$route.path.split("/");
             const name = splitPath[splitPath.length - 1];
 
-            if (this.$store.state.selectedItem[name] === undefined) {
-                this.$store.state.selectedItem[name] = {};
-            }
-            const component =  this.$store.state.selectedItem[name];
-            console.log('data: ' + name + ' -> ' + JSON.stringify(component));
+            this.initializeComponent(name);
             return {
-                name: name,
-
-                store: {},
-                component: component,
+                name: name
             }
         },
         methods: {
-            getComponent: function() {
-                return this.$store.state.selectedItem[this.name];
+            initializeComponent: function (name) {
+                if (this.$store.state.selectedItem[name] === undefined) {
+                    this.$store.state.selectedItem[name] = {
+                        script: '',
+                        assertions: [],
+                        store: {}
+                    };
+                }
             }
         },
-        // beforeRouteEnter: function(from, to, next) {
-            // console.log('beforeRouteEnter: ' + from.path);
-            // let splitPath = from.path.split("/");
-            // name = splitPath[splitPath.length - 1];
-            // if (this.$store.state.selectedItem[name] === undefined) {
-            //     this.$store.state.selectedItem[name] = {};
-            // }
-            // this.component = this.$store.state.selectedItem[name];
-            // console.log('before: ' + name + ' -> ' + JSON.stringify(this.component));
-            // next();
-
-        // },
         watch: {
-            '$route': function() {
+            '$route': function () {
                 let splitPath = this.$route.path.split("/");
                 const name = splitPath[splitPath.length - 1];
-                if (this.$store.state.selectedItem[name] === undefined) {
-                    this.$store.state.selectedItem[name] = {};
-                }
-                console.log('route: ' + name + ' -> ' + JSON.stringify(this.$store.state.selectedItem[name]));
+                this.initializeComponent(name);
                 this.name = name;
-                // this.component = {};
-                // Object.keys(this.$store.state.selectedItem[name]).forEach(key => {
-                // this.component = this.$store.state.selectedItem[name];
-                // this.component.store = this.$store.state.selectedItem[name].store || {};
-                // console.log('route: ' + name + ' -> ' + JSON.stringify(this.$store.state.selectedItem[name].store));
-                console.log('before store: ' + JSON.stringify(this.store));
-                this.store = this.$store.state.selectedItem[name].store || {};
-                console.log('after store: ' + JSON.stringify(this.store));
-                // this.component.assertions = [];
-                // this.component.assertions = [];
-                // this.$store.state.selectedItem[name].assertions &&
-                //             this.$store.state.selectedItem[name].assertions.forEach(assertion => this.component.assertions.push(assertion));
-
-                // });
-                // console.log('route: ' + name + ' -> ' + JSON.stringify(this.component));
             },
-            store: function () {
-                console.log('store changed: ' + JSON.stringify(this.store));
-
-            }
         }
     }
 </script>

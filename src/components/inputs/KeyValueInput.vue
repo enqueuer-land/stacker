@@ -3,6 +3,7 @@
         <div class="row pt-1 px-2" style="font-size: 0.8em; color: white">
             {{title}}
         </div>
+        <div class="row px-2">
             <div class="input-group input-group-sm mb-1" v-for="(pair, index) in pairs" :key="index">
                 <input @input="update(index, 'key', $event.target.value)" :value="pair.key" type="text"
                        class="form-control" style="background-color: transparent; color: white"
@@ -17,6 +18,7 @@
                     </a>
                 </div>
             </div>
+        </div>
         <div class="row px-2">
             <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
                     style="background-color: white; color: var(--stacker-background-color); border-color: white"
@@ -31,18 +33,26 @@
         name: 'KeyValueInput',
         props: ['title', 'value'],
         data: function () {
-            const pairs = [];
-            Object.keys(this.value || {}).forEach(key => {
-                pairs.push({
-                    key: key,
-                    value: this.value[key],
-                });
-            });
             return {
-                pairs: pairs
+                pairs: this.getContent()
             }
         },
+        watch: {
+          value: function() {
+              this.pairs = this.getContent()
+          }
+        },
         methods: {
+            getContent() {
+                const pairs = [];
+                Object.keys(this.value || {}).forEach(key => {
+                    pairs.push({
+                        key: key,
+                        value: this.value[key],
+                    });
+                });
+                return pairs;
+            },
             emitEvent() {
                 let mapped = {};
                 this.pairs.forEach(pair => mapped[pair.key] = pair.value);
