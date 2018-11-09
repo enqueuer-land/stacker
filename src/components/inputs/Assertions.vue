@@ -29,9 +29,12 @@
     export default {
         name: 'Assertions',
         components: {Assertion},
+        props: {
+            value: {}
+        },
         data: function () {
             return {
-                assertions: [],
+                assertions: this.value || [],
             }
         },
         methods: {
@@ -41,6 +44,11 @@
             removeAssertion: function (indexToRemove) {
                 this.assertions = this.assertions.filter((assertion, index) => index !== indexToRemove);
             }
+        },
+        watch: {
+            assertions: function() {
+                this.$emit('input', this.assertions);
+            },
         }
     }
 </script>

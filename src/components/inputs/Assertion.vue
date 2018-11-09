@@ -3,7 +3,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <div class="input-group-append" style="font-size: 0.8em">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                         {{possibleAssertions[currentAssertionIndex].label}}
                     </button>
                     <div class="dropdown-menu">
@@ -13,9 +13,10 @@
                 </div>
                 <input v-model="assertionValue" type="text" class="form-control"
                        style="background-color: transparent; color: white">
-                <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0" class="input-group-append"
+                <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
+                     class="input-group-append"
                      style="font-size: 0.8em">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                         {{possibleAssertions[currentAssertionIndex].criteria[currentCriteriaIndex].label}}
                     </button>
                     <div class="dropdown-menu">
@@ -26,7 +27,8 @@
                         >{{criterium.label}}</a>
                     </div>
                 </div>
-                <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0" type="text"
+                <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
+                       type="text"
                        class="form-control input-group-append"
                        v-model="criteriumValue"
                        style="background-color: transparent; color: white">
@@ -40,13 +42,36 @@
     export default {
         name: 'Assertion',
         components: {},
+        props: {
+            value: {}
+        },
         data: function () {
-            return {
-                possibleAssertions: this.$store.state.assertions,
+            const defaultValue = {
                 currentAssertionIndex: 0,
                 currentCriteriaIndex: 0,
                 assertionValue: '',
-                criteriumValue: ''
+                criteriumValue: '',
+                possibleAssertions: this.$store.state.assertions
+            };
+            Object.keys(this.value || {}).forEach(key => {
+                defaultValue.possibleAssertions.forEach((possible, index) => {
+                    if (possible.name === key) {
+                        defaultValue.currentAssertionIndex = index;
+                        defaultValue.assertionValue = this.value[key];
+                        delete this.value[key];
+                        (possible.criteria || []).forEach((criterium, criteriumIndex) => {
+                            Object.keys(this.value || {}).forEach((remainingKey) => {
+                                if (criterium.name === remainingKey) {
+                                    defaultValue.currentCriteriaIndex = criteriumIndex;
+                                    defaultValue.criteriumValue = this.value[remainingKey];
+                                }
+                            });
+                        })
+                    }
+                });
+            });
+            return {
+                ...defaultValue
             }
         },
         methods: {

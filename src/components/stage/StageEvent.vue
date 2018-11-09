@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row pb-1">
-            <assertions v-model="component.assertions"/>
+            <assertions v-model="getComponent().assertions"/>
         </div>
         <key-value-input v-model="component.store" title="Store"/>
     </div>
@@ -27,20 +27,46 @@
         name: 'StageEvent',
         components: {Assertions, KeyValueInput},
         data: function () {
+            let splitPath = this.$route.path.split("/");
+            const name = splitPath[splitPath.length - 1];
+
+            if (this.$store.state.selectedItem[name] === undefined) {
+                this.$store.state.selectedItem[name] = {};
+            }
+            const component =  this.$store.state.selectedItem[name];
+            console.log('data: ' + name + ' -> ' + JSON.stringify(component));
             return {
-                component: {},
+                name: name,
+                component: component,
             }
         },
+        methods: {
+            getComponent: function() {
+                return this.$store.state.selectedItem[this.name];
+            }
+        },
+        // beforeRouteEnter: function(from, to, next) {
+            // console.log('beforeRouteEnter: ' + from.path);
+            // let splitPath = from.path.split("/");
+            // name = splitPath[splitPath.length - 1];
+            // if (this.$store.state.selectedItem[name] === undefined) {
+            //     this.$store.state.selectedItem[name] = {};
+            // }
+            // this.component = this.$store.state.selectedItem[name];
+            // console.log('before: ' + name + ' -> ' + JSON.stringify(this.component));
+            // next();
+
+        // },
         watch: {
             '$route'() {
-                console.log('Stage event changed route');
                 let splitPath = this.$route.path.split("/");
                 const name = splitPath[splitPath.length - 1];
                 if (this.$store.state.selectedItem[name] === undefined) {
                     this.$store.state.selectedItem[name] = {};
                 }
+                this.name = name;
                 this.component = this.$store.state.selectedItem[name];
-                console.log('Stage event changed route: ' + name + ' -> ' + JSON.stringify(this.component));
+                console.log('route: ' + name + ' -> ' + JSON.stringify(this.component));
             }
         }
     }

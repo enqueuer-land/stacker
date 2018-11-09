@@ -106,6 +106,7 @@
                     'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
                     'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
                     'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
+                    'requisition-side-bar-opened': this.isRequisition && this.opened && !this.isSelected(),
                     'requisition-side-bar-selected': this.isRequisition && this.isSelected(),
                     'publisher-side-bar-selected': this.isPublisher && this.isSelected(),
                     'subscription-side-bar-selected': this.isSubscription && this.isSelected(),
@@ -146,6 +147,14 @@
 
     #name:hover {
         color: white;
+    }
+
+    .requisition-side-bar-opened {
+        color: var(--index-color);
+        background-color: var(--stacker-background-alternative-color);
+        border-left: 8px var(--requisition-color) solid;
+        border-top: 2px var(--requisition-color) solid;
+        border-bottom: 2px var(--requisition-color) solid;
     }
 
     .requisition-side-bar-selected {

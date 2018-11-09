@@ -5,7 +5,7 @@
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>
             <div :id="node.id" class="collapse">
-                <div class="card-body p-0 pl-2" style="background-color: var(--index-color)">
+                <div class="card-body p-0 pl-2" style="background-color: var(--requisition-color)">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in node.requisitions" :index="index" :key="requisition.id"
                                      :node="requisition"/>
@@ -36,7 +36,6 @@
         methods: {
             onClick: function () {
                 this.opened = $('#collapsible' + this.node.id).hasClass('collapsed');
-                console.log(this.opened);
             }
         },
         computed: {
@@ -51,7 +50,7 @@
 
 <style scoped>
     .side-bar-node {
-        background-color: var(--stacker-background-color);
+        /*background-color: var(--stacker-background-color);*/
         border-top: 1px var(--index-color) solid;
     }
 
