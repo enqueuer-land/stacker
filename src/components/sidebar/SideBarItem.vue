@@ -141,7 +141,7 @@
 <style scoped>
 
     .side-bar-item {
-        border-bottom: 1px solid var(--stacker-background-color);
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
         background-color: var(--stacker-header-background-color);
     }
 

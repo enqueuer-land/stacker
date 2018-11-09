@@ -13,9 +13,9 @@
             </div>
         </div>
         <div class="row pb-1">
-            <assertions v-model="getComponent().assertions"/>
+            <assertions v-model="component.assertions"/>
         </div>
-        <key-value-input v-model="component.store" title="Store"/>
+        <key-value-input v-model="store" title="Store"/>
     </div>
 </template>
 
@@ -37,6 +37,8 @@
             console.log('data: ' + name + ' -> ' + JSON.stringify(component));
             return {
                 name: name,
+
+                store: {},
                 component: component,
             }
         },
@@ -58,15 +60,33 @@
 
         // },
         watch: {
-            '$route'() {
+            '$route': function() {
                 let splitPath = this.$route.path.split("/");
                 const name = splitPath[splitPath.length - 1];
                 if (this.$store.state.selectedItem[name] === undefined) {
                     this.$store.state.selectedItem[name] = {};
                 }
+                console.log('route: ' + name + ' -> ' + JSON.stringify(this.$store.state.selectedItem[name]));
                 this.name = name;
-                this.component = this.$store.state.selectedItem[name];
-                console.log('route: ' + name + ' -> ' + JSON.stringify(this.component));
+                // this.component = {};
+                // Object.keys(this.$store.state.selectedItem[name]).forEach(key => {
+                // this.component = this.$store.state.selectedItem[name];
+                // this.component.store = this.$store.state.selectedItem[name].store || {};
+                // console.log('route: ' + name + ' -> ' + JSON.stringify(this.$store.state.selectedItem[name].store));
+                console.log('before store: ' + JSON.stringify(this.store));
+                this.store = this.$store.state.selectedItem[name].store || {};
+                console.log('after store: ' + JSON.stringify(this.store));
+                // this.component.assertions = [];
+                // this.component.assertions = [];
+                // this.$store.state.selectedItem[name].assertions &&
+                //             this.$store.state.selectedItem[name].assertions.forEach(assertion => this.component.assertions.push(assertion));
+
+                // });
+                // console.log('route: ' + name + ' -> ' + JSON.stringify(this.component));
+            },
+            store: function () {
+                console.log('store changed: ' + JSON.stringify(this.store));
+
             }
         }
     }

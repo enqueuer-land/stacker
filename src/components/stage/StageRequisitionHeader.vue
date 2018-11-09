@@ -55,6 +55,7 @@
         },
         data: function () {
             return {
+                id: this.getCurrentSelected().id,
                 tabSelectedIndex: 0,
             }
         },
@@ -79,11 +80,21 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                console.log('Req tab selected');
+                console.log('Req tab selected: ' + '/requisition/' + this.getCurrentSelected().id + '/' + tab.path);
                 this.$router.push({path: '/requisition/' + this.getCurrentSelected().id + '/' + tab.path});
             }
         },
         watch: {
+            '$route': function() {
+                let id = this.$route.path.split("/")[2];
+                console.log('Id: ' + id);
+                if (id !== this.id) {
+                    console.log('Different: ' + id);
+                    this.id = id;
+                    this.tabSelected(this.$store.state.requisition.tabs[0], 0);
+                }
+
+            }
         }
     }
 </script>

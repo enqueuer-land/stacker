@@ -51,9 +51,9 @@
             borderColor: function() {
                 return {
                     'no-component-selected': !this.$store.state.selectedItem,
-                    'requisition-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('REQ'),
-                    'publisher-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('PUB'),
-                    'subscription-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('SUB'),
+                    // 'requisition-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('REQ'),
+                    // 'publisher-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('PUB'),
+                    // 'subscription-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('SUB'),
                 }
             }
         }

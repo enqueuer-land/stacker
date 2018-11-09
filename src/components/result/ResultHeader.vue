@@ -110,8 +110,9 @@
             resultHeader: function () {
                 return {
                     'stacker-header': true,
-                    'passing-test-color': this.$store.state.result && this.tests.isValid(),
-                    'failing-test-color': this.$store.state.result && !this.tests.isValid()
+                    'no-test-color': !this.$store.state.result,
+                    'passing-result-header': this.$store.state.result && this.tests.isValid(),
+                    'failing-result-header': this.$store.state.result && !this.tests.isValid()
                 };
             }
         },
@@ -147,14 +148,15 @@
         letter-spacing: -15px;
     }
 
+    .no-test-color {
+        color: white;
+    }
+
     .failing-result-header {
         border-left: 8px var(--failing-test-color) solid;
         border-right: 8px var(--failing-test-color) solid;
     }
 
-    .no-test-color {
-        color: white;
-    }
 
     .passing-result-header {
         border-right: 8px var(--passing-test-color) solid;

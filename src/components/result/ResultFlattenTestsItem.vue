@@ -127,6 +127,10 @@
         height: inherit;
     }
 
+    a:focus {
+        color: white;
+    }
+
     a:hover {
         color: white;
         /*border-left: 4px solid;*/

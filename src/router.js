@@ -14,10 +14,10 @@ export default new Router({
             path: "/requisition/:id",
             component: StageRequisitionHeader,
             children: [
-                {
-                    path: "",
-                    component: StageRequisitionGeneral
-                },
+                // {
+                //     path: "",
+                //     component: StageRequisitionGeneral
+                // },
                 {
                     path: "general",
                     component: StageRequisitionGeneral
