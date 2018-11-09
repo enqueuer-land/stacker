@@ -46,8 +46,6 @@
 </template>
 
 <script>
-    import ObjectDecycler from "../../tests/object-decycler";
-
     export default {
         name: 'StageRequisitionHeader',
         mounted: function() {
@@ -60,8 +58,8 @@
             }
         },
         methods: {
-            runButtonClick: function() {
-                console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(this.getCurrentSelected())));
+            runButtonClick: async function() {
+                await this.$store.dispatch('runRequisition', this.getCurrentSelected());
             },
             getCurrentSelected: function() {
                 return this.$store.state.selectedItem;
@@ -80,20 +78,17 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                console.log('Req tab selected: ' + '/requisition/' + this.getCurrentSelected().id + '/' + tab.path);
                 this.$router.push({path: '/requisition/' + this.getCurrentSelected().id + '/' + tab.path});
             }
         },
         watch: {
             '$route': function() {
+                console.log('req detected route changed: ' + this.$route.path);
                 let id = this.$route.path.split("/")[2];
-                console.log('Id: ' + id);
                 if (id !== this.id) {
-                    console.log('Different: ' + id);
                     this.id = id;
                     this.tabSelected(this.$store.state.requisition.tabs[0], 0);
                 }
-
             }
         }
     }

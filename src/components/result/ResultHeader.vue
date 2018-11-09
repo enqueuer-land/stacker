@@ -63,9 +63,12 @@
     export default {
         name: 'ResultHeader',
         components: {},
+        props: {
+            value: {}
+        },
         data: function () {
             return {
-                tests: new FlattenTestsSummary().addTest($store.state.result),
+                tests: new FlattenTestsSummary().addTest(this.value),
                 mouseIsOver: false,
                 actions: [{
                     name: "Save"
@@ -74,7 +77,18 @@
                 }]
             }
         },
+        watch: {
+            '$store.state.result'() {
+                console.log('Result header rtests changed');
+            },
+            result() {
+                console.log('Result header rtests changed');
+            }
+        },
         computed: {
+            result: function() {
+                return this.$store.state.result;
+            },
             enqueuerClass: function () {
                 return {
                     'col-7': true,
@@ -156,7 +170,6 @@
         border-left: 8px var(--failing-test-color) solid;
         border-right: 8px var(--failing-test-color) solid;
     }
-
 
     .passing-result-header {
         border-right: 8px var(--passing-test-color) solid;

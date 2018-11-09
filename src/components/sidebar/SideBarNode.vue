@@ -5,7 +5,7 @@
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>
             <div :id="node.id" class="collapse">
-                <div class="card-body p-0 pl-2" style="background-color: var(--requisition-color)">
+                <div class="card-body p-0 pl-2" style="background-color: white">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in node.requisitions" :index="index" :key="requisition.id"
                                      :node="requisition"/>

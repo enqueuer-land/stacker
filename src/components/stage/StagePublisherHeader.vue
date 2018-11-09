@@ -51,10 +51,15 @@
 <script>
     export default {
         name: 'StageHeader',
+        mounted: function() {
+            const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
+            this.tabSelected({path: firstProtocol}, 0);
+        },
         data: function () {
-            const firstProtocol = Object.keys(this.$store.state.publisher.protocols).filter((key, index) => index === 0)[0];
+            const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
             return {
                 tabSelectedIndex: 0,
+                id: this.getCurrentSelected().id,
                 tabs: this.refreshAvailableTabs(firstProtocol),
                 selectedProtocol: firstProtocol,
             }
@@ -90,15 +95,22 @@
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
             tabSelected: function (tab, index) {
+                console.log('tab selected ' + tab.path);
                 this.tabSelectedIndex = index;
                 this.$router.push({path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path});
             }
         },
         watch: {
-            // '$route' () {
-            //     console.log('Entered publisher');
-            //     this.tabSelectedIndex = 0;
-            // }
+            '$route': function() {
+                let id = this.$route.path.split("/")[2];
+                if (id !== this.id) {
+                    console.log('route changed ');
+                    this.id = id;
+                    const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
+                    this.tabSelected({path: firstProtocol}, 0);
+                    console.log('route: ' + firstProtocol);
+                }
+            }
         }
     }
 </script>

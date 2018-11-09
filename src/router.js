@@ -14,10 +14,6 @@ export default new Router({
             path: "/requisition/:id",
             component: StageRequisitionHeader,
             children: [
-                // {
-                //     path: "",
-                //     component: StageRequisitionGeneral
-                // },
                 {
                     path: "general",
                     component: StageRequisitionGeneral
@@ -36,10 +32,6 @@ export default new Router({
             path: "/publisher/:id",
             component: StagePublisherHeader,
             children: [
-                {
-                    path: "",
-                    component: HttpPublisher
-                },
                 {
                     path: "http",
                     component: HttpPublisher

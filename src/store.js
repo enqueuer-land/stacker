@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {generateId} from './tests/id-generator';
+import ObjectDecycler from "./tests/object-decycler";
 
 Vue.use(Vuex);
 
@@ -34,8 +35,7 @@ export default new Vuex.Store({
                         },
                     ]
                 },
-                amqp: {
-                }
+                amqp: {}
             },
             tabs: [
                 {
@@ -58,14 +58,50 @@ export default new Vuex.Store({
                         label: 'to be',
                     },
                     {
+                        name: 'toBeGreaterThanOrEqualTo',
+                        label: 'to be greater than or equal to',
+                    },
+                    {
                         name: 'toBeGreaterThan',
                         label: 'to be greater than',
+                    },
+                    {
+                        name: 'toBeLessThanOrEqualTo',
+                        label: 'to be less than or equal to',
+                    },
+                    {
+                        name: 'toBeLessThan',
+                        label: 'to be less than',
+                    },
+                    {
+                        name: 'toContain',
+                        label: 'to contain',
                     }
                 ]
             },
             {
                 label: 'Expect to be defined',
                 name: 'expectToBeDefined',
+                criteria: []
+            },
+            {
+                label: 'Expect to be truthy',
+                name: 'expectToBeTruthy',
+                criteria: []
+            },
+            {
+                label: 'Expect to be falsy',
+                name: 'expectToBeFalsy',
+                criteria: []
+            },
+            {
+                label: 'Expect to be defined',
+                name: 'expectToBeDefined',
+                criteria: []
+            },
+            {
+                label: 'Expect to be undefined',
+                name: 'expectToBeUndefined',
                 criteria: []
             }
         ],
@@ -242,361 +278,362 @@ export default new Vuex.Store({
         //         ]
         //     }
         // ],
-        result: {
-            "valid": false,
-            "tests": [
-                {
-                    "valid": true,
-                    "name": "No time out",
-                    "description": "Requisition has not timed out"
-                },
-                {
-                    "valid": false,
-                    "name": "Some stuff",
-                    "description": "Description"
-                },
-                {
-                    "valid": true,
-                    "name": "Some stuff",
-                    "description": "Description"
-                },
-                {
-                    "valid": true,
-                    "name": "Some stuff",
-                    "description": "Description"
-                }
 
-            ],
-            "name": "Requisition Giant name and stuff #0",
-            "subscriptions": [
-                {
-                    "name": "Subscription #0",
-                    "type": "https-server",
-                    "tests": [
-                        {
-                            "name": "Https payload",
-                            "valid": true,
-                            "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
-                        },
-                        {
-                            "valid": true,
-                            "name": "Message received",
-                            "description": "Subscription has received its message"
-                        }
-                    ],
-                    "valid": true,
-                    "connectionTime": "2018-11-02T17:19:26.179Z",
-                    "messageReceived": {
-                        "headers": {
-                            "content-type": "application/json",
-                            "content-length": "23",
-                            "host": "localhost:4430",
-                            "connection": "close"
-                        },
-                        "params": {},
-                        "query": {},
-                        "body": "{\n  \"https\": \"works!\"\n}"
-                    }
-                }
-            ],
-            "publishers": [
-                {
-                    "name": "publisher description",
-                    "valid": true,
-                    "type": "https-client",
-                    "tests": [
-                        {
-                            "name": "Published",
-                            "valid": true,
-                            "description": "Published successfully"
-                        },
-                        {
-                            "name": "Status Code",
-                            "valid": true,
-                            "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
-                        },
-                        {
-                            "name": "Body",
-                            "valid": true,
-                            "description": "Expected 'body' to be equal to 'https'. Received 'https'"
-                        },
-                        {
-                            "name": "Response message received",
-                            "valid": true,
-                            "description": "Response message was received"
-                        }
-                    ],
-                    "publishTime": "2018-11-02T17:19:26.212Z",
-                    "messageReceived": {
-                        "statusCode": 200,
-                        "body": "https",
-                        "headers": {
-                            "x-powered-by": "Express",
-                            "access-control-allow-origin": "*",
-                            "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                            "content-type": "text/html; charset=utf-8",
-                            "content-length": "5",
-                            "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
-                            "date": "Fri, 02 Nov 2018 17:19:26 GMT",
-                            "connection": "close"
-                        },
-                        "request": {
-                            "uri": {
-                                "protocol": "https:",
-                                "slashes": true,
-                                "auth": null,
-                                "host": "localhost:4430",
-                                "port": "4430",
-                                "hostname": "localhost",
-                                "hash": null,
-                                "search": null,
-                                "query": null,
-                                "pathname": "/enqueuer",
-                                "path": "/enqueuer",
-                                "href": "https://localhost:4430/enqueuer"
-                            },
-                            "method": "post",
-                            "headers": {
-                                "content-type": "application/json",
-                                "Content-Length": 23
-                            }
-                        }
-                    }
-                }
-            ],
-            "time": {
-                "startTime": "2018-11-02T17:19:26.162Z",
-                "endTime": "2018-11-02T17:19:26.213Z",
-                "totalTime": 51011,
-                "timeout": 3000
-            },
-            requisitions: [{
-                "valid": true,
-                "tests": [
-                    {
-                        "valid": true,
-                        "name": "No time out",
-                        "description": "Requisition has timed out"
-                    }
-                ],
-                "name": "Requisition #0",
-                "subscriptions": [
-                    {
-                        "name": "Subscription #0",
-                        "type": "https-server",
-                        "tests": [
-                            {
-                                "name": "Https payload",
-                                "valid": true,
-                                "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
-                            },
-                            {
-                                "valid": true,
-                                "name": "Message received",
-                                "description": "Subscription has received its message"
-                            }
-                        ],
-                        "valid": true,
-                        "connectionTime": "2018-11-02T17:19:26.179Z",
-                        "messageReceived": {
-                            "headers": {
-                                "content-type": "application/json",
-                                "content-length": "23",
-                                "host": "localhost:4430",
-                                "connection": "close"
-                            },
-                            "params": {},
-                            "query": {},
-                            "body": "{\n  \"https\": \"works!\"\n}"
-                        }
-                    }
-                ],
-                "publishers": [
-                    {
-                        "name": "publisher description",
-                        "valid": true,
-                        "type": "https-client",
-                        "tests": [
-                            {
-                                "name": "Published",
-                                "valid": true,
-                                "description": "Published successfully"
-                            },
-                            {
-                                "name": "Status Code",
-                                "valid": true,
-                                "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
-                            },
-                            {
-                                "name": "Body",
-                                "valid": true,
-                                "description": "Expected 'body' to be equal to 'https'. Received 'https'"
-                            },
-                            {
-                                "name": "Response message received",
-                                "valid": true,
-                                "description": "Response message was received"
-                            }
-                        ],
-                        "publishTime": "2018-11-02T17:19:26.212Z",
-                        "messageReceived": {
-                            "statusCode": 200,
-                            "body": "https",
-                            "headers": {
-                                "x-powered-by": "Express",
-                                "access-control-allow-origin": "*",
-                                "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                                "content-type": "text/html; charset=utf-8",
-                                "content-length": "5",
-                                "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
-                                "date": "Fri, 02 Nov 2018 17:19:26 GMT",
-                                "connection": "close"
-                            },
-                            "request": {
-                                "uri": {
-                                    "protocol": "https:",
-                                    "slashes": true,
-                                    "auth": null,
-                                    "host": "localhost:4430",
-                                    "port": "4430",
-                                    "hostname": "localhost",
-                                    "hash": null,
-                                    "search": null,
-                                    "query": null,
-                                    "pathname": "/enqueuer",
-                                    "path": "/enqueuer",
-                                    "href": "https://localhost:4430/enqueuer"
-                                },
-                                "method": "post",
-                                "headers": {
-                                    "content-type": "application/json",
-                                    "Content-Length": 23
-                                }
-                            }
-                        }
-                    }
-                ],
-                "time": {
-                    "startTime": "2018-11-02T17:19:26.162Z",
-                    "endTime": "2018-11-02T17:19:26.213Z",
-                    "totalTime": 51,
-                    "timeout": 3000
-                }
-            },
-                {
-                    "valid": true,
-                    "tests": [
-                        {
-                            "valid": true,
-                            "name": "No time out",
-                            "description": "Requisition has timed out"
-                        }
-                    ],
-                    "name": "Requisition #1",
-                    "subscriptions": [
-                        {
-                            "name": "Subscription #0",
-                            "type": "https-server",
-                            "tests": [
-                                {
-                                    "name": "Https payload",
-                                    "valid": true,
-                                    "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
-                                },
-                                {
-                                    "valid": true,
-                                    "name": "Message received",
-                                    "description": "Subscription has received its message"
-                                }
-                            ],
-                            "valid": true,
-                            "connectionTime": "2018-11-02T17:19:26.179Z",
-                            "messageReceived": {
-                                "headers": {
-                                    "content-type": "application/json",
-                                    "content-length": "23",
-                                    "host": "localhost:4430",
-                                    "connection": "close"
-                                },
-                                "params": {},
-                                "query": {},
-                                "body": "{\n  \"https\": \"works!\"\n}"
-                            }
-                        }
-                    ],
-                    "publishers": [
-                        {
-                            "name": "publisher description",
-                            "valid": true,
-                            "type": "https-client",
-                            "tests": [
-                                {
-                                    "name": "Published",
-                                    "valid": true,
-                                    "description": "Published successfully"
-                                },
-                                {
-                                    "name": "Status Code",
-                                    "valid": true,
-                                    "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
-                                },
-                                {
-                                    "name": "Body",
-                                    "valid": true,
-                                    "description": "Expected 'body' to be equal to 'https'. Received 'https'"
-                                },
-                                {
-                                    "name": "Response message received",
-                                    "valid": true,
-                                    "description": "Response message was received"
-                                }
-                            ],
-                            "publishTime": "2018-11-02T17:19:26.212Z",
-                            "messageReceived": {
-                                "statusCode": 200,
-                                "body": "https",
-                                "headers": {
-                                    "x-powered-by": "Express",
-                                    "access-control-allow-origin": "*",
-                                    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-                                    "content-type": "text/html; charset=utf-8",
-                                    "content-length": "5",
-                                    "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
-                                    "date": "Fri, 02 Nov 2018 17:19:26 GMT",
-                                    "connection": "close"
-                                },
-                                "request": {
-                                    "uri": {
-                                        "protocol": "https:",
-                                        "slashes": true,
-                                        "auth": null,
-                                        "host": "localhost:4430",
-                                        "port": "4430",
-                                        "hostname": "localhost",
-                                        "hash": null,
-                                        "search": null,
-                                        "query": null,
-                                        "pathname": "/enqueuer",
-                                        "path": "/enqueuer",
-                                        "href": "https://localhost:4430/enqueuer"
-                                    },
-                                    "method": "post",
-                                    "headers": {
-                                        "content-type": "application/json",
-                                        "Content-Length": 23
-                                    }
-                                }
-                            }
-                        }
-                    ],
-                    "time": {
-                        "startTime": "2018-11-02T17:19:26.162Z",
-                        "endTime": "2018-11-02T17:19:26.213Z",
-                        "totalTime": 51,
-                        "timeout": 3000
-                    }
-                }]
-        }
+        // result: {
+        //     "valid": false,
+        //     "tests": [
+        //         {
+        //             "valid": true,
+        //             "name": "No time out",
+        //             "description": "Requisition has not timed out"
+        //         },
+        //         {
+        //             "valid": false,
+        //             "name": "Some stuff",
+        //             "description": "Description"
+        //         },
+        //         {
+        //             "valid": true,
+        //             "name": "Some stuff",
+        //             "description": "Description"
+        //         },
+        //         {
+        //             "valid": true,
+        //             "name": "Some stuff",
+        //             "description": "Description"
+        //         }
+        //
+        //     ],
+        //     "name": "Requisition Giant name and stuff #0",
+        //     "subscriptions": [
+        //         {
+        //             "name": "Subscription #0",
+        //             "type": "https-server",
+        //             "tests": [
+        //                 {
+        //                     "name": "Https payload",
+        //                     "valid": true,
+        //                     "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+        //                 },
+        //                 {
+        //                     "valid": true,
+        //                     "name": "Message received",
+        //                     "description": "Subscription has received its message"
+        //                 }
+        //             ],
+        //             "valid": true,
+        //             "connectionTime": "2018-11-02T17:19:26.179Z",
+        //             "messageReceived": {
+        //                 "headers": {
+        //                     "content-type": "application/json",
+        //                     "content-length": "23",
+        //                     "host": "localhost:4430",
+        //                     "connection": "close"
+        //                 },
+        //                 "params": {},
+        //                 "query": {},
+        //                 "body": "{\n  \"https\": \"works!\"\n}"
+        //             }
+        //         }
+        //     ],
+        //     "publishers": [
+        //         {
+        //             "name": "publisher description",
+        //             "valid": true,
+        //             "type": "https-client",
+        //             "tests": [
+        //                 {
+        //                     "name": "Published",
+        //                     "valid": true,
+        //                     "description": "Published successfully"
+        //                 },
+        //                 {
+        //                     "name": "Status Code",
+        //                     "valid": true,
+        //                     "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+        //                 },
+        //                 {
+        //                     "name": "Body",
+        //                     "valid": true,
+        //                     "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+        //                 },
+        //                 {
+        //                     "name": "Response message received",
+        //                     "valid": true,
+        //                     "description": "Response message was received"
+        //                 }
+        //             ],
+        //             "publishTime": "2018-11-02T17:19:26.212Z",
+        //             "messageReceived": {
+        //                 "statusCode": 200,
+        //                 "body": "https",
+        //                 "headers": {
+        //                     "x-powered-by": "Express",
+        //                     "access-control-allow-origin": "*",
+        //                     "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        //                     "content-type": "text/html; charset=utf-8",
+        //                     "content-length": "5",
+        //                     "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+        //                     "date": "Fri, 02 Nov 2018 17:19:26 GMT",
+        //                     "connection": "close"
+        //                 },
+        //                 "request": {
+        //                     "uri": {
+        //                         "protocol": "https:",
+        //                         "slashes": true,
+        //                         "auth": null,
+        //                         "host": "localhost:4430",
+        //                         "port": "4430",
+        //                         "hostname": "localhost",
+        //                         "hash": null,
+        //                         "search": null,
+        //                         "query": null,
+        //                         "pathname": "/enqueuer",
+        //                         "path": "/enqueuer",
+        //                         "href": "https://localhost:4430/enqueuer"
+        //                     },
+        //                     "method": "post",
+        //                     "headers": {
+        //                         "content-type": "application/json",
+        //                         "Content-Length": 23
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     ],
+        //     "time": {
+        //         "startTime": "2018-11-02T17:19:26.162Z",
+        //         "endTime": "2018-11-02T17:19:26.213Z",
+        //         "totalTime": 51011,
+        //         "timeout": 3000
+        //     },
+        //     requisitions: [{
+        //         "valid": true,
+        //         "tests": [
+        //             {
+        //                 "valid": true,
+        //                 "name": "No time out",
+        //                 "description": "Requisition has timed out"
+        //             }
+        //         ],
+        //         "name": "Requisition #0",
+        //         "subscriptions": [
+        //             {
+        //                 "name": "Subscription #0",
+        //                 "type": "https-server",
+        //                 "tests": [
+        //                     {
+        //                         "name": "Https payload",
+        //                         "valid": true,
+        //                         "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+        //                     },
+        //                     {
+        //                         "valid": true,
+        //                         "name": "Message received",
+        //                         "description": "Subscription has received its message"
+        //                     }
+        //                 ],
+        //                 "valid": true,
+        //                 "connectionTime": "2018-11-02T17:19:26.179Z",
+        //                 "messageReceived": {
+        //                     "headers": {
+        //                         "content-type": "application/json",
+        //                         "content-length": "23",
+        //                         "host": "localhost:4430",
+        //                         "connection": "close"
+        //                     },
+        //                     "params": {},
+        //                     "query": {},
+        //                     "body": "{\n  \"https\": \"works!\"\n}"
+        //                 }
+        //             }
+        //         ],
+        //         "publishers": [
+        //             {
+        //                 "name": "publisher description",
+        //                 "valid": true,
+        //                 "type": "https-client",
+        //                 "tests": [
+        //                     {
+        //                         "name": "Published",
+        //                         "valid": true,
+        //                         "description": "Published successfully"
+        //                     },
+        //                     {
+        //                         "name": "Status Code",
+        //                         "valid": true,
+        //                         "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+        //                     },
+        //                     {
+        //                         "name": "Body",
+        //                         "valid": true,
+        //                         "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+        //                     },
+        //                     {
+        //                         "name": "Response message received",
+        //                         "valid": true,
+        //                         "description": "Response message was received"
+        //                     }
+        //                 ],
+        //                 "publishTime": "2018-11-02T17:19:26.212Z",
+        //                 "messageReceived": {
+        //                     "statusCode": 200,
+        //                     "body": "https",
+        //                     "headers": {
+        //                         "x-powered-by": "Express",
+        //                         "access-control-allow-origin": "*",
+        //                         "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        //                         "content-type": "text/html; charset=utf-8",
+        //                         "content-length": "5",
+        //                         "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+        //                         "date": "Fri, 02 Nov 2018 17:19:26 GMT",
+        //                         "connection": "close"
+        //                     },
+        //                     "request": {
+        //                         "uri": {
+        //                             "protocol": "https:",
+        //                             "slashes": true,
+        //                             "auth": null,
+        //                             "host": "localhost:4430",
+        //                             "port": "4430",
+        //                             "hostname": "localhost",
+        //                             "hash": null,
+        //                             "search": null,
+        //                             "query": null,
+        //                             "pathname": "/enqueuer",
+        //                             "path": "/enqueuer",
+        //                             "href": "https://localhost:4430/enqueuer"
+        //                         },
+        //                         "method": "post",
+        //                         "headers": {
+        //                             "content-type": "application/json",
+        //                             "Content-Length": 23
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         ],
+        //         "time": {
+        //             "startTime": "2018-11-02T17:19:26.162Z",
+        //             "endTime": "2018-11-02T17:19:26.213Z",
+        //             "totalTime": 51,
+        //             "timeout": 3000
+        //         }
+        //     },
+        //         {
+        //             "valid": true,
+        //             "tests": [
+        //                 {
+        //                     "valid": true,
+        //                     "name": "No time out",
+        //                     "description": "Requisition has timed out"
+        //                 }
+        //             ],
+        //             "name": "Requisition #1",
+        //             "subscriptions": [
+        //                 {
+        //                     "name": "Subscription #0",
+        //                     "type": "https-server",
+        //                     "tests": [
+        //                         {
+        //                             "name": "Https payload",
+        //                             "valid": true,
+        //                             "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+        //                         },
+        //                         {
+        //                             "valid": true,
+        //                             "name": "Message received",
+        //                             "description": "Subscription has received its message"
+        //                         }
+        //                     ],
+        //                     "valid": true,
+        //                     "connectionTime": "2018-11-02T17:19:26.179Z",
+        //                     "messageReceived": {
+        //                         "headers": {
+        //                             "content-type": "application/json",
+        //                             "content-length": "23",
+        //                             "host": "localhost:4430",
+        //                             "connection": "close"
+        //                         },
+        //                         "params": {},
+        //                         "query": {},
+        //                         "body": "{\n  \"https\": \"works!\"\n}"
+        //                     }
+        //                 }
+        //             ],
+        //             "publishers": [
+        //                 {
+        //                     "name": "publisher description",
+        //                     "valid": true,
+        //                     "type": "https-client",
+        //                     "tests": [
+        //                         {
+        //                             "name": "Published",
+        //                             "valid": true,
+        //                             "description": "Published successfully"
+        //                         },
+        //                         {
+        //                             "name": "Status Code",
+        //                             "valid": true,
+        //                             "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+        //                         },
+        //                         {
+        //                             "name": "Body",
+        //                             "valid": true,
+        //                             "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+        //                         },
+        //                         {
+        //                             "name": "Response message received",
+        //                             "valid": true,
+        //                             "description": "Response message was received"
+        //                         }
+        //                     ],
+        //                     "publishTime": "2018-11-02T17:19:26.212Z",
+        //                     "messageReceived": {
+        //                         "statusCode": 200,
+        //                         "body": "https",
+        //                         "headers": {
+        //                             "x-powered-by": "Express",
+        //                             "access-control-allow-origin": "*",
+        //                             "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        //                             "content-type": "text/html; charset=utf-8",
+        //                             "content-length": "5",
+        //                             "etag": "W/\"5-w0N9vHwSVdOiHURNhuvy6SNMIr0\"",
+        //                             "date": "Fri, 02 Nov 2018 17:19:26 GMT",
+        //                             "connection": "close"
+        //                         },
+        //                         "request": {
+        //                             "uri": {
+        //                                 "protocol": "https:",
+        //                                 "slashes": true,
+        //                                 "auth": null,
+        //                                 "host": "localhost:4430",
+        //                                 "port": "4430",
+        //                                 "hostname": "localhost",
+        //                                 "hash": null,
+        //                                 "search": null,
+        //                                 "query": null,
+        //                                 "pathname": "/enqueuer",
+        //                                 "path": "/enqueuer",
+        //                                 "href": "https://localhost:4430/enqueuer"
+        //                             },
+        //                             "method": "post",
+        //                             "headers": {
+        //                                 "content-type": "application/json",
+        //                                 "Content-Length": 23
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             ],
+        //             "time": {
+        //                 "startTime": "2018-11-02T17:19:26.162Z",
+        //                 "endTime": "2018-11-02T17:19:26.213Z",
+        //                 "totalTime": 51,
+        //                 "timeout": 3000
+        //             }
+        //         }]
+        // }
     },
     mutations: {
         addRequisition(state, payload) {
@@ -670,10 +707,98 @@ export default new Vuex.Store({
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;
                 let newPath = '/' + payload.item.component + '/' + payload.item.id;
-                console.log('Going to new path');
+                console.log('Going to new path: ' + newPath);
                 payload.router.push({path: newPath});
             }
+        },
+        setRequisitionResult(state, payload) {
+            console.log('result: ' + JSON.stringify(payload.report));
+            state.result = payload.report;
         }
     },
-    actions: {}
+    actions: {
+        runRequisition: function ({commit}, requisition) {
+            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
+
+            commit('setRequisitionResult', {
+                report: {
+                    "valid": true,
+                    "tests": [
+                        {
+                            "valid": true,
+                            "name": "No time out",
+                            "description": "Requisition has timed out"
+                        }
+                    ],
+                    "name": "Requisition #1",
+                    "subscriptions": [
+                        {
+                            "name": "Subscription #0",
+                            "type": "https-server",
+                            "tests": [
+                                {
+                                    "name": "Https payload",
+                                    "valid": true,
+                                    "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
+                                },
+                                {
+                                    "valid": true,
+                                    "name": "Message received",
+                                    "description": "Subscription has received its message"
+                                }
+                            ],
+                            "valid": true,
+                            "connectionTime": "2018-11-02T17:19:26.179Z",
+                            "messageReceived": {
+                                "headers": {
+                                    "content-type": "application/json",
+                                    "content-length": "23",
+                                    "host": "localhost:4430",
+                                    "connection": "close"
+                                },
+                                "params": {},
+                                "query": {},
+                                "body": "{\n  \"https\": \"works!\"\n}"
+                            }
+                        }
+                    ],
+                    "publishers": [
+                        {
+                            "name": "publisher description",
+                            "valid": true,
+                            "type": "https-client",
+                            "tests": [
+                                {
+                                    "name": "Published",
+                                    "valid": true,
+                                    "description": "Published successfully"
+                                },
+                                {
+                                    "name": "Status Code",
+                                    "valid": true,
+                                    "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
+                                },
+                                {
+                                    "name": "Body",
+                                    "valid": true,
+                                    "description": "Expected 'body' to be equal to 'https'. Received 'https'"
+                                },
+                                {
+                                    "name": "Response message received",
+                                    "valid": true,
+                                    "description": "Response message was received"
+                                }
+                            ]
+                        }
+                    ],
+                    "time": {
+                        "startTime": "2018-11-02T17:19:26.162Z",
+                        "endTime": "2018-11-02T17:19:26.213Z",
+                        "totalTime": 51,
+                        "timeout": 3000
+                    }
+                }
+            });
+        }
+    }
 })
