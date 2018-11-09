@@ -14,10 +14,10 @@
             </div>
             <div class="row no-gutters">
                 <div class="col-11 align-self-center">
-                    <div v-if="$store.state.result">
+                    <div v-if="result">
                         <div class="row no-gutters">
                             <div :class="nameClass" style="text-align: left">
-                                {{$store.state.result.name}}
+                                {{result.name}}
                             </div>
                             <div class="col-3 row">
                                 <div :class="['title', 'align-self-center']">
@@ -68,7 +68,7 @@
         },
         data: function () {
             return {
-                tests: new FlattenTestsSummary().addTest(this.value),
+                tests: new FlattenTestsSummary().addTest($store.state.result),
                 mouseIsOver: false,
                 actions: [{
                     name: "Save"
@@ -78,24 +78,21 @@
             }
         },
         watch: {
-            '$store.state.result'() {
-                console.log('Result header rtests changed');
-            },
             result() {
-                console.log('Result header rtests changed');
+                this.tests = new FlattenTestsSummary().addTest($store.state.result);
             }
         },
         computed: {
-            result: function() {
+            result() {
                 return this.$store.state.result;
             },
             enqueuerClass: function () {
                 return {
                     'col-7': true,
                     'enqueuer-style': true,
-                    'no-test-color': !this.$store.state.result,
-                    'passing-test-color': this.$store.state.result && this.tests.isValid(),
-                    'failing-test-color': this.$store.state.result && !this.tests.isValid()
+                    'no-test-color': !this.result,
+                    'passing-test-color': this.result && this.tests.isValid(),
+                    'failing-test-color': this.result && !this.tests.isValid()
                 }
             },
             testNumberClass: function () {
@@ -124,16 +121,16 @@
             resultHeader: function () {
                 return {
                     'stacker-header': true,
-                    'no-test-color': !this.$store.state.result,
-                    'passing-result-header': this.$store.state.result && this.tests.isValid(),
-                    'failing-result-header': this.$store.state.result && !this.tests.isValid()
+                    'no-test-color': !this.result,
+                    'passing-result-header': this.result && this.tests.isValid(),
+                    'failing-result-header': this.result && !this.tests.isValid()
                 };
             }
         },
         methods: {
             printTime: function () {
-                if ($store.state.result) {
-                    let totalTime = $store.state.result.time.totalTime;
+                if (this.result) {
+                    let totalTime = this.result.time.totalTime;
                     const ms = totalTime % 1000;
                     let result = ms + 'ms';
                     if (totalTime >= 1000) {
@@ -144,7 +141,6 @@
                             seconds = seconds % 60;
                             result = minutes + 'm' + seconds + 's' + result;
                         }
-
                     }
                     return result;
                 }

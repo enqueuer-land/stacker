@@ -15,6 +15,13 @@
         props: {
             node: {}
         },
+        watch: {
+            node: function () {
+                let testsSummary = new FlattenTestsSummary();
+                testsSummary.addTest(this.node);
+                this.testsSummary = testsSummary.getTests();
+            }
+        },
         data: function () {
             let testsSummary = new FlattenTestsSummary();
             testsSummary.addTest(this.node);

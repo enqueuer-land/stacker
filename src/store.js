@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        result: null,
         selectedItem: null,
         requisitions: [],
         requisition: {
@@ -712,7 +713,6 @@ export default new Vuex.Store({
             }
         },
         setRequisitionResult(state, payload) {
-            console.log('result: ' + JSON.stringify(payload.report));
             state.result = payload.report;
         }
     },
