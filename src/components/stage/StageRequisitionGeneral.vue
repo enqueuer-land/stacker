@@ -1,7 +1,7 @@
 <template>
     <div class="stage-requisition-general container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col pr-2">
                 <div class="row">
                     <div class="pl-3 pt-2" style="font-size: 0.8em; color: white">
                         Time out
@@ -17,9 +17,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="col">
+            <div class="col pl-0 pr-2">
                 <div class="row">
                     <div class="pl-3 pt-2" style="font-size: 0.8em; color: white">
                         Delay
@@ -37,7 +36,7 @@
                 </div>
 
             </div>
-            <div class="col">
+            <div class="col pl-0">
                 <div class="row">
                     <div class="pl-3 pt-2" style="font-size: 0.8em; color: white">
                         Iterations
