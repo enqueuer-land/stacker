@@ -5,7 +5,7 @@
                 Assertions
             </div>
         </div>
-        <div v-for="(_, index) in assertions" :key="index" class="row no-gutter">
+        <div v-for="(_, index) in assertions" :key="ids[index]" class="row no-gutter">
             <assertion v-model="assertions[index]" class="col pr-0"/>
             <div class="col-1">
                 <a href="#" style="color: white" id="removeIcon">
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="row px-2">
-                    <!--style="background-color: white; color: var(&#45;&#45;stacker-background-color); border-color: white"-->
+            <!--style="background-color: white; color: var(&#45;&#45;stacker-background-color); border-color: white"-->
             <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
                     @click="addAssertion">Add
             </button>
@@ -26,6 +26,8 @@
 <script>
 
     import Assertion from "./Assertion";
+    import {generateId} from "../../tests/id-generator";
+
     export default {
         name: 'Assertions',
         components: {Assertion},
@@ -34,20 +36,30 @@
         },
         data: function () {
             return {
+                ids: (this.value || []).map(() => generateId()),
                 assertions: this.value || [],
             }
         },
         methods: {
             addAssertion: function () {
+                this.ids.push(generateId());
                 this.assertions.push({})
             },
             removeAssertion: function (indexToRemove) {
+                this.ids = this.ids.splice(indexToRemove, 1);
                 this.assertions = this.assertions.filter((assertion, index) => index !== indexToRemove);
             }
         },
         watch: {
-            assertions: function() {
+            assertions: function () {
                 this.$emit('input', this.assertions);
+            },
+            value: function () {
+                this.assertions = [];
+                (this.value || []).forEach((item) => {
+                    this.ids.push(generateId());
+                    this.assertions.push(item);
+                });
             },
         }
     }

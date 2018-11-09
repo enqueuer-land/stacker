@@ -46,35 +46,43 @@
             value: {}
         },
         data: function () {
-            const defaultValue = {
-                currentAssertionIndex: 0,
-                currentCriteriaIndex: 0,
-                assertionValue: '',
-                criteriumValue: '',
-                possibleAssertions: this.$store.state.assertions
-            };
-            Object.keys(this.value || {}).forEach(key => {
-                defaultValue.possibleAssertions.forEach((possible, index) => {
-                    if (possible.name === key) {
-                        defaultValue.currentAssertionIndex = index;
-                        defaultValue.assertionValue = this.value[key];
-                        delete this.value[key];
-                        (possible.criteria || []).forEach((criterium, criteriumIndex) => {
-                            Object.keys(this.value || {}).forEach((remainingKey) => {
-                                if (criterium.name === remainingKey) {
-                                    defaultValue.currentCriteriaIndex = criteriumIndex;
-                                    defaultValue.criteriumValue = this.value[remainingKey];
-                                }
-                            });
-                        })
-                    }
-                });
-            });
+            const initialContent = this.getContent();
             return {
-                ...defaultValue
+                currentAssertionIndex: initialContent.currentAssertionIndex,
+                currentCriteriaIndex: initialContent.currentCriteriaIndex,
+                assertionValue: initialContent.assertionValue,
+                criteriumValue: initialContent.criteriumValue,
+                possibleAssertions: this.$store.state.assertions || []
             }
         },
         methods: {
+            getContent() {
+                const value = this.value || {};
+                const content = {
+                    currentAssertionIndex: 0,
+                    currentCriteriaIndex: 0,
+                    assertionValue: '',
+                    criteriumValue: '',
+                    possibleAssertions: this.$store.state.assertions || []
+                };
+                Object.keys(value).forEach(key => {
+                    content.possibleAssertions.forEach((possible, index) => {
+                        if (possible.name === key) {
+                            content.currentAssertionIndex = index;
+                            content.assertionValue = value[key];
+                            (possible.criteria || []).forEach((criterium, criteriumIndex) => {
+                                Object.keys(value || {}).forEach((remainingKey) => {
+                                    if (criterium.name === remainingKey) {
+                                        content.currentCriteriaIndex = criteriumIndex;
+                                        content.criteriumValue = value[remainingKey];
+                                    }
+                                });
+                            })
+                        }
+                    });
+                });
+                return content;
+            },
             emitChanges: function () {
                 let assertion = {};
                 let currentAssertion = this.possibleAssertions[this.currentAssertionIndex];
@@ -98,6 +106,13 @@
             criteriumValue() {
                 this.emitChanges();
             },
+            value() {
+                const initialContent = this.getContent();
+                this.currentAssertionIndex = initialContent.currentAssertionIndex;
+                this.currentCriteriaIndex = initialContent.currentCriteriaIndex;
+                this.assertionValue = initialContent.assertionValue;
+                this.criteriumValue = initialContent.criteriumValue;
+            }
         }
     }
 </script>
