@@ -643,7 +643,7 @@ export default new Vuex.Store({
         },
         deleteComponent(state, payload) {
             const item = payload.item;
-            if (state.selectedItem === item.id) {
+            if (state.selectedItem.id === item.id) {
                 state.selectedItem = null;
             }
             if (item.parent) {
@@ -665,7 +665,7 @@ export default new Vuex.Store({
             payload.router.push({path: '/'});
         },
         selectItem(state, payload) {
-            const currentSelectedId = state.selectedItem.id;
+            const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Selecting item: ' + currentSelectedId);
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;

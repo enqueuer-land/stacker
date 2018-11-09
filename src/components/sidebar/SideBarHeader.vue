@@ -1,5 +1,5 @@
 <template>
-    <div class="side-bar-header stacker-header"
+    <div :class="['side-bar-header stacker-header', borderColor]"
             @mouseover="mouseIsOver = true"
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
@@ -47,6 +47,16 @@
                 }]
             }
         },
+        computed: {
+            borderColor: function() {
+                return {
+                    'no-component-selected': !this.$store.state.selectedItem,
+                    'requisition-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('REQ'),
+                    'publisher-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('PUB'),
+                    'subscription-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('SUB'),
+                }
+            }
+        }
     }
 </script>
 
@@ -69,6 +79,23 @@
     .dropdown-toggle::after {
         display: none !important;
     }
+
+    .no-component-selected {
+        border: none;
+    }
+
+    .requisition-selected {
+        border-right: 2px var(--requisition-color) solid;
+    }
+
+    .publisher-selected {
+        border-right: 2px var(--publisher-color) solid;
+    }
+
+    .subscription-selected {
+        border-right: 2px var(--subscription-color) solid;
+    }
+
 
 
 </style>
