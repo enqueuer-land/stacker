@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="getCurrentSelected().name" type="text" class="form-control" style="background-color: transparent; color: white"
+                    <input v-model="getCurrentSelected().name" type="text" class="form-control col-11" style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div class="input-group-append">
                         <button class="btn"

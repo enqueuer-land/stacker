@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="stage-publisher-header stacker-header container-fluid">
+        <div class="stage-subscription-header stacker-header container-fluid">
             <div class="row">
-                <div :class="['publisher-color', 'pl-2 pt-1']" style="font-size: 0.8em">
+                <div :class="['subscription-color', 'pl-2 pt-1']" style="font-size: 0.8em">
                     Name
                 </div>
             </div>
@@ -12,9 +12,9 @@
                            placeholder="Name">
                     <div class="input-group-append">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                style="border: 1px var(--publisher-color) solid; color: var(--publisher-color); background-color: transparent; text-transform: uppercase">{{selectedProtocol}}</button>
+                                style="border: 1px var(--subscription-color) solid; color: var(--subscription-color); background-color: transparent; text-transform: uppercase">{{selectedProtocol}}</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="protocol in Object.keys($store.state.publisher.protocols)"
+                            <a class="dropdown-item" href="#" v-for="protocol in Object.keys($store.state.subscription.protocols)"
                                :key="protocol" style="text-transform: uppercase"
                                @click="selectProtocol(protocol)"
                             >{{protocol}}</a>
@@ -33,10 +33,10 @@
             <div class="row pt-2">
                 <ul class="nav" id="tabs" role="tablist">
                     <li class="nav-item" v-for="(tab, index) in tabs" :key="index">
-                        <a :class="['publisher-color',
+                        <a :class="['subscription-color',
                                     'nav-link pb-1',
                                     tabSelectedIndex === index ? 'tab-selected' : '',
-                                    tabSelectedIndex === index ? 'border-publisher-color': '']"
+                                    tabSelectedIndex === index ? 'border-subscription-color': '']"
                            data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
                            :href="'#'">{{tab.name}}</a>
@@ -50,7 +50,7 @@
 
 <script>
     export default {
-        name: 'StagePublisherHeader',
+        name: 'StageSubscriptionHeader',
         mounted: function() {
             const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
             this.tabSelected({path: firstProtocol}, 0);
@@ -119,7 +119,7 @@
 </script>
 
 <style scoped>
-    .stage-publisher-header {
+    .stage-subscription-header {
 
     }
 
@@ -147,8 +147,8 @@
         background-color: var(--stacker-background-color);
     }
 
-    .border-publisher-color {
-        border-left: 8px var(--publisher-color) solid;
+    .border-subscription-color {
+        border-left: 8px var(--subscription-color) solid;
     }
 
 </style>

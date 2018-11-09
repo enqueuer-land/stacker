@@ -1,13 +1,14 @@
 <template>
-    <div class="http-publisher container-fluid px-4">
+    <div class="http-subscription container-fluid px-4">
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
-                URL
+                Endpoint
             </div>
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="$store.state.selectedItem.url" placeholder="http://github.com/lopidio/stacker" type="text" class="form-control" style="background-color: transparent; color: white">
+                <input v-model="$store.state.selectedItem.port" placeholder="8080" type="text" class="form-control col-2" style="background-color: transparent; color: white">
+                <input v-model="$store.state.selectedItem.endpoint" placeholder="/stacker" type="text" class="form-control input-group-append" style="background-color: transparent; color: white">
                 <div class="input-group-append"  style="font-size: 0.8em">
                     <button class="btn dropdown-toggle" style="background-color: transparent; color: white; border: 1px solid white" type="button" data-toggle="dropdown">{{method}}</button>
                     <div class="dropdown-menu">
@@ -19,12 +20,23 @@
         <key-value-input v-model="$store.state.selectedItem.headers" title="Headers"/>
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
-                Body
+                Status Code
             </div>
         </div>
-        <div v-if="$store.state.selectedItem.method !== 'GET'" class="row">
+        <div class="row">
+            <div class="input-group input-group-sm mb-1 ml-2 pr-2">
+                <input v-model="$store.state.selectedItem.response.statusCode" type="text" class="form-control" style="background-color: transparent; color: white"
+                       placeholder="200">
+            </div>
+        </div>
+        <div class="row">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
+                Payload
+            </div>
+        </div>
+        <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="$store.state.selectedItem.payload" class="form-control p-1" rows="10"
+                <textarea v-model="$store.state.selectedItem.response.payload" class="form-control p-1" rows="10"
                           style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
             </div>
         </div>
@@ -34,10 +46,13 @@
 
     import KeyValueInput from "../../inputs/KeyValueInput";
     export default {
-        name: 'HttpPublisher',
+        name: 'HttpSubscription',
         components: {KeyValueInput},
         data: function () {
             const methods = ["GET", "POST", "PATCH", "OPTION", "DELETE", "PUT"].sort();
+            if (!this.$store.state.selectedItem.response) {
+                this.$store.state.selectedItem.response = {};
+            }
             this.$store.state.selectedItem.method = methods[0];
             return {
                 method: this.$store.state.selectedItem.method,
@@ -54,7 +69,7 @@
 </script>
 
 <style scoped>
-    .http-publisher {
+    .http-subscription {
 
     }
 
