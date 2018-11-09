@@ -9,7 +9,7 @@
                        class="form-control" style="background-color: transparent; color: white"
                        placeholder="key">
                 <input @input="update(index, 'value', $event.target.value)" :value="pair.value" type="text"
-                       class="form-control input-group-append ml-1" style="background-color: transparent; color: white"
+                       class="form-control input-group-append ml-2" style="background-color: transparent; color: white"
                        placeholder="value">
                 <div class="input-group-append pl-1">
                     <a href="#" style="color: white">

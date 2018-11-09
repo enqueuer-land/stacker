@@ -8,10 +8,10 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="getCurrentSelected().name" type="text" class="form-control col-11" style="background-color: transparent; color: white"
+                    <input v-model="getCurrentSelected().name" type="text" class="form-control" style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div class="input-group-append">
-                        <button class="btn"
+                        <button class="btn pl-4 pr-4"
                                 style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
                                 @click="runButtonClick"
                                 type="button">Run
