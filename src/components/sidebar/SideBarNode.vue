@@ -1,6 +1,6 @@
 <template>
     <div :class="sideBarClass">
-        <div class="card" style="border: none; border-left: 1px solid var(--stacker-background-color)">
+        <div class="card" style="border: none;">
             <div @click="onClick" :id="'collapsible' + node.id" data-toggle="collapse" :data-target="'#' + node.id">
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>

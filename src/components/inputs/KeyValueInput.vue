@@ -29,10 +29,17 @@
 <script>
     export default {
         name: 'KeyValueInput',
-        props: ['title'],
+        props: ['title', 'value'],
         data: function () {
+            const pairs = [];
+            Object.keys(this.value || {}).forEach(key => {
+                this.pairs.push({
+                    key: key,
+                    value: this.value[key],
+                });
+            });
             return {
-                pairs: []
+                pairs: pairs
             }
         },
         methods: {

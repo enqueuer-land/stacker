@@ -79,8 +79,9 @@
                 return {
                     'col-7': true,
                     'enqueuer-style': true,
-                    'passing-test-color': this.tests.isValid(),
-                    'failing-test-color': !this.tests.isValid()
+                    'no-test-color': !this.$store.state.result,
+                    'passing-test-color': this.$store.state.result && this.tests.isValid(),
+                    'failing-test-color': this.$store.state.result && !this.tests.isValid()
                 }
             },
             testNumberClass: function () {
@@ -109,8 +110,8 @@
             resultHeader: function () {
                 return {
                     'stacker-header': true,
-                    'passing-result-header': this.tests.isValid(),
-                    'failing-result-header': !this.tests.isValid()
+                    'passing-test-color': this.$store.state.result && this.tests.isValid(),
+                    'failing-test-color': this.$store.state.result && !this.tests.isValid()
                 };
             }
         },
@@ -149,6 +150,10 @@
     .failing-result-header {
         border-left: 8px var(--failing-test-color) solid;
         border-right: 8px var(--failing-test-color) solid;
+    }
+
+    .no-test-color {
+        color: white;
     }
 
     .passing-result-header {

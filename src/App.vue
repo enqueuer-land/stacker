@@ -7,7 +7,7 @@
             <div class="col">
                 <stage/>
             </div>
-            <div class="col" style="border-left: 1px solid #4d4d4d">
+            <div class="col">
                 <Result/>
             </div>
         </div>
@@ -68,7 +68,6 @@
     .stacker-header {
         height: 150px;
         background-color: var(--stacker-header-background-color);
-        border: 1px solid var(--stacker-background-alternative-color)
     }
 
 </style>

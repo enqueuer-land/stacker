@@ -21,7 +21,7 @@ export default {
 <style scoped>
     .result {
         height: 100vh;
-        background-color: var(--stacker-background-color);
+        background-color: var(--stacker-header-background-color);
     }
 
 </style>

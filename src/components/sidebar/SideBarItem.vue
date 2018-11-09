@@ -152,7 +152,7 @@
     .requisition-side-bar-opened {
         color: var(--index-color);
         background-color: var(--stacker-background-alternative-color);
-        border-left: 8px var(--requisition-color) solid;
+        /*border-left: 8px var(--requisition-color) solid;*/
         border-top: 2px var(--requisition-color) solid;
         border-bottom: 2px var(--requisition-color) solid;
     }
