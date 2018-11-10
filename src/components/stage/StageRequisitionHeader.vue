@@ -83,7 +83,6 @@
         },
         watch: {
             '$route': function () {
-                console.log('req detected route changed: ' + this.$route.path);
                 let id = this.$route.path.split("/")[2];
                 if (id !== this.id) {
                     this.id = id;

@@ -94,7 +94,6 @@
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
             tabSelected: function (tab, index) {
-                console.log('tab selected ' + tab.path);
                 this.tabSelectedIndex = index;
                 this.$router.push({path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path});
             }
@@ -103,11 +102,9 @@
             '$route': function() {
                 let id = this.$route.path.split("/")[2];
                 if (id !== this.id) {
-                    console.log('route changed ');
                     this.id = id;
                     const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
                     this.tabSelected({path: firstProtocol}, 0);
-                    console.log('route: ' + firstProtocol);
                 }
             }
         },
