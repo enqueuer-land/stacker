@@ -1,5 +1,5 @@
 <template>
-    <div :class="sideBarItemClass">
+    <div :class="sideBarItemClass" :style="sideBarItemStyle">
         <a class="row no-gutters" href="#" style="text-decoration: none"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
@@ -122,6 +122,15 @@
             },
         },
         computed: {
+            sideBarItemStyle: function () {
+                const selectedItem = this.$store.state.selectedItem;
+                if (selectedItem.id === this.item.id) {
+                    return {};
+                }
+                return {
+                    'border-right': '2px var(--' + selectedItem.component + '-color) solid'
+                };
+            },
             sideBarItemClass: function () {
                 return {
                     'side-bar-item': true,
