@@ -7,7 +7,8 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="$store.state.selectedItem.timeout" placeholder="3000" type="text" class="form-control" style="background-color: transparent; color: white">
+                <input v-model="$store.state.selectedItem.timeout" placeholder="3000" type="text" class="form-control"
+                       style="background-color: transparent; color: white">
                 <div class="input-group-append">
                     <span class="input-group-text">ms</span>
                 </div>
@@ -20,11 +21,16 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="$store.state.selectedItem.url" placeholder="http://github.com/lopidio/stacker" type="text" class="form-control" style="background-color: transparent; color: white">
-                <div class="input-group-append"  style="font-size: 0.8em">
-                    <button class="btn dropdown-toggle" style="background-color: transparent; color: white; border: 1px solid white" type="button" data-toggle="dropdown">{{method}}</button>
+                <input v-model="$store.state.selectedItem.url" placeholder="http://github.com/lopidio/stacker"
+                       type="text" class="form-control" style="background-color: transparent; color: white">
+                <div class="input-group-append" style="font-size: 0.8em">
+                    <button class="btn dropdown-toggle"
+                            style="background-color: transparent; color: white; border: 1px solid white" type="button"
+                            data-toggle="dropdown">{{method}}
+                    </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="item in methods" :key="item" @click="selectMethod(item)">{{item}}</a>
+                        <a class="dropdown-item" href="#" v-for="item in methods" :key="item"
+                           @click="selectMethod(item)">{{item}}</a>
                     </div>
                 </div>
             </div>
@@ -36,20 +42,19 @@
             </div>
         </div>
         <div v-if="$store.state.selectedItem.method !== 'GET'" class="row">
-            <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="$store.state.selectedItem.payload" class="form-control p-1" rows="10"
-                          style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
-            </div>
+            <object-formatter class="mb-1 ml-2 mr-2" v-model="$store.state.selectedItem.payload"/>
         </div>
-        <div v-if="$store.state.selectedItem.method === 'GET'" class="row" style="border-top: white 1px solid" ></div>
+        <div v-else class="row" style="border-top: white 1px solid"></div>
     </div>
 </template>
 <script>
 
     import KeyValueInput from "../../inputs/KeyValueInput";
+    import ObjectFormatter from "../../inputs/ObjectFormatter";
+
     export default {
         name: 'HttpPublisher',
-        components: {KeyValueInput},
+        components: {ObjectFormatter, KeyValueInput},
         data: function () {
             const methods = ["GET", "POST", "PATCH", "OPTION", "DELETE", "PUT"].sort();
             this.$store.state.selectedItem.method = methods[0];

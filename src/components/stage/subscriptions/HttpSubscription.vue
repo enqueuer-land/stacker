@@ -60,10 +60,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="$store.state.selectedItem.response.payload" class="form-control p-1" rows="10"
-                          style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
-            </div>
+            <object-formatter class="mb-1 ml-2 mr-2" v-model="$store.state.selectedItem.response.payload"/>
         </div>
     </div>
 </template>
@@ -72,10 +69,11 @@
     import KeyValueInput from "../../inputs/KeyValueInput";
     import RoundedSwitch from "../../inputs/RoundedSwitch";
     import CommonSubscription from "../../inputs/CommonSubscription";
+    import ObjectFormatter from "../../inputs/ObjectFormatter";
 
     export default {
         name: 'HttpSubscription',
-        components: {CommonSubscription, RoundedSwitch, KeyValueInput},
+        components: {ObjectFormatter, CommonSubscription, RoundedSwitch, KeyValueInput},
         data: function () {
             const methods = ["GET", "POST", "PATCH", "OPTION", "DELETE", "PUT"].sort();
             if (!this.$store.state.selectedItem.response) {
