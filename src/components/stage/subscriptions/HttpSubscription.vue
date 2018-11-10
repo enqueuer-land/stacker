@@ -1,7 +1,8 @@
 <template>
     <div class="http-subscription container-fluid px-4">
         <div class="row">
-            <common-subscription :timeout.sync="$store.state.selectedItem.timeout" :avoidable.sync="$store.state.selectedItem.avoidable"/>
+            <common-subscription :timeout.sync="$store.state.selectedItem.timeout"
+                                 :avoidable.sync="$store.state.selectedItem.avoidable"/>
         </div>
         <div class="row">
             <div class="col-2 pl-2 pr-1">
@@ -38,7 +39,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <key-value-input v-model="$store.state.selectedItem.response.headers" title="Headers"/>

@@ -8,7 +8,8 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="getCurrentSelected().name" type="text" class="form-control" style="background-color: transparent; color: white"
+                    <input v-model="getCurrentSelected().name" type="text" class="form-control"
+                           style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div class="input-group-append">
                         <button class="btn pl-4 pr-4"
@@ -21,9 +22,17 @@
             </div>
             <div class="row">
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
-                        v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">{{breadCrumb.name}}</a>
+                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
+                        v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
+                        <a class="requisition-color" style="text-decoration: none;" href="#"
+                           @click="$store.dispatch('runRequisition', breadCrumb)">
+                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);"
+                               class="material-icons">play_circle_outline</i>
+                        </a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#"
+                           @click="breadCrumbSelected(breadCrumb)">
+                            {{breadCrumb.name}}
+                        </a>
                     </li>
                 </ol>
             </div>
@@ -48,7 +57,7 @@
 <script>
     export default {
         name: 'StageRequisitionHeader',
-        mounted: function() {
+        mounted: function () {
             this.tabSelected(this.$store.state.requisition.tabs[0], 0);
         },
         data: function () {
@@ -58,22 +67,13 @@
             }
         },
         methods: {
-            runButtonClick: async function() {
+            runButtonClick: async function () {
                 await this.$store.dispatch('runRequisition', this.getCurrentSelected());
             },
-            getCurrentSelected: function() {
+            getCurrentSelected: function () {
                 return this.$store.state.selectedItem;
             },
-            getBreadCrumbs: function () {
-                let breadCrumbs = [{name: ''}];
-                let current = this.getCurrentSelected().parent;
-                while (current !== undefined) {
-                    breadCrumbs.unshift(current);
-                    current = current.parent;
-                }
-                return breadCrumbs;
-            },
-            breadCrumbSelected: function(breadCrumb) {
+            breadCrumbSelected: function (breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
             tabSelected: function (tab, index) {
@@ -82,7 +82,7 @@
             }
         },
         watch: {
-            '$route': function() {
+            '$route': function () {
                 console.log('req detected route changed: ' + this.$route.path);
                 let id = this.$route.path.split("/")[2];
                 if (id !== this.id) {
@@ -90,6 +90,17 @@
                     this.tabSelected(this.$store.state.requisition.tabs[0], 0);
                 }
             }
+        },
+        computed: {
+            getBreadCrumbs: function () {
+                let breadCrumbs = [];
+                let current = this.getCurrentSelected().parent;
+                while (current !== undefined) {
+                    breadCrumbs.unshift(current);
+                    current = current.parent;
+                }
+                return breadCrumbs;
+            },
         }
     }
 </script>
@@ -107,6 +118,10 @@
     }
 
     .breadcrumb-item a:hover {
+        color: white;
+    }
+
+    .breadcrumb-item a:focus {
         color: white;
     }
 

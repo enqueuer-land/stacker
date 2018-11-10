@@ -24,9 +24,14 @@
             </div>
             <div class="row">
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
-                        v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">{{breadCrumb.name}}</a>
+                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
+                        v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
+                        <a class="requisition-color" style="text-decoration: none;" href="#" @click="$store.dispatch('runRequisition', breadCrumb)">
+                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);" class="material-icons">play_circle_outline</i>
+                        </a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">
+                            {{breadCrumb.name}}
+                        </a>
                     </li>
                 </ol>
             </div>
@@ -85,15 +90,6 @@
             getCurrentSelected: function() {
                 return this.$store.state.selectedItem;
             },
-            getBreadCrumbs: function () {
-                let breadCrumbs = [{name: ''}];
-                let current = this.getCurrentSelected().parent;
-                while (current !== undefined) {
-                    breadCrumbs.unshift(current);
-                    current = current.parent;
-                }
-                return breadCrumbs;
-            },
             breadCrumbSelected: function(breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
@@ -114,7 +110,19 @@
                     console.log('route: ' + firstProtocol);
                 }
             }
+        },
+        computed: {
+            getBreadCrumbs: function () {
+                let breadCrumbs = [];
+                let current = this.getCurrentSelected().parent;
+                while (current !== undefined) {
+                    breadCrumbs.unshift(current);
+                    current = current.parent;
+                }
+                return breadCrumbs;
+            },
         }
+
     }
 </script>
 
@@ -131,6 +139,10 @@
     }
 
     .breadcrumb-item a:hover {
+        color: white;
+    }
+
+    .breadcrumb-item a:focus {
         color: white;
     }
 

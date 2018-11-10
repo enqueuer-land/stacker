@@ -8,13 +8,17 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="getCurrentSelected().name" type="text" class="form-control" style="background-color: transparent; color: white"
+                    <input v-model="getCurrentSelected().name" type="text" class="form-control"
+                           style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div class="input-group-append">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                style="border: 1px var(--publisher-color) solid; color: var(--publisher-color); background-color: transparent; text-transform: uppercase">{{selectedProtocol}}</button>
+                                style="border: 1px var(--publisher-color) solid; color: var(--publisher-color); background-color: transparent; text-transform: uppercase">
+                            {{selectedProtocol}}
+                        </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="protocol in Object.keys($store.state.publisher.protocols)"
+                            <a class="dropdown-item" href="#"
+                               v-for="protocol in Object.keys($store.state.publisher.protocols)"
                                :key="protocol" style="text-transform: uppercase"
                                @click="selectProtocol(protocol)"
                             >{{protocol}}</a>
@@ -24,9 +28,17 @@
             </div>
             <div class="row">
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs().length - 1 ? 'active' : '']"
-                        v-for="(breadCrumb, index) in getBreadCrumbs()" :key="index">
-                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#" @click="breadCrumbSelected(breadCrumb)">{{breadCrumb.name}}</a>
+                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
+                        v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
+                        <a class="requisition-color" style="text-decoration: none;" href="#"
+                           @click="$store.dispatch('runRequisition', breadCrumb)">
+                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);"
+                               class="material-icons">play_circle_outline</i>
+                        </a>
+                        <a class="requisition-color" style="text-decoration: none; font-size: 0.8em" href="#"
+                           @click="breadCrumbSelected(breadCrumb)">
+                            {{breadCrumb.name}}
+                        </a>
                     </li>
                 </ol>
             </div>
@@ -51,7 +63,7 @@
 <script>
     export default {
         name: 'StagePublisherHeader',
-        mounted: function() {
+        mounted: function () {
             const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
             this.tabSelected({path: firstProtocol}, 0);
         },
@@ -65,7 +77,7 @@
             }
         },
         methods: {
-            refreshAvailableTabs: function(protocol) {
+            refreshAvailableTabs: function (protocol) {
                 const protocolTab = {name: protocol.toUpperCase(), path: protocol};
                 let config = this.$store.state[this.getCurrentSelected().component];
                 let regularTabs = config.tabs;
@@ -75,26 +87,17 @@
                 }
                 return [protocolTab].concat(regularTabs);
             },
-            selectProtocol: function(protocol) {
+            selectProtocol: function (protocol) {
                 this.selectedProtocol = protocol;
                 this.tabs = this.refreshAvailableTabs(protocol);
                 if (this.tabSelectedIndex === 0) {
                     this.tabSelected({path: protocol}, 0);
                 }
             },
-            getCurrentSelected: function() {
+            getCurrentSelected: function () {
                 return this.$store.state.selectedItem;
             },
-            getBreadCrumbs: function () {
-                let breadCrumbs = [{name: ''}];
-                let current = this.getCurrentSelected().parent;
-                while (current !== undefined) {
-                    breadCrumbs.unshift(current);
-                    current = current.parent;
-                }
-                return breadCrumbs;
-            },
-            breadCrumbSelected: function(breadCrumb) {
+            breadCrumbSelected: function (breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
             tabSelected: function (tab, index) {
@@ -104,7 +107,7 @@
             }
         },
         watch: {
-            '$route': function() {
+            '$route': function () {
                 let id = this.$route.path.split("/")[2];
                 if (id !== this.id) {
                     console.log('route changed ');
@@ -114,6 +117,17 @@
                     console.log('route: ' + firstProtocol);
                 }
             }
+        },
+        computed: {
+            getBreadCrumbs: function () {
+                let breadCrumbs = [];
+                let current = this.getCurrentSelected().parent;
+                while (current !== undefined) {
+                    breadCrumbs.unshift(current);
+                    current = current.parent;
+                }
+                return breadCrumbs;
+            },
         }
     }
 </script>
@@ -131,6 +145,10 @@
     }
 
     .breadcrumb-item a:hover {
+        color: white;
+    }
+
+    .breadcrumb-item a:focus {
         color: white;
     }
 
