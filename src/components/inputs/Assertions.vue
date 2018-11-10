@@ -55,11 +55,13 @@
                 this.$emit('input', this.assertions);
             },
             value: function () {
-                this.assertions = [];
-                (this.value || []).forEach((item) => {
-                    this.ids.push(generateId());
-                    this.assertions.push(item);
-                });
+                if (this.value !== this.assertions) {
+                    this.assertions = [];
+                    (this.value || []).forEach((item) => {
+                        this.ids.push(generateId());
+                        this.assertions.push(item);
+                    });
+                }
             },
         }
     }
