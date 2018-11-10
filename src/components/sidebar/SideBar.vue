@@ -8,7 +8,7 @@
 <script>
 import SideBarHeader from "./SideBarHeader";
 import SideBarTree from "./SideBarTree";
-
+//http://jsfiddle.net/Bek9L/3020/
 export default {
     name: 'SideBar',
     components: {

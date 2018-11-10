@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
+    "vue-prism-editor": "^0.1.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

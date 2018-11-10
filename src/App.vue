@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="container-fluid pr-0 pl-0">
         <div class="row no-gutters">
-            <div class="col-3">
+            <div id="side-bar" class="col-3">
                 <SideBar/>
             </div>
             <div class="col">
@@ -38,33 +38,42 @@
         --stacker-background-alternative-color: #4d4d4d;
 
     }
+
     .dropdown-menu {
         background-color: var(--index-color);
         padding-bottom: 0px;
     }
+
     .dropdown-item {
         color: white;
         background-color: var(--stacker-background-alternative-color);
         border-bottom: 1px var(--stacker-background-color) solid;
     }
+
     .publisher-color {
         color: var(--publisher-color)
     }
+
     .requisition-color {
         color: var(--requisition-color);
     }
+
     .subscription-color {
         color: var(--subscription-color);
     }
+
     .passing-test-color {
         color: var(--passing-test-color);
     }
+
     .failing-test-color {
         color: var(--failing-test-color);
     }
+
     .stacker {
         background-color: var(--stacker-background-color);
     }
+
     .stacker-header {
         height: 150px;
         background-color: var(--stacker-header-background-color);

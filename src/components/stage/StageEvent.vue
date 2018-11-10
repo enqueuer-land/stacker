@@ -7,9 +7,11 @@
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
-                <textarea v-model="$store.state.selectedItem[name].script" class="form-control p-1" rows="5"
-                          placeholder="js code snippet"
-                          style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter"></textarea>
+                <prism-editor v-model="script" lineNumbers language="js"
+                              style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter; border: white 1px solid; border-radius: 4px;">
+
+                </prism-editor>
+
             </div>
         </div>
         <div class="row pb-1">
@@ -22,17 +24,19 @@
 <script>
     import KeyValueInput from "../inputs/KeyValueInput";
     import Assertions from "../inputs/Assertions";
+    import PrismEditor from 'vue-prism-editor'
 
     export default {
         name: 'StageEvent',
-        components: {Assertions, KeyValueInput},
+        components: {Assertions, KeyValueInput, PrismEditor},
         data: function () {
             let splitPath = this.$route.path.split("/");
             const name = splitPath[splitPath.length - 1];
 
             this.initializeComponent(name);
             return {
-                name: name
+                name: name,
+                script: ''
             }
         },
         methods: {
@@ -44,6 +48,7 @@
                         store: {}
                     };
                 }
+                this.script = this.$store.state.selectedItem[name].script;
             }
         },
         watch: {
@@ -53,6 +58,9 @@
                 this.initializeComponent(name);
                 this.name = name;
             },
+            script() {
+                this.$store.state.selectedItem[this.name].script = this.script;
+            }
         }
     }
 </script>
