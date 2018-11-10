@@ -8,10 +8,10 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <span :class="['col pl-1', enabled ? 'enabled-label' : 'disabled-label']"
-                  style="position: relative; top: 2px; left: 4px">
+            <a :href="'#' + label" :class="['col pl-1', enabled ? 'enabled-label' : 'disabled-label']"
+                  style="position: relative; top: 2px; left: 8px; text-decoration: none">
                 {{label}}
-            </span>
+            </a>
         </div>
     </div>
 </template>
@@ -65,7 +65,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: var(--failing-test-color);
+        border: 1px solid var(--stacker-background-alternative-color);
+        background-color: transparent;
         /*-webkit-transition: .4s;*/
         transition: .4s;
     }
@@ -77,14 +78,15 @@
         width: 20px;
         left: 4px;
         bottom: 5px;
-        background-color: white;
+        background-color: var(--stacker-background-alternative-color);
         /*-webkit-transition: .4s;*/
         transition: .4s;
     }
 
     input:checked + .slider {
-        background-color: var(--passing-test-color);
-        border: none;
+        /*background-color: var(--passing-test-color);*/
+        border: 1px solid white;
+        /*border: none;*/
     }
 
     input:focus + .slider {
@@ -95,17 +97,22 @@
         /*-webkit-transform: translateX(26px);*/
         /*-ms-transform: translateX(26px);*/
         transform: translateX(18px);
+        background-color: white;
         /*transform: translateX(18px);*/
     }
 
     /* Rounded sliders */
     .slider.round {
-        border-radius: 34px;
-        /*border: 1px solid white;*/
+        border-radius: 32px;
     }
 
     .slider.round:before {
         border-radius: 50%;
+        /*border: 1px solid var(--stacker-background-color);*/
+    }
+
+    a:hover {
+        color: white;
     }
 
     .enabled-label {

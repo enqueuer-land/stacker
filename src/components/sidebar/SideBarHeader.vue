@@ -36,10 +36,12 @@
         data: function () {
             return {
                 mouseIsOver: false,
-                actions: [{
-                    name: "Open requisition",
-                    click: () => {}
-                }, {
+                actions: [
+                    {
+                        name: "Open requisition",
+                        click: () => {}
+                    },
+                    {
                     name: "Add requisition",
                     click: () => {
                         $store.commit('addRequisition', {router: this.$router});

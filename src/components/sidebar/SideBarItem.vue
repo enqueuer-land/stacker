@@ -11,8 +11,10 @@
                         <i class="material-icons">more_vert</i>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
-                           @click="action.click">{{action.name}}</a>
+                        <div v-for="action in actions" :key="action.name">
+                            <a v-if="action.name !== null" class="dropdown-item" href="#" @click="action.click">{{action.name}}</a>
+                            <div v-else class="dropdown-divider"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -20,10 +22,12 @@
                 <div v-if="isRequisition" class="dropdown">
                     <i v-if="!opened" style="color: var(--requisition-color)" class="material-icons">folder</i>
                     <i v-if="opened" style="color: var(--requisition-color)" class="material-icons">folder_open</i>
-                    <span v-if="!opened" style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color);">
+                    <span v-if="!opened"
+                          style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color);">
                         {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
                     </span>
-                    <span v-if="opened" style="position: relative; top: -6px; left: -22px; color: var(--requisition-color);">
+                    <span v-if="opened"
+                          style="position: relative; top: -6px; left: -22px; color: var(--requisition-color);">
                         {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
                     </span>
                 </div>
@@ -55,12 +59,6 @@
             const tag = this.item.component.substr(0, 3);
             const isRequisition = tag.toUpperCase().startsWith('REQ');
             let actions = [];
-            actions.push({
-                name: "Delete",
-                click: () => {
-                    this.$store.commit('deleteComponent', {item: this.item, router: this.$router});
-                }
-            });
             if (isRequisition) {
                 actions.push({
                     name: "Add requisition",
@@ -81,7 +79,31 @@
                         this.$store.commit('addSubscription', {parent: this.item, router: this.$router});
                     }
                 });
+                actions.push({
+                    name: null,
+                    click: () => null
+                });
+                actions.push({
+                    name: "Save",
+                    click: () => {
+                    }
+                });
+                actions.push({
+                    name: "Expand all",
+                    click: () => {
+                    }
+                });
+                actions.push({
+                    name: null,
+                    click: () => null
+                });
             }
+            actions.push({
+                name: "Delete",
+                click: () => {
+                    this.$store.commit('deleteComponent', {item: this.item, router: this.$router});
+                }
+            });
             return {
                 mouseIsOver: false,
                 tag: tag,
