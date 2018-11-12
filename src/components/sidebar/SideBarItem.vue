@@ -12,7 +12,8 @@
                     </a>
                     <div class="dropdown-menu">
                         <div v-for="action in actions" :key="action.name">
-                            <a v-if="action.name !== null" class="dropdown-item" href="#" @click="action.click">{{action.name}}</a>
+                            <a v-if="action.name !== null" class="dropdown-item" href="#"
+                               @click="action.click($store.commit, item, $router)">{{action.name}}</a>
                             <div v-else class="dropdown-divider"></div>
                         </div>
                     </div>
@@ -58,52 +59,7 @@
         data: function () {
             const tag = this.item.component.substr(0, 3);
             const isRequisition = tag.toUpperCase().startsWith('REQ');
-            let actions = [];
-            if (isRequisition) {
-                actions.push({
-                    name: "Add requisition",
-                    click: () => {
-                        // e.stopPropagation();
-                        this.$store.commit('addRequisition', {parent: this.item, router: this.$router});
-                    }
-                });
-                actions.push({
-                    name: "Add publisher",
-                    click: () => {
-                        this.$store.commit('addPublisher', {parent: this.item, router: this.$router});
-                    }
-                });
-                actions.push({
-                    name: "Add subscription",
-                    click: () => {
-                        this.$store.commit('addSubscription', {parent: this.item, router: this.$router});
-                    }
-                });
-                actions.push({
-                    name: null,
-                    click: () => null
-                });
-                actions.push({
-                    name: "Save",
-                    click: () => {
-                    }
-                });
-                actions.push({
-                    name: "Expand all",
-                    click: () => {
-                    }
-                });
-                actions.push({
-                    name: null,
-                    click: () => null
-                });
-            }
-            actions.push({
-                name: "Delete",
-                click: () => {
-                    this.$store.commit('deleteComponent', {item: this.item, router: this.$router});
-                }
-            });
+            const actions = this.$store.state[this.item.component].sideBarOptions;
             return {
                 mouseIsOver: false,
                 tag: tag,
@@ -119,7 +75,7 @@
             },
             isSelected: function () {
                 return this.$store.state.selectedItem.id === this.item.id;
-            },
+            }
         },
         computed: {
             sideBarItemStyle: function () {

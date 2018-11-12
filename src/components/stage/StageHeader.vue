@@ -118,9 +118,9 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                console.log('going to:' + '/' + this.item.component + '/' + this.id + '/' + tab.path);
+                console.log('going to:' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.id + '/' + tab.path,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + tab.path,
                     props: {
                         item: this.item,
                         eventName: tab.path

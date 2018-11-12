@@ -12,6 +12,53 @@ export default new Vuex.Store({
         selectedItem: null,
         requisitions: [],
         requisition: {
+            sideBarOptions: [
+                {
+                    name: "Save",
+                    click: (commit, item) => {
+                        commit('saveRequisition', {item: item});
+                    }
+                },
+                {
+                    name: "Expand",
+                    click: (commit, item) => {
+                        commit('expandRequisition', {item: item});
+                    }
+                },
+                {
+                    name: null,
+                    click: () => null
+                },
+                {
+                    name: "Add requisition",
+                    click: (commit, item, router) => {
+                        commit('addRequisition', {parent: item, router: router});
+                    }
+                },
+                {
+                    name: "Add publisher",
+                    click: (commit, item, router) => {
+                        commit('addPublisher', {parent: item, router: router});
+                    }
+                },
+                {
+                    name: "Add subscription",
+                    click: (commit, item, router) => {
+                        commit('addSubscription', {parent: item, router: router});
+                    }
+                },
+                {
+                    name: null,
+                    click: () => null
+                },
+                {
+                    name: "Delete",
+                    click: (commit, item, router) => {
+                        console.log('Deleting requisition: ' + commit);
+                        commit('deleteComponent', {item: item, router: router});
+                    }
+                },
+            ],
             tabs: [
                 {
                     name: 'General',
@@ -28,6 +75,15 @@ export default new Vuex.Store({
             ]
         },
         publisher: {
+            sideBarOptions: [
+                {
+                    name: "Delete",
+                    click: (commit, item, router) => {
+                        console.log('Deleting requisition: ' + commit);
+                        commit('deleteComponent', {item: item, router: router});
+                    }
+                }
+            ],
             protocols: {
                 http: {sync: true},
                 amqp: {}
@@ -48,6 +104,15 @@ export default new Vuex.Store({
             ]
         },
         subscription: {
+            sideBarOptions: [
+                {
+                    name: "Delete",
+                    click: (commit, item, router) => {
+                        console.log('Deleting requisition: ' + commit);
+                        commit('deleteComponent', {item: item, router: router});
+                    }
+                }
+            ],
             protocols: {
                 http: {},
                 amqp: {}
