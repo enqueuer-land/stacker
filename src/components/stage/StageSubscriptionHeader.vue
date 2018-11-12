@@ -157,7 +157,7 @@
     }
 
     .border-subscription-color {
-        border-left: 8px var(--subscription-color) solid;
+        border-left: 6px var(--subscription-color) solid;
     }
 
 </style>

@@ -138,7 +138,7 @@
     }
 
     .border-requisition-color {
-        border-left: 8px var(--requisition-color) solid;
+        border-left: 6px var(--requisition-color) solid;
     }
 
 </style>

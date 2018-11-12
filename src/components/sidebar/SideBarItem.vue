@@ -1,5 +1,5 @@
 <template>
-    <div :class="sideBarItemClass" :style="sideBarItemStyle">
+    <div :style="sideBarItemStyle">
         <a class="row no-gutters" href="#" style="text-decoration: none"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
@@ -124,24 +124,31 @@
         computed: {
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
-                if (selectedItem.id === this.item.id) {
-                    return {};
-                }
-                return {
-                    'border-right': '3px var(--' + selectedItem.component + '-color) solid'
+                let style = {
+                    // 'border-bottom': '1px solid var(--stacker-background-alternative-color)',
+                    'background-color': 'var(--stacker-header-background-color)'
                 };
-            },
-            sideBarItemClass: function () {
-                return {
-                    'side-bar-item': true,
-                    'requisition-side-bar-hover': this.isRequisition && this.mouseIsOver,
-                    'publisher-side-bar-hover': this.isPublisher && this.mouseIsOver,
-                    'subscription-side-bar-hover': this.isSubscription && this.mouseIsOver,
-                    'requisition-side-bar-opened': this.isRequisition && this.opened && !this.isSelected(),
-                    'requisition-side-bar-selected': this.isRequisition && this.isSelected(),
-                    'publisher-side-bar-selected': this.isPublisher && this.isSelected(),
-                    'subscription-side-bar-selected': this.isSubscription && this.isSelected(),
+                if (this.mouseIsOver) {
+                    style.color = 'white';
+                    style['border-left'] = '6px var(--' + selectedItem.component + '-color) solid';
+                    if (this.isRequisition && !this.isSelected()) {
+                        style.color = 'var(--index-color)';
+                    }
                 }
+                if (this.isSelected()) {
+                    style = {
+                        ...style,
+                        color: 'white',
+                        'background-color': 'var(--stacker-background-color)',
+                        'border-left': '6px var(--' + selectedItem.component + '-color) solid',
+                        'border-top': '2px var(--' + selectedItem.component + '-color) solid',
+                        'border-bottom': '2px var(--' + selectedItem.component + '-color) solid',
+                    }
+                }
+                if (selectedItem.id !== this.item.id) {
+                    style['border-right'] = '3px var(--' + selectedItem.component + '-color) solid';
+                }
+                return style;
             },
             tagClass: function () {
                 return {
@@ -171,65 +178,12 @@
 
 <style scoped>
 
-    .side-bar-item {
-        border-bottom: 1px solid var(--stacker-background-alternative-color);
-        background-color: var(--stacker-header-background-color);
-    }
-
     #name:hover {
         color: white;
     }
 
-    .requisition-side-bar-opened {
+    a {
         color: var(--index-color);
-        /*background-color: var(--stacker-background-alternative-color);*/
-        /*border-left: 8px var(--requisition-color) solid;*/
-        /*border-top: 1px var(--requisition-color) solid;*/
-        /*border-bottom: 1px var(--requisition-color) solid;*/
-    }
-
-    .requisition-side-bar-selected {
-        color: white;
-        border-left: 8px var(--requisition-color) solid;
-        border-top: 2px var(--requisition-color) solid;
-        border-bottom: 2px var(--requisition-color) solid;
-        background-color: var(--stacker-background-color);
-    }
-
-    .publisher-side-bar-selected {
-        color: white;
-        border-left: 8px var(--publisher-color) solid;
-        border-top: 2px var(--publisher-color) solid;
-        border-bottom: 2px var(--publisher-color) solid;
-        background-color: var(--stacker-background-color);
-    }
-
-    .subscription-side-bar-selected {
-        color: white;
-        border-left: 8px var(--subscription-color) solid;
-        border-top: 2px var(--subscription-color) solid;
-        border-bottom: 2px var(--subscription-color) solid;
-        background-color: var(--stacker-background-color);
-    }
-
-    .requisition-side-bar-hover {
-        color: white;
-        border-left: 8px var(--requisition-color) solid;
-    }
-
-    .publisher-side-bar-hover {
-        color: white;
-        border-left: 8px var(--publisher-color) solid;
-    }
-
-    .subscription-side-bar-hover {
-        color: white;
-        border-left: 8px var(--subscription-color) solid;
-    }
-
-    .side-bar-item > a {
-        color: var(--index-color);
-        /*height: inherit;*/
     }
 
     .dropdown-toggle::after {

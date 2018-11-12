@@ -163,7 +163,7 @@
     }
 
     .border-publisher-color {
-        border-left: 8px var(--publisher-color) solid;
+        border-left: 6px var(--publisher-color) solid;
     }
 
 </style>
