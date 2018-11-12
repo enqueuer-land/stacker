@@ -126,7 +126,7 @@
     }
 
     .disabled-label {
-        /*color: var(--index-color)*/
+        color: var(--index-color)
     }
 
 </style>

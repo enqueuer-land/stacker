@@ -5,26 +5,40 @@ import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
 import StageEvent from './components/stage/StageEvent'
+import store from './store'
 
 Vue.use(Router);
+
+let stageBodyPropsBuilder = function (route) {
+    const splitPath = route.path.split("/");
+    const name = splitPath[splitPath.length - 1];
+    return {
+        eventName: name,
+        item: store.state.selectedItem
+    };
+};
 
 export default new Router({
     routes: [
         {
             path: "/requisition/:id",
             component: StageHeader,
+            props: true,
             children: [
                 {
                     path: "general",
-                    component: StageRequisitionGeneral
+                    component: StageRequisitionGeneral,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onInit",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onFinish",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 }
             ]
         },

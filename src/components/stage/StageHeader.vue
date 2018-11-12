@@ -51,7 +51,7 @@
             </div>
             <div class="row pt-2">
                 <ul class="nav" role="tablist" id="tab-collection">
-                    <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item" >
+                    <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">
                         <a class="nav-link pb-1" :style="tabStyle(index)"
                            data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
@@ -60,7 +60,7 @@
                 </ul>
             </div>
         </div>
-        <router-view/>
+        <router-view @input="stageBodyChanged"/>
     </div>
 </template>
 
@@ -89,6 +89,9 @@
             }
         },
         methods: {
+            stageBodyChanged({attribute, payload}) {
+                this.$store.state.selectedItem[attribute] = payload;
+            },
             runButtonClick: async function () {
                 await this.$store.dispatch('runRequisition', this.getCurrentSelected());
             },
@@ -119,7 +122,13 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                this.$router.push({path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path});
+                this.$router.push({
+                    path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path,
+                    props: {
+                        item: this.getCurrentSelected(),
+                        eventName: tab.path
+                    }
+                });
             },
             isRequisition() {
                 return this.$store.state.selectedItem.component.toUpperCase().startsWith("REQ");

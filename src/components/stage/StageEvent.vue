@@ -27,47 +27,43 @@
     export default {
         name: 'StageEvent',
         components: {Assertions, KeyValueInput, PrismEditor},
+        props: {
+            item: {
+                defaultValue: {}
+            },
+            eventName: {},
+        },
         data: function () {
-            let splitPath = this.$route.path.split("/");
-            const name = splitPath[splitPath.length - 1];
-
-            this.initializeComponent(name);
+            const defaultValue = this.item[this.eventName] || {};
             return {
-                name: name,
-                script: this.$store.state.selectedItem[name].script = '',
-                store: this.$store.state.selectedItem[name].store = {},
-                assertions: this.$store.state.selectedItem[name].assertions || [],
+                script: defaultValue.script || '',
+                store: defaultValue.store || {},
+                assertions: defaultValue.assertions || [],
             }
         },
         methods: {
-            initializeComponent: function (name) {
-                if (this.$store.state.selectedItem[name] === undefined) {
-                    this.$store.state.selectedItem[name] = {
-                        script: '',
-                        assertions: [],
-                        store: {}
-                    };
-                }
-                this.script = this.$store.state.selectedItem[name].script;
-                this.store = this.$store.state.selectedItem[name].store;
-                this.assertions = this.$store.state.selectedItem[name].assertions;
+            getContent: function () {
+                const defaultValue = this.item[this.eventName] || {};
+                this.script = defaultValue.script;
+                this.store = defaultValue.store;
+                this.assertions = defaultValue.assertions;
             }
         },
         watch: {
-            '$route': function () {
-                let splitPath = this.$route.path.split("/");
-                const name = splitPath[splitPath.length - 1];
-                this.initializeComponent(name);
-                this.name = name;
+            eventName: function () {
+                this.getContent();
+            },
+            item: function () {
+                this.getContent();
             },
             script() {
-                this.$store.state.selectedItem[this.name].script = this.script;
+                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
             },
             assertions() {
-                this.$store.state.selectedItem[this.name].assertions = this.assertions;
+                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
             },
             store() {
-                this.$store.state.selectedItem[this.name].store = this.store;
+                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
             }
         }
     }

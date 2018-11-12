@@ -1,6 +1,6 @@
 <template>
     <div class="stage">
-        <router-view/>
+        <router-view />
     </div>
 </template>
 
@@ -9,6 +9,8 @@
         name: 'Stage',
         data: function () {
             return {}
+        },
+        methods: {
         }
     }
 </script>

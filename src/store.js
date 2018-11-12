@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {generateId} from './tests/id-generator';
-import ObjectDecycler from "./tests/object-decycler";
+// import ObjectDecycler from "./tests/object-decycler";
 // import {RequisitionRunner} from "enqueuer/js/requisition-runners/requisition-runner";
 
 Vue.use(Vuex);
@@ -208,7 +208,7 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
+            // console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
             // new RequisitionRunner(requisition, null).run()
             //     .then(report => {
             //         commit('setRequisitionResult', {report: report});
