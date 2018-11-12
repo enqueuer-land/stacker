@@ -128,7 +128,7 @@
                     return {};
                 }
                 return {
-                    'border-right': '2px var(--' + selectedItem.component + '-color) solid'
+                    'border-right': '3px var(--' + selectedItem.component + '-color) solid'
                 };
             },
             sideBarItemClass: function () {

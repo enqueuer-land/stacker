@@ -27,7 +27,6 @@
 
     const defaultFormatters = [
         {
-            default: true,
             name: 'Raw',
             stringify(formatted) {
                 return formatted;
@@ -38,6 +37,7 @@
         },
         {
             name: 'JSON',
+            default: true,
             stringify(formatted) {
                 return JSON.stringify(formatted, null, 4)
             },
@@ -73,6 +73,7 @@
         methods: {
             getContent() {
                 console.log('Getting content');
+                //TODO check this
                 if (typeof (this.value) === 'object') {
                     return {
                         payload: JSON.stringify(this.value, null, 4),

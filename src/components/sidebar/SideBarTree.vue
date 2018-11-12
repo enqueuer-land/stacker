@@ -1,6 +1,6 @@
 <template>
     <div class="side-bar-tree">
-        <ul class="list-unstyled">
+        <ul class="list-unstyled mb-0">
             <SideBarNode v-for="(requisition, index) in $store.state.requisitions" :key="requisition.id" :index="index" :node="requisition"/>
         </ul>
     </div>
