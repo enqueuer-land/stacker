@@ -11,7 +11,7 @@
                     <input v-model="getCurrentSelected().name" type="text" class="form-control"
                            style="background-color: transparent; color: white"
                            placeholder="Name">
-                    <div v-if="!isRequisition()" class="input-group-append">
+                    <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                 :style="protocolsListStyle">
                             {{selectedProtocol}}
@@ -24,7 +24,7 @@
                             >{{protocol}}</a>
                         </div>
                     </div>
-                    <div v-else class="input-group-append">
+                    <div v-else class="input-group-append stage-header-main-dropdown">
                         <button class="btn pl-4 pr-4"
                                 style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
                                 @click="runButtonClick"
@@ -37,12 +37,12 @@
                 <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
-                        <a style="text-decoration: none; color: var(--requisition-color)" href="#"
+                        <a href="#"
                            @click="$store.dispatch('runRequisition', breadCrumb)">
                             <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);"
                                class="material-icons">play_circle_outline</i>
                         </a>
-                        <a style="text-decoration: none; font-size: 0.8em; color: var(--requisition-color)" href="#"
+                        <a style="text-decoration: none; font-size: 0.8em;" href="#"
                            @click="breadCrumbSelected(breadCrumb)">
                             {{breadCrumb.name}}
                         </a>
@@ -51,8 +51,8 @@
             </div>
             <div class="row pt-2">
                 <ul class="nav" role="tablist" id="tab-collection">
-                    <li class="nav-item" v-for="(tab, index) in tabs" :key="index">
-                        <a id="tab-item" class="nav-link pb-1" :style="tabStyle(index)"
+                    <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item" >
+                        <a class="nav-link pb-1" :style="tabStyle(index)"
                            data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
                            :href="'#'">{{tab.name}}</a>
@@ -177,14 +177,13 @@
                 return function (index) {
                     if (this.tabSelectedIndex === index) {
                         return {
-                            color: 'white',
+                            'color': 'white',
                             'background-color': 'var(--stacker-background-color)',
                             'border-left': '6px ' + 'var(--' + this.getCurrentSelected().component + '-color)' + ' solid'
                         };
                     }
                     return {
                         'color': 'var(--' + this.getCurrentSelected().component + '-color)',
-                        'background-color': 'var(--stacker-alternative-background-color)',
                     }
                 };
             }
@@ -196,6 +195,11 @@
 
     .breadcrumb-item::before {
         content: '›';
+    }
+
+    .breadcrumb-item a {
+        color: var(--requisition-color);
+        text-decoration: none;
     }
 
     .breadcrumb-item a:hover {
@@ -210,12 +214,12 @@
         display: none;
     }
 
-    #tab-collection :hover {
-        background-color: var(--stacker-header-background-color);
-        color: white;
+    #tab-item a:hover {
+        background-color: var(--stacker-background-color);
     }
 
-    #tab-item a:hover {
+    .stage-header-main-dropdown a:hover {
+        color: white;
     }
 
 </style>
