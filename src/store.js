@@ -29,15 +29,12 @@ export default new Vuex.Store({
         },
         publisher: {
             protocols: {
-                http: {
-                    additionalTabs: [
-                        {
-                            name: 'On Message Received',
-                            path: 'onMessageReceived'
-                        },
-                    ]
-                },
+                http: {sync: true},
                 amqp: {}
+            },
+            syncTab: {
+                name: 'On Message Received',
+                path: 'onMessageReceived',
             },
             tabs: [
                 {
@@ -211,6 +208,7 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
+            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
             // new RequisitionRunner(requisition, null).run()
             //     .then(report => {
             //         commit('setRequisitionResult', {report: report});
@@ -218,7 +216,6 @@ export default new Vuex.Store({
             //     .catch(err => {
             //        console.log(`Error running requisition: ${err}`);
             //     });
-            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
 
 
             commit('setRequisitionResult', {

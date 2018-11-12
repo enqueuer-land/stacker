@@ -1,13 +1,13 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a class="row no-gutters" href="#" style="text-decoration: none"
+        <a class="row no-gutters" href="#" style="text-decoration: none; color: var(--index-color)'"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
         >
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="more-icon">
                         <i class="material-icons">more_vert</i>
                     </a>
                     <div class="dropdown-menu">
@@ -126,14 +126,12 @@
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
                     // 'border-bottom': '1px solid var(--stacker-background-alternative-color)',
-                    'background-color': 'var(--stacker-header-background-color)'
+                    'background-color': 'var(--stacker-header-background-color)',
+                    color: 'var(--index-color)'
                 };
                 if (this.mouseIsOver) {
                     style.color = 'white';
                     style['border-left'] = '6px var(--' + selectedItem.component + '-color) solid';
-                    if (this.isRequisition && !this.isSelected()) {
-                        style.color = 'var(--index-color)';
-                    }
                 }
                 if (this.isSelected()) {
                     style = {
@@ -143,7 +141,10 @@
                         'border-left': '6px var(--' + selectedItem.component + '-color) solid',
                         'border-top': '2px var(--' + selectedItem.component + '-color) solid',
                         'border-bottom': '2px var(--' + selectedItem.component + '-color) solid',
-                    }
+                    };
+                }
+                if (this.isRequisition && this.opened) {
+                    style['background-color'] = 'var(--stacker-background-color)';
                 }
                 if (selectedItem.id !== this.item.id) {
                     style['border-right'] = '3px var(--' + selectedItem.component + '-color) solid';
@@ -178,14 +179,6 @@
 
 <style scoped>
 
-    #name:hover {
-        color: white;
-    }
-
-    a {
-        color: var(--index-color);
-    }
-
     .dropdown-toggle::after {
         display: none !important;
     }
@@ -194,6 +187,14 @@
         font-size: 0.7em;
         text-transform: uppercase;
         font-weight: bold;
+    }
+
+    #more-icon {
+        color: white;
+    }
+
+    #more-icon:hover {
+        color: var(--stacker-background-alternative-color);
     }
 
 </style>

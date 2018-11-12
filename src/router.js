@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import StageRequisitionHeader from './components/stage/StageRequisitionHeader'
-import StagePublisherHeader from './components/stage/StagePublisherHeader'
-import StageSubscriptionHeader from './components/stage/StageSubscriptionHeader'
+import StageHeader from './components/stage/StageHeader'
 import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
@@ -14,7 +12,7 @@ export default new Router({
     routes: [
         {
             path: "/requisition/:id",
-            component: StageRequisitionHeader,
+            component: StageHeader,
             children: [
                 {
                     path: "general",
@@ -32,7 +30,7 @@ export default new Router({
         },
         {
             path: "/publisher/:id",
-            component: StagePublisherHeader,
+            component: StageHeader,
             children: [
                 {
                     path: "http",
@@ -55,7 +53,7 @@ export default new Router({
         },
         {
             path: "/subscription/:id",
-            component: StageSubscriptionHeader,
+            component: StageHeader,
             children: [
                 {
                     path: "http",

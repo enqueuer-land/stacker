@@ -50,6 +50,12 @@
         border-bottom: 1px var(--stacker-background-color) solid;
     }
 
+    .dropdown-item:focus {
+        color: black;
+        background-color: var(--index-color);
+        border-bottom: 1px var(--stacker-background-color) solid;
+    }
+
     .publisher-color {
         color: var(--publisher-color)
     }

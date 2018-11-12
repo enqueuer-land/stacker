@@ -73,18 +73,18 @@
         methods: {
             getContent() {
                 console.log('Getting content');
-                //TODO check this
                 if (typeof (this.value) === 'object') {
                     return {
                         payload: JSON.stringify(this.value, null, 4),
                         selectedIndex: defaultFormatters.findIndex(formatter => !!formatter.default),
                     }
                 }
+                let stringifiedValue = this.value ? this.value.toString(): '';
                 defaultFormatters
                     .filter(formatter => !formatter.default)
                     .forEach((formatter, index) => {
                         try {
-                            const formatted = formatter.parse(this.value);
+                            const formatted = formatter.parse(stringifiedValue);
                             return {
                                 payload: formatter.stringify(formatted),
                                 selectedIndex: index,
@@ -94,8 +94,8 @@
                         }
                     });
                 return {
-                    payload: this.value,
-                    selectedIndex: defaultFormatters.findIndex(formatter => !!formatter.default)
+                    payload: stringifiedValue,
+                    selectedIndex: 0
                 }
             },
             update() {
@@ -126,7 +126,7 @@
     }
 
     .disabled-label {
-        color: var(--index-color)
+        /*color: var(--index-color)*/
     }
 
 </style>
