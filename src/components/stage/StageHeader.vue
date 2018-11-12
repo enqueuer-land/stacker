@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="getCurrentSelected().name" type="text" class="form-control"
+                    <input v-model="item.name" type="text" class="form-control"
                            style="background-color: transparent; color: white"
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
@@ -18,7 +18,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#"
-                               v-for="protocol in Object.keys($store.state[getCurrentSelected().component].protocols)"
+                               v-for="protocol in Object.keys($store.state[item.component].protocols)"
                                :key="protocol" style="text-transform: uppercase"
                                @click="selectProtocol(protocol)"
                             >{{protocol}}</a>
@@ -67,45 +67,44 @@
 <script>
     export default {
         name: 'StageHeader',
+        props: ['item'],
         mounted: function () {
             if (this.isRequisition()) {
                 this.tabSelected(this.$store.state.requisition.tabs[0], 0);
             }
             else {
-                const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
+                const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
                 this.tabSelected({path: firstProtocol}, 0);
             }
         },
         data: function () {
             let firstProtocol = null;
             if (!this.isRequisition()) {
-                firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
+                firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
             }
             return {
                 tabSelectedIndex: 0,
-                id: this.getCurrentSelected().id,
                 tabs: this.refreshAvailableTabs(firstProtocol),
                 selectedProtocol: firstProtocol
             }
         },
         methods: {
             stageBodyChanged({attribute, payload}) {
-                this.$store.state.selectedItem[attribute] = payload;
+                this.item[attribute] = payload;
             },
             runButtonClick: async function () {
-                await this.$store.dispatch('runRequisition', this.getCurrentSelected());
+                await this.$store.dispatch('runRequisition', this.item);
             },
             refreshAvailableTabs: function (protocol) {
-                let currentSelected = this.$store.state.selectedItem;
-                let config = this.$store.state[currentSelected.component];
+                let config = this.$store.state[this.item.component];
                 let regularTabs = config.tabs.concat([]);
                 if (this.isRequisition()) {
                     return regularTabs;
                 }
                 const protocolTab = {name: protocol.toUpperCase(), path: protocol};
                 if (this.isPublisher()) {
-                    if (this.$store.state[currentSelected.component].protocols[protocol].sync) {
-                        regularTabs.push(this.$store.state[currentSelected.component].syncTab);
+                    if (this.$store.state[this.item.component].protocols[protocol].sync) {
+                        regularTabs.push(this.$store.state[this.item.component].syncTab);
                     }
                 }
                 return [protocolTab].concat(regularTabs);
@@ -114,47 +113,38 @@
                 this.selectedProtocol = protocol;
                 this.tabs = this.refreshAvailableTabs();
             },
-            getCurrentSelected: function () {
-                return this.$store.state.selectedItem;
-            },
             breadCrumbSelected: function (breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
+                console.log('going to:' + '/' + this.item.component + '/' + this.id + '/' + tab.path);
                 this.$router.push({
-                    path: '/' + this.getCurrentSelected().component + '/' + this.getCurrentSelected().id + '/' + tab.path,
+                    path: '/' + this.item.component + '/' + this.id + '/' + tab.path,
                     props: {
-                        item: this.getCurrentSelected(),
+                        item: this.item,
                         eventName: tab.path
                     }
                 });
             },
             isRequisition() {
-                return this.$store.state.selectedItem.component.toUpperCase().startsWith("REQ");
+                return this.item.component.toUpperCase().startsWith("REQ");
             },
             isPublisher() {
-                return this.$store.state.selectedItem.component.toUpperCase().startsWith("PUB");
-            },
-            isSubscription() {
-                return this.$store.state.selectedItem.component.toUpperCase().startsWith("SUB");
+                return this.item.component.toUpperCase().startsWith("PUB");
             },
         },
         watch: {
-            '$route': function () {
-                let id = this.$route.path.split("/")[2];
-                if (id !== this.id) {
-                    this.id = id;
-                    if (this.isRequisition()) {
-                        this.tabs = this.refreshAvailableTabs();
-                        this.tabSelected(this.$store.state.requisition.tabs[0], 0);
-                    }
-                    else {
-                        const firstProtocol = Object.keys(this.$store.state[this.getCurrentSelected().component].protocols).filter((key, index) => index === 0)[0];
-                        this.selectedProtocol = firstProtocol;
-                        this.tabs = this.refreshAvailableTabs(firstProtocol);
-                        this.tabSelected({path: firstProtocol}, 0);
-                    }
+            item: function () {
+                if (this.isRequisition()) {
+                    this.tabs = this.refreshAvailableTabs();
+                    this.tabSelected(this.$store.state.requisition.tabs[0], 0);
+                }
+                else {
+                    const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+                    this.selectedProtocol = firstProtocol;
+                    this.tabs = this.refreshAvailableTabs(firstProtocol);
+                    this.tabSelected({path: firstProtocol}, 0);
                 }
             }
         },
@@ -162,20 +152,20 @@
             nameStyle() {
                 return {
                     'font-size': '0.8em',
-                    'color': 'var(--' + this.getCurrentSelected().component + '-color)'
+                    'color': 'var(--' + this.item.component + '-color)'
                 }
             },
             protocolsListStyle() {
                 return {
-                    border: '1px var(--' + this.getCurrentSelected().component + '-color) solid',
-                    color: 'var(--' + this.getCurrentSelected().component + '-color)',
+                    border: '1px var(--' + this.item.component + '-color) solid',
+                    color: 'var(--' + this.item.component + '-color)',
                     'background-color': 'transparent',
                     'text-transform': 'uppercase'
                 }
             },
             getBreadCrumbs: function () {
                 let breadCrumbs = [];
-                let current = this.getCurrentSelected().parent;
+                let current = this.item.parent;
                 while (current !== undefined) {
                     breadCrumbs.unshift(current);
                     current = current.parent;
@@ -188,11 +178,11 @@
                         return {
                             'color': 'white',
                             'background-color': 'var(--stacker-background-color)',
-                            'border-left': '6px ' + 'var(--' + this.getCurrentSelected().component + '-color)' + ' solid'
+                            'border-left': '6px ' + 'var(--' + this.item.component + '-color)' + ' solid'
                         };
                     }
                     return {
-                        'color': 'var(--' + this.getCurrentSelected().component + '-color)',
+                        'color': 'var(--' + this.item.component + '-color)',
                     }
                 };
             }

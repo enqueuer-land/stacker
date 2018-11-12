@@ -18,12 +18,21 @@ let stageBodyPropsBuilder = function (route) {
     };
 };
 
+let stageHeaderPropsBuilder = function (route) {
+    const splitPath = route.path.split("/");
+    const id = splitPath[splitPath.length - 1];
+    return {
+        id: id,
+        item: store.state.selectedItem
+    };
+};
+
 export default new Router({
     routes: [
         {
             path: "/requisition/:id",
             component: StageHeader,
-            props: true,
+            props: (route) => stageHeaderPropsBuilder(route),
             children: [
                 {
                     path: "general",
@@ -45,22 +54,27 @@ export default new Router({
         {
             path: "/publisher/:id",
             component: StageHeader,
+            props: (route) => stageHeaderPropsBuilder(route),
             children: [
                 {
                     path: "http",
-                    component: HttpPublisher
+                    component: HttpPublisher,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onInit",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onMessageReceived",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onFinish",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 }
             ],
 
@@ -68,6 +82,7 @@ export default new Router({
         {
             path: "/subscription/:id",
             component: StageHeader,
+            props: (route) => stageHeaderPropsBuilder(route),
             children: [
                 {
                     path: "http",
@@ -76,14 +91,17 @@ export default new Router({
                 {
                     path: "onInit",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onMessageReceived",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onFinish",
                     component: StageEvent,
+                    props: (route) => stageBodyPropsBuilder(route)
                 }
             ],
 
