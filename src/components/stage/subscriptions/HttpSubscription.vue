@@ -70,19 +70,19 @@
     import RoundedSwitch from "../../inputs/RoundedSwitch";
     import CommonSubscription from "../../inputs/CommonSubscription";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+    const methodsList = ["POST", "GET", "PATCH", "OPTION", "DELETE", "PUT"];
 
     export default {
         name: 'HttpSubscription',
         components: {ObjectFormatter, CommonSubscription, RoundedSwitch, KeyValueInput},
         data: function () {
-            const methods = ["GET", "POST", "PATCH", "OPTION", "DELETE", "PUT"].sort();
             if (!this.$store.state.selectedItem.response) {
                 this.$store.state.selectedItem.response = {};
             }
-            this.$store.state.selectedItem.method = methods[0];
+            this.$store.state.selectedItem.method = methodsList[0];
             return {
                 method: this.$store.state.selectedItem.method,
-                methods: methods
+                methods: methodsList
             }
         },
         methods: {
