@@ -157,8 +157,8 @@
                 this.getContent();
             },
             id: function () {
-                console.log('ID changed: '  + this.item.component + '/' + this.item.id);
-                this.getContent();
+                // console.log('ID changed: '  + this.item.component + '/' + this.item.id);
+                // this.getContent();
             }
         },
         computed: {

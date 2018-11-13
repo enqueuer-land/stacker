@@ -76,7 +76,6 @@
                     iterations: this.iterations,
                     delay: this.delay,
                 };
-                console.log(JSON.stringify(payload));
                 this.$emit('input', {payload: payload});
             },
         },
@@ -91,7 +90,6 @@
                 this.emit();
             },
             item() {
-                console.log('item ' + JSON.stringify(this.item));
                 this.timeout = this.item.timeout;
                 this.iterations = this.item.iterations;
                 this.delay = this.item.delay;
