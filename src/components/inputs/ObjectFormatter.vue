@@ -2,11 +2,11 @@
     <div class="object-formatter container-fluid">
         <div class="row" style="background-color: var(--stacker-background-alternative-color); border-radius: 4px;">
             <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons">
-                <label v-for="(formatter, index) in formatters" :key="index" @click="selectedIndex = index"
-                       :class="['btn', index === selectedIndex ? 'active enabled-label' : 'disabled-label']"
+                <a v-for="(formatter, index) in formatters" :key="index" @click="selectIndex(index)" href="#"
+                   :class="['btn', index === selectedIndex ? 'active enabled-label' : 'disabled-label']"
                 >
                     <input type="radio" name="formatters">{{formatter.name}}
-                </label>
+                </a>
             </div>
         </div>
         <div class="row">
@@ -24,10 +24,12 @@
 </template>
 <script>
     import PrismEditor from 'vue-prism-editor'
+    import * as yaml from 'yamljs';
 
     const defaultFormatters = [
         {
             name: 'Raw',
+            raw: true,
             stringify(formatted) {
                 return formatted;
             },
@@ -37,12 +39,21 @@
         },
         {
             name: 'JSON',
-            default: true,
+            json: true,
             stringify(formatted) {
                 return JSON.stringify(formatted, null, 4)
             },
             parse: (stringified) => {
                 return JSON.parse(stringified);
+            }
+        },
+        {
+            name: 'YAML',
+            stringify(formatted) {
+                return yaml.stringify(formatted, 100, 4);
+            },
+            parse: (stringified) => {
+                return yaml.parse(stringified);
             }
         }
     ];
@@ -51,67 +62,77 @@
         name: 'ObjectFormatter',
         components: {PrismEditor},
         props: {
-            value: ''
+            text: {},
+            format: {}
         },
         data: function () {
-            let content = this.getContent();
+            console.log('data');
+            const content = this.getContent();
             return {
                 payload: content.payload,
                 alert: null,
                 selectedIndex: content.selectedIndex,
-                formatters: defaultFormatters,
+                formatters: defaultFormatters
             }
         },
         watch: {
-            value() {
+            text() {
                 const content = this.getContent();
                 this.payload = content.payload;
                 this.selectedIndex = content.selectedIndex;
             },
-            selectedIndex() {
-                this.update();
+            format() {
+                const content = this.getContent();
+                this.payload = content.payload;
+                this.selectedIndex = content.selectedIndex;
             },
             payload() {
-                this.update();
+                this.checkSyntax();
+                this.emit();
             }
         },
         methods: {
             getContent() {
-                if (typeof (this.value) === 'object') {
-                    return {
-                        payload: JSON.stringify(this.value, null, 4),
-                        selectedIndex: defaultFormatters.findIndex(formatter => !!formatter.default),
+                const defaultFormatterIndex = defaultFormatters.findIndex(formatter => formatter.raw);
+                if (this.text && this.format) {
+                    const formatterIndex = defaultFormatters.findIndex(formatter => formatter.name.toLowerCase() === this.format.toLowerCase());
+                    const formatter = defaultFormatters[formatterIndex];
+                    try {
+                        formatter.stringify(formatter.parse(this.text));
+                        return {
+                            payload: formatter.stringify(formatter.parse(this.text)),
+                            selectedIndex: formatterIndex
+                        }
+                    } catch (err) {
                     }
                 }
-                let stringifiedValue = this.value ? this.value.toString() : '';
-                defaultFormatters
-                    .filter(formatter => !formatter.default)
-                    .forEach((formatter, index) => {
-                        try {
-                            const formatted = formatter.parse(stringifiedValue);
-                            return {
-                                payload: formatter.stringify(formatted),
-                                selectedIndex: index,
-                            }
-                        }
-                        catch (e) {
-                        }
-                    });
                 return {
-                    payload: stringifiedValue,
-                    selectedIndex: 0
+                    payload: this.text,
+                    selectedIndex: defaultFormatterIndex
                 }
             },
-            update() {
+            selectIndex(index) {
+                this.selectedIndex = index;
+                if (this.checkSyntax()) {
+                    const formatter = this.formatters[this.selectedIndex];
+                    this.payload = formatter.stringify(formatter.parse(this.payload));
+                }
+                this.emit();
+            },
+            checkSyntax() {
                 this.alert = null;
                 try {
-                    const formatted = this.formatters[this.selectedIndex].parse(this.payload);
-                    this.payload = this.formatters[this.selectedIndex].stringify(formatted);
-                    this.$emit('input', formatted);
+                    this.formatters[this.selectedIndex].parse(this.payload);
+                    return true;
                 } catch (err) {
                     this.alert = err.toString();
-                    this.$emit('input', this.payload);
                 }
+                return false;
+            },
+            emit() {
+                const format = defaultFormatters[this.selectedIndex].name.toLowerCase();
+                this.$emit('update:text', this.payload);
+                this.$emit('update:format', format);
             }
         },
     }
@@ -131,6 +152,11 @@
 
     .disabled-label {
         color: var(--index-color)
+    }
+
+    .btn-group-toggle > a:hover {
+        background-color: var(--stacker-background-color);
+        /*color: white;*/
     }
 
 </style>

@@ -42,7 +42,7 @@
             </div>
         </div>
         <div v-if="http.method !== 'GET'" class="row">
-            <object-formatter class="mb-1 ml-2 mr-2" v-model="http.payload"/>
+            <object-formatter class="mb-1 ml-2 mr-2" :text.sync="http.payload" :format.sync="http.format"/>
         </div>
         <div v-else class="row" style="border-top: white 1px solid"></div>
     </div>
@@ -61,8 +61,9 @@
             item: {},
         },
         data: function () {
+            const http = this.getContent();
             return {
-                http: this.getContent(),
+                http: http,
                 methods: methodsList
             }
         },
@@ -74,6 +75,7 @@
                     method: this.item.method || methodsList[0],
                     headers: this.item.headers || {},
                     payload: this.item.payload,
+                    format: this.item.format,
                 }
             },
             emit() {
