@@ -81,29 +81,32 @@
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
-                    // 'border-bottom': '1px solid var(--stacker-background-alternative-color)',
+                    'border-bottom': '1px solid var(--stacker-background-alternative-color)',
                     'background-color': 'var(--stacker-header-background-color)',
-                    color: 'var(--index-color)'
+                    'color': 'var(--index-color)'
                 };
-                if (this.mouseIsOver) {
-                    style.color = 'white';
-                    style['border-left'] = '6px var(--' + selectedItem.component + '-color) solid';
-                }
                 if (this.isSelected()) {
                     style = {
                         ...style,
-                        color: 'white',
+                        'color': 'white',
                         'background-color': 'var(--stacker-background-color)',
-                        'border-left': '6px var(--' + selectedItem.component + '-color) solid',
-                        'border-top': '2px var(--' + selectedItem.component + '-color) solid',
-                        'border-bottom': '2px var(--' + selectedItem.component + '-color) solid',
+                        'border-left': '2px var(--' + selectedItem.component + '-color) solid',
+                        'border-top': '1px var(--' + selectedItem.component + '-color) solid',
+                        'border-bottom': '1px var(--' + selectedItem.component + '-color) solid',
+                    };
+                }
+                if (this.mouseIsOver) {
+                    style = {
+                        ...style,
+                        'color': 'white',
+                        'border-left': '8px var(--' + this.item.component + '-color) solid'
                     };
                 }
                 if (this.isRequisition && this.opened) {
                     style['background-color'] = 'var(--stacker-background-color)';
                 }
                 if (selectedItem.id !== this.item.id) {
-                    style['border-right'] = '3px var(--' + selectedItem.component + '-color) solid';
+                    style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
                 }
                 return style;
             },

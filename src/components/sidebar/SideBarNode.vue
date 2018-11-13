@@ -1,11 +1,11 @@
 <template>
-    <div :class="sideBarClass">
+    <div class="side-bar-node mb-0 mt-0">
         <div class="card" style="border: none;">
             <div @click="onClick" :id="'collapsible' + node.id" data-toggle="collapse" :data-target="'#' + node.id">
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>
             <div :id="node.id" class="collapse">
-                <div class="card-body p-0 pl-2" style="background-color: white">
+                <div class="card-body p-0 pl-1" style="background-color: var(--requisition-color);">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in node.requisitions" :index="index" :key="requisition.id"
                                      :node="requisition"/>
@@ -39,11 +39,6 @@
             }
         },
         computed: {
-            sideBarClass: function () {
-                return {
-                    'side-bar-node mb-0 mt-0': true,
-                }
-            }
         }
     }
 </script>
