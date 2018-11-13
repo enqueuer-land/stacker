@@ -1,42 +1,42 @@
 import {generateId} from "./id-generator";
 
 export default class ComponentManager {
-    createRequisition = (payload) => {
-        const newComponent = {
-            id: generateId(),
-            name: 'New Requisition',
+    createRequisition = (base, parent) => {
+        const requisition = {
+            ...base,
+            id: base.id || generateId(),
+            name: base.name || 'New Requisition',
             publishers: [],
             subscriptions: [],
             requisitions: [],
+            parent: parent,
             component: "requisition"
         };
-        if (payload.parent !== null && payload.parent !== undefined) {
-            payload.parent.requisitions.push(newComponent);
-            newComponent.parent = payload.parent;
-        }
-
-        return newComponent;
+        requisition.publishers = (base.publishers || []).map(publisher => this.createPublisher(publisher, requisition));
+        requisition.subscriptions = (base.subscriptions || []).map(subscription => this.createSubscription(subscription, requisition));
+        requisition.requisitions = (base.requisitions || []).map(requisition => this.createRequisition(requisition, requisition));
+        return requisition;
     };
-    createPublisher = (payload) => {
+    createPublisher = (base, parent) => {
         const newComponent = {
-            id: generateId(),
-            name: 'New Publisher',
-            type: "HTTP",
-            parent: payload.parent,
+            ...base,
+            id: base.id || generateId(),
+            name: base.name || 'New Publisher',
+            type: base.type || "HTTP",
+            parent: parent,
             component: "publisher"
         };
-        payload.parent.publishers.push(newComponent);
         return newComponent;
     };
-    createSubscription = (payload) => {
+    createSubscription = (base, parent) => {
         const newComponent = {
-            id: generateId(),
-            name: 'New Subscription',
-            type: "HTTP",
-            parent: payload.parent,
+            ...base,
+            id: base.id || generateId(),
+            name: base.name || 'New Subscription',
+            type: base.type || "HTTP",
+            parent: parent,
             component: "subscription"
         };
-        payload.parent.subscriptions.push(newComponent);
         return newComponent;
     };
     delete = (item) => {

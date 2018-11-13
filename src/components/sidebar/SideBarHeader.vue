@@ -39,7 +39,9 @@
                 actions: [
                     {
                         name: "Open requisition",
-                        click: () => {}
+                        click: () => {
+                            $store.commit('openFile', {router: this.$router});
+                        }
                     },
                     {
                     name: "Add requisition",

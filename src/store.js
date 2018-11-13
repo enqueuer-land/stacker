@@ -188,26 +188,89 @@ export default new Vuex.Store({
                 criteria: []
             }
         ],
-
     },
     mutations: {
+        openFile(state, payload) {
+            const fileRequisition = {
+                "timeout": 3000,
+                name: "opened from file req",
+                delay: 9090,
+                iterations: 69,
+                "publishers": [
+                    {
+                        timeout: 123,
+                        name: "opened from file pub",
+                        "type": "http",
+                        "url": "http://localhost:23068/basic",
+                        "method": "POST",
+                        "payload": "basic auth",
+                        "headers": {
+                            "content-type": "application/json"
+                        },
+                        "onMessageReceived": {
+                            "assertions": [
+                                {
+                                    "expect": "body",
+                                    "toBeEqualTo": "`basic auth response`"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "subscriptions": [
+                    {
+                        name: "opened from file sub",
+                        "type": "http",
+                        "endpoint": "/basic",
+                        "port": 23068,
+                        "method": "POST",
+                        avoid: true,
+                        "timeout": 10000,
+                        "response": {
+                            headers: {
+                                key: 123
+                            },
+                            "status": 200,
+                            "payload": "basic auth response"
+                        },
+                        "onMessageReceived": {
+                            "assertions": [
+                                {
+                                    "name": "Payload",
+                                    "expect": "message.body",
+                                    "toBeEqualTo": "`basic auth`"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+            const newComponent = new ComponentManager().createRequisition(fileRequisition);
+            state.requisitions.push(newComponent);
+            state.selectedItem = newComponent;
+            payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
+        },
         addRequisition(state, payload) {
-            const newComponent = new ComponentManager().createRequisition(payload, state);
+            console.log(payload);
+            const newComponent = new ComponentManager().createRequisition({}, payload.parent);
             if (payload.parent === undefined) {
                 state.requisitions.push(newComponent);
+            } else {
+                newComponent.parent.requisitions.push(newComponent);
             }
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addPublisher(state, payload) {
-            const newComponent = new ComponentManager().createPublisher(payload);
+            const newComponent = new ComponentManager().createPublisher({}, payload.parent);
             state.selectedItem = newComponent;
-            console.log('New publisher item: ' + newComponent.id);
+            payload.parent.publishers.push(newComponent);
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addSubscription(state, payload) {
-            const newComponent = new ComponentManager().createSubscription(payload);
+            const newComponent = new ComponentManager().createSubscription({}, payload.parent);
             state.selectedItem = newComponent;
+            payload.parent.subscriptions.push(newComponent);
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         deleteComponent(state, payload) {
@@ -223,7 +286,7 @@ export default new Vuex.Store({
         },
         selectItem(state, payload) {
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
-            console.log('Current item: '+currentSelectedId+'; Selecting item: ' + payload.item.id);
+            console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;
                 let newPath = '/' + payload.item.component + '/' + payload.item.id;
