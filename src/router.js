@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import StageHeader from './components/stage/StageHeader'
-import StageRequisitionGeneral from './components/stage/StageRequisitionGeneral'
+import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
 import StageEvent from './components/stage/StageEvent'
@@ -36,7 +36,7 @@ export default new Router({
             children: [
                 {
                     path: "general",
-                    component: StageRequisitionGeneral,
+                    component: GeneralRequisition,
                     props: (route) => stageBodyPropsBuilder(route)
                 },
                 {

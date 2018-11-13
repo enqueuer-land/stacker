@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-requisition-general container-fluid">
+    <div class="general-requisition container-fluid">
         <div class="row">
             <div class="col pr-2">
                 <div class="row">
@@ -57,7 +57,7 @@
 <script>
 
     export default {
-        name: 'StageRequisitionGeneral',
+        name: 'GeneralRequisition',
         props: {
             item: {},
         },
@@ -102,7 +102,7 @@
 </script>
 
 <style scoped>
-    .stage-requisition-general {
+    .general-requisition {
 
     }
 

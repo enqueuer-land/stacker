@@ -70,11 +70,17 @@
             return {
                 tests: new FlattenTestsSummary().addTest($store.state.result),
                 mouseIsOver: false,
-                actions: [{
-                    name: "Save"
-                }, {
-                    name: "Flatten tests"
-                }]
+                actions: [
+                    {
+                        name: "Save"
+                    },
+                    {
+                        name: "Open"
+                    },
+                    {
+                        name: "Flatten"
+                    }
+                ]
             }
         },
         watch: {
@@ -128,6 +134,9 @@
             }
         },
         methods: {
+            openFileSelected(file) {
+              console.log(file.target.value);
+            },
             printTime: function () {
                 if (this.result) {
                     let totalTime = this.result.time.totalTime;
