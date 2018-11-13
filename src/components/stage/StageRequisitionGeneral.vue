@@ -9,7 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="getComponent().timeout" type="text" class="form-control"
+                        <input v-model="timeout" type="text" class="form-control"
                                style="background-color: transparent; color: white"
                                placeholder="5000">
                         <div class="input-group-append">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="getComponent().delay" type="text" class="form-control"
+                        <input v-model="delay" type="text" class="form-control"
                                style="background-color: transparent; color: white"
                                placeholder="0">
                         <div class="input-group-append">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="getComponent().iterations" type="text" class="form-control"
+                        <input v-model="iterations" type="text" class="form-control"
                                style="background-color: transparent; color: white"
                                placeholder="1">
                     </div>
@@ -58,14 +58,46 @@
 
     export default {
         name: 'StageRequisitionGeneral',
-        data: function () {
-            return {}
+        props: {
+            item: {},
         },
-        methods: {
-            getComponent: function () {
-                return this.$store.state.selectedItem
+        data: function () {
+            const defaultItem = this.item || {};
+            return {
+                timeout: defaultItem.timeout,
+                iterations: defaultItem.iterations,
+                delay: defaultItem.delay,
             }
         },
+        methods: {
+            emit() {
+                let payload = {
+                    timeout: this.timeout,
+                    iterations: this.iterations,
+                    delay: this.delay,
+                };
+                console.log(JSON.stringify(payload));
+                this.$emit('input', {payload: payload});
+            },
+        },
+        watch: {
+            timeout() {
+                this.emit();
+            },
+            iterations() {
+                this.emit();
+            },
+            delay() {
+                this.emit();
+            },
+            item() {
+                console.log('item ' + JSON.stringify(this.item));
+                this.timeout = this.item.timeout;
+                this.iterations = this.item.iterations;
+                this.delay = this.item.delay;
+
+            }
+        }
     }
 </script>
 

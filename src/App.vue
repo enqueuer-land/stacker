@@ -50,6 +50,11 @@
         border-bottom: 1px var(--stacker-background-color) solid;
     }
 
+    .dropdown-divider {
+        background-color: green;
+        margin: 1px 0;
+    }
+
     .dropdown-item:focus {
         color: black;
         background-color: var(--index-color);

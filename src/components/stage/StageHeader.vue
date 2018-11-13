@@ -91,7 +91,11 @@
         },
         methods: {
             stageBodyChanged({attribute, payload}) {
-                this.item[attribute] = payload;
+                if (attribute) {
+                    this.item[attribute] = payload;
+                } else {
+                    this.item = Object.assign(this.item, payload);
+                }
             },
             runButtonClick: async function () {
                 await this.$store.dispatch('runRequisition', this.item);
