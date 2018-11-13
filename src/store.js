@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {generateId} from './tests/id-generator';
 import ObjectDecycler from "./tests/object-decycler";
+import ComponentManager from "./tests/component-manager";
 // import {RequisitionRunner} from "enqueuer/js/requisition-runners/requisition-runner";
 
 Vue.use(Vuex);
@@ -54,7 +54,6 @@ export default new Vuex.Store({
                 {
                     name: "Delete",
                     click: (commit, item, router) => {
-                        console.log('Deleting requisition: ' + commit);
                         commit('deleteComponent', {item: item, router: router});
                     }
                 },
@@ -193,73 +192,38 @@ export default new Vuex.Store({
     },
     mutations: {
         addRequisition(state, payload) {
-            const newComponent = {
-                id: generateId(),
-                name: 'New Requisition',
-                publishers: [],
-                subscriptions: [],
-                requisitions: [],
-                component: "requisition"
-            };
-            if (payload.parent !== null && payload.parent !== undefined) {
-                payload.parent.requisitions.push(newComponent);
-                newComponent.parent = payload.parent;
-            } else {
+            const newComponent = new ComponentManager().createRequisition(payload, state);
+            if (payload.parent === undefined) {
                 state.requisitions.push(newComponent);
             }
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addPublisher(state, payload) {
-            const newComponent = {
-                id: generateId(),
-                name: 'New Publisher',
-                type: "HTTP",
-                parent: payload.parent,
-                component: "publisher"
-            };
-            payload.parent.publishers.push(newComponent);
+            const newComponent = new ComponentManager().createPublisher(payload);
             state.selectedItem = newComponent;
+            console.log('New publisher item: ' + newComponent.id);
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addSubscription(state, payload) {
-            const newComponent = {
-                id: generateId(),
-                name: 'New Subscription',
-                type: "HTTP",
-                parent: payload.parent,
-                component: "subscription"
-            };
-            payload.parent.subscriptions.push(newComponent);
+            const newComponent = new ComponentManager().createSubscription(payload);
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         deleteComponent(state, payload) {
             const item = payload.item;
+            new ComponentManager().delete(item);
             if (state.selectedItem.id === item.id) {
                 state.selectedItem = null;
             }
-            if (item.parent) {
-                item.parent.requisitions = item.parent.requisitions.filter(requisition => requisition.id !== item.id);
-                item.parent.publishers = item.parent.publishers.filter(publisher => publisher.id !== item.id);
-                item.parent.subscriptions = item.parent.subscriptions.filter(subscription => subscription.id !== item.id);
-            } else {
+            if (item.parent === undefined) {
                 state.requisitions = state.requisitions.filter(requisition => requisition.id !== item.id);
-            }
-            if (item.subscriptions) {
-                item.subscriptions = item.subscriptions.filter(subscription => subscription.id !== item.id);
-            }
-            if (item.publishers) {
-                item.publishers = item.publishers.filter(publisher => publisher.id !== item.id);
-            }
-            if (item.requisitions) {
-                item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
             }
             payload.router.push({path: '/'});
         },
         selectItem(state, payload) {
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
-            console.log('Selecting item: ' + currentSelectedId);
+            console.log('Current item: '+currentSelectedId+'; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;
                 let newPath = '/' + payload.item.component + '/' + payload.item.id;

@@ -69,7 +69,7 @@
         name: 'StageHeader',
         props: ['item', 'id'],
         mounted: function () {
-            console.log('Mounted: '  + this.item.component + '/' + this.item.id);
+            console.log('Mounted: ' + this.item.component + '/' + this.item.id);
             if (this.isRequisition()) {
                 this.tabSelected(this.$store.state.requisition.tabs[0], 0);
             }
@@ -153,12 +153,11 @@
         },
         watch: {
             item: function () {
-                console.log('Item changed: '  + this.item.component + '/' + this.item.id);
-                this.getContent();
+                console.log('Item changed');
             },
             id: function () {
-                // console.log('ID changed: '  + this.item.component + '/' + this.item.id);
-                // this.getContent();
+                console.log('Id changed');
+                this.getContent();
             }
         },
         computed: {

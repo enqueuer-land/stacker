@@ -34,7 +34,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col pl-0">
                 <div class="row">

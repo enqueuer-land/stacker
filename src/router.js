@@ -20,7 +20,8 @@ let stageBodyPropsBuilder = function (route) {
 
 let stageHeaderPropsBuilder = function (route) {
     const splitPath = route.path.split("/");
-    const id = splitPath[splitPath.length - 1];
+    const id = splitPath[2];
+    console.log(id);
     return {
         id: id,
         item: store.state.selectedItem
@@ -34,6 +35,11 @@ export default new Router({
             component: StageHeader,
             props: (route) => stageHeaderPropsBuilder(route),
             children: [
+                {
+                    path: "",
+                    component: GeneralRequisition,
+                    props: (route) => stageBodyPropsBuilder(route)
+                },
                 {
                     path: "general",
                     component: GeneralRequisition,
