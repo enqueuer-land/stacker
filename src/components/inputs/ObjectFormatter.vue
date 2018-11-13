@@ -63,6 +63,11 @@
             }
         },
         watch: {
+            value() {
+                const content = this.getContent();
+                this.payload = content.payload;
+                this.selectedIndex = content.selectedIndex;
+            },
             selectedIndex() {
                 this.update();
             },
@@ -78,7 +83,7 @@
                         selectedIndex: defaultFormatters.findIndex(formatter => !!formatter.default),
                     }
                 }
-                let stringifiedValue = this.value ? this.value.toString(): '';
+                let stringifiedValue = this.value ? this.value.toString() : '';
                 defaultFormatters
                     .filter(formatter => !formatter.default)
                     .forEach((formatter, index) => {

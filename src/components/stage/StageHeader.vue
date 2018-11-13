@@ -67,7 +67,7 @@
 <script>
     export default {
         name: 'StageHeader',
-        props: ['item'],
+        props: ['item', 'id'],
         mounted: function () {
             console.log('Mounted: '  + this.item.component + '/' + this.item.id);
             if (this.isRequisition()) {
@@ -138,10 +138,7 @@
             isPublisher() {
                 return this.item.component.toUpperCase().startsWith("PUB");
             },
-        },
-        watch: {
-            item: function () {
-                console.log('Item changed: '  + this.item.component + '/' + this.item.id);
+            getContent() {
                 if (this.isRequisition()) {
                     this.tabs = this.refreshAvailableTabs();
                     this.tabSelected(this.$store.state.requisition.tabs[0], 0);
@@ -152,6 +149,16 @@
                     this.tabs = this.refreshAvailableTabs(firstProtocol);
                     this.tabSelected({path: firstProtocol}, 0);
                 }
+            }
+        },
+        watch: {
+            item: function () {
+                console.log('Item changed: '  + this.item.component + '/' + this.item.id);
+                this.getContent();
+            },
+            id: function () {
+                console.log('ID changed: '  + this.item.component + '/' + this.item.id);
+                this.getContent();
             }
         },
         computed: {
