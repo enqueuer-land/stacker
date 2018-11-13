@@ -69,6 +69,7 @@
         name: 'StageHeader',
         props: ['item'],
         mounted: function () {
+            console.log('Mounted: '  + this.item.component + '/' + this.item.id);
             if (this.isRequisition()) {
                 this.tabSelected(this.$store.state.requisition.tabs[0], 0);
             }
@@ -118,7 +119,7 @@
             },
             tabSelected: function (tab, index) {
                 this.tabSelectedIndex = index;
-                console.log('going to:' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
+                console.log('going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
                 this.$router.push({
                     path: '/' + this.item.component + '/' + this.item.id + '/' + tab.path,
                     props: {
@@ -136,6 +137,7 @@
         },
         watch: {
             item: function () {
+                console.log('Item changed: '  + this.item.component + '/' + this.item.id);
                 if (this.isRequisition()) {
                     this.tabs = this.refreshAvailableTabs();
                     this.tabSelected(this.$store.state.requisition.tabs[0], 0);

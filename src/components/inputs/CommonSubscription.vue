@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="col-6 pr-2 pt-4 pl-2">
-                <rounded-switch v-model="input.avoidable" label="Avoidable"/>
+                <rounded-switch v-model="input.avoid" label="avoid"/>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
         name: 'CommonSubscription',
         components: {RoundedSwitch},
         props: {
-            avoidable: {
+            avoid: {
                 default: false
             },
             timeout: {
@@ -41,20 +41,20 @@
         data: function () {
             return {
                 input: {
-                    avoidable: this.avoidable,
+                    avoid: this.avoid,
                     timeout: this.timeout,
                 }
             }
         },
         watch: {
-            'input.avoidable'() {
-                this.$emit('update:avoidable', this.input.avoidable);
+            'input.avoid'() {
+                this.$emit('update:avoid', this.input.avoid);
             },
             'input.timeout'() {
                 this.$emit('update:timeout', this.input.timeout);
             },
-            avoidable() {
-                this.input.avoidable = this.avoidable;
+            avoid() {
+                this.input.avoid = this.avoid;
             },
             timeout() {
                 this.input.timeout = this.timeout;

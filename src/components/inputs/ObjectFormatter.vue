@@ -72,7 +72,6 @@
         },
         methods: {
             getContent() {
-                console.log('Getting content');
                 if (typeof (this.value) === 'object') {
                     return {
                         payload: JSON.stringify(this.value, null, 4),

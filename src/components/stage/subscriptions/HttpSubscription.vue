@@ -2,7 +2,7 @@
     <div class="http-subscription container-fluid px-4">
         <div class="row">
             <common-subscription :timeout.sync="$store.state.selectedItem.timeout"
-                                 :avoidable.sync="$store.state.selectedItem.avoidable"/>
+                                 :avoid.sync="$store.state.selectedItem.avoid"/>
         </div>
         <div class="row">
             <div class="col-2 pl-2 pr-1">
@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 pr-2">
-                <input v-model="$store.state.selectedItem.response.statusCode" type="text" class="form-control"
+                <input v-model="$store.state.selectedItem.response.status" type="text" class="form-control"
                        style="background-color: transparent; color: white"
                        placeholder="200">
             </div>
