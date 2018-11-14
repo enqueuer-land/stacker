@@ -33,7 +33,6 @@
         --failing-test-color: #a9524a;
         --information-color: #7ed221;
         --index-color: #bbbbbb;
-        --stacker-header-sidebar-color: #30303c;
         --stacker-header-background-color: #303033;
         --stacker-background-color: #353535;
         --stacker-background-alternative-color: #3a3a3a;

@@ -50,7 +50,8 @@
                             <a class="dropdown-item" href="#" v-for="(action, index) in actions"
                                :key="index"
                             >{{action.name}}
-                                <input v-if="action.fileDialog" type="file" class="custom-file-input" @change="(event) => action.click(event.target.value)">
+                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
+                                       @change="(event) => action.click(event.target.value)">
                             </a>
                         </div>
                     </div>
@@ -74,7 +75,6 @@
         },
         data: function () {
             return {
-                tests: new FlattenTestsSummary().addTest($store.state.result),
                 mouseIsOver: false,
                 actions: [
                     {
@@ -103,6 +103,9 @@
         },
         watch: {},
         computed: {
+            tests() {
+                return new FlattenTestsSummary().addTest($store.state.result);
+            },
             result() {
                 return this.$store.state.result;
             },
@@ -183,13 +186,13 @@
     }
 
     .failing-result-header {
-        border-left: 2px var(--failing-test-color) solid;
-        border-right: 2px var(--failing-test-color) solid;
+        /*border-left: 2px var(--failing-test-color) solid;*/
+        /*border-right: 2px var(--failing-test-color) solid;*/
     }
 
     .passing-result-header {
-        border-right: 2px var(--passing-test-color) solid;
-        border-left: 2px var(--passing-test-color) solid;
+        /*border-left: 2px var(--passing-test-color) solid;*/
+        /*border-right: 2px var(--passing-test-color) solid;*/
     }
 
     .dropdown-toggle::before {

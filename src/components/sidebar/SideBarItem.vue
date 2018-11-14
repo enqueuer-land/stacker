@@ -91,7 +91,6 @@
                         'color': 'white',
                         'background-color': 'var(--stacker-background-color)',
                         'border-left': '2px var(--' + selectedItem.component + '-color) solid',
-                        'border-top': '1px var(--' + selectedItem.component + '-color) solid',
                         'border-bottom': '1px var(--' + selectedItem.component + '-color) solid',
                     };
                 }

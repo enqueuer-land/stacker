@@ -2,7 +2,7 @@
     <div>
         <div class="stacker-header container-fluid">
             <div class="row">
-                <div class="pl-2 pt-1" :style="nameStyle">
+                <div class="pl-2 pt-2" :style="nameStyle">
                     Name
                 </div>
             </div>
@@ -26,9 +26,9 @@
                     </div>
                     <div v-else class="input-group-append stage-header-main-dropdown">
                         <button class="btn pl-4 pr-4"
-                                style="border: 1px var(--requisition-color) solid; color: var(--requisition-color); background-color: transparent"
+                                style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
                                 @click="runButtonClick"
-                                type="button">Run
+                                type="button">RUN
                         </button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </li>
                 </ol>
             </div>
-            <div class="row pt-2" style="position: relative; left: -2px">
+            <div class="row pt-1" style="position: relative; left: -2px">
                 <ul class="nav nav-fill" role="tablist" id="tab-collection">
                     <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">
                         <a class="nav-link pb-1" :style="tabStyle(index)"
@@ -197,7 +197,7 @@
                         return {
                             'color': 'white',
                             'background-color': 'var(--stacker-background-color)',
-                            'border-left': '3px ' + 'var(--' + this.item.component + '-color)' + ' solid',
+                            'border-left': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
                         };
                     }
                     return {
@@ -235,10 +235,6 @@
 
     #tab-item a:hover {
         background-color: var(--stacker-background-color);
-    }
-
-    .stage-header-main-dropdown a:hover {
-        color: white;
     }
 
 </style>
