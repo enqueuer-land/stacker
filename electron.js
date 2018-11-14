@@ -14,7 +14,16 @@ if (process.env.NODE_ENV === 'DEV') {
 }
 
 app.on('ready', () => {
-    let window = new BrowserWindow({width: 1600, height: 1200, webPreferences: { nodeIntegration: false }});
+    let window = new BrowserWindow({
+        width: 1600,
+        height: 1200,
+        // minWidth: 800,
+        // minHeight: 600,
+        // resizable: true,
+        webPreferences: {
+            nodeIntegration: false
+        }
+    });
     window.loadURL(url);
 
     installExtension(VUEJS_DEVTOOLS)
@@ -23,9 +32,8 @@ app.on('ready', () => {
 
     window.webContents.openDevTools({mode: 'bottom'});
 
-
     // ipcMain.on('openFile', (event) => {
     //     console.log('file: ' + event);
-        // enqueuer = newEnqueuer;
+    // enqueuer = newEnqueuer;
     // });
 });

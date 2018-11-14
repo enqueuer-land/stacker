@@ -1,6 +1,6 @@
 import {generateId} from "./id-generator";
 import store from '../store'
-import fs from 'fs';
+// import fs from 'fs';
 
 export default class ComponentManager {
     openFile = (filename) => {

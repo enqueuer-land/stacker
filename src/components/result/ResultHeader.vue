@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-1">
                     <div class="dropdown dropleft">
-                        <a v-show="mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#"
+                        <a v-show="true || mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#"
                            data-toggle="dropdown" style="color: white">
                             <i class="material-icons">more_vert</i>
                         </a>

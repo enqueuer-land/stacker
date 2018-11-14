@@ -14,7 +14,7 @@
             </div>
             <div class="row">
                 <div class="col offset-10 align-self-end">
-                    <div v-show="mouseIsOver" class="dropdown pl-3">
+                    <div v-show="true || mouseIsOver" class="dropdown pl-3">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
                             <i class="material-icons">more_vert</i>
                         </a>

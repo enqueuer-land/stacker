@@ -36,7 +36,6 @@
         --stacker-header-sidebar-color: #30303c;
         --stacker-header-background-color: #303033;
         --stacker-background-color: #353535;
-        /*--stacker-background-alternative-color: #3b3b3b;*/
         --stacker-background-alternative-color: #3a3a3a;
 
     }
