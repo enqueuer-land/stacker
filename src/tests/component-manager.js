@@ -1,6 +1,6 @@
 import {generateId} from "./id-generator";
 import store from '../store'
-import * as fs from 'fs';
+import fs from 'fs';
 
 export default class ComponentManager {
     openFile = (filename) => {
@@ -70,6 +70,8 @@ export default class ComponentManager {
             ]
         };
 
+
+        // console.log(fs.statSync(filename).toString())
 
         // let fileRequisitionsArray = [fileRequisition, fileRequisition];
         // if (Array.isArray(fileRequisitionsArray)) {

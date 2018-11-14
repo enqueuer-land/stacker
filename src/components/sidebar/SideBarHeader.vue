@@ -1,7 +1,7 @@
 <template>
-    <div :class="['side-bar-header stacker-header', borderColor]"
-            @mouseover="mouseIsOver = true"
-            @mouseleave="mouseIsOver = false">
+    <div :class="['side-bar-header stacker-header']"
+         @mouseover="mouseIsOver = true"
+         @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 80%">
                 <div class="col-3">
@@ -14,12 +14,13 @@
             </div>
             <div class="row">
                 <div class="col offset-10 align-self-end">
-                    <div v-show="mouseIsOver" class="dropdown ml-4">
+                    <div v-show="mouseIsOver" class="dropdown pl-3">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" style="color: white">
                             <i class="material-icons">more_vert</i>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name" @click="action.click">{{action.name}}</a>
+                            <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
+                               @click="action.click">{{action.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -44,23 +45,13 @@
                         }
                     },
                     {
-                    name: "Add requisition",
-                    click: () => {
-                        $store.commit('addRequisition', {router: this.$router});
-                    }
-                }]
+                        name: "Add requisition",
+                        click: () => {
+                            $store.commit('addRequisition', {router: this.$router});
+                        }
+                    }]
             }
         },
-        computed: {
-            borderColor: function() {
-                return {
-                    'no-component-selected': !this.$store.state.selectedItem,
-                    // 'requisition-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('REQ'),
-                    // 'publisher-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('PUB'),
-                    // 'subscription-selected': this.$store.state.selectedItem && this.$store.state.selectedItem.component.toUpperCase().startsWith('SUB'),
-                }
-            }
-        }
     }
 </script>
 
@@ -77,29 +68,11 @@
     }
 
     .dropdown-toggle > i:hover {
-        color: var(--stacker-background-alternative-color);
+        color: var(--index-color);
     }
 
     .dropdown-toggle::after {
         display: none !important;
     }
-
-    .no-component-selected {
-        border: none;
-    }
-
-    .requisition-selected {
-        border-right: 2px var(--requisition-color) solid;
-    }
-
-    .publisher-selected {
-        border-right: 2px var(--publisher-color) solid;
-    }
-
-    .subscription-selected {
-        border-right: 2px var(--subscription-color) solid;
-    }
-
-
 
 </style>

@@ -183,13 +183,13 @@
     }
 
     .failing-result-header {
-        border-left: 6px var(--failing-test-color) solid;
-        border-right: 6px var(--failing-test-color) solid;
+        border-left: 2px var(--failing-test-color) solid;
+        border-right: 2px var(--failing-test-color) solid;
     }
 
     .passing-result-header {
-        border-right: 6px var(--passing-test-color) solid;
-        border-left: 6px var(--passing-test-color) solid;
+        border-right: 2px var(--passing-test-color) solid;
+        border-left: 2px var(--passing-test-color) solid;
     }
 
     .dropdown-toggle::before {
@@ -201,7 +201,7 @@
     }
 
     #moreOptions :hover {
-        color: var(--stacker-background-alternative-color);
+        color: var(--index-color);
     }
 
     .custom-file-input {

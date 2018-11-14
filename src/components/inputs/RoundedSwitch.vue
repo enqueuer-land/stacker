@@ -65,7 +65,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        border: 1px solid var(--stacker-background-alternative-color);
+        border: 1px solid var(--index-color);
         background-color: transparent;
         /*-webkit-transition: .4s;*/
         transition: .4s;
@@ -78,7 +78,8 @@
         width: 20px;
         left: 4px;
         bottom: 5px;
-        background-color: var(--stacker-background-alternative-color);
+        border: 1px solid var(--index-color);
+        /*background-color: #696969;*/
         /*-webkit-transition: .4s;*/
         transition: .4s;
     }

@@ -32,10 +32,12 @@
         --passing-test-color: #42ba84;
         --failing-test-color: #a9524a;
         --information-color: #7ed221;
-        --index-color: #a8a8a8;
-        --stacker-header-background-color: #141414;
-        --stacker-background-color: #2b2b2b;
-        --stacker-background-alternative-color: #4d4d4d;
+        --index-color: #bbbbbb;
+        --stacker-header-sidebar-color: #30303c;
+        --stacker-header-background-color: #303033;
+        --stacker-background-color: #353535;
+        /*--stacker-background-alternative-color: #3b3b3b;*/
+        --stacker-background-alternative-color: #3a3a3a;
 
     }
 

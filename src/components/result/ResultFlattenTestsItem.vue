@@ -119,16 +119,16 @@
 
     .valid-result-flatten-tests-item {
         background-color: var(--stacker-background-color);
-        border-top: 1px var(--passing-test-color) solid;
-        border-left: 6px var(--passing-test-color) solid;
-        border-right: 6px var(--passing-test-color) solid;
+        /*border-top: 1px var(--passing-test-color) solid;*/
+        border-left: 2px var(--passing-test-color) solid;
+        border-right: 2px var(--passing-test-color) solid;
     }
 
     .invalid-result-flatten-tests-item {
         background-color: var(--stacker-background-color);
-        border-top: 1px var(--failing-test-color) solid;
-        border-left: 6px var(--failing-test-color) solid;
-        border-right: 6px var(--failing-test-color) solid;
+        /*border-top: 1px var(--failing-test-color) solid;*/
+        border-left: 2px var(--failing-test-color) solid;
+        border-right: 2px var(--failing-test-color) solid;
     }
 
     .result-flatten-tests-item-header {
