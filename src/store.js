@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import ObjectDecycler from "./tests/object-decycler";
 import ComponentManager from "./tests/component-manager";
 // import {RequisitionRunner} from "enqueuer/js/requisition-runners/requisition-runner";
+// import {ipcRenderer} from 'electron';
 
 Vue.use(Vuex);
 
@@ -309,11 +310,8 @@ export default new Vuex.Store({
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.id);
             if (currentSelectedId !== payload.id) {
 
-                const componentManager = new ComponentManager();
 
-                const item = (state.requisitions || [])
-                    .map(requisition => componentManager.findById(requisition, payload.id))
-                    .filter(component => !!component)[0];
+                const item = new ComponentManager().findItem(payload.id);
                 if (item) {
                     state.selectedItem = item;
                     let newPath = '/' + item.component + '/' + payload.id;
@@ -332,14 +330,18 @@ export default new Vuex.Store({
     actions: {
         runRequisition: function ({commit}, requisition) {
             console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
+            // console.log('File: ' + JSON.parse(fs.readFileSync('fileToOpen.json').toString()));
+            // ipcRenderer.send('openFile', 'fileToOpen.json');
+
             // new RequisitionRunner(requisition, null).run()
             //     .then(report => {
-            //         commit('setRequisitionResult', {report: report});
+            //         console.log('works')
+            //         // commit('setRequisitionResult', {report: report});
             //     })
             //     .catch(err => {
             //        console.log(`Error running requisition: ${err}`);
             //     });
-
+            //
 
             commit('setRequisitionResult', {
                 report: {

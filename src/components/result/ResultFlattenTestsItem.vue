@@ -16,7 +16,7 @@
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
                                         v-for="(breadCrumb, index) in test.hierarchy.filter((_, index) => index > 0)" :key="index">
-                                        <a href="#" style="text-decoration: none"
+                                        <a href="#" :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
                                            @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</a>
                                     </li>
                                 </ol>
@@ -47,6 +47,7 @@
 
 <script>
     import {generateId} from '../../tests/id-generator';
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'ResultFlattenTestsItem',
@@ -71,6 +72,19 @@
             },
         },
         computed: {
+            breadCrumbStyle() {
+                return function(breadCrumb) {
+                    const item = new ComponentManager().findItem(breadCrumb.id);
+                    let color = 'white';
+                    if (item) {
+                        color = `var(--${item.component}-color)`;
+                    }
+                    return {
+                        'text-decoration': 'none',
+                        color
+                    }
+                }
+            },
             indexClass: function () {
                 return {
                     'index-class': true,
@@ -123,22 +137,37 @@
         background-color: var(--stacker-background-color);
     }
 
-    .result-flatten-tests-item-header a {
+    .result-flatten-tests-item-header > a {
         color: var(--index-color);
         height: inherit;
     }
 
-    a:focus {
+    .result-flatten-tests-item-header > a:focus {
         color: white;
     }
 
-    a:hover {
+    .result-flatten-tests-item-header > a:hover {
         color: white;
         /*border-left: 4px solid;*/
     }
-
-    a {
+    .result-flatten-tests-item-header > a {
         color: var(--index-color);
+    }
+
+    .list-unstyled > li > a {
+        color: var(--index-color);
+    }
+
+    .list-unstyled > li > a:hover {
+        color: white;
+    }
+
+    .list-unstyled > li > a:focus {
+        color: white;
+    }
+
+    .breadcrumb-anchor a:hover {
+        color: white;
     }
 
     .even-class {

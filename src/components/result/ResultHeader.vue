@@ -200,7 +200,6 @@
     }
 
     .nameStyle {
-        font-weight: bold;
         text-align: left;
     }
 

@@ -1,4 +1,5 @@
 import {generateId} from "./id-generator";
+import store from '../store'
 
 export default class ComponentManager {
     createRequisition = (base, parent) => {
@@ -56,12 +57,16 @@ export default class ComponentManager {
         }
 
     };
-    findById(requisition, id) {
+    findItem(id) {
+        return (store.state.requisitions || [])
+            .map(requisition => this.findIdInRequisition(id, requisition))
+            .filter(component => !!component)[0];
+    }
+    findIdInRequisition(id, requisition) {
         let result = requisition.id === id ? requisition: null;
 
         (requisition.requisitions || [])
-            .filter(requisition => requisition.id === id)
-            .forEach(requisition => result = requisition);
+            .forEach(requisition => result = this.findIdInRequisition(id, requisition));
         (requisition.publishers || [])
             .filter(publisher => publisher.id === id)
             .forEach(publisher => result = publisher);
