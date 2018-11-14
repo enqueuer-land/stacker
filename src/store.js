@@ -280,7 +280,7 @@ export default new Vuex.Store({
             //     .catch(err => {
             //        console.log(`Error running requisition: ${err}`);
             //     });
-            //
+
 
             const firstRequisition = this.state.requisitions[0];
             commit('setRequisitionResult', {
