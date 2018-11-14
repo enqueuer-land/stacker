@@ -4,9 +4,9 @@
             @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 80%">
-                <div class="col">
+                <div class="col-3">
                     <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
-                         style="transform: scale(-1.1, 1.1) rotate(90deg);">
+                         style="transform: scale(-1.3, 1.3) rotate(90deg);">
                 </div>
                 <header id="side-bar-header" class="col" style="position: relative; left: -15px">
                     stacker
