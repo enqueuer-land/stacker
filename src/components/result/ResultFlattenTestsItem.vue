@@ -16,7 +16,8 @@
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
                                         v-for="(breadCrumb, index) in test.hierarchy.filter((_, index) => index > 0)" :key="index">
-                                        <a href="#" style="text-decoration: none">{{breadCrumb.name}}</a>
+                                        <a href="#" style="text-decoration: none"
+                                           @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</a>
                                     </li>
                                 </ol>
                             </div>

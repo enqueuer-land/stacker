@@ -304,6 +304,27 @@ export default new Vuex.Store({
                 payload.router.push({path: newPath});
             }
         },
+        selectItemById(state, payload) {
+            const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
+            console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.id);
+            if (currentSelectedId !== payload.id) {
+
+                const componentManager = new ComponentManager();
+
+                const item = (state.requisitions || [])
+                    .map(requisition => componentManager.findById(requisition, payload.id))
+                    .filter(component => !!component)[0];
+                if (item) {
+                    state.selectedItem = item;
+                    let newPath = '/' + item.component + '/' + payload.id;
+                    console.log('Going to new path: ' + newPath);
+                    payload.router.push({path: newPath});
+                } else {
+                    console.log('No item was find with: ' + payload.id);
+                }
+
+            }
+        },
         setRequisitionResult(state, payload) {
             state.result = payload.report;
         }
@@ -323,6 +344,7 @@ export default new Vuex.Store({
             commit('setRequisitionResult', {
                 report: {
                     "valid": true,
+                    id: this.state.requisitions[0].id,
                     "tests": [
                         {
                             "valid": true,
@@ -333,6 +355,7 @@ export default new Vuex.Store({
                     "name": "Requisition #1",
                     "subscriptions": [
                         {
+                            id: this.state.requisitions[0].subscriptions[0].id,
                             "name": "Subscription #0",
                             "type": "https-server",
                             "tests": [
@@ -364,6 +387,7 @@ export default new Vuex.Store({
                     ],
                     "publishers": [
                         {
+                            id: this.state.requisitions[0].publishers[0].id,
                             "name": "publisher description",
                             "valid": true,
                             "type": "https-client",

@@ -56,4 +56,18 @@ export default class ComponentManager {
         }
 
     };
+    findById(requisition, id) {
+        let result = requisition.id === id ? requisition: null;
+
+        (requisition.requisitions || [])
+            .filter(requisition => requisition.id === id)
+            .forEach(requisition => result = requisition);
+        (requisition.publishers || [])
+            .filter(publisher => publisher.id === id)
+            .forEach(publisher => result = publisher);
+        (requisition.subscriptions || [])
+            .filter(subscription => subscription.id === id)
+            .forEach(subscription => result = subscription);
+        return result;
+    }
 }

@@ -16,7 +16,8 @@
                 <div class="col-11 align-self-center">
                     <div v-if="result">
                         <div class="row no-gutters">
-                            <div :class="nameClass" style="text-align: left">
+                            <div :class="nameClass" style="text-align: left"
+                                 @click="$store.commit('selectItemById', {router: $router, route: $route, id: $store.state.result.id})">
                                 {{result.name}}
                             </div>
                             <div class="col-3 row">
@@ -84,9 +85,9 @@
             }
         },
         watch: {
-            result() {
-                this.tests = new FlattenTestsSummary().addTest($store.state.result);
-            }
+            // result() {
+            //     this.tests = new FlattenTestsSummary().addTest($store.state.result);
+            // }
         },
         computed: {
             result() {
