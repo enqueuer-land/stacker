@@ -32,7 +32,7 @@ app.on('ready', () => {
 
     window.webContents.openDevTools({mode: 'bottom'});
 
-    // ipcMain.on('openFile', (event) => {
+    // ipcMain.on('openRequisitionFile', (event) => {
     //     console.log('file: ' + event);
     // enqueuer = newEnqueuer;
     // });

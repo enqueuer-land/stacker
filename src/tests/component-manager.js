@@ -3,7 +3,8 @@ import store from '../store'
 // import fs from 'fs';
 
 export default class ComponentManager {
-    openFile = (filename) => {
+    openRequisitionFile = (filename) => {
+        console.log(`Should be opening '${filename}' but I don't know how to do it`)
         // console.log(fs.readFileSync(filename).toString());
         const fileRequisition = {
             "timeout": 3000,

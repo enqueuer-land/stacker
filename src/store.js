@@ -194,8 +194,8 @@ export default new Vuex.Store({
         ],
     },
     mutations: {
-        openFile(state, payload) {
-            const newComponent = new ComponentManager().openFile('fileToOpen.json');
+        openRequisitionFile(state, payload) {
+            const newComponent = new ComponentManager().openRequisitionFile(payload.file);
             console.log('Requisition opened: ' + JSON.stringify(new ObjectDecycler().decycle(newComponent), null, 2));
             state.requisitions.push(newComponent);
             state.selectedItem = newComponent;

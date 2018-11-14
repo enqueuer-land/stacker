@@ -44,7 +44,7 @@
                         fileDialog: true,
                         name: "Open requisition",
                         click: (file) => {
-                            this.$store.commit('openFile', {router: this.$router, file: file});
+                            this.$store.commit('openRequisitionFile', {router: this.$router, file: file});
                         }
                     },
                     {
