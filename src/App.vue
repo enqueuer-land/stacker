@@ -7,7 +7,7 @@
             <div class="col">
                 <stage/>
             </div>
-            <div class="col">
+            <div class="col-4">
                 <Result/>
             </div>
         </div>

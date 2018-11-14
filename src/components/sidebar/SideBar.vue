@@ -24,7 +24,7 @@ export default {
             };
             const selectedItem = this.$store.state.selectedItem;
             if (selectedItem) {
-                style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
+                // style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
             }
             return style;
         },

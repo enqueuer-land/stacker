@@ -81,6 +81,7 @@
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
+                    height: '30px',
                     'border-bottom': '1px solid var(--stacker-background-alternative-color)',
                     'background-color': 'var(--stacker-header-background-color)',
                     'color': 'var(--index-color)'
@@ -98,7 +99,7 @@
                     style = {
                         ...style,
                         'color': 'white',
-                        'border-left': '8px var(--' + this.item.component + '-color) solid'
+                        'border-left': '4px var(--' + this.item.component + '-color) solid'
                     };
                 }
                 if (this.isRequisition && this.opened) {
@@ -111,7 +112,6 @@
             },
             tagClass: function () {
                 return {
-                    pr2: true,
                     'align-self-center': true,
                     'requisition-color': this.isRequisition,
                     'publisher-color': this.isPublisher,
@@ -122,7 +122,6 @@
             },
             typeClass: function () {
                 return {
-                    pr2: true,
                     'align-self-center': true,
                     'col-2': true,
                     'requisition-color': this.isRequisition,
