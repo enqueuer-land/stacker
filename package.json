@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve & sleep 5 && NODE_ENV=DEV electron electron.js",
+    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --target electron-renderer & sleep 5 && NODE_ENV=DEV electron electron.js",
     "serve": "node_modules/.bin/vue-cli-service serve",
     "build": "node_modules/.bin/vue-cli-service build",
     "lint": "node_modules/.bin/vue-cli-service lint"

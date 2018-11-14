@@ -195,72 +195,8 @@ export default new Vuex.Store({
     },
     mutations: {
         openFile(state, payload) {
-            const fileRequisition = {
-                    "timeout": 3000,
-                    "name": "opened from file req",
-                    "delay": 9090,
-                    "iterations": 69,
-                    "publishers": [
-                        {
-                            "timeout": 123,
-                            "name": "opened from file pub",
-                            "type": "http",
-                            "url": "http://localhost:23068/basic",
-                            "method": "POST",
-                            "payload": "basic auth",
-                            "headers": {
-                                "content-type": "application/json"
-                            },
-                            "onMessageReceived": {
-                                "assertions": [
-                                    {
-                                        "expect": "body",
-                                        "toBeEqualTo": "`basic auth response`"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "subscriptions": [
-                        {
-                            "name": "opened from file sub",
-                            "type": "http",
-                            "endpoint": "/basic",
-                            "port": 23068,
-                            "method": "POST",
-                            "avoid": true,
-                            "timeout": 10000,
-                            "response": {
-                                "headers": {
-                                    "key": 123
-                                },
-                                "status": 200,
-                                "payload": "basic auth response"
-                            },
-                            "onMessageReceived": {
-                                "assertions": [
-                                    {
-                                        "name": "Payload",
-                                        "expect": "message.body",
-                                        "toBeEqualTo": "`basic auth`"
-                                    }
-                                ]
-                            },
-                            "onFinish": {
-                                script: 'I am a script',
-                                "assertions": [
-                                    {
-                                        "name": "Payload",
-                                        "expect": "message.body",
-                                        "toBeGreaterThan": "`basic auth`"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ;
-            const newComponent = new ComponentManager().createRequisition(fileRequisition);
+            const newComponent = new ComponentManager().openFile('fileToOpen.json');
+            console.log('Requisition opened: ' + JSON.stringify(new ObjectDecycler().decycle(newComponent), null, 2));
             state.requisitions.push(newComponent);
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
@@ -332,7 +268,7 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition)));
+            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition), null, 2));
             // console.log('File: ' + JSON.parse(fs.readFileSync('fileToOpen.json').toString()));
             // ipcRenderer.send('openFile', 'fileToOpen.json');
 
@@ -346,10 +282,11 @@ export default new Vuex.Store({
             //     });
             //
 
+            const firstRequisition = this.state.requisitions[0];
             commit('setRequisitionResult', {
                 report: {
                     "valid": true,
-                    id: this.state.requisitions[0].id,
+                    id: firstRequisition.id,
                     "tests": [
                         {
                             "valid": true,
@@ -360,7 +297,7 @@ export default new Vuex.Store({
                     "name": "Requisition #1",
                     "subscriptions": [
                         {
-                            id: this.state.requisitions[0].subscriptions[0].id,
+                            id: firstRequisition.subscriptions.length > 0 ? firstRequisition.subscriptions[0].id : firstRequisition.requisitions[0].subscriptions[0].id,
                             "name": "Subscription #0",
                             "type": "https-server",
                             "tests": [
@@ -392,7 +329,7 @@ export default new Vuex.Store({
                     ],
                     "publishers": [
                         {
-                            id: this.state.requisitions[0].publishers[0].id,
+                            id: firstRequisition.publishers.length > 0 ? firstRequisition.publishers[0].id : firstRequisition.requisitions[0].publishers[0].id,
                             "name": "publisher description",
                             "valid": true,
                             "type": "https-client",

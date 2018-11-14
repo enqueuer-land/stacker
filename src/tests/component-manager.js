@@ -1,9 +1,85 @@
 import {generateId} from "./id-generator";
 import store from '../store'
+import * as fs from 'fs';
 
 export default class ComponentManager {
+    openFile = (filename) => {
+        // console.log(fs.readFileSync(filename).toString());
+        const fileRequisition = {
+            "timeout": 3000,
+            "name": "opened from file req",
+            "delay": 9090,
+            "iterations": 69,
+            "publishers": [
+                {
+                    "timeout": 123,
+                    "name": "opened from file pub",
+                    "type": "http",
+                    "url": "http://localhost:23068/basic",
+                    "method": "POST",
+                    "payload": "basic auth",
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "onMessageReceived": {
+                        "assertions": [
+                            {
+                                "expect": "body",
+                                "toBeEqualTo": "`basic auth response`"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "subscriptions": [
+                {
+                    "name": "opened from file sub",
+                    "type": "http",
+                    "endpoint": "/basic",
+                    "port": 23068,
+                    "method": "POST",
+                    "avoid": true,
+                    "timeout": 10000,
+                    "response": {
+                        "headers": {
+                            "key": 123
+                        },
+                        "status": 200,
+                        "payload": "basic auth response"
+                    },
+                    "onMessageReceived": {
+                        "assertions": [
+                            {
+                                "name": "Payload",
+                                "expect": "message.body",
+                                "toBeEqualTo": "`basic auth`"
+                            }
+                        ]
+                    },
+                    "onFinish": {
+                        script: 'I am a script',
+                        "assertions": [
+                            {
+                                "name": "Payload",
+                                "expect": "message.body",
+                                "toBeGreaterThan": "`basic auth`"
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+        // let fileRequisitionsArray = [fileRequisition, fileRequisition];
+        // if (Array.isArray(fileRequisitionsArray)) {
+        //     const base = this.createRequisition({name: filename, requisitions: fileRequisitionsArray});
+        //     return new ComponentManager().createRequisition(base);
+        // }
+        return new ComponentManager().createRequisition(fileRequisition);
+    };
     createRequisition = (base, parent) => {
-        const requisition = {
+        const newRequisition = {
             ...base,
             id: base.id || generateId(),
             name: base.name || 'New Requisition',
@@ -13,13 +89,13 @@ export default class ComponentManager {
             parent: parent,
             component: "requisition"
         };
-        requisition.publishers = (base.publishers || []).map(publisher => this.createPublisher(publisher, requisition));
-        requisition.subscriptions = (base.subscriptions || []).map(subscription => this.createSubscription(subscription, requisition));
-        requisition.requisitions = (base.requisitions || []).map(requisition => this.createRequisition(requisition, requisition));
-        return requisition;
+        newRequisition.publishers = (base.publishers || []).map(publisher => this.createPublisher(publisher, newRequisition));
+        newRequisition.subscriptions = (base.subscriptions || []).map(subscription => this.createSubscription(subscription, newRequisition));
+        newRequisition.requisitions = (base.requisitions || []).map(requisition => this.createRequisition(requisition, newRequisition));
+        return newRequisition;
     };
     createPublisher = (base, parent) => {
-        const newComponent = {
+        return {
             ...base,
             id: base.id || generateId(),
             name: base.name || 'New Publisher',
@@ -27,10 +103,9 @@ export default class ComponentManager {
             parent: parent,
             component: "publisher"
         };
-        return newComponent;
     };
     createSubscription = (base, parent) => {
-        const newComponent = {
+        return {
             ...base,
             id: base.id || generateId(),
             name: base.name || 'New Subscription',
@@ -38,7 +113,6 @@ export default class ComponentManager {
             parent: parent,
             component: "subscription"
         };
-        return newComponent;
     };
     delete = (item) => {
         if (item.parent) {
@@ -57,13 +131,15 @@ export default class ComponentManager {
         }
 
     };
+
     findItem(id) {
         return (store.state.requisitions || [])
             .map(requisition => this.findIdInRequisition(id, requisition))
             .filter(component => !!component)[0];
     }
+
     findIdInRequisition(id, requisition) {
-        let result = requisition.id === id ? requisition: null;
+        let result = requisition.id === id ? requisition : null;
 
         (requisition.requisitions || [])
             .forEach(requisition => result = this.findIdInRequisition(id, requisition));

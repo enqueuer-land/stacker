@@ -50,8 +50,7 @@
                             <a class="dropdown-item" href="#" v-for="(action, index) in actions"
                                :key="index"
                             >{{action.name}}
-                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
-                                       @change="action.click">
+                                <input v-if="action.fileDialog" type="file" class="custom-file-input" @change="(event) => action.click(event.target.value)">
                             </a>
                         </div>
                     </div>
@@ -64,6 +63,8 @@
 
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import $store from "../../store";
+    // import * as fs from 'fs';
+    const fs = require('fs');
 
     export default {
         name: 'ResultHeader',
@@ -79,15 +80,17 @@
                     {
                         name: "Save",
                         fileDialog: true,
-                        click(event) {
-                            console.log('Saving: ' + event.target.value)
+                        click(file) {
+                            console.log('Saving: ' + fs);
                         }
                     },
                     {
                         name: "Open",
                         fileDialog: true,
-                        click(event) {
-                            console.log('Opening: ' + event.target.value);
+                        click(file) {
+                            console.log('Opening: ' + file);
+                            console.log('Keys: ' + Object.keys(fs).filter(key => typeof(fs[key]) === 'function').join(';'));
+                            console.log('stringify: ' + JSON.stringify(fs));
                         }
                     },
                     {
