@@ -20,7 +20,10 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
-                               @click="action.click">{{action.name}}</a>
+                               @click="!action.fileDialog ? action.click() : ''">{{action.name}}
+                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
+                                       @change="(event) => action.click(event.target.value)">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -30,7 +33,6 @@
 </template>
 
 <script>
-    import $store from "../../store";
 
     export default {
         name: 'SideBarHeader',
@@ -39,15 +41,16 @@
                 mouseIsOver: false,
                 actions: [
                     {
+                        fileDialog: true,
                         name: "Open requisition",
-                        click: () => {
-                            $store.commit('openFile', {router: this.$router});
+                        click: (file) => {
+                            this.$store.commit('openFile', {router: this.$router, file: file});
                         }
                     },
                     {
                         name: "Add requisition",
                         click: () => {
-                            $store.commit('addRequisition', {router: this.$router});
+                            this.$store.commit('addRequisition', {router: this.$router});
                         }
                     }]
             }
@@ -73,6 +76,11 @@
 
     .dropdown-toggle::after {
         display: none !important;
+    }
+
+    .custom-file-input {
+        height: 100%;
+        opacity: 0;
     }
 
 </style>

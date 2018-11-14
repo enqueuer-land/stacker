@@ -20,7 +20,10 @@
     import Stage from "./components/stage/Stage";
 
     export default {
-        components: {Stage, Result, SideBar}
+        components: {Stage, Result, SideBar},
+        created() {
+            this.$store.commit('addRequisition', {router: this.$router});
+        }
     }
 </script>
 
@@ -40,14 +43,14 @@
     }
 
     .dropdown-menu {
-        background-color: var(--index-color);
+        /*background-color: var(--index-color);*/
         padding-bottom: 0px;
     }
 
     .dropdown-item {
         color: white;
         background-color: var(--stacker-background-alternative-color);
-        border-bottom: 1px var(--stacker-background-color) solid;
+        border-bottom: 1px var(--stacker-header-background-color) solid;
     }
 
     .dropdown-item:active {
