@@ -50,15 +50,9 @@
         border-bottom: 1px var(--stacker-background-color) solid;
     }
 
-    .dropdown-divider {
-        background-color: green;
-        margin: 1px 0;
-    }
-
-    .dropdown-item:focus {
+    .dropdown-item:active {
         color: black;
         background-color: var(--index-color);
-        border-bottom: 1px var(--stacker-background-color) solid;
     }
 
     .publisher-color {

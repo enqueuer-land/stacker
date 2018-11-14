@@ -47,8 +47,12 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="action in actions"
-                               :key="action.name">{{action.name}}</a>
+                            <a class="dropdown-item" href="#" v-for="(action, index) in actions"
+                               :key="index"
+                            >{{action.name}}
+                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
+                                       @change="action.click">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -73,22 +77,28 @@
                 mouseIsOver: false,
                 actions: [
                     {
-                        name: "Save"
+                        name: "Save",
+                        fileDialog: true,
+                        click(event) {
+                            console.log('Saving: ' + event.target.value)
+                        }
                     },
                     {
-                        name: "Open"
+                        name: "Open",
+                        fileDialog: true,
+                        click(event) {
+                            console.log('Opening: ' + event.target.value);
+                        }
                     },
                     {
-                        name: "Flatten"
+                        name: "Flatten",
+                        click() {
+                        }
                     }
                 ]
             }
         },
-        watch: {
-            // result() {
-            //     this.tests = new FlattenTestsSummary().addTest($store.state.result);
-            // }
-        },
+        watch: {},
         computed: {
             result() {
                 return this.$store.state.result;
@@ -135,9 +145,6 @@
             }
         },
         methods: {
-            openFileSelected(file) {
-              console.log(file.target.value);
-            },
             printTime: function () {
                 if (this.result) {
                     let totalTime = this.result.time.totalTime;
@@ -192,6 +199,11 @@
 
     #moreOptions :hover {
         color: var(--stacker-background-alternative-color);
+    }
+
+    .custom-file-input {
+        height: 100%;
+        opacity: 0;
     }
 
     .tag {

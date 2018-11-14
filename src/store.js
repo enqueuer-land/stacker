@@ -4,6 +4,9 @@ import ObjectDecycler from "./tests/object-decycler";
 import ComponentManager from "./tests/component-manager";
 // import {RequisitionRunner} from "enqueuer/js/requisition-runners/requisition-runner";
 // import {ipcRenderer} from 'electron';
+// import * as fs from 'fs';
+// const fs = window.require('fs');
+// const staticFsModule = require('./lib/fs');
 
 Vue.use(Vuex);
 
