@@ -192,66 +192,76 @@ export default new Vuex.Store({
     mutations: {
         openFile(state, payload) {
             const fileRequisition = {
-                "timeout": 3000,
-                name: "opened from file req",
-                delay: 9090,
-                iterations: 69,
-                "publishers": [
-                    {
-                        timeout: 123,
-                        name: "opened from file pub",
-                        "type": "http",
-                        "url": "http://localhost:23068/basic",
-                        "method": "POST",
-                        "payload": "basic auth",
-                        "headers": {
-                            "content-type": "application/json"
-                        },
-                        "onMessageReceived": {
-                            "assertions": [
-                                {
-                                    "expect": "body",
-                                    "toBeEqualTo": "`basic auth response`"
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "subscriptions": [
-                    {
-                        name: "opened from file sub",
-                        "type": "http",
-                        "endpoint": "/basic",
-                        "port": 23068,
-                        "method": "POST",
-                        avoid: true,
-                        "timeout": 10000,
-                        "response": {
-                            headers: {
-                                key: 123
+                    "timeout": 3000,
+                    "name": "opened from file req",
+                    "delay": 9090,
+                    "iterations": 69,
+                    "publishers": [
+                        {
+                            "timeout": 123,
+                            "name": "opened from file pub",
+                            "type": "http",
+                            "url": "http://localhost:23068/basic",
+                            "method": "POST",
+                            "payload": "basic auth",
+                            "headers": {
+                                "content-type": "application/json"
                             },
-                            "status": 200,
-                            "payload": "basic auth response"
-                        },
-                        "onMessageReceived": {
-                            "assertions": [
-                                {
-                                    "name": "Payload",
-                                    "expect": "message.body",
-                                    "toBeEqualTo": "`basic auth`"
-                                }
-                            ]
+                            "onMessageReceived": {
+                                "assertions": [
+                                    {
+                                        "expect": "body",
+                                        "toBeEqualTo": "`basic auth response`"
+                                    }
+                                ]
+                            }
                         }
-                    }
-                ]
-            }
+                    ],
+                    "subscriptions": [
+                        {
+                            "name": "opened from file sub",
+                            "type": "http",
+                            "endpoint": "/basic",
+                            "port": 23068,
+                            "method": "POST",
+                            "avoid": true,
+                            "timeout": 10000,
+                            "response": {
+                                "headers": {
+                                    "key": 123
+                                },
+                                "status": 200,
+                                "payload": "basic auth response"
+                            },
+                            "onMessageReceived": {
+                                "assertions": [
+                                    {
+                                        "name": "Payload",
+                                        "expect": "message.body",
+                                        "toBeEqualTo": "`basic auth`"
+                                    }
+                                ]
+                            },
+                            "onFinish": {
+                                script: 'I am a script',
+                                "assertions": [
+                                    {
+                                        "name": "Payload",
+                                        "expect": "message.body",
+                                        "toBeGreaterThan": "`basic auth`"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ;
             const newComponent = new ComponentManager().createRequisition(fileRequisition);
             state.requisitions.push(newComponent);
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
         },
         addRequisition(state, payload) {
-            console.log(payload);
             const newComponent = new ComponentManager().createRequisition({}, payload.parent);
             if (payload.parent === undefined) {
                 state.requisitions.push(newComponent);

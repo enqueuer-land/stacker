@@ -1,5 +1,6 @@
 {
   "name": "stacker",
+  "description": "Multi protocol GUI client testing tool",
   "version": "0.1.0",
   "private": true,
   "scripts": {

@@ -92,7 +92,8 @@ export default new Router({
             children: [
                 {
                     path: "http",
-                    component: HttpSubscription
+                    component: HttpSubscription,
+                    props: (route) => stageBodyPropsBuilder(route)
                 },
                 {
                     path: "onInit",
