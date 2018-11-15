@@ -58,22 +58,34 @@
         background-color: var(--index-color);
     }
 
+    .dropdown-divider {
+        height: 0;
+        margin: .05rem 0;
+        overflow: hidden;
+        /*border-top: 1px solid var(--index-color);*/
+    }
+
+    /*TODO remove this*/
     .publisher-color {
         color: var(--publisher-color)
     }
 
+    /*TODO remove this*/
     .requisition-color {
         color: var(--requisition-color);
     }
 
+    /*TODO remove this*/
     .subscription-color {
         color: var(--subscription-color);
     }
 
+    /*TODO remove this*/
     .passing-test-color {
         color: var(--passing-test-color);
     }
 
+    /*TODO remove this*/
     .failing-test-color {
         color: var(--failing-test-color);
     }

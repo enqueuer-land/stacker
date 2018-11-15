@@ -151,7 +151,7 @@
     }
 
     #more-icon:hover {
-        color: var(--stacker-background-alternative-color);
+        color: var(--index-color);
     }
 
 </style>

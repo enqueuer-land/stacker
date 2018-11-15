@@ -164,6 +164,7 @@
 
     .list-unstyled > li > a:focus {
         color: white;
+        background-color: var(--stacker-background-alternative-color);
     }
 
     .breadcrumb-anchor a:hover {
@@ -172,16 +173,20 @@
 
     .even-class {
         height: 30px;
-        border-bottom: 1px solid var(--stacker-background-alternative-color);
         padding-left: 1px;
-        background-color: var(--stacker-background-color);
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
+        background-color: var(--stacker-header-background-color);
+        /*border-bottom: 1px solid var(--stacker-background-color);*/
+        /*background-color: var(--stacker-background-alternative-color);*/
     }
 
     .odd-class {
         height: 30px;
-        border-bottom: 1px solid var(--stacker-background-color);
         padding-left: 1px;
-        background-color: var(--stacker-background-alternative-color);
+        /*border-bottom: 1px solid var(--stacker-background-color);*/
+        /*background-color: var(--stacker-background-alternative-color);*/
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
+        background-color: var(--stacker-header-background-color);
     }
 
     .index-class {
