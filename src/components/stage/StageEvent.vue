@@ -8,7 +8,7 @@
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
                 <prism-editor v-model="script" lineNumbers language="js"
-                              style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter; border: white 1px solid; border-radius: 4px;">
+                              style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter; border: var(--stacker-background-alternative-color) 1px solid; border-radius: 4px;">
                 </prism-editor>
             </div>
         </div>

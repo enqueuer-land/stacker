@@ -10,7 +10,7 @@
                 <div class="row pl-2">
                     <div class="input-group input-group-sm mb-0 pl-2">
                         <input v-model="input.timeout" placeholder="3000" type="text" class="form-control"
-                               style="background-color: transparent; color: white">
+                               style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
                         </div>

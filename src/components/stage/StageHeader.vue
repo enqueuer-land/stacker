@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                     <input v-model="item.name" type="text" class="form-control"
-                           style="background-color: transparent; color: white"
+                           style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white"
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
@@ -67,7 +67,7 @@
 
             </div>
         </div>
-        <router-view @input="stageBodyChanged"/>
+        <router-view @input="stageBodyChanged" class="pt-2"/>
     </div>
 </template>
 

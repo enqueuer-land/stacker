@@ -140,7 +140,7 @@
 
 <style scoped>
     .object-formatter {
-        border: white 1px solid;
+        border: var(--stacker-background-alternative-color) 1px solid;
         border-radius: 4px;
     }
 

@@ -13,7 +13,7 @@
                 </div>
                 <div class="input-group input-group-sm mb-1">
                     <input v-model="http.port" placeholder="8080" type="text" class="form-control"
-                           style="background-color: transparent; color: white">
+                           style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                 </div>
             </div>
             <div class="col pr-4">
@@ -26,7 +26,7 @@
                     <div class="input-group input-group-sm mb-1 pl-1">
                         <input v-model="http.endpoint" placeholder="/stacker" type="text"
                                class="form-control input-group-append"
-                               style="background-color: transparent; color: white">
+                               style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                         <div class="input-group-append" style="font-size: 0.8em">
                             <button class="btn dropdown-toggle"
                                     style="background-color: transparent; color: white; border: 1px solid white"
@@ -50,7 +50,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 pr-2">
                 <input v-model="http.response.status" type="text" class="form-control"
-                       style="background-color: transparent; color: white"
+                       style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)"
                        placeholder="200">
             </div>
         </div>

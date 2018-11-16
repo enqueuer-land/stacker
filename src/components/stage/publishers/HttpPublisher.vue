@@ -8,7 +8,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
                 <input v-model="http.timeout" placeholder="3000" type="text" class="form-control"
-                       style="background-color: transparent; color: white">
+                       style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                 <div class="input-group-append">
                     <span class="input-group-text">ms</span>
                 </div>
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <input v-model="http.url" placeholder="http://github.com/lopidio/stacker"
-                       type="text" class="form-control" style="background-color: transparent; color: white">
+                       type="text" class="form-control" style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                 <div class="input-group-append" style="font-size: 0.8em">
                     <button class="btn dropdown-toggle"
                             style="background-color: transparent; color: white; border: 1px solid white" type="button"
