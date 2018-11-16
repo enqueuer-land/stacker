@@ -20,6 +20,7 @@
 
 <script>
     import SideBarItem from "./SideBarItem";
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'SideBarNode',
@@ -39,6 +40,20 @@
             }
         },
         computed: {
+        },
+        watch: {
+            '$store.state.selectedItem'() {
+                const selectedIsDescendant = new ComponentManager().findIdInRequisition(this.$store.state.selectedItem.id, this.node);
+                const item = $('#' + this.node.id);
+                let notSelf = this.node.id != this.$store.state.selectedItem.id;
+                if (selectedIsDescendant && notSelf) {
+                    this.opened = true;
+                    item.addClass('show');
+                } else {
+                    // this.opened = false;
+                    // item.removeClass('show');
+                }
+            }
         }
     }
 </script>
