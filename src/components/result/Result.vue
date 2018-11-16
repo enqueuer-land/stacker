@@ -1,7 +1,9 @@
 <template>
     <div class="result">
-        <result-header />
-        <result-tree />
+        <div >
+            <result-header :result="result"/>
+            <result-tree :result="result" />
+        </div>
     </div>
 </template>
 
@@ -14,6 +16,18 @@ export default {
     components: {
         ResultHeader,
         ResultTree
+    },
+    data() {
+        const results = this.$store.state.results;
+        return {
+            result: results[results.length - 1]
+        }
+    },
+    watch: {
+        '$store.state.results'() {
+            const results = this.$store.state.results;
+            this.result = this.$store.state.results[results.length - 1];
+        }
     }
 }
 </script>

@@ -365,7 +365,7 @@ export default new Vuex.Store({
                     ],
                     "time": {
                         "startTime": "2018-11-02T17:19:26.162Z",
-                        "endTime": "2018-11-02T17:19:26.213Z",
+                        "endTime": "2018-11-16T21:00:26.213Z",
                         "totalTime": 51,
                         "timeout": 3000
                     }

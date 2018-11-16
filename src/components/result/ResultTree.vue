@@ -11,15 +11,12 @@
 
     export default {
         name: 'ResultTree',
+        props: {
+            result: {}
+        },
         components: {
             ResultFlattenTests
         },
-        computed: {
-            result() {
-                const results = this.$store.state.results;
-                return results[results.length - 1];
-            }
-        }
     }
 </script>
 

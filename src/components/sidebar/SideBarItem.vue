@@ -14,6 +14,9 @@
                         <div v-for="action in actions" :key="action.name">
                             <a v-if="action.name !== null" class="dropdown-item" href="#"
                                @click="action.click($store.commit, item, $router)">{{action.name}}</a>
+                            <!--TODO insert categories-->
+                            <!--<h6 class="dropdown-header">Dropdown header</h6>-->
+
                             <div v-else class="dropdown-divider"></div>
                         </div>
                     </div>

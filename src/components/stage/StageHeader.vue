@@ -190,13 +190,11 @@
                         return {
                             'color': 'white',
                             'background-color': 'var(--stacker-background-color)',
-                            // 'border-bottom': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
                         };
                     }
                     return {
                         'color': 'var(--' + this.item.component + '-color)',
-                        // 'border-bottom': '1px ' + 'var(--stacker-background-alternative-color)' + ' solid'
-                            'border-bottom': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
+                        'border-bottom': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
                     }
                 };
             }

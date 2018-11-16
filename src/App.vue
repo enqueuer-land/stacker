@@ -32,9 +32,10 @@
         --requisition-color: #e8bf57;
         --publisher-color: #a9524a;;
         --subscription-color: #589df6;
-        --passing-test-color: #42ba84;
+        /*--passing-test-color: #42ba84;*/
+        --passing-test-color: #9FB630;
         --failing-test-color: #a9524a;
-        --information-color: #7ed221;
+        /*--information-color: #7ed221;*/
         --index-color: #bbbbbb;
         --enqueuer-color: #9FB630;
         --stacker-header-background-color: #303033;

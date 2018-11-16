@@ -2,13 +2,27 @@
     <div :class="resultHeader">
         <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false">
-            <div class="row no-gutters" style="height: 50%">
-                <div :class="nameClass" style="text-align: left;"
-                     @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
-                    {{result.name}}
-                </div>
+            <div class="row" style="height: 40%">
+
+                <!--<a class="pl-4 col-1 pr-0 align-self-center pt-1" href="#">-->
+                <!--<i class="material-icons" style="color: var(&#45;&#45;index-color); transform: scale(0.85)">search</i>-->
+                <!--</a>-->
+                <!--<div class="col pt-0 pl-0 align-self-center">-->
+                <!--<div class="input-group input-group-sm pr-4">-->
+                <!--<input type="text" class="form-control"-->
+                <!--style="background-color: transparent; border-color: var(&#45;&#45;stacker-background-alternative-color); color: white; border-radius: 10px"-->
+                <!--placeholder="Filter">-->
+                <!--</div>-->
+                <!--</div>-->
+
+
             </div>
-            <div class="row" style="height: 30%"></div>
+            <div class="row no-gutters">
+                <span :class="nameClass" style="text-align: left; font-size: 30px"
+                      @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
+                    {{result.name}}
+                </span>
+            </div>
             <div class="row no-gutters">
                 <div class="col-11 align-self-center pl-2 pt-0">
                     <div class="row no-gutters">
@@ -16,19 +30,23 @@
                             <span :class="['title']">
                                 Tests:
                             </span>
-                            <span :class="testNumberClass" style="margin-left: 3px; text-align: left;">
+                            <span :class="testNumberClass" style="margin-left: 3px;">
                                 {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </span>
                         </div>
-                        <div class="col-4 pl-2">
-                            <span :class="['title']">
+                        <div class="col-4 pl-1">
+                            <span class="title">
                                 Time:
                             </span>
-                            <span :class="timeClass" style="text-align: left;">
+                            <span class="time align-self-center">
                                 {{printTime()}}
                             </span>
                         </div>
+                        <span class="col-4 align-self-center pl-2 pr-2 title" style="text-align: left">
+                            {{timeAgo}}
+                        </span>
+
                     </div>
                 </div>
                 <div class="col-1">
@@ -54,16 +72,18 @@
 <script>
 
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
+    import TimeHandler from "../../tests/time-handler";
 
     export default {
         name: 'ResultHeader',
         components: {},
         props: {
-            value: {}
+            result: {}
         },
         data: function () {
             return {
                 mouseIsOver: false,
+                timeAgo: '',
                 actions: [
                     {
                         name: "Save",
@@ -96,17 +116,28 @@
                         click() {
                         }
                     },
-                ]
+                ],
+                timerInterval: null,
             }
         },
-        watch: {},
+        watch: {
+            result() {
+                const timeUpdater = () => {
+                    if (this.result) {
+                        this.timeAgo = new TimeHandler().getTimeAgo(this.result.time.endTime);
+                    }
+                    console.log("SET TIME OUT");
+                };
+                timeUpdater();
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                this.timerInterval = setInterval(timeUpdater, 30000);
+            }
+        },
         computed: {
             tests() {
-                return new FlattenTestsSummary().addTest(this.$store.state.results);
-            },
-            result() {
-                const results = this.$store.state.results;
-                return results[results.length - 1];
+                return new FlattenTestsSummary().addTest(this.result);
             },
             enqueuerClass: function () {
                 return {
@@ -127,16 +158,10 @@
             },
             nameClass: function () {
                 return {
-                    'col-12 align-self-center pt-2 pl-2': true,
+                    'col-12 pt-2 pl-2 align-self-end': true,
                     'passing-test-color': this.tests.isValid(),
                     'failing-test-color': !this.tests.isValid()
                 }
-            },
-            timeClass: function () {
-                return {
-                    'time': true,
-                    'align-self-center': true
-                };
             },
             resultHeader: function () {
                 return {
@@ -150,19 +175,7 @@
         methods: {
             printTime: function () {
                 if (this.result) {
-                    let totalTime = this.result.time.totalTime;
-                    const ms = totalTime % 1000;
-                    let result = ms + 'ms';
-                    if (totalTime >= 1000) {
-                        let seconds = Math.trunc(totalTime / 1000);
-                        result = seconds + 's' + ms + 'ms';
-                        if (seconds >= 60) {
-                            const minutes = Math.trunc(seconds / 60);
-                            seconds = seconds % 60;
-                            result = minutes + 'm' + seconds + 's' + result;
-                        }
-                    }
-                    return result;
+                    return new TimeHandler().getTotalTime(this.result.time.totalTime);
                 }
             }
         }
