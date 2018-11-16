@@ -12,6 +12,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        //TODO this has to be an array, so there is a history to navigate through
         result: null,
         selectedItem: null,
         requisitions: [],
@@ -235,6 +236,7 @@ export default new Vuex.Store({
             payload.router.push({path: '/'});
         },
         selectItem(state, payload) {
+            //TODO do not allow to select deleted item
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {
@@ -245,6 +247,7 @@ export default new Vuex.Store({
             }
         },
         selectItemById(state, payload) {
+            //TODO do not allow to select deleted item
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.id);
             if (currentSelectedId !== payload.id) {

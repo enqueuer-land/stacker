@@ -1,6 +1,6 @@
 {
   "name": "stacker",
-  "description": "Multi protocol GUI client testing tool",
+  "description": "Multi IPC protocol GUI testing tool",
   "version": "0.1.0",
   "private": true,
   "scripts": {

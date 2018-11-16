@@ -3,15 +3,16 @@
     >
         <a href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false">
-            <div class="row no-gutters" style="height: 80%">
-                <div class="col-3">
-                    <img src="../../../src/assets/symbol3.png"
-                         style="transform: scale(1); height: 130%; width: auto; position: relative; top: -15px">
-                </div>
-                <header :class="enqueuerClass">
-                    enqueuer
-                </header>
+            <div class="row no-gutters" style="height: 50%">
+                <!--<div class="col-3 align-self-center">-->
+                    <!--<img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"-->
+                         <!--style="">-->
+                <!--</div>-->
+                <!--<header :class="enqueuerClass">-->
+                    <!--enqueuer-->
+                <!--</header>-->
             </div>
+            <div class="row" style="height: 30%"></div>
             <div class="row no-gutters">
                 <div class="col-11 align-self-center">
                     <div v-if="result">
@@ -97,7 +98,17 @@
                         name: "Flatten",
                         click() {
                         }
-                    }
+                    },
+                    {
+                        name: "Clear",
+                        click() {
+                        }
+                    },
+                    {
+                        name: "History",
+                        click() {
+                        }
+                    },
                 ]
             }
         },
@@ -111,11 +122,11 @@
             },
             enqueuerClass: function () {
                 return {
-                    'col-7': true,
+                    'col-9 align-self-center': true,
                     'enqueuer-style': true,
-                    'no-test-color': !this.result,
-                    'passing-test-color': this.result && this.tests.isValid(),
-                    'failing-test-color': this.result && !this.tests.isValid()
+                    'no-test-color': true, //!this.result,
+                    // 'passing-test-color': this.result && this.tests.isValid(),
+                    // 'failing-test-color': this.result && !this.tests.isValid()
                 }
             },
             testNumberClass: function () {
@@ -176,8 +187,8 @@
     .enqueuer-style {
         transform: scale(1, .65);
         font-family: 'Nova Mono', monospace;
-        font-size: 100px;
-        text-align: center;
+        font-size: 600%;
+        /*text-align: center;*/
         letter-spacing: -15px;
     }
 

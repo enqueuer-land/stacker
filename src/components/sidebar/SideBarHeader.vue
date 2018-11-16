@@ -1,17 +1,18 @@
 <template>
-    <div :class="['side-bar-header stacker-header']"
+    <div :class="['stacker-header']"
          @mouseover="mouseIsOver = true"
          @mouseleave="mouseIsOver = false">
         <a href="#" style="text-decoration: none">
-            <div class="row no-gutters" style="height: 80%">
+            <div class="row no-gutters" style="height: 50%">
                 <div class="col-3">
-                    <img src="../../../src/assets/symbol3.png" class="img-fluid mx-auto rounded d-block"
+                    <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"
                          style="transform: scale(-1.3, 1.3) rotate(90deg);">
                 </div>
-                <header id="side-bar-header" class="col" style="position: relative; left: -15px">
+                <header id="side-bar-header" class="col-9 align-self-center" style="position: relative; left: -15px">
                     stacker
                 </header>
             </div>
+            <div class="row" style="height: 30%"></div>
             <div class="row">
                 <div class="col offset-10 align-self-end">
                     <div v-show="true || mouseIsOver" class="dropdown pl-3">
@@ -61,12 +62,12 @@
 <style scoped>
 
     #side-bar-header {
-        height: 120px;
+        /*height: 120px;*/
         transform: scale(1, .65);
         font-family: 'Nova Mono', monospace;
-        font-size: 100px;
+        font-size: 600%;
         color: white;
-        text-align: center;
+        /*text-align: center;*/
         letter-spacing: -15px;
     }
 
