@@ -58,13 +58,6 @@
                            :href="'#'">{{tab.name}}</a>
                     </li>
                 </ul>
-                <!--<nav class="nav nav-fill" role="tablist" id="tab-collection">-->
-                        <!--<a class="nav-link pb-1 nav-item" :style="tabStyle(index)" v-for="(tab, index) in tabs" :key="index" id="tab-item"-->
-                           <!--data-toggle="tab" role="tab"-->
-                           <!--@click="tabSelected(tab, index)"-->
-                           <!--:href="'#'">{{tab.name}}</a>-->
-                <!--</nav>-->
-
             </div>
         </div>
         <router-view @input="stageBodyChanged" class="pt-2"/>

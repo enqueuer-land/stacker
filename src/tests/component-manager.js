@@ -139,7 +139,7 @@ export default class ComponentManager {
         return (store.state.requisitions || [])
             .map(requisition => this.findIdInRequisition(id, requisition))
             .filter(component => !!component)[0];
-    }
+    };
 
     findIdInRequisition(id, requisition) {
         let result = requisition.id === id ? requisition : null;
@@ -154,4 +154,26 @@ export default class ComponentManager {
             .forEach(subscription => result = subscription);
         return result;
     }
+
+    nodeFilter(node) {
+        if (this.itemFilter(node)) {
+            return true;
+        }
+        if (node.publishers.some(leaf => this.itemFilter(leaf))) {
+            return true;
+        }
+        if (node.subscriptions.some(leaf => this.itemFilter(leaf))) {
+            return true;
+        }
+        return node.requisitions.some(node => this.nodeFilter(node));
+
+    };
+    itemFilter(leaf) {
+        const filter = store.state.filter;
+        if (leaf.type && leaf.type.indexOf(filter) !== -1) {
+            return true;
+        }
+        return leaf.name.indexOf(filter) !== -1;
+    };
+
 }

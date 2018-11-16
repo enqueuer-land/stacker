@@ -36,6 +36,7 @@
         --failing-test-color: #a9524a;
         --information-color: #7ed221;
         --index-color: #bbbbbb;
+        --enqueuer-color: #9FB630;
         --stacker-header-background-color: #303033;
         --stacker-background-color: #353535;
         --stacker-background-alternative-color: #3a3a3a;
@@ -44,7 +45,8 @@
 
     .dropdown-menu {
         /*background-color: var(--index-color);*/
-        padding-bottom: 0px;
+        padding-bottom: 0;
+        padding-top: 2px;
     }
 
     .dropdown-item {
@@ -60,7 +62,7 @@
 
     .dropdown-divider {
         height: 0;
-        margin: .05rem 0;
+        margin: .01rem 0;
         overflow: hidden;
         /*border-top: 1px solid var(--index-color);*/
     }

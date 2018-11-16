@@ -14,6 +14,7 @@ export default new Vuex.Store({
     state: {
         //TODO this has to be an array, so there is a history to navigate through
         result: null,
+        filter: '',
         selectedItem: null,
         requisitions: [],
         requisition: {

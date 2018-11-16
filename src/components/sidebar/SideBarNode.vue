@@ -7,10 +7,12 @@
             <div :id="node.id" class="collapse">
                 <div class="card-body p-0 pl-1" style="background-color: var(--requisition-color);">
                     <ul class="list-unstyled">
-                        <SideBarNode v-for="(requisition, index) in node.requisitions" :index="index" :key="requisition.id"
-                                     :node="requisition"/>
-                        <SideBarItem v-for="(publisher, index) in node.publishers" :index="index" :key="publisher.id" :item="publisher"/>
-                        <SideBarItem v-for="(subscription, index) in node.subscriptions" :index="index" :key="subscription.id" :item="subscription"/>
+                        <SideBarNode v-for="(requisition, index) in filteredRequisitions" :index="index"
+                                     :key="requisition.id" :node="requisition"/>
+                        <SideBarItem v-for="(publisher, index) in filteredPublishers" :index="index" :key="publisher.id"
+                                     :item="publisher"/>
+                        <SideBarItem v-for="(subscription, index) in filteredSubscriptions" :index="index"
+                                     :key="subscription.id" :item="subscription"/>
                     </ul>
                 </div>
             </div>
@@ -29,7 +31,7 @@
             node: {},
             index: {},
         },
-        data: function() {
+        data: function () {
             return {
                 opened: false
             }
@@ -37,9 +39,18 @@
         methods: {
             onClick: function () {
                 this.opened = $('#collapsible' + this.node.id).hasClass('collapsed');
-            }
+            },
         },
         computed: {
+            filteredRequisitions() {
+                return (this.node.requisitions || []).filter(requisition => new ComponentManager().nodeFilter(requisition));
+            },
+            filteredPublishers() {
+                return (this.node.publishers || []).filter(leaf => new ComponentManager().itemFilter(leaf));
+            },
+            filteredSubscriptions() {
+                return (this.node.subscriptions || []).filter(leaf => new ComponentManager().itemFilter(leaf));
+            }
         },
         watch: {
             '$store.state.selectedItem'() {
