@@ -1,43 +1,33 @@
 <template>
-    <div :class="resultHeader"
-    >
-        <a href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
+    <div :class="resultHeader">
+        <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false">
             <div class="row no-gutters" style="height: 50%">
-                <!--<div class="col-3 align-self-center">-->
-                    <!--<img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"-->
-                         <!--style="">-->
-                <!--</div>-->
-                <!--<header :class="enqueuerClass">-->
-                    <!--enqueuer-->
-                <!--</header>-->
+                <div :class="nameClass" style="text-align: left;"
+                     @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
+                    {{result.name}}
+                </div>
             </div>
             <div class="row" style="height: 30%"></div>
             <div class="row no-gutters">
-                <div class="col-11 align-self-center">
-                    <div v-if="result">
-                        <div class="row no-gutters">
-                            <div :class="nameClass" style="text-align: left"
-                                 @click="$store.commit('selectItemById', {router: $router, route: $route, id: $store.state.result.id})">
-                                {{result.name}}
-                            </div>
-                            <div class="col-3 row">
-                                <div :class="['title', 'align-self-center']">
-                                    Tests:
-                                </div>
-                                <div :class="testNumberClass" style="margin-left: 3px; text-align: left;">
-                                    {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
-                                    ({{Math.trunc(tests.getPercentage())}}%)
-                                </div>
-                            </div>
-                            <div class="col-2 row pl-2">
-                                <div :class="['title', 'align-self-center']">
-                                    Time:
-                                </div>
-                                <div :class="timeClass" style="margin-left: 3px; text-align: left;">
-                                    {{printTime()}}
-                                </div>
-                            </div>
+                <div class="col-11 align-self-center pl-2 pt-0">
+                    <div class="row no-gutters">
+                        <div class="col-4">
+                            <span :class="['title']">
+                                Tests:
+                            </span>
+                            <span :class="testNumberClass" style="margin-left: 3px; text-align: left;">
+                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
+                                ({{Math.trunc(tests.getPercentage())}}%)
+                            </span>
+                        </div>
+                        <div class="col-4 pl-2">
+                            <span :class="['title']">
+                                Time:
+                            </span>
+                            <span :class="timeClass" style="text-align: left;">
+                                {{printTime()}}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -64,9 +54,6 @@
 <script>
 
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
-    import $store from "../../store";
-    // import * as fs from 'fs';
-    const fs = require('fs');
 
     export default {
         name: 'ResultHeader',
@@ -115,10 +102,11 @@
         watch: {},
         computed: {
             tests() {
-                return new FlattenTestsSummary().addTest($store.state.result);
+                return new FlattenTestsSummary().addTest(this.$store.state.results);
             },
             result() {
-                return this.$store.state.result;
+                const results = this.$store.state.results;
+                return results[results.length - 1];
             },
             enqueuerClass: function () {
                 return {
@@ -139,9 +127,7 @@
             },
             nameClass: function () {
                 return {
-                    'nameStyle': true,
-                    'col pl-2': true,
-                    'align-self-center': true,
+                    'col-12 align-self-center pt-2 pl-2': true,
                     'passing-test-color': this.tests.isValid(),
                     'failing-test-color': !this.tests.isValid()
                 }
@@ -224,23 +210,19 @@
     }
 
     .tag {
-        font-size: 0.7em;
+        font-size: 0.9em;
         text-align: right;
     }
 
-    .nameStyle {
-        text-align: left;
-    }
-
     .title {
-        font-size: 0.7em;
+        font-size: 0.9em;
         text-align: right;
         font-weight: lighter;
         color: var(--index-color);
     }
 
     .time {
-        font-size: 0.7em;
+        font-size: 0.9em;
         text-align: right;
         font-weight: lighter;
         color: var(--passing-test-color);

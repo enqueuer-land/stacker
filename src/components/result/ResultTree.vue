@@ -16,7 +16,8 @@
         },
         computed: {
             result() {
-                return this.$store.state.result;
+                const results = this.$store.state.results;
+                return results[results.length - 1];
             }
         }
     }

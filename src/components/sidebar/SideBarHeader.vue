@@ -31,7 +31,10 @@
             <div class="row" style="height: 20%">
             </div>
             <div class="row">
-                <div class="col pt-0">
+                <a class="pl-4 col-1 pr-0 align-self-center pt-1" href="#">
+                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
+                </a>
+                <div class="col pt-0 pl-0">
                     <div class="input-group input-group-sm pl-4 pr-4">
                         <input type="text" class="form-control"
                                v-model="filter"

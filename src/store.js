@@ -12,8 +12,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        //TODO this has to be an array, so there is a history to navigate through
-        result: null,
+        results: [],
         filter: '',
         selectedItem: null,
         requisitions: [],
@@ -270,7 +269,7 @@ export default new Vuex.Store({
             }
         },
         setRequisitionResult(state, payload) {
-            state.result = payload.report;
+            state.results.push(payload.report);
         }
     },
     actions: {
