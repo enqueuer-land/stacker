@@ -13,6 +13,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         results: [],
+        deletedItems: [],
         filter: '',
         selectedItem: null,
         requisitions: [],
@@ -236,10 +237,13 @@ export default new Vuex.Store({
             if (item.parent === undefined) {
                 state.requisitions = state.requisitions.filter(requisition => requisition.id !== item.id);
             }
+            state.deletedItems.push(item);
             payload.router.push({path: '/'});
         },
         selectItem(state, payload) {
-            //TODO do not allow to select deleted item
+            if (state.deletedItems.some(deleted => deleted.id === payload.item.id)) {
+                return;
+            }
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {
@@ -250,12 +254,9 @@ export default new Vuex.Store({
             }
         },
         selectItemById(state, payload) {
-            //TODO do not allow to select deleted item
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.id);
             if (currentSelectedId !== payload.id) {
-
-
                 const item = new ComponentManager().findItem(payload.id);
                 if (item) {
                     state.selectedItem = item;

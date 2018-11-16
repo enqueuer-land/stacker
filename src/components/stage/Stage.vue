@@ -1,5 +1,6 @@
 <template>
     <div class="stage">
+        <div class="stacker-header" v-if="!$store.state.selectedItem"></div>
         <router-view />
     </div>
 </template>

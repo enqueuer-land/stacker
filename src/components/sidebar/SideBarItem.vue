@@ -77,7 +77,8 @@
                 this.$store.commit('selectItem', {item: this.item, router: this.$router, route: this.$route});
             },
             isSelected: function () {
-                return this.$store.state.selectedItem.id === this.item.id;
+                const selectedItem = this.$store.state.selectedItem;
+                return selectedItem && selectedItem.id === this.item.id;
             }
         },
         computed: {
@@ -108,7 +109,7 @@
                 if (this.isRequisition && this.opened) {
                     style['background-color'] = 'var(--stacker-background-color)';
                 }
-                if (selectedItem.id !== this.item.id) {
+                if (selectedItem && selectedItem.id !== this.item.id) {
                     style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
                 }
                 return style;

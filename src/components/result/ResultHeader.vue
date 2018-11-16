@@ -126,7 +126,6 @@
                     if (this.result) {
                         this.timeAgo = new TimeHandler().getTimeAgo(this.result.time.endTime);
                     }
-                    console.log("SET TIME OUT");
                 };
                 timeUpdater();
                 if (this.timerInterval) {
