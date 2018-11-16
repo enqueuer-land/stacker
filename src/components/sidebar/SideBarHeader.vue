@@ -33,9 +33,8 @@
             <div class="row">
                 <div class="col pt-0">
                     <div class="input-group input-group-sm pl-4 pr-4">
-                        <!--TODO avoid changing directly store state-->
                         <input type="text" class="form-control"
-                               v-model="$store.state.filter"
+                               v-model="filter"
                                style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white; border-radius: 10px"
                                placeholder="Filter">
                     </div>
@@ -68,6 +67,16 @@
                     }]
             }
         },
+        computed: {
+            filter: {
+                get() {
+                    return this.$store.state.filter;
+                },
+                set(value) {
+                    return this.$store.commit('changeFilter', value);
+                }
+            }
+        }
     }
 </script>
 

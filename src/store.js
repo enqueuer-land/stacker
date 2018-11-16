@@ -196,6 +196,9 @@ export default new Vuex.Store({
         ],
     },
     mutations: {
+        changeFilter(state, value) {
+            state.filter = value;
+        },
         openRequisitionFile(state, payload) {
             const newComponent = new ComponentManager().openRequisitionFile(payload.file);
             console.log('Requisition opened: ' + JSON.stringify(new ObjectDecycler().decycle(newComponent), null, 2));

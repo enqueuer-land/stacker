@@ -169,11 +169,11 @@ export default class ComponentManager {
 
     };
     itemFilter(leaf) {
-        const filter = store.state.filter;
-        if (leaf.type && leaf.type.indexOf(filter) !== -1) {
+        const filter = store.state.filter.toLowerCase();
+        if (leaf.type && leaf.type.toLowerCase().indexOf(filter) !== -1) {
             return true;
         }
-        return leaf.name.indexOf(filter) !== -1;
+        return leaf.name.toLowerCase().indexOf(filter) !== -1;
     };
 
 }
