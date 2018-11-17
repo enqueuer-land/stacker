@@ -13,7 +13,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         results: [],
-        deletedItems: [],
         filter: '',
         selectedItem: null,
         requisitions: [],
@@ -32,6 +31,7 @@ export default new Vuex.Store({
                     }
                 },
                 {
+                    divider: true,
                     name: null,
                     click: () => null
                 },
@@ -54,6 +54,7 @@ export default new Vuex.Store({
                     }
                 },
                 {
+                    divider: true,
                     name: null,
                     click: () => null
                 },
@@ -237,13 +238,9 @@ export default new Vuex.Store({
             if (item.parent === undefined) {
                 state.requisitions = state.requisitions.filter(requisition => requisition.id !== item.id);
             }
-            state.deletedItems.push(item);
             payload.router.push({path: '/'});
         },
         selectItem(state, payload) {
-            if (state.deletedItems.some(deleted => deleted.id === payload.item.id)) {
-                return;
-            }
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {

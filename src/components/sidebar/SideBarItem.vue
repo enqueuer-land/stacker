@@ -11,7 +11,7 @@
                         <i class="material-icons">more_vert</i>
                     </a>
                     <div class="dropdown-menu">
-                        <div v-for="action in actions" :key="action.name">
+                        <div v-for="action in actions" :key="action.name" @click="(event) => event.stopPropagation()">
                             <a v-if="action.name !== null" class="dropdown-item" href="#"
                                @click="action.click($store.commit, item, $router)">{{action.name}}</a>
                             <!--TODO insert categories-->

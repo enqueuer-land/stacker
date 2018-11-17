@@ -40,7 +40,7 @@
         --enqueuer-color: #9FB630;
         --stacker-header-background-color: #303033;
         --stacker-background-color: #353535;
-        --stacker-background-alternative-color: #3a3a3a;
+        --stacker-background-alternative-color: #404040;
 
     }
 
