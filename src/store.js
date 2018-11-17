@@ -36,6 +36,11 @@ export default new Vuex.Store({
                     click: () => null
                 },
                 {
+                    header: true,
+                    name: "Create",
+                    click: () => null
+                },
+                {
                     name: "Add requisition",
                     click: (commit, item, router) => {
                         commit('addRequisition', {parent: item, router: router});

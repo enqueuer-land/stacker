@@ -47,7 +47,7 @@
     .dropdown-menu {
         /*background-color: var(--index-color);*/
         padding-bottom: 0;
-        padding-top: 2px;
+        padding-top: 1px;
     }
 
     .dropdown-item {
@@ -66,6 +66,16 @@
         margin: .01rem 0;
         overflow: hidden;
         /*border-top: 1px solid var(--index-color);*/
+    }
+
+    .dropdown-header {
+        /*display: block;*/
+        padding: .1rem .5rem;
+        /*margin-bottom: 0;*/
+        font-size: .75em;
+        color: var(--index-color);
+        /*white-space: nowrap;*/
+        background-color: var(--stacker-header-background-color);
     }
 
     /*TODO remove this*/

@@ -12,12 +12,11 @@
                     </a>
                     <div class="dropdown-menu">
                         <div v-for="action in actions" :key="action.name" @click="(event) => event.stopPropagation()">
-                            <a v-if="action.name !== null" class="dropdown-item" href="#"
+                            <div v-if="action.divider" class="dropdown-divider"></div>
+                            <h6 v-else-if="action.header" class="dropdown-header">{{action.name}}</h6>
+                            <a v-else class="dropdown-item" href="#"
                                @click="action.click($store.commit, item, $router)">{{action.name}}</a>
-                            <!--TODO insert categories-->
-                            <!--<h6 class="dropdown-header">Dropdown header</h6>-->
 
-                            <div v-else class="dropdown-divider"></div>
                         </div>
                     </div>
                 </div>
