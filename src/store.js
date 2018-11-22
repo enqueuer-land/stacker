@@ -209,7 +209,6 @@ export default new Vuex.Store({
         },
         openRequisitionFile(state, payload) {
             const newComponent = new ComponentManager().openRequisitionFile(payload.file);
-            console.log('Requisition opened: ' + JSON.stringify(new ObjectDecycler().decycle(newComponent), null, 2));
             state.requisitions.push(newComponent);
             state.selectedItem = newComponent;
             payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});

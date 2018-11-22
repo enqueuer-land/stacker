@@ -49,9 +49,6 @@
 </template>
 
 <script>
-
-    import ComponentManager from "../../tests/component-manager";
-
     export default {
         name: 'SideBarItem',
         props: {

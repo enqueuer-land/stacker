@@ -22,7 +22,7 @@
                             <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
                                @click="!action.fileDialog ? action.click() : ''">{{action.name}}
                                 <input v-if="action.fileDialog" type="file" class="custom-file-input"
-                                       @change="(event) => action.click(event.target.value)">
+                                       @change="(event) => action.click(event.target.files[0].path)">
                             </a>
                         </div>
                     </div>

@@ -1,84 +1,25 @@
 import {generateId} from "./id-generator";
 import store from '../store'
-// import fs from 'fs';
+
+// const remote = require('electron').remote;
+// const electronFs = electron.remote.require('fs');
+// var electronDialog = remote.dialog;
+const fs = window.remote.require('fs');
+const path = require('path');
 
 export default class ComponentManager {
     openRequisitionFile = (filename) => {
-        console.log(`Should be opening '${filename}' but I don't know how to do it`)
-        // console.log(fs.readFileSync(filename).toString());
-        const fileRequisition = {
-            "timeout": 3000,
-            "name": "opened from file req",
-            "delay": 9090,
-            "iterations": 69,
-            "publishers": [
-                {
-                    "timeout": 123,
-                    "name": "opened from file pub",
-                    "type": "http",
-                    "url": "http://localhost:23068/basic",
-                    "method": "POST",
-                    "payload": "basic auth",
-                    "headers": {
-                        "content-type": "application/json"
-                    },
-                    "onMessageReceived": {
-                        "assertions": [
-                            {
-                                "expect": "body",
-                                "toBeEqualTo": "`basic auth response`"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "subscriptions": [
-                {
-                    "name": "opened from file sub",
-                    "type": "http",
-                    "endpoint": "/basic",
-                    "port": 23068,
-                    "method": "POST",
-                    "avoid": true,
-                    "timeout": 10000,
-                    "response": {
-                        "headers": {
-                            "key": 123
-                        },
-                        "status": 200,
-                        "payload": "basic auth response"
-                    },
-                    "onMessageReceived": {
-                        "assertions": [
-                            {
-                                "name": "Payload",
-                                "expect": "message.body",
-                                "toBeEqualTo": "`basic auth`"
-                            }
-                        ]
-                    },
-                    "onFinish": {
-                        script: 'I am a script',
-                        "assertions": [
-                            {
-                                "name": "Payload",
-                                "expect": "message.body",
-                                "toBeGreaterThan": "`basic auth`"
-                            }
-                        ]
-                    }
-                }
-            ]
-        };
+        // console.log(`Should be opening '${filename}' but I don't know how to do it`);
+        // const fs = window.remote.require('fs');
 
 
-        // console.log(fs.statSync(filename).toString())
+        const fileRequisition = JSON.parse(fs.readFileSync(filename).toString());
 
         // let fileRequisitionsArray = [fileRequisition, fileRequisition];
-        // if (Array.isArray(fileRequisitionsArray)) {
-        //     const base = this.createRequisition({name: filename, requisitions: fileRequisitionsArray});
-        //     return new ComponentManager().createRequisition(base);
-        // }
+        if (Array.isArray(fileRequisition)) {
+            const base = this.createRequisition({name: path.basename(filename), requisitions: fileRequisition});
+            return new ComponentManager().createRequisition(base);
+        }
         return new ComponentManager().createRequisition(fileRequisition);
     };
     createRequisition = (base, parent) => {
@@ -144,7 +85,7 @@ export default class ComponentManager {
 
     isComponentValid(component) {
         return Object.keys(component.errors || {}).length === 0;
-    };
+    }
 
     findItem(id) {
         return (store.state.requisitions || [])

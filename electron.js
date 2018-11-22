@@ -1,5 +1,4 @@
 const {default: installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
-
 const electron = require('electron');
 const app = electron.app;
 // const ipcMain = electron.ipcMain;
@@ -21,7 +20,8 @@ app.on('ready', () => {
         // minHeight: 600,
         // resizable: true,
         webPreferences: {
-            nodeIntegration: false
+            nodeIntegration: false,
+            preload: __dirname + '/preload.js'
         }
     });
     window.loadURL(url);
@@ -33,7 +33,8 @@ app.on('ready', () => {
     window.webContents.openDevTools({mode: 'bottom'});
 
     // ipcMain.on('openRequisitionFile', (event) => {
-    //     console.log('file: ' + event);
+    //     console.log('file: ' + fs.readFileSync('preload.js').toString().substr(0, 30));
+        // console.log('file: ' + __dirname);
     // enqueuer = newEnqueuer;
     // });
 });
