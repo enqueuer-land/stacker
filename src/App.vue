@@ -35,6 +35,7 @@
         /*--passing-test-color: #42ba84;*/
         --passing-test-color: #9FB630;
         --failing-test-color: #a9524a;
+        --invalid-color: #a9524a;
         /*--information-color: #7ed221;*/
         --index-color: #bbbbbb;
         --enqueuer-color: #9FB630;
@@ -78,29 +79,14 @@
         background-color: var(--stacker-header-background-color);
     }
 
-    /*TODO remove this*/
-    .publisher-color {
-        color: var(--publisher-color)
+    .invalid-input {
+        box-shadow: 0 0 15px var(--invalid-color);
+        text-decoration: underline wavy var(--invalid-color);
     }
 
     /*TODO remove this*/
     .requisition-color {
         color: var(--requisition-color);
-    }
-
-    /*TODO remove this*/
-    .subscription-color {
-        color: var(--subscription-color);
-    }
-
-    /*TODO remove this*/
-    .passing-test-color {
-        color: var(--passing-test-color);
-    }
-
-    /*TODO remove this*/
-    .failing-test-color {
-        color: var(--failing-test-color);
     }
 
     .stacker {

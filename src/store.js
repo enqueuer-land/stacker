@@ -96,7 +96,9 @@ export default new Vuex.Store({
                 }
             ],
             protocols: {
-                http: {sync: true},
+                http: {
+                    sync: true,
+                },
                 amqp: {}
             },
             syncTab: {

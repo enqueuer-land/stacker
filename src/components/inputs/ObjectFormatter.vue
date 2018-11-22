@@ -66,7 +66,6 @@
             format: {}
         },
         data: function () {
-            console.log('data');
             const content = this.getContent();
             return {
                 payload: content.payload,

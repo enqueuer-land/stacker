@@ -1,6 +1,6 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a class="row no-gutters" href="#" style="text-decoration: none; color: var(--index-color)'"
+        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" href="#" style="color: var(--index-color)'"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
@@ -16,12 +16,11 @@
                             <h6 v-else-if="action.header" class="dropdown-header">{{action.name}}</h6>
                             <a v-else class="dropdown-item" href="#"
                                @click="action.click($store.commit, item, $router)">{{action.name}}</a>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <div :class="typeClass">
+            <div class="align-self-center col-2 tag" :style="typeStyle">
                 <div v-if="isRequisition" class="dropdown">
                     <i v-if="!opened" style="color: var(--requisition-color)" class="material-icons">folder</i>
                     <i v-if="opened" style="color: var(--requisition-color)" class="material-icons">folder_open</i>
@@ -41,7 +40,7 @@
             <div id="name" :class="['col align-self-center']" :style="isSelected() ? 'color: white' : ''">
                 {{item.name}}
             </div>
-            <div :class="tagClass">
+            <div class="align-self-center tag pr-1" :style="tagStyle">
                 {{tag}} #{{index}}
             </div>
         </a>
@@ -50,6 +49,8 @@
 </template>
 
 <script>
+
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'SideBarItem',
@@ -78,9 +79,16 @@
             isSelected: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 return selectedItem && selectedItem.id === this.item.id;
-            }
+            },
+        },
+        watch: {
         },
         computed: {
+            computedMainSideBarItem() {
+                return {
+                    'invalid-input': false
+                };
+            },
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
@@ -113,24 +121,14 @@
                 }
                 return style;
             },
-            tagClass: function () {
+            tagStyle: function () {
                 return {
-                    'align-self-center': true,
-                    'requisition-color': this.isRequisition,
-                    'publisher-color': this.isPublisher,
-                    'subscription-color': this.isSubscription,
-                    'tag': true,
-                    'pr-1': true
+                    'color': 'var(--' + this.item.component + '-color)'
                 }
             },
-            typeClass: function () {
+            typeStyle: function () {
                 return {
-                    'align-self-center': true,
-                    'col-2': true,
-                    'requisition-color': this.isRequisition,
-                    'publisher-color': this.isPublisher,
-                    'subscription-color': this.isSubscription,
-                    'tag': true
+                    'color': 'var(--' + this.item.component + '-color)',
                 };
             }
         }
@@ -144,9 +142,14 @@
     }
 
     .tag {
+        text-decoration: none;
         font-size: 0.7em;
         text-transform: uppercase;
         font-weight: bold;
+    }
+
+    .mainSideBarItem:hover {
+        text-decoration: none;
     }
 
     #more-icon {

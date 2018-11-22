@@ -26,6 +26,7 @@
                     </div>
                     <div v-else class="input-group-append stage-header-main-dropdown">
                         <button class="btn pl-4 pr-4"
+                                id="runButton"
                                 style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
                                 @click="runButtonClick"
                                 type="button">RUN
@@ -53,6 +54,7 @@
                 <ul class="nav nav-fill" role="tablist" id="tab-collection">
                     <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">
                         <a class="nav-link pb-1" :style="tabStyle(index)"
+                           :id="item.component + '_' + tab.name.toLowerCase()"
                            data-toggle="tab" role="tab"
                            @click="tabSelected(tab, index)"
                            :href="'#'">{{tab.name}}</a>
@@ -90,11 +92,19 @@
             }
         },
         methods: {
-            stageBodyChanged({attribute, payload}) {
+            stageBodyChanged({attribute, payload, errors}) {
+                const itemId = this.item.component + '_' + this.selectedProtocol;
+                const item = $('#' + itemId);
+                if (errors) {
+                    item.addClass('invalid-input');
+                } else {
+                    item.removeClass('invalid-input');
+                }
+
                 if (attribute) {
                     this.item[attribute] = payload;
                 } else {
-                    this.item = Object.assign(this.item, payload);
+                    this.item = Object.assign(this.item, payload, {validation: errors});
                 }
             },
             runButtonClick: async function () {

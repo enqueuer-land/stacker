@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="http.url" placeholder="http://github.com/lopidio/stacker"
+                <input v-model="http.url" placeholder="http://github.com/lopidio/stacker" id="httpPublisherUrlId"
                        type="text" class="form-control" style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
                 <div class="input-group-append" style="font-size: 0.8em">
                     <button class="btn dropdown-toggle"
@@ -60,6 +60,9 @@
         props: {
             item: {},
         },
+        mounted() {
+            this.emit();
+        },
         data: function () {
             const http = this.getContent();
             return {
@@ -83,7 +86,18 @@
                 if (this.http.method === 'GET') {
                     payload.payload = null;
                 }
-                this.$emit('input', {payload});
+                let inputPayload = {payload};
+                const valid = (this.http.url !== undefined && this.http.url.length > 0);
+                if (!valid) {
+                    inputPayload.errors = 'Http publisher url cannot be empty'
+                }
+                this.$emit('input', inputPayload);
+                const item = $('#httpPublisherUrlId');
+                if (!valid) {
+                    item.addClass('invalid-input');
+                } else {
+                    item.removeClass('invalid-input');
+                }
             },
         },
         computed: {},

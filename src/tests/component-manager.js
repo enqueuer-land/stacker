@@ -135,11 +135,22 @@ export default class ComponentManager {
 
     };
 
+    isRequisitionValid(requisition) {
+        return this.isComponentValid(requisition) &&
+            (requisition.requisitions || []).every(requisition => this.isRequisitionValid(requisition)) &&
+            (requisition.publishers || []).every(publisher => this.isComponentValid(publisher)) &&
+            (requisition.subscriptions || []).every(subscription => this.isComponentValid(subscription));
+    }
+
+    isComponentValid(component) {
+        return Object.keys(component.errors || {}).length === 0;
+    };
+
     findItem(id) {
         return (store.state.requisitions || [])
             .map(requisition => this.findIdInRequisition(id, requisition))
             .filter(component => !!component)[0];
-    };
+    }
 
     findIdInRequisition(id, requisition) {
         let result = requisition.id === id ? requisition : null;
@@ -167,13 +178,14 @@ export default class ComponentManager {
         }
         return node.requisitions.some(node => this.nodeFilter(node));
 
-    };
+    }
+
     itemFilter(leaf) {
         const filter = store.state.filter.toLowerCase();
         if (leaf.type && leaf.type.toLowerCase().indexOf(filter) !== -1) {
             return true;
         }
         return leaf.name.toLowerCase().indexOf(filter) !== -1;
-    };
+    }
 
 }

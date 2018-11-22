@@ -1,24 +1,11 @@
 <template>
-    <div :class="resultHeader">
+    <div class="stacker-header" :style="resultHeaderStyle">
         <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false">
             <div class="row" style="height: 40%">
-
-                <!--<a class="pl-4 col-1 pr-0 align-self-center pt-1" href="#">-->
-                <!--<i class="material-icons" style="color: var(&#45;&#45;index-color); transform: scale(0.85)">search</i>-->
-                <!--</a>-->
-                <!--<div class="col pt-0 pl-0 align-self-center">-->
-                <!--<div class="input-group input-group-sm pr-4">-->
-                <!--<input type="text" class="form-control"-->
-                <!--style="background-color: transparent; border-color: var(&#45;&#45;stacker-background-alternative-color); color: white; border-radius: 10px"-->
-                <!--placeholder="Filter">-->
-                <!--</div>-->
-                <!--</div>-->
-
-
             </div>
             <div class="row no-gutters">
-                <span :class="nameClass" style="text-align: left; font-size: 30px"
+                <span class="col-12 pt-2 pl-2 align-self-end" :style="{'text-align': 'left', 'font-size': '30px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}"
                       @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
                     {{result.name}}
                 </span>
@@ -30,7 +17,7 @@
                             <span :class="['title']">
                                 Tests:
                             </span>
-                            <span :class="testNumberClass" style="margin-left: 3px;">
+                            <span class="align-self-center tag" :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
                                 {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </span>
@@ -121,6 +108,7 @@
             }
         },
         watch: {
+            //TODO verify bug here
             result() {
                 const timeUpdater = () => {
                     if (this.result) {
@@ -138,37 +126,18 @@
             tests() {
                 return new FlattenTestsSummary().addTest(this.result);
             },
-            enqueuerClass: function () {
-                return {
-                    'col-9 align-self-center': true,
-                    'enqueuer-style': true,
-                    'no-test-color': true, //!this.result,
-                    // 'passing-test-color': this.result && this.tests.isValid(),
-                    // 'failing-test-color': this.result && !this.tests.isValid()
-                }
-            },
-            testNumberClass: function () {
-                return {
-                    'tag': true,
-                    'align-self-center': true,
-                    'passing-test-color': this.tests.isValid(),
-                    'failing-test-color': !this.tests.isValid()
-                }
-            },
-            nameClass: function () {
-                return {
-                    'col-12 pt-2 pl-2 align-self-end': true,
-                    'passing-test-color': this.tests.isValid(),
-                    'failing-test-color': !this.tests.isValid()
-                }
-            },
-            resultHeader: function () {
-                return {
-                    'stacker-header': true,
-                    'no-test-color': !this.result,
-                    'passing-result-header': this.result && this.tests.isValid(),
-                    'failing-result-header': this.result && !this.tests.isValid()
+            resultHeaderStyle: function () {
+                const result = {
+                    color: 'white'
                 };
+                if (this.result) {
+                    if (this.tests.isValid()) {
+                        result.color = 'var(--passing-test-color);'
+                    } else {
+                        result.color = 'var(--failing-test-color);'
+                    }
+                }
+                return result;
             }
         },
         methods: {
@@ -182,27 +151,6 @@
 </script>
 
 <style scoped>
-    .enqueuer-style {
-        transform: scale(1, .65);
-        font-family: 'Nova Mono', monospace;
-        font-size: 600%;
-        /*text-align: center;*/
-        letter-spacing: -15px;
-    }
-
-    .no-test-color {
-        color: white;
-    }
-
-    .failing-result-header {
-        /*border-left: 2px var(--failing-test-color) solid;*/
-        /*border-right: 2px var(--failing-test-color) solid;*/
-    }
-
-    .passing-result-header {
-        /*border-left: 2px var(--passing-test-color) solid;*/
-        /*border-right: 2px var(--passing-test-color) solid;*/
-    }
 
     .dropdown-toggle::before {
         display: none !important;

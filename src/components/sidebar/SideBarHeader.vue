@@ -16,7 +16,7 @@
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"
                            style="color: var(--enqueuer-color); position: relative; top: -5px">
                             <i class="material-icons"
-                               style="transform: scale(1.3); text-shadow: 1px 1px 0px var(--stacker-background-alternative-color);">add_circle</i>
+                               style="transform: scale(1.3); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
