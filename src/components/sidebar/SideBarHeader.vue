@@ -8,15 +8,15 @@
                     <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"
                          style="transform: scale(-1.3, 1.3) rotate(90deg);">
                 </div>
-                <header id="side-bar-header" class="col-8 align-self-center" style="position: relative; left: -15px">
+                <header id="side-bar-header" class="col-8 align-self-center" style="position: relative; top: 0px; left: -15px">
                     stacker
                 </header>
                 <div class="col align-self-end">
                     <div v-show="true || mouseIsOver" class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                           style="color: var(--enqueuer-color); position: relative; top: -5px">
+                           style="color: var(--enqueuer-color); position: relative; top: -10px">
                             <i class="material-icons"
-                               style="transform: scale(1.3); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
+                               style="transform: scale(1.1); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
@@ -87,11 +87,11 @@
 
     #side-bar-header {
         /*height: 120px;*/
-        transform: scale(1, .65);
+        transform: scale(1, .5);
         font-family: 'Nova Mono', monospace;
-        font-size: 600%;
+        font-size: 550%;
         color: white;
-        /*text-align: center;*/
+        text-align: left;
         letter-spacing: -15px;
     }
 

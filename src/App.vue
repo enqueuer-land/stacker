@@ -1,13 +1,13 @@
 <template>
     <div id="app" class="container-fluid pr-0 pl-0">
         <div class="row no-gutters">
-            <div id="side-bar" class="col-3">
+            <div id="side-bar">
                 <SideBar/>
             </div>
-            <div class="col">
+            <div id="stage">
                 <stage/>
             </div>
-            <div class="col-4">
+            <div id="result">
                 <Result/>
             </div>
         </div>
@@ -96,6 +96,21 @@
     .stacker-header {
         height: 150px;
         background-color: var(--stacker-header-background-color);
+    }
+
+    #side-bar {
+        flex: 0 0 22%;
+        max-width: 22%;
+    }
+
+    #stage {
+        flex: 0 0 43%;
+        max-width: 43%;
+    }
+
+    #result {
+        flex: 0 0 35%;
+        max-width: 35%;
     }
 
 </style>
