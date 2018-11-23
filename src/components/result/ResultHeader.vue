@@ -2,27 +2,27 @@
     <div class="stacker-header" :style="resultHeaderStyle">
         <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false">
-            <div class="row" style="height: 40%">
-            </div>
             <div class="row no-gutters">
-                <span class="col-12 pt-2 pl-2 align-self-end" :style="{'text-align': 'left', 'font-size': '30px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}"
+                <span class="col-11 pt-2 align-self-end pl-2"
+                      :style="{'text-align': 'left', 'font-size': '30px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}"
                       @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
                     {{result.name}}
                 </span>
             </div>
-            <div class="row no-gutters">
-                <div class="col-11 align-self-center pl-2 pt-0">
+            <div class="row no-gutters pb-1">
+                <div class="col-12 align-self-center pl-2 pt-0">
                     <div class="row no-gutters">
                         <div class="col-4">
-                            <span :class="['title']">
+                            <span class="title">
                                 Tests:
                             </span>
-                            <span class="align-self-center tag" :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
+                            <span class="tag"
+                                  :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
                                 {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </span>
                         </div>
-                        <div class="col-4 pl-1">
+                        <div class="col-4 pl-5">
                             <span class="title">
                                 Time:
                             </span>
@@ -30,28 +30,24 @@
                                 {{printTime()}}
                             </span>
                         </div>
-                        <span class="col-4 align-self-center pl-2 pr-2 title" style="text-align: left">
+                        <span class="col-4 align-self-center pl-2 pr-2 title" style="text-align: right">
                             {{timeAgo}}
                         </span>
-
                     </div>
                 </div>
-                <div class="col-1">
-                    <div class="dropdown dropleft">
-                        <a v-show="true || mouseIsOver" id="moreOptions" class="dropdown-toggle pl-4" href="#"
-                           data-toggle="dropdown" style="color: white">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="(action, index) in actions"
-                               :key="index"
-                            >{{action.name}}
-                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
-                                       @change="(event) => action.click(event.target.value)">
-                            </a>
-                        </div>
+            </div>
+            <div class="row" style="height: 15%" />
+            <div class="row">
+                <div class="col pt-0 pl-4">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control"
+                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white; border-radius: 10px"
+                               placeholder="Filter">
                     </div>
                 </div>
+                <a class="pl-0 col-1 pr-1 align-self-center pt-1" href="#">
+                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
+                </a>
             </div>
         </a>
     </div>
@@ -71,39 +67,6 @@
             return {
                 mouseIsOver: false,
                 timeAgo: '',
-                actions: [
-                    {
-                        name: "Save",
-                        fileDialog: true,
-                        click(file) {
-                            console.log('Saving: ' + fs);
-                        }
-                    },
-                    {
-                        name: "Open",
-                        fileDialog: true,
-                        click(file) {
-                            console.log('Opening: ' + file);
-                            console.log('Keys: ' + Object.keys(fs).filter(key => typeof(fs[key]) === 'function').join(';'));
-                            console.log('stringify: ' + JSON.stringify(fs));
-                        }
-                    },
-                    {
-                        name: "Flatten",
-                        click() {
-                        }
-                    },
-                    {
-                        name: "Clear",
-                        click() {
-                        }
-                    },
-                    {
-                        name: "History",
-                        click() {
-                        }
-                    },
-                ],
                 timerInterval: null,
             }
         },

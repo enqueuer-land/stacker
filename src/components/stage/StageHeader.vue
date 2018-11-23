@@ -41,9 +41,9 @@
                         <a href="#"
                            @click="$store.dispatch('runRequisition', breadCrumb)">
                             <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);"
-                               class="material-icons">play_circle_outline</i>
+                               class="material-icons">play_circle_filled</i>
                         </a>
-                        <a style="text-decoration: none; font-size: 0.8em;" href="#"
+                        <a style="text-decoration: none; font-size: 0.8em; position: relative; top: -2px" href="#"
                            @click="breadCrumbSelected(breadCrumb)">
                             {{breadCrumb.name}}
                         </a>

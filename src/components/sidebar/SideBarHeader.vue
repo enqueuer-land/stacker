@@ -28,20 +28,20 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="height: 20%">
+            <div class="row" style="height: 18%">
             </div>
-            <div class="row">
-                <a class="pl-4 col-1 pr-0 align-self-center pt-1" href="#">
-                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
-                </a>
-                <div class="col pt-0 pl-0">
-                    <div class="input-group input-group-sm pl-4 pr-4">
+            <div class="row no-gutters">
+                <div class="col-11 pl-0">
+                    <div class="input-group input-group-sm pl-2 pr-1">
                         <input type="text" class="form-control"
                                v-model="filter"
                                style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white; border-radius: 10px"
                                placeholder="Filter">
                     </div>
                 </div>
+                <a class="col-1 pr-0 align-self-center pt-1" href="#">
+                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
+                </a>
             </div>
         </a>
     </div>

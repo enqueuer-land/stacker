@@ -3,12 +3,8 @@
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + id">
                 <div class="result-flatten-tests-item-header">
-                    <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                        <div class="col align-self-center">
-                                <i v-show="test.valid" style="color: var(--passing-test-color)" class="material-icons">check_circle_outline</i>
-                                <i v-show="!test.valid" style="color: var(--failing-test-color)" class="material-icons">highlight_off</i>
-                        </div>
-                        <div class="col-11 align-self-center ml-1 row">
+                    <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none; min-height: 28px">
+                        <div class="col align-self-center ml-1 row">
                             <div class="col align-self-center pl-1">
                                 {{test.name}}
                             </div>
@@ -66,8 +62,7 @@
                 return {
                     'even-class': this.index % 2 === 0,
                     'odd-class': this.index % 2 === 1,
-                    'row': true,
-                    'no-gutters': true
+                    'row no-gutters': true
                 }
             },
         },
@@ -89,7 +84,7 @@
                 return {
                     'index-class': true,
                     'align-self-center': true,
-                    'col': true
+                    'col-1': true
                 }
             },
             resultFlattenTestsItem: function () {
