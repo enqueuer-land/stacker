@@ -1,7 +1,5 @@
 <template>
-    <div :class="['stacker-header']"
-         @mouseover="mouseIsOver = true"
-         @mouseleave="mouseIsOver = false">
+    <div :class="['stacker-header']">
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 55%">
                 <div class="col-3">
@@ -13,19 +11,13 @@
                     stacker
                 </header>
                 <div class="col align-self-end">
-                    <div v-show="true || mouseIsOver" class="dropdown">
+                    <div class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                           style="color: var(--enqueuer-color); position: relative; top: -10px">
+                           style="color: var(--enqueuer-color); position: relative; top: -10px; left: 5px">
                             <i class="material-icons"
-                               style="transform: scale(1.1); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
+                               style="transform: scale(0.9); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
-                               @click="action.click">{{action.name}}
-                                <!--<input v-if="action.fileDialog" type="file" class="custom-file-input"-->
-                                <!--@change="(event) => action.click(event.target.files[0].path)">-->
-                            </a>
-                        </div>
+                        <dropdown-component :value="actions"></dropdown-component>
                     </div>
                 </div>
             </div>
@@ -49,14 +41,20 @@
 </template>
 
 <script>
+    import DropdownComponent from "../inputs/DropdownComponent";
+
     const fs = window.remote.require('fs');
 
     export default {
         name: 'SideBarHeader',
+        components: {DropdownComponent},
         data: function () {
             return {
-                mouseIsOver: false,
                 actions: [
+                    {
+                      name: 'Requisition',
+                      header: true,
+                    },
                     {
                         name: "Import requisitions",
                         click: () => {
@@ -70,6 +68,19 @@
                                 }
                             });
                         }
+                    },
+                    {
+                        name: "Create Requisition",
+                        click: () => {
+                            this.$store.commit('addRequisition', {router: this.$router});
+                        }
+                    },
+                    {
+                        divider: true,
+                    },
+                    {
+                        name: 'Response',
+                        header: true,
                     },
                     {
                         name: "Import responses",
@@ -89,12 +100,7 @@
                             });
                         }
                     },
-                    {
-                        name: "Create Requisition",
-                        click: () => {
-                            this.$store.commit('addRequisition', {router: this.$router});
-                        }
-                    }]
+                ]
             }
         },
         computed: {

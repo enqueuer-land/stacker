@@ -7,9 +7,9 @@
         >
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="more-icon">
+                    <div data-toggle="dropdown" id="more-icon">
                         <i class="material-icons">more_vert</i>
-                    </a>
+                    </div>
                     <div class="dropdown-menu">
                         <div v-for="action in actions" :key="action.name" @click="(event) => event.stopPropagation()">
                             <div v-if="action.divider" class="dropdown-divider"></div>
