@@ -26,8 +26,8 @@ app.on('ready', () => {
     });
     window.loadURL(url);
 
-    ipcMain.on('runRequisition', (event) => {
-        console.log('file: ' + JSON.stringify(event, null, 2));
+    ipcMain.on('runRequisition', (event, requisition) => {
+        console.log('file: ' + JSON.stringify(requisition, null, 2));
     });
 
     installExtension(VUEJS_DEVTOOLS)
