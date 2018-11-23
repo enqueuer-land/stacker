@@ -283,17 +283,9 @@ export default new Vuex.Store({
             window.ipcRenderer.send('runRequisition', decycle);
 
             window.ipcRenderer.on('runRequisitionReply', (event, report) => {
+                console.log('Renderer got report: ' + JSON.stringify(report, null, 2));
                 commit('setRequisitionResult', {report: report});
             })
-
-            // new RequisitionRunner(requisition, null).run()
-            //     .then(report => {
-            //         console.log('works')
-            //         // commit('setRequisitionResult', {report: report});
-            //     })
-            //     .catch(err => {
-            //        console.log(`Error running requisition: ${err}`);
-            //     });
 
         }
     }

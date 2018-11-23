@@ -3,7 +3,8 @@ const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
-const nqr = require("enqueuer/js/requisition-runners/requisition-runner");
+const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
+require('enqueuer/js/injectable-files-list');
 
 let url;
 if (process.env.NODE_ENV === 'DEV') {
@@ -29,11 +30,10 @@ app.on('ready', () => {
 
     ipcMain.on('runRequisition', (event, requisition) => {
         // console.log('file: ' + JSON.stringify(requisition, null, 2));
+        // Logger.setLoggerLevel('trace');
 
-        new nqr.RequisitionRunner(requisition, null).run()
+        new RequisitionRunner(requisition, null).run()
             .then(report => {
-                // console.log('works: ' + JSON.stringify(report));
-                // commit('setRequisitionResult', {report: report});
                 event.sender.send('runRequisitionReply', report)
             })
             .catch(err => {

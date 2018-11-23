@@ -42,15 +42,18 @@ export default class FlattenTestsSummary {
                 this.sumTests(value, clonedHierarchy)
             }
             else if (typeof value === 'object') {
-                if (Array.isArray(value)) {
-                    value.forEach((item => {
-                        const updatedHierarchy = clonedHierarchy.concat(item);
-                        this.findTests(item, updatedHierarchy);
-                    }));
+                if (key !== 'messageReceived') {
+                    if (Array.isArray(value)) {
+                        value.forEach((item => {
+                            const updatedHierarchy = clonedHierarchy.concat(item);
+                            this.findTests(item, updatedHierarchy);
+                        }));
+                    } else {
+                        const updatedHierarchy = clonedHierarchy.concat(value);
+                        this.findTests(value, updatedHierarchy);
+                    }
                 } else {
-
-                    const updatedHierarchy = clonedHierarchy.concat(value);
-                    this.findTests(value, updatedHierarchy);
+                    console.log('Skipping messageReceived');
                 }
             }
         });
