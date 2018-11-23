@@ -3,6 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
+const nqr = require("enqueuer/js/requisition-runners/requisition-runner");
 
 let url;
 if (process.env.NODE_ENV === 'DEV') {
@@ -27,7 +28,18 @@ app.on('ready', () => {
     window.loadURL(url);
 
     ipcMain.on('runRequisition', (event, requisition) => {
-        console.log('file: ' + JSON.stringify(requisition, null, 2));
+        // console.log('file: ' + JSON.stringify(requisition, null, 2));
+
+        new nqr.RequisitionRunner(requisition, null).run()
+            .then(report => {
+                // console.log('works: ' + JSON.stringify(report));
+                // commit('setRequisitionResult', {report: report});
+                event.sender.send('runRequisitionReply', report)
+            })
+            .catch(err => {
+               console.log(`Error running requisition: ${err}`);
+            });
+
     });
 
     installExtension(VUEJS_DEVTOOLS)

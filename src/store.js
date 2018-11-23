@@ -279,8 +279,12 @@ export default new Vuex.Store({
     actions: {
         runRequisition: function ({commit}, requisition) {
             const decycle = new ObjectDecycler().decycle(requisition);
-            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 100));
+            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
+
+            window.ipcRenderer.on('runRequisitionReply', (event, report) => {
+                commit('setRequisitionResult', {report: report});
+            })
 
             // new RequisitionRunner(requisition, null).run()
             //     .then(report => {

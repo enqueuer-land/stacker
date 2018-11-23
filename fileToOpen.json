@@ -1,8 +1,8 @@
 {
   "timeout": 3000,
   "name": "opened from file req",
-  "delay": 9090,
-  "iterations": 69,
+  "delay": 1090,
+  "iterations": 2,
   "publishers": [
     {
       "timeout": 123,
@@ -31,7 +31,6 @@
       "endpoint": "/basic",
       "port": 23068,
       "method": "POST",
-      "avoid": true,
       "timeout": 10000,
       "response": {
         "headers": {
