@@ -1,0 +1,49 @@
+{
+  "id": "id1543000638523m9VUBwwaZQ",
+  "name": "Github API",
+  "publishers": [
+    {
+      "id": "id15430006520613DQyTRy3yb",
+      "name": "Nqr contributors",
+      "type": "HTTP",
+      "component": "publisher",
+      "timeout": "",
+      "url": "https://api.github.com/repos/lopidio/enqueuer/contributors",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "stacker"
+      },
+      "payload": null,
+      "format": "raw",
+      "onMessageReceived": {
+        "script": "body = JSON.parse(body)",
+        "assertions": [
+          {
+            "expect": "statusCode",
+            "toBeEqualTo": "200"
+          },
+          {
+            "expect": "body[0].login",
+            "toBeEqualTo": "`lopidio`"
+          },
+          {
+            "expect": "body[1].login",
+            "toBeEqualTo": "`greenkeeper[bot]`"
+          },
+          {
+            "expect": "body[2].login",
+            "toBeEqualTo": "`rodrigohrech`"
+          },
+          {
+            "expect": "body.length",
+            "toBeGreaterThanOrEqualTo": "4"
+          }
+        ],
+        "store": {}
+      }
+    }
+  ],
+  "subscriptions": [],
+  "requisitions": [],
+  "component": "requisition"
+}

@@ -3,7 +3,7 @@
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + id">
                 <div class="result-flatten-tests-item-header">
-                    <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none; min-height: 28px">
+                    <a class="row no-gutters title-class" href="#noPlace">
                         <div class="col align-self-center ml-1 row">
                             <div class="col align-self-center pl-1">
                                 {{test.name}}
@@ -27,12 +27,8 @@
             <div :id="id" class="collapse">
                 <div class="card-body p-0">
                     <ul class="list-unstyled">
-                        <li>
-                            <a :class="lineClass(index)" href="#noPlace" style="text-decoration: none">
-                                <div class="align-self-center col pl-1" style="font-size: 0.8em">
-                                    {{test.description}}
-                                </div>
-                            </a>
+                        <li class="pl-3 pt-1 description-class">
+                                {{test.description}}
                         </li>
                     </ul>
                 </div>
@@ -58,13 +54,6 @@
             }
         },
         methods: {
-            lineClass: function () {
-                return {
-                    'even-class': this.index % 2 === 0,
-                    'odd-class': this.index % 2 === 1,
-                    'row no-gutters': true
-                }
-            },
         },
         computed: {
             breadCrumbStyle() {
@@ -113,14 +102,14 @@
     }
 
     .valid-result-flatten-tests-item {
-        background-color: var(--stacker-background-color);
+        /*background-color: var(--stacker-background-color);*/
         /*border-top: 1px var(--passing-test-color) solid;*/
         border-left: 2px var(--passing-test-color) solid;
         /*border-right: 2px var(--passing-test-color) solid;*/
     }
 
     .invalid-result-flatten-tests-item {
-        background-color: var(--stacker-background-color);
+        /*background-color: var(--stacker-background-color);*/
         /*border-top: 1px var(--failing-test-color) solid;*/
         border-left: 2px var(--failing-test-color) solid;
         /*border-right: 2px var(--failing-test-color) solid;*/
@@ -146,7 +135,7 @@
         /*border-left: 4px solid;*/
     }
     .result-flatten-tests-item-header > a {
-        color: var(--index-color);
+        /*color: var(--index-color);*/
     }
 
     .list-unstyled > li > a {
@@ -166,28 +155,25 @@
         color: white;
     }
 
-    .even-class {
-        min-height: 28px;
-        padding-left: 1px;
-        border-bottom: 1px solid var(--stacker-background-alternative-color);
-        background-color: var(--stacker-header-background-color);
-        /*border-bottom: 1px solid var(--stacker-background-color);*/
-        /*background-color: var(--stacker-background-alternative-color);*/
-    }
-
-    .odd-class {
-        min-height: 28px;
-        padding-left: 1px;
-        /*border-bottom: 1px solid var(--stacker-background-color);*/
-        /*background-color: var(--stacker-background-alternative-color);*/
-        border-bottom: 1px solid var(--stacker-background-alternative-color);
-        background-color: var(--stacker-header-background-color);
-    }
-
     .index-class {
         font-size: 0.75em;
         text-align: center;
         color: var(--index-color);
     }
 
+    .description-class {
+        font-size: 0.8em;
+        min-height: 28px;
+        color: var(--index-color);
+        background-color: var(--stacker-background-alternative-color);
+        border-bottom: 2px solid var(--stacker-header-background-color);
+        border-left: 1px solid var(--stacker-header-background-color);
+    }
+
+    .title-class {
+        text-decoration: none;
+        min-height: 28px;
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
+        background-color: var(--stacker-background-color);
+    }
 </style>

@@ -58,26 +58,33 @@
                 mouseIsOver: false,
                 actions: [
                     {
-                        name: "Import requisition",
+                        name: "Import requisitions",
                         click: () => {
                             window.remote.dialog.showOpenDialog({
-                                properties: ['openFile']//, 'multiSelections']
+                                properties: ['openFile', 'multiSelections']
                             }, (files) => {
-                                if (files !== undefined && files.length > 0) {
-                                    this.$store.commit('openRequisitionFile', {router: this.$router, file: files[0]});
+                                if (files !== undefined) {
+                                    (files || []).forEach(file => {
+                                        this.$store.commit('openRequisitionFile', {router: this.$router, file: file});
+                                    })
                                 }
                             });
                         }
                     },
                     {
-                        name: "Import response",
+                        name: "Import responses",
                         click: () => {
                             window.remote.dialog.showOpenDialog({
-                                properties: ['openFile']//, 'multiSelections']
+                                properties: ['openFile']
                             }, (files) => {
-                                if (files !== undefined && files.length > 0) {
-                                    const response = JSON.parse(fs.readFileSync(files[0]).toString());
-                                    this.$store.commit('setRequisitionResult', {router: this.$router, report: response});
+                                if (files !== undefined) {
+                                    (files || []).forEach(file => {
+                                        const response = JSON.parse(fs.readFileSync(file).toString());
+                                        this.$store.commit('setRequisitionResult', {
+                                            router: this.$router,
+                                            report: response
+                                        });
+                                    });
                                 }
                             });
                         }
