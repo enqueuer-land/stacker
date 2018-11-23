@@ -11,7 +11,7 @@
                             <div class="col-5 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
-                                        v-for="(breadCrumb, index) in test.hierarchy.filter((_, index) => index > 0)" :key="index">
+                                        v-for="(breadCrumb, index) in test.hierarchy" :key="index">
                                         <a href="#" :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
                                            @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</a>
                                     </li>
@@ -167,7 +167,7 @@
     }
 
     .even-class {
-        height: 30px;
+        min-height: 28px;
         padding-left: 1px;
         border-bottom: 1px solid var(--stacker-background-alternative-color);
         background-color: var(--stacker-header-background-color);
@@ -176,7 +176,7 @@
     }
 
     .odd-class {
-        height: 30px;
+        min-height: 28px;
         padding-left: 1px;
         /*border-bottom: 1px solid var(--stacker-background-color);*/
         /*background-color: var(--stacker-background-alternative-color);*/

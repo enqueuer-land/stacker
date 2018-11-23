@@ -1,7 +1,7 @@
 const {default: installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
 const electron = require('electron');
 const app = electron.app;
-// const ipcMain = electron.ipcMain;
+const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
 let url;
@@ -26,15 +26,14 @@ app.on('ready', () => {
     });
     window.loadURL(url);
 
+    ipcMain.on('runRequisition', (event) => {
+        console.log('file: ' + JSON.stringify(event, null, 2));
+    });
+
     installExtension(VUEJS_DEVTOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
 
     window.webContents.openDevTools({mode: 'bottom'});
 
-    // ipcMain.on('openRequisitionFile', (event) => {
-    //     console.log('file: ' + fs.readFileSync('preload.js').toString().substr(0, 30));
-        // console.log('file: ' + __dirname);
-    // enqueuer = newEnqueuer;
-    // });
 });

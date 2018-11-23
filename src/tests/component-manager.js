@@ -1,21 +1,13 @@
 import {generateId} from "./id-generator";
 import store from '../store'
 
-// const remote = require('electron').remote;
-// const electronFs = electron.remote.require('fs');
-// var electronDialog = remote.dialog;
 const fs = window.remote.require('fs');
 const path = require('path');
 
 export default class ComponentManager {
     openRequisitionFile = (filename) => {
-        // console.log(`Should be opening '${filename}' but I don't know how to do it`);
-        // const fs = window.remote.require('fs');
-
-
         const fileRequisition = JSON.parse(fs.readFileSync(filename).toString());
 
-        // let fileRequisitionsArray = [fileRequisition, fileRequisition];
         if (Array.isArray(fileRequisition)) {
             const base = this.createRequisition({name: path.basename(filename), requisitions: fileRequisition});
             return new ComponentManager().createRequisition(base);

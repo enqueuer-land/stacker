@@ -278,9 +278,9 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            console.log('Requisition to be ran: ' + JSON.stringify(new ObjectDecycler().decycle(requisition), null, 2));
-            // console.log('File: ' + JSON.parse(fs.readFileSync('fileToOpen.json').toString()));
-            // ipcRenderer.send('openFile', 'fileToOpen.json');
+            let decycle = new ObjectDecycler().decycle(requisition);
+            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 100));
+            window.ipcRenderer.send('runRequisition', decycle);
 
             // new RequisitionRunner(requisition, null).run()
             //     .then(report => {
@@ -290,91 +290,6 @@ export default new Vuex.Store({
             //     .catch(err => {
             //        console.log(`Error running requisition: ${err}`);
             //     });
-
-
-            const firstRequisition = this.state.requisitions[0];
-            commit('setRequisitionResult', {
-                report: {
-                    "valid": true,
-                    id: firstRequisition.id,
-                    "tests": [
-                        {
-                            "valid": true,
-                            "name": "No time out",
-                            "description": "Requisition has timed out"
-                        }
-                    ],
-                    "name": "Requisition #1",
-                    "subscriptions": [
-                        {
-                            id: firstRequisition.subscriptions.length > 0 ? firstRequisition.subscriptions[0].id : firstRequisition.requisitions[0].subscriptions[0].id,
-                            "name": "Subscription #0",
-                            "type": "https-server",
-                            "tests": [
-                                {
-                                    "name": "Https payload",
-                                    "valid": true,
-                                    "description": "Expected 'JSON.parse(message.body).https' to be equal to 'works!'. Received 'works!'"
-                                },
-                                {
-                                    "valid": true,
-                                    "name": "Message received",
-                                    "description": "Subscription has received its message"
-                                }
-                            ],
-                            "valid": true,
-                            "connectionTime": "2018-11-02T17:19:26.179Z",
-                            "messageReceived": {
-                                "headers": {
-                                    "content-type": "application/json",
-                                    "content-length": "23",
-                                    "host": "localhost:4430",
-                                    "connection": "close"
-                                },
-                                "params": {},
-                                "query": {},
-                                "body": "{\n  \"https\": \"works!\"\n}"
-                            }
-                        }
-                    ],
-                    "publishers": [
-                        {
-                            id: firstRequisition.publishers.length > 0 ? firstRequisition.publishers[0].id : firstRequisition.requisitions[0].publishers[0].id,
-                            "name": "publisher description",
-                            "valid": true,
-                            "type": "https-client",
-                            "tests": [
-                                {
-                                    "name": "Published",
-                                    "valid": true,
-                                    "description": "Published successfully"
-                                },
-                                {
-                                    "name": "Status Code",
-                                    "valid": true,
-                                    "description": "Expected 'statusCode' to be equal to '200'. Received '200'"
-                                },
-                                {
-                                    "name": "Body",
-                                    "valid": true,
-                                    "description": "Expected 'body' to be equal to 'https'. Received 'https'"
-                                },
-                                {
-                                    "name": "Response message received",
-                                    "valid": true,
-                                    "description": "Response message was received"
-                                }
-                            ]
-                        }
-                    ],
-                    "time": {
-                        "startTime": "2018-11-02T17:19:26.162Z",
-                        "endTime": "2018-11-16T21:00:26.213Z",
-                        "totalTime": 51,
-                        "timeout": 3000
-                    }
-                }
-            });
 
         }
     }

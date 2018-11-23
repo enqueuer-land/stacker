@@ -8,7 +8,8 @@
                     <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"
                          style="transform: scale(-1.3, 1.3) rotate(90deg);">
                 </div>
-                <header id="side-bar-header" class="col-8 align-self-center" style="position: relative; top: 0px; left: -15px">
+                <header id="side-bar-header" class="col-8 align-self-center"
+                        style="position: relative; top: 0px; left: -15px">
                     stacker
                 </header>
                 <div class="col align-self-end">
@@ -20,9 +21,9 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" v-for="action in actions" :key="action.name"
-                               @click="!action.fileDialog ? action.click() : ''">{{action.name}}
-                                <input v-if="action.fileDialog" type="file" class="custom-file-input"
-                                       @change="(event) => action.click(event.target.files[0].path)">
+                               @click="action.click">{{action.name}}
+                                <!--<input v-if="action.fileDialog" type="file" class="custom-file-input"-->
+                                <!--@change="(event) => action.click(event.target.files[0].path)">-->
                             </a>
                         </div>
                     </div>
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+    const fs = window.remote.require('fs');
 
     export default {
         name: 'SideBarHeader',
@@ -56,14 +58,32 @@
                 mouseIsOver: false,
                 actions: [
                     {
-                        fileDialog: true,
-                        name: "Import",
-                        click: (file) => {
-                            this.$store.commit('openRequisitionFile', {router: this.$router, file: file});
+                        name: "Import requisition",
+                        click: () => {
+                            window.remote.dialog.showOpenDialog({
+                                properties: ['openFile']//, 'multiSelections']
+                            }, (files) => {
+                                if (files !== undefined && files.length > 0) {
+                                    this.$store.commit('openRequisitionFile', {router: this.$router, file: files[0]});
+                                }
+                            });
                         }
                     },
                     {
-                        name: "Create",
+                        name: "Import response",
+                        click: () => {
+                            window.remote.dialog.showOpenDialog({
+                                properties: ['openFile']//, 'multiSelections']
+                            }, (files) => {
+                                if (files !== undefined && files.length > 0) {
+                                    const response = JSON.parse(fs.readFileSync(files[0]).toString());
+                                    this.$store.commit('setRequisitionResult', {router: this.$router, report: response});
+                                }
+                            });
+                        }
+                    },
+                    {
+                        name: "Create Requisition",
                         click: () => {
                             this.$store.commit('addRequisition', {router: this.$router});
                         }
@@ -92,7 +112,7 @@
         font-size: 550%;
         color: white;
         text-align: left;
-        letter-spacing: -15px;
+        letter-spacing: -13px;
     }
 
     .dropdown-toggle > i:hover {

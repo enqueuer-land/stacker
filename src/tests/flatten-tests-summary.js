@@ -34,14 +34,24 @@ export default class FlattenTestsSummary {
         if (node === undefined || node === null) {
             return;
         }
+
         Object.keys(node).forEach(key => {
-            let value = node[key];
+            const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
+            const value = node[key];
             if (key === 'tests') {
-                this.sumTests(value, hierarchy)
+                this.sumTests(value, clonedHierarchy)
             }
             else if (typeof value === 'object') {
-                let updatedHierarchy = hierarchy.concat(node);
-                this.findTests(value, updatedHierarchy);
+                if (Array.isArray(value)) {
+                    value.forEach((item => {
+                        const updatedHierarchy = clonedHierarchy.concat(item);
+                        this.findTests(item, updatedHierarchy);
+                    }));
+                } else {
+
+                    const updatedHierarchy = clonedHierarchy.concat(value);
+                    this.findTests(value, updatedHierarchy);
+                }
             }
         });
     }
