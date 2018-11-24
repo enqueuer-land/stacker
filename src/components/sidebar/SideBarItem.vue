@@ -10,14 +10,7 @@
                     <div data-toggle="dropdown" id="more-icon">
                         <i class="material-icons">more_vert</i>
                     </div>
-                    <div class="dropdown-menu">
-                        <div v-for="action in actions" :key="action.name" @click="(event) => event.stopPropagation()">
-                            <div v-if="action.divider" class="dropdown-divider"></div>
-                            <h6 v-else-if="action.header" class="dropdown-header">{{action.name}}</h6>
-                            <a v-else class="dropdown-item" href="#"
-                               @click="action.click($store.commit, item, $router)">{{action.name}}</a>
-                        </div>
-                    </div>
+                    <dropdown-component :value="actions" :args="[$store.commit, item, $router]"></dropdown-component>
                 </div>
             </div>
             <div class="align-self-center col-2 tag" :style="typeStyle">
@@ -49,8 +42,10 @@
 </template>
 
 <script>
+    import DropdownComponent from "../inputs/DropdownComponent";
     export default {
         name: 'SideBarItem',
+        components: {DropdownComponent},
         props: {
             opened: {},
             index: {},

@@ -2,11 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import ObjectDecycler from "./tests/object-decycler";
 import ComponentManager from "./tests/component-manager";
-// import {RequisitionRunner} from "enqueuer/js/requisition-runners/requisition-runner";
-// import {ipcRenderer} from 'electron';
-// import * as fs from 'fs';
-// const fs = window.require('fs');
-// const staticFsModule = require('./lib/fs');
 
 Vue.use(Vuex);
 
@@ -20,6 +15,9 @@ export default new Vuex.Store({
             sideBarOptions: [
                 {
                     name: "Save",
+                    isEnabled() {
+                        return true;
+                    },
                     click: (commit, item) => {
                         commit('saveRequisition', {item: item});
                     }
@@ -204,6 +202,14 @@ export default new Vuex.Store({
         ],
     },
     mutations: {
+        saveRequisition(state, payload) {
+            window.remote.dialog.showSaveDialog({
+                defaultPath: payload.item.name + '.stk.json',
+                showsTagField: false,
+            }, (filename) => {
+                new ComponentManager().saveRequisitionFile(filename, payload.item);
+            })
+        },
         changeFilter(state, value) {
             state.filter = value;
         },
@@ -238,7 +244,7 @@ export default new Vuex.Store({
         deleteComponent(state, payload) {
             const item = payload.item;
             new ComponentManager().delete(item);
-            if (state.selectedItem.id === item.id) {
+            if (state.selectedItem && state.selectedItem.id === item.id) {
                 state.selectedItem = null;
             }
             if (item.parent === undefined) {

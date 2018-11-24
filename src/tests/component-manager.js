@@ -1,5 +1,6 @@
 import {generateId} from "./id-generator";
 import store from '../store'
+import ObjectDecycler from "./object-decycler";
 
 const fs = window.remote.require('fs');
 const path = require('path');
@@ -14,6 +15,10 @@ export default class ComponentManager {
         }
         return new ComponentManager().createRequisition(fileRequisition);
     };
+    saveRequisitionFile(name, requisition) {
+        const decycle = new ObjectDecycler().decycle(requisition);
+        fs.writeFileSync(name, JSON.stringify(decycle, null, 2));
+    }
     createRequisition = (base, parent) => {
         const newRequisition = {
             ...base,
