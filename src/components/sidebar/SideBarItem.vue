@@ -1,6 +1,6 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" href="#" style="color: var(--index-color)'"
+        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" href="#" style="color: var(--text-smooth-color)'"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
@@ -87,7 +87,7 @@
                     height: '30px',
                     'border-bottom': '1px solid var(--stacker-background-alternative-color)',
                     'background-color': 'var(--stacker-header-background-color)',
-                    'color': 'var(--index-color)'
+                    'color': 'var(--text-smooth-color)'
                 };
                 if (this.isSelected()) {
                     style = {
@@ -149,7 +149,7 @@
     }
 
     #more-icon:hover {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
 </style>

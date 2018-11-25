@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <a class="col-1 pr-0 align-self-center pt-1" href="#">
-                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
+                    <i class="material-icons" style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
                 </a>
             </div>
         </a>
@@ -129,7 +129,7 @@
     }
 
     .dropdown-toggle > i:hover {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     .dropdown-toggle::after {

@@ -59,7 +59,7 @@
             breadCrumbStyle() {
                 return function(breadCrumb) {
                     const item = new ComponentManager().findItem(breadCrumb.id);
-                    let color = 'var(--index-color)';
+                    let color = 'var(--text-smooth-color)';
                     if (item) {
                         color = `var(--${item.component}-color)`;
                     }
@@ -122,7 +122,7 @@
     }
 
     .result-flatten-tests-item-header > a {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
         height: inherit;
     }
 
@@ -135,11 +135,11 @@
         /*border-left: 4px solid;*/
     }
     .result-flatten-tests-item-header > a {
-        /*color: var(--index-color);*/
+        /*color: var(--text-smooth-color);*/
     }
 
     .list-unstyled > li > a {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     .list-unstyled > li > a:hover {
@@ -158,13 +158,13 @@
     .index-class {
         font-size: 0.75em;
         text-align: center;
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     .description-class {
         font-size: 0.8em;
         min-height: 28px;
-        color: var(--index-color);
+        color: var(--text-smooth-color);
         background-color: var(--stacker-background-alternative-color);
         border-bottom: 2px solid var(--stacker-header-background-color);
         border-left: 1px solid var(--stacker-header-background-color);

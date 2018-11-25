@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <a class="pl-0 col-1 pr-1 align-self-center pt-1" href="#">
-                    <i class="material-icons" style="color: var(--index-color); transform: scale(0.85)">search</i>
+                    <i class="material-icons" style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
                 </a>
             </div>
         </a>
@@ -124,7 +124,7 @@
     }
 
     #moreOptions :hover {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     .custom-file-input {
@@ -141,7 +141,7 @@
         font-size: 0.9em;
         text-align: right;
         font-weight: lighter;
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     .time {

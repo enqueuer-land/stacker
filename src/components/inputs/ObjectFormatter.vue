@@ -150,7 +150,7 @@
     }
 
     .disabled-label {
-        color: var(--index-color)
+        color: var(--text-smooth-color)
     }
 
     .btn-group-toggle > a:hover {

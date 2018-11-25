@@ -75,7 +75,7 @@
 <style scoped>
     .side-bar-node {
         /*background-color: var(--stacker-background-color);*/
-        /*border-top: 1px var(--index-color) solid;*/
+        /*border-top: 1px var(--text-smooth-color) solid;*/
     }
 
 </style>

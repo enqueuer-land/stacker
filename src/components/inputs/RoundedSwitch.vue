@@ -65,7 +65,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        border: 1px solid var(--index-color);
+        border: 1px solid var(--text-smooth-color);
         background-color: transparent;
         /*-webkit-transition: .4s;*/
         transition: .4s;
@@ -78,7 +78,7 @@
         width: 20px;
         left: 4px;
         bottom: 5px;
-        border: 1px solid var(--index-color);
+        border: 1px solid var(--text-smooth-color);
         /*background-color: #696969;*/
         /*-webkit-transition: .4s;*/
         transition: .4s;
@@ -121,7 +121,7 @@
     }
 
     .disabled-label {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
 </style>

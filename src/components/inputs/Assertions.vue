@@ -73,11 +73,11 @@
     }
 
     #removeIcon :hover {
-        color: var(--index-color);
+        color: var(--text-smooth-color);
     }
 
     #addButton :hover {
-        /*border: 2px solid var(--index-color);*/
+        /*border: 2px solid var(--text-smooth-color);*/
     }
 
 </style>
