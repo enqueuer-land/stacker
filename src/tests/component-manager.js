@@ -20,10 +20,18 @@ export default class ComponentManager {
         fs.writeFileSync(name, JSON.stringify(decycle, null, 2));
     }
     createRequisition = (base, parent) => {
+        let name = base.name;
+        if (!name) {
+            if (parent !== undefined) {
+              name = 'Requisition #' + parent.requisitions.length;
+            } else {
+                name = 'New Requisition';
+            }
+        }
         const newRequisition = {
             ...base,
             id: base.id || generateId(),
-            name: base.name || 'New Requisition',
+            name: name,
             publishers: [],
             subscriptions: [],
             requisitions: [],
@@ -39,7 +47,7 @@ export default class ComponentManager {
         return {
             ...base,
             id: base.id || generateId(),
-            name: base.name || 'New Publisher',
+            name: base.name || 'Publisher #' + parent.publishers.length,
             type: base.type || "HTTP",
             parent: parent,
             component: "publisher"
@@ -49,7 +57,7 @@ export default class ComponentManager {
         return {
             ...base,
             id: base.id || generateId(),
-            name: base.name || 'New Subscription',
+            name: base.name || 'Subscription #' + parent.subscriptions.length,
             type: base.type || "HTTP",
             parent: parent,
             component: "subscription"
