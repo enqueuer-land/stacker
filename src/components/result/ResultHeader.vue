@@ -41,7 +41,7 @@
                 <div class="col pt-0 pl-4">
                     <div class="input-group input-group-sm">
                         <input type="text" class="form-control"
-                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white; border-radius: 10px"
+                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color); border-radius: 10px"
                                placeholder="Filter">
                     </div>
                 </div>
@@ -91,7 +91,7 @@
             },
             resultHeaderStyle: function () {
                 const result = {
-                    color: 'white'
+                    color: 'var(--text-color)'
                 };
                 if (this.result) {
                     if (this.tests.isValid()) {

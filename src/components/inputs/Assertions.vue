@@ -1,21 +1,21 @@
 <template>
     <div class="assertions container-fluid">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Assertions
             </div>
         </div>
         <div v-for="(_, index) in assertions" :key="ids[index]" class="row no-gutter">
             <assertion v-model="assertions[index]" class="col pr-0"/>
             <div class="col-1">
-                <a href="#" style="color: white" id="removeIcon">
+                <a href="#" style="color: var(--text-color)" id="removeIcon">
                     <i @click="removeAssertion(index)" class="material-icons"
                        style="transform: scale(0.75)">highlight_off</i>
                 </a>
             </div>
         </div>
         <div class="row px-2">
-            <!--style="background-color: white; color: var(&#45;&#45;stacker-background-color); border-color: white"-->
+            <!--style="background-color: var(--text-color); color: var(&#45;&#45;stacker-background-color); border-color: var(--text-color)"-->
             <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
                     @click="addAssertion">Add
             </button>

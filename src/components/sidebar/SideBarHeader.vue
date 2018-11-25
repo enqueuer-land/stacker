@@ -28,7 +28,7 @@
                     <div class="input-group input-group-sm pl-2 pr-1">
                         <input type="text" class="form-control"
                                v-model="filter"
-                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white; border-radius: 10px"
+                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color); border-radius: 10px"
                                placeholder="Filter">
                     </div>
                 </div>
@@ -123,7 +123,7 @@
         transform: scale(1, .5);
         font-family: 'Nova Mono', monospace;
         font-size: 550%;
-        color: white;
+        color: var(--text-color);
         text-align: left;
         letter-spacing: -13px;
     }

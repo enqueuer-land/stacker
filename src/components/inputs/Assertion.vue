@@ -13,7 +13,7 @@
                 </div>
                 <input v-model="assertionValue" type="text" class="form-control"
                        placeholder="expectation"
-                       style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
+                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                 <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
                      class="input-group-append"
                      style="font-size: 0.8em">
@@ -33,7 +33,7 @@
                        placeholder="condition"
                        class="form-control input-group-append"
                        v-model="criteriumValue"
-                       style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
+                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>
     </div>

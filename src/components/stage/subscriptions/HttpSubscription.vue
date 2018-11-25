@@ -7,18 +7,18 @@
         <div class="row">
             <div class="col-2 pl-2 pr-1">
                 <div class="row">
-                    <div class="pt-2 pl-3" style="font-size: 0.8em; color: white">
+                    <div class="pt-2 pl-3" style="font-size: 0.8em; color: var(--text-color)">
                         Port
                     </div>
                 </div>
                 <div class="input-group input-group-sm mb-1">
                     <input v-model="http.port" placeholder="8080" type="text" class="form-control"
-                           style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
+                           style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                 </div>
             </div>
             <div class="col pr-4">
                 <div class="row">
-                    <div class="pt-2 pl-1" style="font-size: 0.8em; color: white">
+                    <div class="pt-2 pl-1" style="font-size: 0.8em; color: var(--text-color)">
                         Endpoint
                     </div>
                 </div>
@@ -26,10 +26,10 @@
                     <div class="input-group input-group-sm mb-1 pl-1">
                         <input v-model="http.endpoint" placeholder="/stacker" type="text"
                                class="form-control input-group-append"
-                               style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
+                               style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                         <div class="input-group-append" style="font-size: 0.8em">
                             <button class="btn dropdown-toggle"
-                                    style="background-color: transparent; color: white; border: 1px solid white"
+                                    style="background-color: transparent; color: var(--text-color); border: 1px solid var(--text-color)"
                                     type="button" data-toggle="dropdown">{{http.method}}
                             </button>
                             <div class="dropdown-menu">
@@ -43,19 +43,19 @@
         </div>
         <key-value-input v-model="http.response.headers" title="Headers"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Status Code
             </div>
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 pr-2">
                 <input v-model="http.response.status" type="text" class="form-control"
-                       style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)"
+                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
                        placeholder="200">
             </div>
         </div>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Payload
             </div>
         </div>

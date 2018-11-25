@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <prism-editor v-model="payload" lineNumbers language="js" rows="10"
-                          style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter; border-radius: 4px;">
+                          style="background-color: transparent; color: var(--text-color); font-size: 14px; font-weight: lighter; border-radius: 4px;">
             </prism-editor>
         </div>
         <div v-if="alert !== null" class="row" style="">
@@ -144,9 +144,9 @@
     }
 
     .enabled-label {
-        border-left: 6px solid white;
+        border-left: 6px solid var(--text-color);
         background-color: var(--stacker-background-color);
-        color: white;
+        color: var(--text-color);
     }
 
     .disabled-label {
@@ -155,7 +155,7 @@
 
     .btn-group-toggle > a:hover {
         background-color: var(--stacker-background-color);
-        /*color: white;*/
+        /*color: var(--text-color);*/
     }
 
 </style>

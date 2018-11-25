@@ -1,7 +1,7 @@
 {
   "timeout": 3000,
   "name": "self-test",
-  "delay": 1090,
+  "delay": "123",
   "iterations": 2,
   "publishers": [
     {
@@ -20,7 +20,10 @@
             "toBeEqualTo": "`basic auth response`"
           }
         ]
-      }
+      },
+      "id": "id1543155534120rnZ74OpxsQ",
+      "name": "Endpoint hit",
+      "component": "publisher"
     }
   ],
   "subscriptions": [
@@ -45,7 +48,13 @@
             "toBeEqualTo": "`basic auth`"
           }
         ]
-      }
+      },
+      "id": "id1543155534120uHEjlry1iu",
+      "name": "Server mock",
+      "component": "subscription"
     }
-  ]
+  ],
+  "id": "id1543155534120h5PCfz8OeX",
+  "requisitions": [],
+  "component": "requisition"
 }

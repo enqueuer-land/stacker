@@ -98,7 +98,7 @@
     }
 
     .breadcrumb-item a:hover {
-        color: white;
+        color: var(--text-color);
     }
 
     .valid-result-flatten-tests-item {
@@ -127,11 +127,11 @@
     }
 
     .result-flatten-tests-item-header > a:focus {
-        color: white;
+        color: var(--text-color);
     }
 
     .result-flatten-tests-item-header > a:hover {
-        color: white;
+        color: var(--text-color);
         /*border-left: 4px solid;*/
     }
     .result-flatten-tests-item-header > a {
@@ -143,16 +143,16 @@
     }
 
     .list-unstyled > li > a:hover {
-        color: white;
+        color: var(--text-color);
     }
 
     .list-unstyled > li > a:focus {
-        color: white;
+        color: var(--text-color);
         background-color: var(--stacker-background-alternative-color);
     }
 
     .breadcrumb-anchor a:hover {
-        color: white;
+        color: var(--text-color);
     }
 
     .index-class {

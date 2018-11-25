@@ -1,14 +1,14 @@
 <template>
     <div class="stage-event container-fluid px-4">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: white">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Script
             </div>
         </div>
         <div class="row">
             <div class="input-group mb-1 ml-2 mr-2">
                 <prism-editor v-model="script" lineNumbers language="js"
-                              style="background-color: transparent; color: white; font-size: 14px; font-weight: lighter; border: var(--stacker-background-alternative-color) 1px solid; border-radius: 4px;">
+                              style="background-color: transparent; color: var(--text-color); font-size: 14px; font-weight: lighter; border: var(--stacker-background-alternative-color) 1px solid; border-radius: 4px;">
                 </prism-editor>
             </div>
         </div>

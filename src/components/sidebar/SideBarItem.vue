@@ -30,7 +30,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" :class="['col align-self-center']" :style="isSelected() ? 'color: white' : ''">
+            <div id="name" :class="['col align-self-center']" :style="isSelected() ? 'color: var(--text-color)' : ''">
                 {{item.name}}
             </div>
             <div class="align-self-center tag pr-1" :style="tagStyle">
@@ -92,7 +92,7 @@
                 if (this.isSelected()) {
                     style = {
                         ...style,
-                        'color': 'white',
+                        'color': 'var(--text-color)',
                         'background-color': 'var(--stacker-background-color)',
                         'border-left': '2px var(--' + selectedItem.component + '-color) solid',
                         'border-bottom': '1px var(--' + selectedItem.component + '-color) solid',
@@ -101,7 +101,7 @@
                 if (this.mouseIsOver) {
                     style = {
                         ...style,
-                        'color': 'white',
+                        'color': 'var(--text-color)',
                         'border-left': '4px var(--' + this.item.component + '-color) solid'
                     };
                 }
@@ -145,7 +145,7 @@
     }
 
     #more-icon {
-        color: white;
+        color: var(--text-color);
     }
 
     #more-icon:hover {

@@ -86,7 +86,7 @@
 
     input:checked + .slider {
         /*background-color: var(--passing-test-color);*/
-        border: 1px solid white;
+        border: 1px solid var(--text-color);
         /*border: none;*/
     }
 
@@ -98,7 +98,7 @@
         /*-webkit-transform: translateX(26px);*/
         /*-ms-transform: translateX(26px);*/
         transform: translateX(18px);
-        background-color: white;
+        background-color: var(--text-color);
         /*transform: translateX(18px);*/
     }
 
@@ -113,11 +113,11 @@
     }
 
     a:hover {
-        color: white;
+        color: var(--text-color);
     }
 
     .enabled-label {
-        color: white;
+        color: var(--text-color);
     }
 
     .disabled-label {

@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                     <input v-model="item.name" type="text" class="form-control"
-                           style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: white"
+                           style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color)"
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
@@ -198,7 +198,7 @@
                 return function (index) {
                     if (this.tabSelectedIndex === index) {
                         return {
-                            'color': 'white',
+                            'color': 'var(--text-color)',
                             'background-color': 'var(--stacker-background-color)',
                         };
                     }
@@ -224,11 +224,11 @@
     }
 
     .breadcrumb-item a:hover {
-        color: white;
+        color: var(--text-color);
     }
 
     .breadcrumb-item a:focus {
-        color: white;
+        color: var(--text-color);
     }
 
     .breadcrumb-item:nth-child(1)::before {

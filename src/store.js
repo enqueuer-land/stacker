@@ -15,7 +15,7 @@ export default new Vuex.Store({
             sideBarOptions: [
                 {
                     name: "Save",
-                    disabled: true,
+                    disabled: false,
                     click: (commit, item) => {
                         commit('saveRequisition', {item: item});
                     }

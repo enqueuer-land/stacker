@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col-3 pr-2 pt-2 pl-2">
                 <div class="row">
-                    <div class="col" style="font-size: 0.8em; color: white">
+                    <div class="col" style="font-size: 0.8em; color: var(--text-color)">
                         Timeout
                     </div>
                 </div>
                 <div class="row pl-2">
                     <div class="input-group input-group-sm mb-0 pl-2">
                         <input v-model="input.timeout" placeholder="3000" type="text" class="form-control"
-                               style="background-color: transparent; color: white; border-color: var(--stacker-background-alternative-color)">
+                               style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
                         </div>

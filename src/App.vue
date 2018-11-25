@@ -55,7 +55,7 @@
     }
 
     .dropdown-item {
-        color: white;
+        color: var(--text-color);
         background-color: var(--stacker-background-alternative-color);
         border-bottom: 1px var(--stacker-header-background-color) solid;
     }
