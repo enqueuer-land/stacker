@@ -30,12 +30,9 @@
             }
         },
         methods: {
-            isItemEnabled(item) {
-                return !item.isEnabled || item.isEnabled();
-            },
             itemClicked(item) {
                 const dropdownMenu = $('#' + this.id);
-                if (this.isItemEnabled(item)) {
+                if (!item.disabled) {
                     item.click(...this.args);
                     dropdownMenu.removeClass('show');
                 }
@@ -45,7 +42,7 @@
             itemClass() {
                 return (item) => {
                     return {
-                        disabled: !this.isItemEnabled(item)
+                        disabled: item.disabled
                     }
                 }
             }

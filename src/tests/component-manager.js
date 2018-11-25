@@ -85,23 +85,29 @@ export default class ComponentManager {
     }
 
     findItem(id) {
-        return (store.state.requisitions || [])
+        let any = (store.state.requisitions || [])
             .map(requisition => this.findIdInRequisition(id, requisition))
             .filter(component => !!component)[0];
+        return any;
     }
 
     findIdInRequisition(id, requisition) {
-        let result = requisition.id === id ? requisition : null;
+        if (requisition.id === id) {
+            return requisition;
+        }
 
-        (requisition.requisitions || [])
-            .forEach(requisition => result = this.findIdInRequisition(id, requisition));
-        (requisition.publishers || [])
-            .filter(publisher => publisher.id === id)
-            .forEach(publisher => result = publisher);
-        (requisition.subscriptions || [])
-            .filter(subscription => subscription.id === id)
-            .forEach(subscription => result = subscription);
-        return result;
+        const foundPublisher = (requisition.publishers || []).filter(publisher => publisher.id === id)[0];
+        if (foundPublisher) {
+            return foundPublisher;
+        }
+        const foundSubscription = (requisition.subscriptions || []).filter(subscription => subscription.id === id)[0];
+        if (foundSubscription) {
+            return foundSubscription;
+        }
+
+        return (requisition.requisitions || [])
+            .map(requisition => this.findIdInRequisition(id, requisition))
+            .filter(component => !!component)[0];
     }
 
     nodeFilter(node) {

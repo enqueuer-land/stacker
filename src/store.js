@@ -15,19 +15,17 @@ export default new Vuex.Store({
             sideBarOptions: [
                 {
                     name: "Save",
-                    isEnabled() {
-                        return true;
-                    },
+                    disabled: true,
                     click: (commit, item) => {
                         commit('saveRequisition', {item: item});
                     }
                 },
-                {
-                    name: "Expand",
-                    click: (commit, item) => {
-                        commit('expandRequisition', {item: item});
-                    }
-                },
+                // {
+                //     name: "Expand",
+                //     click: (commit, item) => {
+                //         commit('expandRequisition', {item: item});
+                //     }
+                // },
                 {
                     divider: true,
                     name: null,
@@ -207,7 +205,9 @@ export default new Vuex.Store({
                 defaultPath: payload.item.name + '.stk.json',
                 showsTagField: false,
             }, (filename) => {
-                new ComponentManager().saveRequisitionFile(filename, payload.item);
+                if (filename) {
+                    new ComponentManager().saveRequisitionFile(filename, payload.item);
+                }
             })
         },
         changeFilter(state, value) {
@@ -285,11 +285,11 @@ export default new Vuex.Store({
     actions: {
         runRequisition: function ({commit}, requisition) {
             const decycle = new ObjectDecycler().decycle(requisition);
-            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
+            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 100));
             window.ipcRenderer.send('runRequisition', decycle);
 
-            window.ipcRenderer.on('runRequisitionReply', (event, report) => {
-                console.log('Renderer got report: ' + JSON.stringify(report, null, 2));
+            window.ipcRenderer.once('runRequisitionReply', (event, report) => {
+                console.log('Renderer got report: ' + JSON.stringify(report, null, 2).substr(0, 100));
                 commit('setRequisitionResult', {report: report});
             })
 
