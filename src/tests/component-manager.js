@@ -1,13 +1,14 @@
 import {generateId} from "./id-generator";
 import store from '../store'
 import ObjectDecycler from "./object-decycler";
+import MultipleObjectNotation from "./multiple-object-notation";
 
 const fs = window.remote.require('fs');
 const path = require('path');
 
 export default class ComponentManager {
     openRequisitionFile = (filename) => {
-        const fileRequisition = JSON.parse(fs.readFileSync(filename).toString());
+        const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
 
         if (Array.isArray(fileRequisition)) {
             const base = this.createRequisition({name: path.basename(filename), requisitions: fileRequisition});

@@ -53,6 +53,11 @@
                 id: generateId()
             }
         },
+        watch: {
+            test() {
+                $('#' + this.id).removeClass('show');
+            }
+        },
         methods: {
         },
         computed: {
