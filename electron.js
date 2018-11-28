@@ -31,7 +31,7 @@ app.on('ready', () => {
     ipcMain.on('runRequisition', (event, requisition) => {
         // console.log('file: ' + JSON.stringify(requisition, null, 2));
         // Logger.setLoggerLevel('trace');
-
+        event.sender.send('runningRequisition');
         new RequisitionRunner(requisition, null).run()
             .then(report => {
                 event.sender.send('runRequisitionReply', report)

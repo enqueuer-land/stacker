@@ -37,15 +37,13 @@
         --failing-test-color: #a9524a;
         --invalid-color: #a9524a;
         /*--information-color: #7ed221;*/
-        --index-color: #bbbbbb;
         --enqueuer-color: #9FB630;
 
-        --text-color: #f0f0f0;
-        --text-smooth-color: #bbbbbb;
+        --text-color: #eeeeee;
+        --text-smooth-color: #a4a4a4;
         --stacker-header-background-color: #303033;
         --stacker-background-color: #353535;
         --stacker-background-alternative-color: #404040;
-
     }
 
     .dropdown-menu {

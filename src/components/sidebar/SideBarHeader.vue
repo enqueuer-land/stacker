@@ -4,7 +4,7 @@
             <div class="row no-gutters" style="height: 55%">
                 <div class="col-3">
                     <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"
-                         style="transform: scale(-1.3, 1.3) rotate(90deg);">
+                         style="transform: scale(-1.3, 1.3) rotate(90deg); position: relative; top: 5px;">
                 </div>
                 <header id="side-bar-header" class="col-8 align-self-center"
                         style="position: relative; top: 0px; left: -15px">
@@ -13,9 +13,9 @@
                 <div class="col align-self-end">
                     <div class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                           style="color: var(--enqueuer-color); position: relative; top: -10px; left: 5px">
+                           style="color: var(--enqueuer-color); position: relative; top: -10px; left: 0px">
                             <i class="material-icons"
-                               style="transform: scale(0.9); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
+                               style="transform: scale(1.1); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
                         </a>
                         <dropdown-component :value="actions"></dropdown-component>
                     </div>
@@ -120,12 +120,12 @@
 
     #side-bar-header {
         /*height: 120px;*/
-        transform: scale(1, .5);
+        transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
         font-size: 550%;
         color: var(--text-color);
         text-align: left;
-        letter-spacing: -13px;
+        letter-spacing: -15px;
     }
 
     .dropdown-toggle > i:hover {

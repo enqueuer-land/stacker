@@ -291,7 +291,7 @@ export default new Vuex.Store({
             window.ipcRenderer.once('runRequisitionReply', (event, report) => {
                 console.log('Renderer got report: ' + JSON.stringify(report, null, 2).substr(0, 100));
                 commit('setRequisitionResult', {report: report});
-            })
+            });
 
         }
     }
