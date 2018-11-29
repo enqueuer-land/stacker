@@ -216,11 +216,16 @@
 
     .breadcrumb-item::before {
         content: '›';
+        padding-right: 3px;
     }
 
     .breadcrumb-item a {
         color: var(--requisition-color);
         text-decoration: none;
+    }
+
+    .breadcrumb-item {
+        padding-left: 3px;
     }
 
     .breadcrumb-item a:hover {

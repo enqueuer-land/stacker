@@ -1,6 +1,6 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" href="#" style="color: var(--text-smooth-color)'"
+        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" style="color: var(--text-smooth-color); cursor: pointer;"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"

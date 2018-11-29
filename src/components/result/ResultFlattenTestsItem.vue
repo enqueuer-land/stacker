@@ -3,12 +3,9 @@
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + id">
                 <div class="result-flatten-tests-item-header">
-                    <a class="row no-gutters title-class" href="#noPlace">
-                        <div class="col align-self-center ml-1 row">
-                            <div class="col align-self-center pl-1">
-                                {{test.name}}
-                            </div>
-                            <div class="col-5 align-self-center pl-0" style="font-size: 0.75em; text-align: left">
+                    <a class="row no-gutters title-class" style="cursor: pointer;">
+                        <div class="col align-self-center ml-1">
+                            <div class="pl-0 pr-0" style="font-size: 0.75em; text-align: left">
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
                                         v-for="(breadCrumb, index) in test.hierarchy" :key="index">
@@ -16,6 +13,9 @@
                                            @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</a>
                                     </li>
                                 </ol>
+                            </div>
+                            <div class="align-self-center pl-1">
+                                {{test.name}}
                             </div>
                         </div>
                         <div :class="indexClass">
@@ -27,8 +27,8 @@
             <div :id="id" class="collapse">
                 <div class="card-body p-0">
                     <ul class="list-unstyled">
-                        <li class="pl-3 pt-1 description-class">
-                                {{test.description}}
+                        <li class="pl-1 pt-1 description-class">
+                            {{test.description}}
                         </li>
                     </ul>
                 </div>
@@ -48,21 +48,34 @@
             test: {},
             index: {}
         },
-        data: function () {
+        data() {
             return {
                 id: generateId()
             }
         },
         watch: {
             test() {
-                $('#' + this.id).removeClass('show');
+                console.log('Test changed: ' + this.index);
+                this.openCloseEffect();
             }
         },
         methods: {
+            openCloseEffect() {
+                $('#' + this.id).removeClass('show');
+
+                // setTimeout(() => {
+                //     $('#' + this.id).addClass('show');
+                //
+                //     setTimeout(() => {
+                //         $('#' + this.id).removeClass('show');
+                //     }, 50);
+                //
+                // }, this.index * 50);
+            }
         },
         computed: {
             breadCrumbStyle() {
-                return function(breadCrumb) {
+                return function (breadCrumb) {
                     const item = new ComponentManager().findItem(breadCrumb.id);
                     let color = 'var(--text-smooth-color)';
                     if (item) {
@@ -100,6 +113,13 @@
 
     .breadcrumb-item::before {
         content: '›';
+        padding-right: 3px;
+    }
+
+    .breadcrumb-item {
+        color: var(--requisition-color);
+        text-decoration: none;
+        padding-left: 3px;
     }
 
     .breadcrumb-item a:hover {
@@ -139,6 +159,7 @@
         color: var(--text-color);
         /*border-left: 4px solid;*/
     }
+
     .result-flatten-tests-item-header > a {
         /*color: var(--text-smooth-color);*/
     }
@@ -169,10 +190,10 @@
     .description-class {
         font-size: 0.8em;
         min-height: 28px;
-        color: var(--text-smooth-color);
+        color: var(--text-color);
         background-color: var(--stacker-background-alternative-color);
-        border-bottom: 2px solid var(--stacker-header-background-color);
-        border-left: 1px solid var(--stacker-header-background-color);
+        border-bottom: 1px solid var(--stacker-header-background-color);
+        border-left: 3px solid var(--text-smooth-color);
     }
 
     .title-class {

@@ -85,10 +85,7 @@
         text-decoration: underline wavy var(--invalid-color);
     }
 
-    /*!*TODO remove this*!*/
-    /*.requisition-color {*/
-        /*color: var(--requisition-color);*/
-    /*}*/
+
 
     .stacker {
         background-color: var(--stacker-background-color);
@@ -105,13 +102,13 @@
     }
 
     #stage {
-        flex: 0 0 43%;
-        max-width: 43%;
+        flex: 0 0 48%;
+        max-width: 48%;
     }
 
     #result {
-        flex: 0 0 35%;
-        max-width: 35%;
+        flex: 0 0 30%;
+        max-width: 30%;
     }
 
 </style>
