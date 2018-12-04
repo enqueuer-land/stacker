@@ -67,6 +67,7 @@
         },
         data: function () {
             const content = this.getContent();
+            console.log(JSON.stringify(content));
             return {
                 payload: content.payload,
                 alert: null,
@@ -105,8 +106,15 @@
                     } catch (err) {
                     }
                 }
+                if (this.text && !this.format) {
+                    //TODO test with every formatter first
+                    return {
+                        payload: JSON.stringify(this.text),
+                        selectedIndex: defaultFormatterIndex
+                    }
+                }
                 return {
-                    payload: this.text,
+                    payload: JSON.stringify(this.text),
                     selectedIndex: defaultFormatterIndex
                 }
             },

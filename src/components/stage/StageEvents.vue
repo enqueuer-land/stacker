@@ -1,22 +1,26 @@
 <template>
-    <div class="stage-events container-fluid p-0" style="position: relative; top: calc(100% - 130px);"
+    <div class="stage-events p-0" style="position: relative; top: calc(100% - 135px)"
          id="stage-event-group-parent">
-        <p class="row justify-content-end mb-0">
-            <button v-for="(event, index) in events" :key="event.name" class="btn event-item" type="button"
-                    :style="tabStyle(index)"
+        <div class="row justify-content-end mb-0">
+            <button v-for="(event, index) in events"
+                    :key="event.name"
+                    class="btn event-item py-1 pr-1"
+                    type="button"
                     data-toggle="collapse"
+                    :style="buttonStyle(index)"
                     @click="selectIndex(index)"
                     :id="event.name + 'Button'"
-                    :data-target="'#' + event.name + 'Body'">{{event.label}}
+                    :data-target="'#' + event.name + 'Body'">
+                {{event.label}}
+                <i class="material-icons button-icon">keyboard_arrow_up</i>
             </button>
-        </p>
-        <div>
-            <div v-for="event in events" :key="event.name" class="collapse event-body" :id="event.name + 'Body'"
-                 data-parent="#stage-event-group-parent">
-                <div class="card card-body"
-                     style="background-color: var(--stacker-background-color); border: none; padding: 0; height: 100vh">
-                    <event v-model="item[event.name]" :eventName="event.name"></event>
-                </div>
+        </div>
+        <div v-for="event in events" :key="event.name" class="collapse event-body row" :id="event.name + 'Body'"
+             :style="cardBodyStyle"
+             data-parent="#stage-event-group-parent">
+            <div class="card card-body px-2"
+                 :style="eventStyle">
+                <event v-model="item[event.name]" :eventName="event.name"></event>
             </div>
         </div>
     </div>
@@ -48,8 +52,12 @@
 
             },
             selectIndex(index) {
+                (this.events || [])
+                    .forEach(event => $('#' + event.name + 'Button i').removeClass('active'));
+
                 if (this.selectedIndex !== index) {
                     this.selectedIndex = index;
+                    $('#' + this.events[index].name + 'Button i').addClass('active');
                 } else {
                     this.selectedIndex = null;
                 }
@@ -64,22 +72,36 @@
             },
         },
         computed: {
-            tabStyle() {
+            buttonStyle() {
                 return function (index) {
                     if (this.selectedIndex === index) {
                         return {
                             'color': 'var(--text-color)',
-                            'background-color': 'var(--stacker-background-color)',
-                            'border-top': '2px ' + this.color + ' solid',
-                            'border-right': '2px ' + this.color + ' solid',
+                            'background-color': 'var(--stacker-background-alternative-color)',
+                            'border-right': '2px solid ' + this.color,
+                            'border-top': '2px solid ' + this.color,
                         };
-                    }
-                    return {
-                        'color': this.color,
-                        'border-bottom': '2px ' + this.color + ' solid',
+                    } else {
+                        return {
+                            'color': this.color,
+                            'border-bottom': '2px solid ' + this.color,
+                        }
                     }
                 };
             },
+            eventStyle() {
+                return {
+                    'background-color': 'var(--stacker-background-alternative-color)',
+                    border: 'none',
+                    padding: 0,
+                    'padding-bottom': '15px',
+                }
+            },
+            cardBodyStyle() {
+                return {
+                    'border-bottom': '2px solid ' + this.color,
+                }
+            }
         }
     }
 </script>
@@ -100,7 +122,7 @@
     }
 
     .event-item:hover {
-        background-color: var(--stacker-background-color);
+        background-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
     }
 
@@ -109,7 +131,18 @@
     }
 
     .event-body {
-        transition: none !important;
+        /*transition: none !important;*/
+    }
+
+    .button-icon.active {
+        transform: scale(0.95) rotate(180deg);
+    }
+
+    .button-icon {
+        transform: scale(0.75);
+        position: relative;
+        top: 6px;
+        transition: transform 400ms ease
     }
 
 </style>

@@ -52,11 +52,13 @@
                     </div>
                 </div>
             </div>
-            <stage-events :item="item"
-                          :color="'var(--' + item.component + '-color)'"
-                          :events="[{label: 'On Initialization', name: 'onInit'},
-                                                                    {label: 'On MessageReceived', name: 'onMessageReceived'},
-                                                                    {label: 'On Finish', name: 'onFinish'},]" ></stage-events>
+            <!--<div class="">-->
+                <stage-events :item="item"
+                              :color="'var(--' + item.component + '-color)'"
+                              :events="[{label: 'On Initialization', name: 'onInit'},
+                                                                        {label: 'On MessageReceived', name: 'onMessageReceived'},
+                                                                        {label: 'On Finish', name: 'onFinish'},]" ></stage-events>
+            <!--</div>-->
         </div>
         <router-view @input="stageBodyChanged" class="pt-2"/>
     </div>
