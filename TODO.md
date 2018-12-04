@@ -4,5 +4,5 @@
 - [ ] Filter Result Items
 - [ ] Create Stage Header Header
 - [ ] Draggable/resizable sidebar/resultbar 
-- [ ] Change SideBarItem when requisition's child is opened
+- [x] Change SideBarItem when requisition's child is opened
 

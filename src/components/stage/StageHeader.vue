@@ -8,7 +8,7 @@
                         <a href="#"
                            @click="$store.dispatch('runRequisition', breadCrumb)"
                            :style="breadcrumbStyle">
-                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 7px);"
+                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 7px); color: var(--requisition-color)"
                                class="material-icons">play_circle_filled</i>
                         </a>
                         <a :style="breadcrumbStyle" href="#"
@@ -24,7 +24,7 @@
                     Name
                 </div>
             </div>
-            <div class="row">
+            <div class="row pt-1">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                     <input v-model="item.name" type="text" class="form-control"
                            style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color)"

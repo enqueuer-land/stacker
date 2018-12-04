@@ -16,7 +16,6 @@
                 <div class="card card-body"
                      style="background-color: var(--stacker-background-color); border: none; padding: 0; height: 100vh">
                     <event v-model="item[event.name]" :eventName="event.name"></event>
-                    <div class="row pt-2" :style="{'border-bottom': color + ' 1px solid'}"></div>
                 </div>
             </div>
         </div>
@@ -52,9 +51,6 @@
                 if (this.selectedIndex !== index) {
                     this.selectedIndex = index;
                 } else {
-                    // (this.events || []).
-                    //     map(event => $('#' + event.name + 'Body'))
-                    //     .forEach(item => item.removeClass('show'));
                     this.selectedIndex = null;
                 }
             }
@@ -112,8 +108,8 @@
         box-shadow: none;
     }
 
-    .collapsing {
-        transition-duration: 0s;
+    .event-body {
+        transition: none !important;
     }
 
 </style>

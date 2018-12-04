@@ -106,7 +106,7 @@
                     };
                 }
                 if (this.isRequisition && this.opened) {
-                    style['background-color'] = 'var(--stacker-background-color)';
+                    style['background-color'] = 'var(--stacker-background-alternative-color)';
                 }
                 if (selectedItem && selectedItem.id !== this.item.id) {
                     style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
