@@ -1,8 +1,26 @@
 <template>
     <div>
         <div class="stacker-header container-fluid">
+            <div class="row" style="min-height: 30px">
+                <ol class="breadcrumb my-0 py-0 pl-1" style="background-color: transparent;">
+                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
+                        v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
+                        <a href="#"
+                           @click="$store.dispatch('runRequisition', breadCrumb)"
+                           :style="breadcrumbStyle">
+                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 7px);"
+                               class="material-icons">play_circle_filled</i>
+                        </a>
+                        <a :style="breadcrumbStyle" href="#"
+                           @click="breadCrumbSelected(breadCrumb)">
+                            {{breadCrumb.name}}
+                        </a>
+                    </li>
+                </ol>
+            </div>
+
             <div class="row">
-                <div class="pl-2 pt-2" :style="nameStyle">
+                <div class="pl-2 p1-2" :style="nameStyle">
                     Name
                 </div>
             </div>
@@ -34,33 +52,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <ol class="breadcrumb mb-0 pl-2" style="background-color: transparent; height: 48px">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
-                        v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
-                        <a href="#"
-                           @click="$store.dispatch('runRequisition', breadCrumb)">
-                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 6px);"
-                               class="material-icons">play_circle_filled</i>
-                        </a>
-                        <a style="text-decoration: none; font-size: 0.8em; position: relative; top: -2px" href="#"
-                           @click="breadCrumbSelected(breadCrumb)">
-                            {{breadCrumb.name}}
-                        </a>
-                    </li>
-                </ol>
-            </div>
-            <div class="row pt-1" style="position: relative; left: -2px">
-                <ul class="nav nav-fill" role="tablist" id="tab-collection">
-                    <li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">
-                        <a class="nav-link pb-1" :style="tabStyle(index)"
-                           :id="item.component + '_' + tab.name.toLowerCase()"
-                           data-toggle="tab" role="tab"
-                           @click="tabSelected(tab, index)"
-                           :href="'#'">{{tab.name}}</a>
-                    </li>
-                </ul>
-            </div>
+            <!--<div class="row pt-1" style="position: relative; left: -2px">-->
+            <!--<ul class="nav nav-fill" role="tablist" id="tab-collection">-->
+            <!--<li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">-->
+            <!--<a class="nav-link pb-1" :style="tabStyle(index)"-->
+            <!--:id="item.component + '_' + tab.name.toLowerCase()"-->
+            <!--data-toggle="tab" role="tab"-->
+            <!--@click="tabSelected(tab, index)"-->
+            <!--:href="'#'">{{tab.name}}</a>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
         </div>
         <router-view @input="stageBodyChanged" class="pt-2"/>
     </div>
@@ -73,21 +75,45 @@
         mounted: function () {
             console.log('Mounted: ' + this.item.component + '/' + this.item.id);
             if (this.isRequisition()) {
-                this.tabSelected(this.$store.state.requisition.tabs[0], 0);
+                this.$router.push({
+                    path: '/' + this.item.component + '/' + this.item.id + '/general',
+                    props: {
+                        item: this.item
+                    }
+                });
             }
             else {
                 const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
-                this.tabSelected({path: firstProtocol}, 0);
+                this.$router.push({
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol,
+                    props: {
+                        item: this.item
+                    }
+                });
             }
         },
         data: function () {
             let firstProtocol = null;
-            if (!this.isRequisition()) {
-                firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+            if (this.isRequisition()) {
+                this.$router.push({
+                    path: '/' + this.item.component + '/' + this.item.id + '/general',
+                    props: {
+                        item: this.item
+                    }
+                });
+            }
+            else {
+                const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+                this.$router.push({
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol,
+                    props: {
+                        item: this.item
+                    }
+                });
             }
             return {
-                tabSelectedIndex: 0,
-                tabs: this.refreshAvailableTabs(firstProtocol),
+                // tabSelectedIndex: 0,
+                // tabs: this.refreshAvailableTabs(firstProtocol),
                 selectedProtocol: firstProtocol
             }
         },
@@ -110,38 +136,56 @@
             runButtonClick: async function () {
                 await this.$store.dispatch('runRequisition', this.item);
             },
-            refreshAvailableTabs: function (protocol) {
-                let config = this.$store.state[this.item.component];
-                let regularTabs = config.tabs.concat([]);
-                if (this.isRequisition()) {
-                    return regularTabs;
-                }
-                const protocolTab = {name: protocol.toUpperCase(), path: protocol};
-                if (this.isPublisher()) {
-                    if (this.$store.state[this.item.component].protocols[protocol].sync) {
-                        regularTabs.push(this.$store.state[this.item.component].syncTab);
-                    }
-                }
-                return [protocolTab].concat(regularTabs);
-            },
+            // refreshAvailableTabs: function (protocol) {
+            //     let config = this.$store.state[this.item.component];
+            //     let regularTabs = config.tabs.concat([]);
+            //     if (this.isRequisition()) {
+            //         return regularTabs;
+            //     }
+            //     const protocolTab = {name: protocol.toUpperCase(), path: protocol};
+            //     if (this.isPublisher()) {
+            //         if (this.$store.state[this.item.component].protocols[protocol].sync) {
+            //             regularTabs.push(this.$store.state[this.item.component].syncTab);
+            //         }
+            //     }
+            //     return [protocolTab].concat(regularTabs);
+            // },
             selectProtocol: function (protocol) {
                 this.selectedProtocol = protocol;
-                this.tabs = this.refreshAvailableTabs();
+                this.item.type = protocol;
+                if (this.isRequisition()) {
+                    console.log('Going to: ' + '/' + this.item.component + '/' + this.item.id + '/general');
+                    this.$router.push({
+                        path: '/' + this.item.component + '/' + this.item.id + '/general',
+                        props: {
+                            item: this.item
+                        }
+                    });
+                }
+                else {
+                    console.log('Going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol);
+                    this.$router.push({
+                        path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,
+                        props: {
+                            item: this.item
+                        }
+                    });
+                }
             },
             breadCrumbSelected: function (breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
-            tabSelected: function (tab, index) {
-                this.tabSelectedIndex = index;
-                console.log('going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
-                this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + tab.path,
-                    props: {
-                        item: this.item,
-                        eventName: tab.path
-                    }
-                });
-            },
+            // tabSelected: function (tab, index) {
+            //     this.tabSelectedIndex = index;
+            //     console.log('going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
+            //     this.$router.push({
+            //         path: '/' + this.item.component + '/' + this.item.id + '/' + tab.path,
+            //         props: {
+            //             item: this.item,
+            //             eventName: tab.path
+            //         }
+            //     });
+            // },
             isRequisition() {
                 return this.item.component.toUpperCase().startsWith("REQ");
             },
@@ -150,14 +194,26 @@
             },
             getContent() {
                 if (this.isRequisition()) {
-                    this.tabs = this.refreshAvailableTabs();
-                    this.tabSelected(this.$store.state.requisition.tabs[0], 0);
+                    this.$router.push({
+                        path: '/' + this.item.component + '/' + this.item.id + '/general',
+                        props: {
+                            item: this.item
+                        }
+                    });
                 }
                 else {
-                    const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
-                    this.selectedProtocol = firstProtocol;
-                    this.tabs = this.refreshAvailableTabs(firstProtocol);
-                    this.tabSelected({path: firstProtocol}, 0);
+                    console.log('Item protocol: ' + this.item.type);
+                    this.selectedProtocol = this.item.type;
+                    if (!this.selectedProtocol) {
+                        const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+                        this.selectedProtocol = firstProtocol;
+                    }
+                    this.$router.push({
+                        path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,
+                        props: {
+                            item: this.item
+                        }
+                    });
                 }
             }
         },
@@ -207,6 +263,13 @@
                         'border-bottom': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
                     }
                 };
+            },
+            breadcrumbStyle() {
+                return {
+                    'text-decoration': 'none',
+                    'font-size': '0.8em',
+                    'color': 'var(--' + this.item.component + '-color)'
+                }
             }
         }
     }
@@ -217,15 +280,6 @@
     .breadcrumb-item::before {
         content: '›';
         padding-right: 3px;
-    }
-
-    .breadcrumb-item a {
-        color: var(--requisition-color);
-        text-decoration: none;
-    }
-
-    .breadcrumb-item {
-        padding-left: 3px;
     }
 
     .breadcrumb-item a:hover {

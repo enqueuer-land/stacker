@@ -4,7 +4,6 @@ import StageHeader from './components/stage/StageHeader'
 import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
-import StageEvent from './components/stage/StageEvent'
 import store from './store'
 
 Vue.use(Router);
@@ -44,16 +43,6 @@ export default new Router({
                     path: "general",
                     component: GeneralRequisition,
                     props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onInit",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onFinish",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
                 }
             ]
         },
@@ -65,21 +54,6 @@ export default new Router({
                 {
                     path: "http",
                     component: HttpPublisher,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onInit",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onMessageReceived",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onFinish",
-                    component: StageEvent,
                     props: (route) => stageBodyPropsBuilder(route)
                 }
             ],
@@ -93,21 +67,6 @@ export default new Router({
                 {
                     path: "http",
                     component: HttpSubscription,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onInit",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onMessageReceived",
-                    component: StageEvent,
-                    props: (route) => stageBodyPropsBuilder(route)
-                },
-                {
-                    path: "onFinish",
-                    component: StageEvent,
                     props: (route) => stageBodyPropsBuilder(route)
                 }
             ],

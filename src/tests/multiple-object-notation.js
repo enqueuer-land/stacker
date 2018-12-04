@@ -8,12 +8,12 @@ export default class MultipleObjectNotation {
         }
         catch (ymlErr) {
             try {
-                return new JSON.parse(value);
+                return JSON.parse(value);
             }
             catch (jsonErr) {
                 console.error(`Not able to parse as Yaml: ${ymlErr}`);
                 console.error(`Not able to parse as Json: ${jsonErr}`);
-                throw Error(new JSON.stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
+                throw Error(JSON.stringify({ymlError: ymlErr, jsonError: jsonErr.toString()}));
             }
         }
     }

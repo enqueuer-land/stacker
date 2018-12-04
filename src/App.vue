@@ -85,14 +85,12 @@
         text-decoration: underline wavy var(--invalid-color);
     }
 
-
-
     .stacker {
         background-color: var(--stacker-background-color);
     }
 
     .stacker-header {
-        height: 150px;
+        min-height: 150px;
         background-color: var(--stacker-header-background-color);
     }
 
