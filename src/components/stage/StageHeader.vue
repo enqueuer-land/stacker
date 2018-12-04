@@ -52,13 +52,9 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="">-->
-                <stage-events :item="item"
-                              :color="'var(--' + item.component + '-color)'"
-                              :events="[{label: 'On Initialization', name: 'onInit'},
-                                                                        {label: 'On MessageReceived', name: 'onMessageReceived'},
-                                                                        {label: 'On Finish', name: 'onFinish'},]" ></stage-events>
-            <!--</div>-->
+            <stage-events :item="item"
+                          :color="'var(--' + item.component + '-color)'"
+                          :events="events"></stage-events>
         </div>
         <router-view @input="stageBodyChanged" class="pt-2"/>
     </div>
@@ -66,6 +62,7 @@
 
 <script>
     import StageEvents from "./StageEvents";
+
     export default {
         name: 'StageHeader',
         components: {StageEvents},
@@ -112,6 +109,7 @@
             return {
                 // tabSelectedIndex: 0,
                 // tabs: this.refreshAvailableTabs(firstProtocol),
+                events: this.getEvents(),
                 selectedProtocol: firstProtocol
             }
         },
@@ -134,20 +132,10 @@
             runButtonClick: async function () {
                 await this.$store.dispatch('runRequisition', this.item);
             },
-            // refreshAvailableTabs: function (protocol) {
-            //     let config = this.$store.state[this.item.component];
-            //     let regularTabs = config.tabs.concat([]);
-            //     if (this.isRequisition()) {
-            //         return regularTabs;
-            //     }
-            //     const protocolTab = {name: protocol.toUpperCase(), path: protocol};
-            //     if (this.isPublisher()) {
-            //         if (this.$store.state[this.item.component].protocols[protocol].sync) {
-            //             regularTabs.push(this.$store.state[this.item.component].syncTab);
-            //         }
-            //     }
-            //     return [protocolTab].concat(regularTabs);
-            // },
+            getEvents() {
+                let storeComponent = this.$store.state[this.item.component];
+                return storeComponent.getEvents(storeComponent.protocols && storeComponent.protocols[this.item.type]).concat([]);
+            },
             selectProtocol: function (protocol) {
                 this.selectedProtocol = protocol;
                 this.item.type = protocol;
@@ -173,17 +161,6 @@
             breadCrumbSelected: function (breadCrumb) {
                 this.$store.commit('selectItem', {item: breadCrumb, router: this.$router, route: this.$route});
             },
-            // tabSelected: function (tab, index) {
-            //     this.tabSelectedIndex = index;
-            //     console.log('going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + tab.path);
-            //     this.$router.push({
-            //         path: '/' + this.item.component + '/' + this.item.id + '/' + tab.path,
-            //         props: {
-            //             item: this.item,
-            //             eventName: tab.path
-            //         }
-            //     });
-            // },
             isRequisition() {
                 return this.item.component.toUpperCase().startsWith("REQ");
             },
@@ -191,6 +168,7 @@
                 return this.item.component.toUpperCase().startsWith("PUB");
             },
             getContent() {
+                this.events = this.getEvents();
                 if (this.isRequisition()) {
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/general',

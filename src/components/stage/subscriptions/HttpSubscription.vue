@@ -5,7 +5,7 @@
                                  :avoid.sync="http.avoid"/>
         </div>
         <div class="row">
-            <div class="col-2 pl-2 pr-1">
+            <div class="col-3 pl-2 pr-1">
                 <div class="row">
                     <div class="pt-2 pl-3" style="font-size: 0.8em; color: var(--text-color)">
                         Port

@@ -3,7 +3,7 @@
          id="stage-event-group-parent">
         <div class="row justify-content-end mb-0">
             <button v-for="(event, index) in events"
-                    :key="event.name"
+                    :key="index"
                     class="btn event-item py-1 pr-1"
                     type="button"
                     data-toggle="collapse"
@@ -23,6 +23,7 @@
                 <event v-model="item[event.name]" :eventName="event.name"></event>
             </div>
         </div>
+        <div v-show="selectedIndex !== null" class="row" style="height: 100vh; opacity: .5; background-color: black"></div>
     </div>
 </template>
 

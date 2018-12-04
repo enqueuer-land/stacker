@@ -30,7 +30,7 @@
 <style>
     :root {
         --requisition-color: #e8bf57;
-        --publisher-color: #b97036;;
+        --publisher-color: #c88022;;
         --subscription-color: #589df6;
         /*--passing-test-color: #42ba84;*/
         --passing-test-color: #9FB630;

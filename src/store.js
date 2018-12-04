@@ -66,20 +66,18 @@ export default new Vuex.Store({
                     }
                 },
             ],
-            tabs: [
-                {
-                    name: 'General',
-                    path: 'general'
-                },
-                {
-                    name: 'On Initialization',
-                    path: 'onInit'
-                },
-                {
-                    name: 'On Finish',
-                    path: 'onFinish'
-                },
-            ]
+            getEvents() {
+                return [
+                    {
+                        label: 'On Initialization',
+                        name: 'onInit'
+                    },
+                    {
+                        label: 'On Finish',
+                        name: 'onFinish'
+                    },
+                ]
+            }
         },
         publisher: {
             sideBarOptions: [
@@ -97,20 +95,26 @@ export default new Vuex.Store({
                 },
                 amqp: {}
             },
-            syncTab: {
-                name: 'On Message Received',
-                path: 'onMessageReceived',
-            },
-            tabs: [
-                {
-                    name: 'On Initialization',
-                    path: 'onInit'
-                },
-                {
-                    name: 'On Finish',
-                    path: 'onFinish'
-                },
-            ]
+            getEvents(protocol) {
+                let syncEvent = {
+                    label: 'On Message Received',
+                    name: 'onMessageReceived'
+                };
+                let events = [
+                    {
+                        label: 'On Initialization',
+                        name: 'onInit'
+                    },
+                    {
+                        label: 'On Finish',
+                        name: 'onFinish'
+                    },
+                ];
+                if (protocol.sync) {
+                    events.splice(1, 0, syncEvent);
+                }
+                return events
+            }
         },
         subscription: {
             sideBarOptions: [
@@ -126,20 +130,22 @@ export default new Vuex.Store({
                 http: {},
                 amqp: {}
             },
-            tabs: [
-                {
-                    name: 'On Initialization',
-                    path: 'onInit'
-                },
-                {
-                    name: 'On Message Received',
-                    path: 'onMessageReceived'
-                },
-                {
-                    name: 'On Finish',
-                    path: 'onFinish'
-                },
-            ]
+            getEvents() {
+                return [
+                    {
+                        label: 'On Initialization',
+                        name: 'onInit'
+                    },
+                    {
+                        label: 'On Message Received',
+                        name: 'onMessageReceived'
+                    },
+                    {
+                        label: 'On Finish',
+                        name: 'onFinish'
+                    },
+                ]
+            }
         },
         assertions: [
             {
