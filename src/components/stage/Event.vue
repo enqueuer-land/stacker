@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-event container-fluid px-4">
+    <div class="event px-2">
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Script
@@ -25,16 +25,13 @@
     import PrismEditor from 'vue-prism-editor'
 
     export default {
-        name: 'StageEvent',
+        name: 'Event',
         components: {Assertions, KeyValueInput, PrismEditor},
         props: {
-            item: {
-                defaultValue: {}
-            },
-            eventName: {},
+            value: {},
         },
         data: function () {
-            const defaultValue = this.item[this.eventName] || {};
+            const defaultValue = this.value || {};
             return {
                 script: defaultValue.script || '',
                 store: defaultValue.store || {},
@@ -43,34 +40,42 @@
         },
         methods: {
             getContent: function () {
-                const defaultValue = this.item[this.eventName] || {};
+                const defaultValue = this.value || {};
                 this.script = defaultValue.script;
                 this.store = defaultValue.store;
                 this.assertions = defaultValue.assertions;
+            },
+            emit() {
+                const input = {
+                    script: this.script,
+                    assertions: this.assertions,
+                    store: this.store
+                };
+                this.$emit('input', input);
             }
         },
         watch: {
             eventName: function () {
                 this.getContent();
             },
-            item: function () {
+            value: function () {
                 this.getContent();
             },
             script() {
-                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
+                this.emit();
             },
             assertions() {
-                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
+                this.emit();
             },
             store() {
-                this.$emit('input', {attribute: this.eventName, payload: {script: this.script, assertions: this.assertions, store: this.store}});
+                this.emit();
             }
         }
     }
 </script>
 
 <style scoped>
-    .stage-event {
+    .event {
 
     }
 

@@ -19,7 +19,7 @@
                 </ol>
             </div>
 
-            <div class="row">
+            <div class="row pt-2">
                 <div class="pl-2 p1-2" :style="nameStyle">
                     Name
                 </div>
@@ -52,25 +52,21 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="row pt-1" style="position: relative; left: -2px">-->
-            <!--<ul class="nav nav-fill" role="tablist" id="tab-collection">-->
-            <!--<li class="nav-item" v-for="(tab, index) in tabs" :key="index" id="tab-item">-->
-            <!--<a class="nav-link pb-1" :style="tabStyle(index)"-->
-            <!--:id="item.component + '_' + tab.name.toLowerCase()"-->
-            <!--data-toggle="tab" role="tab"-->
-            <!--@click="tabSelected(tab, index)"-->
-            <!--:href="'#'">{{tab.name}}</a>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
+            <stage-events :item="item"
+                          :color="'var(--' + item.component + '-color)'"
+                          :events="[{label: 'On Initialization', name: 'onInit'},
+                                                                    {label: 'On MessageReceived', name: 'onMessageReceived'},
+                                                                    {label: 'On Finish', name: 'onFinish'},]" ></stage-events>
         </div>
         <router-view @input="stageBodyChanged" class="pt-2"/>
     </div>
 </template>
 
 <script>
+    import StageEvents from "./StageEvents";
     export default {
         name: 'StageHeader',
+        components: {StageEvents},
         props: ['item', 'id'],
         mounted: function () {
             console.log('Mounted: ' + this.item.component + '/' + this.item.id);
@@ -250,20 +246,6 @@
                 }
                 return breadCrumbs;
             },
-            tabStyle() {
-                return function (index) {
-                    if (this.tabSelectedIndex === index) {
-                        return {
-                            'color': 'var(--text-color)',
-                            'background-color': 'var(--stacker-background-color)',
-                        };
-                    }
-                    return {
-                        'color': 'var(--' + this.item.component + '-color)',
-                        'border-bottom': '2px ' + 'var(--' + this.item.component + '-color)' + ' solid',
-                    }
-                };
-            },
             breadcrumbStyle() {
                 return {
                     'text-decoration': 'none',
@@ -292,10 +274,6 @@
 
     .breadcrumb-item:nth-child(1)::before {
         display: none;
-    }
-
-    #tab-item a:hover {
-        background-color: var(--stacker-background-color);
     }
 
 </style>

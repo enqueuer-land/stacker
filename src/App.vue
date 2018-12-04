@@ -90,7 +90,7 @@
     }
 
     .stacker-header {
-        min-height: 150px;
+        height: 150px;
         background-color: var(--stacker-header-background-color);
     }
 
