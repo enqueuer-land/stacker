@@ -1,6 +1,7 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]" style="color: var(--text-smooth-color); cursor: pointer;"
+        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]"
+           style="color: var(--text-smooth-color); cursor: pointer;"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
            @mouseleave="mouseIsOver = false"
@@ -30,7 +31,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" :class="['col align-self-center']" :style="isSelected() ? 'color: var(--text-color)' : ''">
+            <div id="name" :class="['col align-self-center']" :style="nameStyle">
                 {{item.name}}
             </div>
             <div class="align-self-center tag pr-1" :style="tagStyle">
@@ -43,6 +44,7 @@
 
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
+
     export default {
         name: 'SideBarItem',
         components: {DropdownComponent},
@@ -73,8 +75,7 @@
                 return selectedItem && selectedItem.id === this.item.id;
             },
         },
-        watch: {
-        },
+        watch: {},
         computed: {
             computedMainSideBarItem() {
                 return {
@@ -110,6 +111,20 @@
                 }
                 if (selectedItem && selectedItem.id !== this.item.id) {
                     style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
+                }
+                return style;
+            },
+            nameStyle() {
+                // color: var(--text-color)
+                let style = {
+                    'white-space': 'nowrap',
+                    'width': '100%',
+                    'overflow': 'hidden',
+
+                    'text-overflow': 'ellipsis',
+                };
+                if (this.isSelected()) {
+                    style.color = 'var(--text-color)';
                 }
                 return style;
             },
