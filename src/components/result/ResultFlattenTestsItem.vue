@@ -79,7 +79,7 @@
                     const item = new ComponentManager().findItem(breadCrumb.id);
                     let color = 'var(--text-smooth-color)';
                     if (item) {
-                        color = `var(--${item.component}-color)`;
+                        color = `var(--text-color)`;
                     }
                     return {
                         'text-decoration': 'none',

@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="row pt-2">
+        <div class="row pt-5">
             <button type="button" class="btn btn-sm col mx-3"
                     style="background-color: var(--requisition-color); color: var(--stacker-background-color);"
                     @click="addRequisition">
