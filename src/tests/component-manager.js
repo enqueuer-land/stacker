@@ -38,7 +38,7 @@ export default class ComponentManager {
             requisitions: [],
             parent: parent,
             errors: [],
-            invalidChildrenId: [],
+            invalidChildren: [],
             component: "requisition"
         };
         newRequisition.publishers = (base.publishers || []).map(publisher => this.createPublisher(publisher, newRequisition));
@@ -97,7 +97,7 @@ export default class ComponentManager {
         if (component.errors && component.errors.length > 0) {
             return false;
         }
-        if (component.invalidChildrenId && component.invalidChildrenId.length > 0) {
+        if (component.invalidChildren&& component.invalidChildren.length > 0) {
             return false;
         }
         return true;

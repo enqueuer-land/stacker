@@ -114,10 +114,10 @@
             propagateValidationToParents(valid) {
                 let parent = this.item.parent;
                 while (parent !== undefined) {
-                    parent.invalidChildrenId = parent.invalidChildrenId
-                        .filter(invalidChild => invalidChild !== this.item.id);
+                    parent.invalidChildren = parent.invalidChildren
+                        .filter(invalidChild => invalidChild.id !== this.item.id);
                     if (!valid) {
-                        parent.invalidChildrenId.push(this.item.id);
+                        parent.invalidChildren.push(this.item);
                     }
                     parent = parent.parent;
                 }
