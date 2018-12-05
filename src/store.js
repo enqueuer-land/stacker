@@ -93,7 +93,8 @@ export default new Vuex.Store({
                 http: {
                     sync: true,
                 },
-                amqp: {}
+                amqp: {},
+                mqtt: {},
             },
             getEvents(protocol) {
                 let syncEvent = {
@@ -129,7 +130,8 @@ export default new Vuex.Store({
             ],
             protocols: {
                 http: {},
-                amqp: {}
+                amqp: {},
+                mqtt: {},
             },
             getEvents() {
                 return [
@@ -222,9 +224,16 @@ export default new Vuex.Store({
         },
         openRequisitionFile(state, payload) {
             const newComponent = new ComponentManager().openRequisitionFile(payload.file);
-            state.requisitions.push(newComponent);
-            state.selectedItem = newComponent;
-            payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
+            if (Array.isArray(newComponent) && newComponent.length > 0) {
+                state.requisitions = state.requisitions.concat(newComponent);
+                const item = newComponent[newComponent.length - 1];
+                state.selectedItem = item;
+                payload.router.push({path: '/' + item.component + '/' + item.id});
+            } else if (newComponent) {
+                state.requisitions.push(newComponent);
+                state.selectedItem = newComponent;
+                payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
+            }
         },
         addRequisition(state, payload) {
             const newComponent = new ComponentManager().createRequisition({}, payload.parent);

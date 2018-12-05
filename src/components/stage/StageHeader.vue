@@ -111,17 +111,6 @@
             }
         },
         methods: {
-            propagateValidationToParents(valid) {
-                let parent = this.item.parent;
-                while (parent !== undefined) {
-                    parent.invalidChildren = parent.invalidChildren
-                        .filter(invalidChild => invalidChild.id !== this.item.id);
-                    if (!valid) {
-                        parent.invalidChildren.push(this.item);
-                    }
-                    parent = parent.parent;
-                }
-            },
             stageBodyChanged(payload) {
                 const valid = payload.errors === undefined || payload.errors.length === 0;
                 if (valid) {
@@ -130,7 +119,7 @@
                     console.log('Item errors: ' + JSON.stringify(payload.errors));
                 }
                 this.item = Object.assign(this.item, payload);
-                this.propagateValidationToParents(valid);
+                new ComponentManager().propagateValidationToParents(this.item, valid);
             },
             runClick: async function (item) {
                 if (new ComponentManager().isComponentValid(item)) {

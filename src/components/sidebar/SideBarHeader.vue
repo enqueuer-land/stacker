@@ -59,7 +59,7 @@
                         name: "Import requisitions",
                         click: () => {
                             window.remote.dialog.showOpenDialog({
-                                properties: ['openFile', 'multiSelections']
+                                properties: ['openFile', 'multiSelections', 'openDirectory']
                             }, (files) => {
                                 if (files !== undefined) {
                                     (files || []).forEach(file => {

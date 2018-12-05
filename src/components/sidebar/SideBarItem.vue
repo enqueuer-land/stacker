@@ -87,20 +87,14 @@
                     'color': 'var(--text-smooth-color)'
                 };
                 if (this.isSelected()) {
-                    style = {
-                        ...style,
-                        'color': 'var(--text-color)',
-                        'background-color': 'var(--stacker-background-color)',
-                        'border-left': '2px var(--' + selectedItem.component + '-color) solid',
-                        'border-bottom': '1px var(--' + selectedItem.component + '-color) solid',
-                    };
+                    style['color'] = 'var(--text-color)';
+                    style['background-color'] = 'var(--stacker-background-color)';
+                    style['border-left'] = '2px var(--' + selectedItem.component + '-color) solid';
+                    style['border-bottom'] = '1px var(--' + selectedItem.component + '-color) solid';
                 }
                 if (this.mouseIsOver) {
-                    style = {
-                        ...style,
-                        'color': 'var(--text-color)',
-                        'border-left': '4px var(--' + this.item.component + '-color) solid'
-                    };
+                    style['color'] = 'var(--text-color)';
+                    style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
                 }
                 if (this.isRequisition && this.opened) {
                     style['background-color'] = 'var(--stacker-background-alternative-color)';

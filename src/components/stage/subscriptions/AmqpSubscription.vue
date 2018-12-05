@@ -108,9 +108,6 @@
                 this.amqp = this.getContent();
             },
             amqp: {
-                routingKey(value) {
-                    console.log('Routing key changed: ' + value);
-                },
                 handler() {
                     this.emit();
                 },

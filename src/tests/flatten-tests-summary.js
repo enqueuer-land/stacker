@@ -64,10 +64,7 @@ export default class FlattenTestsSummary {
             if (test.valid !== undefined &&
                 test.description !== undefined &&
                 test.name !== undefined) {
-                let clone = {
-                    ...test,
-                    hierarchy: hierarchy
-                };
+                const clone = Object.assign({}, test, {hierarchy: hierarchy});
                 this.testSummary.addTest(clone)
             }
         });

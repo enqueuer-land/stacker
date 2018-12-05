@@ -22,7 +22,8 @@
     export default {
         components: {Stage, Result, SideBar},
         created() {
-            this.$store.commit('addRequisition', {router: this.$router});
+            // this.$store.commit('addRequisition', {router: this.$router});
+            this.$store.commit('openRequisitionFile', {router: this.$router, file: 'requisitions'});
         }
     }
 </script>

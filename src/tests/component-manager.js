@@ -4,33 +4,52 @@ import ObjectDecycler from "./object-decycler";
 import MultipleObjectNotation from "./multiple-object-notation";
 
 const fs = window.remote.require('fs');
-import path from 'path';// const { parse } = path;
+import path from 'path';
 
 export default class ComponentManager {
-    openRequisitionFile = (filename) => {
-        const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
+    openRequisitionsDirectory(filename) {
+        console.log('Reading dir ' + filename);
+        const requisitionFiles = fs.readdirSync(filename)
+            .map(file => filename + '/' + file)
+            .filter(file => fs.lstatSync(file).isFile())
+            .map(file => this.openRequisitionFile(file));
+        return requisitionFiles;
+    };
 
-        if (Array.isArray(fileRequisition)) {
+    openRequisitionFile(filename) {
+        if (fs.lstatSync(filename).isDirectory()) {
+            return this.openRequisitionsDirectory(filename);
+        } else {
+            console.log('Reading ' + filename);
+            const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
+
             let nameWithNoExtension = path.basename(filename);
             const dotIndex = nameWithNoExtension.lastIndexOf(".");
             if (dotIndex !== -1) {
-                console.log(dotIndex)
                 nameWithNoExtension = nameWithNoExtension.substring(0, dotIndex);
             }
-            const base = this.createRequisition({name: nameWithNoExtension, requisitions: fileRequisition});
-            return new ComponentManager().createRequisition(base);
+            console.log('nameWithNoExtension: ' + nameWithNoExtension);
+            if (Array.isArray(fileRequisition)) {
+                return this.createRequisition({name: nameWithNoExtension, requisitions: fileRequisition});
+            } else {
+                if (!fileRequisition.name) {
+                    fileRequisition.name = nameWithNoExtension;
+                }
+                return this.createRequisition(fileRequisition);
+            }
         }
-        return new ComponentManager().createRequisition(fileRequisition);
     };
+
     saveRequisitionFile(name, requisition) {
         const decycle = new ObjectDecycler().decycle(requisition);
         fs.writeFileSync(name, JSON.stringify(decycle, null, 2));
     }
-    createRequisition = (base, parent) => {
+
+    createRequisition(base, parent) {
         let name = base.name;
-        if (!name) {
+        if (name === undefined) {
             if (parent !== undefined) {
-              name = 'Requisition #' + parent.requisitions.length;
+                name = 'Requisition #' + parent.requisitions.length;
             } else {
                 name = 'New Requisition';
             }
@@ -52,6 +71,7 @@ export default class ComponentManager {
         newRequisition.requisitions = (base.requisitions || []).map(requisition => this.createRequisition(requisition, newRequisition));
         return newRequisition;
     };
+
     createPublisher = (base, parent) => {
         return {
             ...base,
@@ -75,6 +95,8 @@ export default class ComponentManager {
         };
     };
     delete = (item) => {
+        new ComponentManager().propagateValidationToParents(item, true);
+
         if (item.parent) {
             item.parent.requisitions = item.parent.requisitions.filter(requisition => requisition.id !== item.id);
             item.parent.publishers = item.parent.publishers.filter(publisher => publisher.id !== item.id);
@@ -103,7 +125,7 @@ export default class ComponentManager {
         if (component.errors && component.errors.length > 0) {
             return false;
         }
-        if (component.invalidChildren&& component.invalidChildren.length > 0) {
+        if (component.invalidChildren && component.invalidChildren.length > 0) {
             return false;
         }
         return true;
@@ -156,5 +178,18 @@ export default class ComponentManager {
         }
         return leaf.name.toLowerCase().indexOf(filter) !== -1;
     }
+
+    propagateValidationToParents(item, valid) {
+        let parent = item.parent;
+        while (parent !== undefined) {
+            parent.invalidChildren = parent.invalidChildren
+                .filter(invalidChild => invalidChild.id !== item.id);
+            if (!valid) {
+                parent.invalidChildren.push(item);
+            }
+            parent = parent.parent;
+        }
+    }
+
 
 }
