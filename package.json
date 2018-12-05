@@ -10,7 +10,7 @@
     "lint": "node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
-    "enqueuer": "^3.5.21",
+    "enqueuer": "^3.5.23",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
     "vue-router": "^3.0.1",

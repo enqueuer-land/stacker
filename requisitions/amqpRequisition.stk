@@ -5,6 +5,7 @@
       {
         "type": "amqp",
         "payload": "notPassive",
+
         "options": {
           "host": "localhost",
           "port": 5672

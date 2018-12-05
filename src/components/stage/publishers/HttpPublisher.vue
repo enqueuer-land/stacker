@@ -73,6 +73,7 @@
         methods: {
             getContent() {
                 return {
+                    type: "http",
                     timeout: this.item.timeout,
                     url: this.item.url,
                     method: this.item.method || methodsList[0],

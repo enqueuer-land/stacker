@@ -93,6 +93,7 @@
         methods: {
             getContent() {
                 return {
+                    type: "http",
                     timeout: this.item.timeout,
                     port: this.item.port,
                     endpoint: this.item.endpoint,

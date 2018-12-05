@@ -168,6 +168,7 @@
                             item: this.item
                         }
                     });
+                    this.events = this.getEvents();
                 }
             },
             breadCrumbSelected: function (breadCrumb) {

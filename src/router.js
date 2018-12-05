@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import StageHeader from './components/stage/StageHeader'
 import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
+import AmqpPublisher from './components/stage/publishers/AmqpPublisher'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
 import store from './store'
 
@@ -54,6 +55,11 @@ export default new Router({
                 {
                     path: "http",
                     component: HttpPublisher,
+                    props: (route) => stageBodyPropsBuilder(route)
+                },
+                {
+                    path: "amqp",
+                    component: AmqpPublisher,
                     props: (route) => stageBodyPropsBuilder(route)
                 }
             ],
