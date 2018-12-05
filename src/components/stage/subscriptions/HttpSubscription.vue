@@ -13,6 +13,7 @@
                 </div>
                 <div class="input-group input-group-sm mb-1">
                     <input v-model="http.port" placeholder="8080" type="text" class="form-control"
+                           id="httpSubscriptionPort"
                            style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                 </div>
             </div>
@@ -26,6 +27,7 @@
                     <div class="input-group input-group-sm mb-1 pl-1">
                         <input v-model="http.endpoint" placeholder="/stacker" type="text"
                                class="form-control input-group-append"
+                               id="httpSubscriptionEndpoint"
                                style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
                         <div class="input-group-append" style="font-size: 0.8em">
                             <button class="btn dropdown-toggle"
@@ -51,6 +53,7 @@
             <div class="input-group input-group-sm mb-1 ml-2 pr-2">
                 <input v-model="http.response.status" type="text" class="form-control"
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                       id="httpSubscriptionStatusCode"
                        placeholder="200">
             </div>
         </div>
@@ -60,7 +63,8 @@
             </div>
         </div>
         <div class="row">
-            <object-formatter class="mb-1 ml-2 mr-2" :text.sync="http.response.payload" :format.sync="http.response.format"/>
+            <object-formatter class="mb-1 ml-2 mr-2" :text.sync="http.response.payload"
+                              :format.sync="http.response.format"/>
         </div>
     </div>
 </template>
@@ -70,6 +74,7 @@
     import RoundedSwitch from "../../inputs/RoundedSwitch";
     import CommonSubscription from "../../inputs/CommonSubscription";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+
     const methodsList = ["POST", "GET", "PATCH", "OPTION", "DELETE", "PUT"];
 
     export default {
@@ -87,7 +92,6 @@
         },
         methods: {
             getContent() {
-                // console.log('HttpSub getContent' + JSON.stringify(this.item));
                 return {
                     timeout: this.item.timeout,
                     port: this.item.port,
@@ -98,8 +102,43 @@
                     response: this.item.response || {}
                 }
             },
+            checkPort: function () {
+                const item = $('#httpSubscriptionPort');
+                const value = this.http.port;
+                if (value === undefined || value.length === 0) {
+                    item.addClass('invalid-input');
+                    return 'Http subscription port cannot be empty';
+                } else {
+                    item.removeClass('invalid-input');
+                }
+            },
+            checkEndpoint: function () {
+                const item = $('#httpSubscriptionEndpoint');
+                const value = this.http.endpoint;
+                if (value === undefined || value.length === 0) {
+                    item.addClass('invalid-input');
+                    return 'Http subscription endpoint cannot be empty';
+                } else {
+                    item.removeClass('invalid-input');
+                }
+            },
+            checkStatusCode: function () {
+                const item = $('#httpSubscriptionStatusCode');
+                const value = this.http.response.status;
+                if (value === undefined || value.length === 0) {
+                    item.addClass('invalid-input');
+                    return 'Http subscription status code cannot be empty';
+                } else {
+                    item.removeClass('invalid-input');
+                }
+            },
+            compileErrors(...errors) {
+                return (errors)
+                    .filter(error => error !== undefined);
+            },
             emit() {
                 const payload = this.http;
+                payload.errors = this.compileErrors(this.checkPort(payload), this.checkEndpoint(payload), this.checkStatusCode(payload));
                 this.$emit('input', payload);
             },
         },
