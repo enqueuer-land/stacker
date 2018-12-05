@@ -6,28 +6,26 @@
         <key-value-input v-model="amqp.options" title="Connection Options"/>
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
-                Exchange
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.exchange" type="text" class="form-control"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Queue
             </div>
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.queueName" type="text" class="form-control"
+                <input v-model="amqp.queueName" type="text" class="form-control"  id="amqpSubscriptionQueue"
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>
-
+        <div class="row">
+            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+                Exchange
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
+                <input v-model="amqp.exchange" type="text" class="form-control"  id="amqpSubscriptionExchange"
+                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+            </div>
+        </div>
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Routing Key
@@ -35,14 +33,9 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="amqp.routingKey" id="amqpPublisherRoutingKey"
+                <input v-model="amqp.routingKey" id="amqpSubscriptionRoutingKey"
                        type="text" class="form-control"
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
-            </div>
-        </div>
-        <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
-                Message
             </div>
         </div>
     </div>
@@ -81,6 +74,28 @@
             },
             emit() {
                 const input = Object.assign({}, this.amqp);
+
+                const queueIsSet = (this.amqp.queueName !== undefined && this.amqp.queueName.length > 0);
+                const exchangeIsSet = (this.amqp.exchange !== undefined && this.amqp.exchange.length > 0);
+                const routingKeyIsSet = (this.amqp.routingKey !== undefined && this.amqp.routingKey.length > 0);
+                const valid = queueIsSet || (exchangeIsSet && routingKeyIsSet);
+                if (!valid) {
+                    if (exchangeIsSet) {
+                        input.errors = ['Amqp subscription routing key cannot be empty when an exchange is set'];
+                    } else if (routingKeyIsSet) {
+                        input.errors = ['Amqp subscription exchange cannot be empty when a routing key is set'];
+                    } else {
+                        input.errors = ['Amqp subscription has to have a) queue or b) routing key and exchange set '];
+                    }
+                }
+
+                const items = [$('#amqpSubscriptionRoutingKey'), $('#amqpSubscriptionExchange'), $('#amqpSubscriptionQueue')];
+                if (!valid) {
+                    items.forEach(item => item.addClass('invalid-input'));
+                } else {
+                    items.forEach(item => item.removeClass('invalid-input'));
+                }
+
                 this.$emit('input', input);
             },
         },
@@ -93,6 +108,9 @@
                 this.amqp = this.getContent();
             },
             amqp: {
+                routingKey(value) {
+                    console.log('Routing key changed: ' + value);
+                },
                 handler() {
                     this.emit();
                 },

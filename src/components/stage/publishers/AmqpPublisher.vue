@@ -25,6 +25,7 @@
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>
+        <key-value-input v-model="amqp.messageOptions.headers" title="Message Headers"/>
         <div class="row">
             <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
                 Message
@@ -33,7 +34,6 @@
         <div class="row">
             <object-formatter class="mb-1 ml-2 mr-2" :text.sync="amqp.payload" :format.sync="amqp.format"/>
         </div>
-        <key-value-input v-model="amqp.messageOptions.headers" title="Message Headers"/>
     </div>
 </template>
 <script>
@@ -62,15 +62,26 @@
                     exchange: this.item.exchange,
                     routingKey: this.item.routingKey,
                     exchangeOptions: this.item.exchangeOptions || {},
-                    messageOptions: this.item.messageOptions || {headers: ''},
+                    messageOptions: this.item.messageOptions || {headers: {}},
                     options: this.item.options || {host: '', port: ''},
                     payload: this.item.payload,
                     format: this.item.format,
-
                 }
             },
             emit() {
                 const input = Object.assign({}, this.amqp);
+
+                const valid = (this.amqp.routingKey !== undefined && this.amqp.routingKey.length > 0);
+                if (!valid) {
+                    input.errors = ['Amqp publisher routing key cannot be empty']
+                }
+                const item = $('#amqpPublisherRoutingKey');
+                if (!valid) {
+                    item.addClass('invalid-input');
+                } else {
+                    item.removeClass('invalid-input');
+                }
+
                 this.$emit('input', input);
             },
         },

@@ -93,7 +93,7 @@
             },
             eventStyle() {
                 return {
-                    'background-color': 'var(--stacker-background-alternative-color)',
+                    'background-color': 'var(--stacker-background-color)',
                     border: 'none',
                     padding: 0,
                     'padding-bottom': '15px',
