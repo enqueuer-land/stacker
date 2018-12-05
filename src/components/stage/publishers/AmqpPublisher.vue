@@ -33,7 +33,7 @@
         <div class="row">
             <object-formatter class="mb-1 ml-2 mr-2" :text.sync="amqp.payload" :format.sync="amqp.format"/>
         </div>
-        <key-value-input v-model="amqp.messageOptions" title="Message Options"/>
+        <key-value-input v-model="amqp.messageOptions.headers" title="Message Headers"/>
     </div>
 </template>
 <script>
@@ -62,7 +62,7 @@
                     exchange: this.item.exchange,
                     routingKey: this.item.routingKey,
                     exchangeOptions: this.item.exchangeOptions || {},
-                    messageOptions: this.item.messageOptions || {},
+                    messageOptions: this.item.messageOptions || {headers: ''},
                     options: this.item.options || {host: '', port: ''},
                     payload: this.item.payload,
                     format: this.item.format,
