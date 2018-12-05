@@ -1,6 +1,6 @@
 {
   "timeout": 3000,
-  "name": "self-test",
+  "name": "http self-test",
   "delay": "123",
   "iterations": 2,
   "publishers": [

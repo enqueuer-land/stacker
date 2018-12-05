@@ -30,7 +30,7 @@
                                 {{printTime()}}
                             </span>
                         </div>
-                        <span class="col-4 align-self-end pl-2 pr-1 title" style="text-align: right; font-size: 0.75em">
+                        <span class="col-4 align-self-end pr-1 title" style="text-align: right; font-size: 0.75em">
                             {{timeAgo}}
                         </span>
                     </div>

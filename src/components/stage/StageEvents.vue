@@ -79,7 +79,7 @@
                     if (this.selectedIndex === index) {
                         return {
                             'color': 'var(--text-color)',
-                            'background-color': 'var(--stacker-background-alternative-color)',
+                            'background-color': 'var(--stacker-background-color)',
                             'border-right': '2px solid ' + this.color,
                             'border-top': '2px solid ' + this.color,
                         };
