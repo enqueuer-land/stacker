@@ -22,7 +22,7 @@
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </span>
                         </div>
-                        <div class="col-4 pl-5">
+                        <div class="col-4 pl-3">
                             <span class="title">
                                 Time:
                             </span>

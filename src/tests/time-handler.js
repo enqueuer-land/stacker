@@ -52,16 +52,23 @@ export default class TimeHandler {
         return timer(from);
     }
 
+    paddy(num, padlen) {
+        const pad = new Array(1 + padlen).join('0');
+        return (pad + num).slice(-pad.length);
+    }
+
     getTotalTime(totalTime) {
-        const ms = totalTime % 1000;
+        let ms = totalTime % 1000;
         let result = ms + 'ms';
+
         if (totalTime >= 1000) {
+            ms = this.paddy(ms, 3);
             let seconds = Math.trunc(totalTime / 1000);
             result = seconds + 's' + ms + 'ms';
             if (seconds >= 60) {
                 const minutes = Math.trunc(seconds / 60);
-                seconds = seconds % 60;
-                result = minutes + 'm' + seconds + 's' + result;
+                seconds = this.paddy(seconds % 60, 2);
+                result = minutes + 'm' + seconds + 's' + ms + 'ms';
             }
         }
         return result;

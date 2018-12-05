@@ -44,12 +44,13 @@
         methods: {
             getContent: function () {
                 this.selectedIndex = null;
-
-                (this.events || []).map(event => $('#' + event.name + 'Body'))
+                (this.events || [])
+                    .map(event => $('#' + event.name + 'Body'))
                     .forEach(item => item.collapse('hide'));
-
                 (this.events || [])
                     .forEach(event => this.item[event.name] = this.item[event.name] || {});
+                (this.events || [])
+                    .forEach(event => $('#' + event.name + 'Button i').removeClass('active'));
 
             },
             selectIndex(index) {
