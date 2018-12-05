@@ -4,14 +4,20 @@ import ObjectDecycler from "./object-decycler";
 import MultipleObjectNotation from "./multiple-object-notation";
 
 const fs = window.remote.require('fs');
-const path = require('path');
+import path from 'path';// const { parse } = path;
 
 export default class ComponentManager {
     openRequisitionFile = (filename) => {
         const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
 
         if (Array.isArray(fileRequisition)) {
-            const base = this.createRequisition({name: path.basename(filename), requisitions: fileRequisition});
+            let nameWithNoExtension = path.basename(filename);
+            const dotIndex = nameWithNoExtension.lastIndexOf(".");
+            if (dotIndex !== -1) {
+                console.log(dotIndex)
+                nameWithNoExtension = nameWithNoExtension.substring(0, dotIndex);
+            }
+            const base = this.createRequisition({name: nameWithNoExtension, requisitions: fileRequisition});
             return new ComponentManager().createRequisition(base);
         }
         return new ComponentManager().createRequisition(fileRequisition);

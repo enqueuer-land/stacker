@@ -94,9 +94,9 @@
             getContent() {
                 return {
                     type: "http",
-                    timeout: this.item.timeout,
                     port: this.item.port,
                     endpoint: this.item.endpoint,
+                    timeout: this.item.timeout,
                     avoid: this.item.avoid,
                     method: this.item.method || methodsList[0],
                     headers: this.item.headers || {},

@@ -55,7 +55,6 @@
         },
         watch: {
             test() {
-                console.log('Test changed: ' + this.index);
                 this.openCloseEffect();
             }
         },

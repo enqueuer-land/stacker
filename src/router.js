@@ -4,6 +4,7 @@ import StageHeader from './components/stage/StageHeader'
 import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import AmqpPublisher from './components/stage/publishers/AmqpPublisher'
+import AmqpSubscription from './components/stage/subscriptions/AmqpSubscription'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
 import store from './store'
 
@@ -21,7 +22,6 @@ let stageBodyPropsBuilder = function (route) {
 let stageHeaderPropsBuilder = function (route) {
     const splitPath = route.path.split("/");
     const id = splitPath[2];
-    console.log(id);
     return {
         id: id,
         item: store.state.selectedItem
@@ -73,6 +73,11 @@ export default new Router({
                 {
                     path: "http",
                     component: HttpSubscription,
+                    props: (route) => stageBodyPropsBuilder(route)
+                },
+                {
+                    path: "amqp",
+                    component: AmqpSubscription,
                     props: (route) => stageBodyPropsBuilder(route)
                 }
             ],
