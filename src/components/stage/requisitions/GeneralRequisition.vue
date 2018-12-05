@@ -50,6 +50,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="row pt-2">
+            <button type="button" class="btn btn-sm col mx-3"
+                    style="background-color: var(--requisition-color); color: var(--stacker-background-color);"
+                    @click="addRequisition">
+                Add requisition
+            </button>
+            <button type="button" class="btn btn-sm col mx-3"
+                    style="background-color: var(--publisher-color); color: var(--stacker-background-color);"
+                    @click="addPublisher">
+                Add publisher
+            </button>
+            <button type="button" class="btn btn-sm col mx-3"
+                    style="background-color: var(--subscription-color); color: var(--stacker-background-color);"
+                    @click="addSubscription">
+                Add subscription
+            </button>
+
+        </div>
     </div>
 </template>
 
@@ -76,6 +95,15 @@
                     delay: this.delay,
                 };
                 this.$emit('input', payload);
+            },
+            addRequisition() {
+                this.$store.commit('addRequisition', {parent: this.item, router: this.$router});
+            },
+            addPublisher() {
+                this.$store.commit('addPublisher', {parent: this.item, router: this.$router});
+            },
+            addSubscription() {
+                this.$store.commit('addSubscription', {parent: this.item, router: this.$router});
             },
         },
         watch: {

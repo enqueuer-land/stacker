@@ -139,7 +139,14 @@
             },
             getEvents() {
                 let storeComponent = this.$store.state[this.item.component];
-                return storeComponent.getEvents(storeComponent.protocols && storeComponent.protocols[this.item.type]).concat([]);
+                let protocol = undefined;
+                if (storeComponent.protocols) {
+                    protocol = storeComponent.protocols[this.item.type.toLowerCase()];
+                    if (!protocol) {
+                        protocol = Object.keys(storeComponent.protocols)[0];
+                    }
+                }
+                return storeComponent.getEvents(protocol).concat([]);
             },
             selectProtocol: function (protocol) {
                 this.selectedProtocol = protocol;
