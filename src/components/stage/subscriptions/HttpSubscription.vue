@@ -100,7 +100,7 @@
             },
             emit() {
                 const payload = this.http;
-                this.$emit('input', {payload});
+                this.$emit('input', payload);
             },
         },
         watch: {

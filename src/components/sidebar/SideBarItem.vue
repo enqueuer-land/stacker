@@ -1,6 +1,6 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a :class="['row no-gutters mainSideBarItem', computedMainSideBarItem]"
+        <a class="row no-gutters mainSideBarItem'"
            style="color: var(--text-smooth-color); cursor: pointer;"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
@@ -31,7 +31,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" :class="['col align-self-center']" :style="nameStyle">
+            <div id="name" :class="['col align-self-center', nameClass]" :style="nameStyle">
                 {{item.name}}
             </div>
             <div class="align-self-center tag pr-1" :style="tagStyle">
@@ -44,6 +44,7 @@
 
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'SideBarItem',
@@ -77,11 +78,6 @@
         },
         watch: {},
         computed: {
-            computedMainSideBarItem() {
-                return {
-                    'invalid-input': false
-                };
-            },
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
@@ -127,6 +123,11 @@
                     style.color = 'var(--text-color)';
                 }
                 return style;
+            },
+            nameClass() {
+                return {
+                    'invalid-name': !new ComponentManager().isComponentValid(this.item)
+                };
             },
             tagStyle: function () {
                 return {

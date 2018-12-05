@@ -70,12 +70,12 @@
         },
         methods: {
             emit() {
-                let payload = {
+                const payload = {
                     timeout: this.timeout,
                     iterations: this.iterations,
                     delay: this.delay,
                 };
-                this.$emit('input', {payload: payload});
+                this.$emit('input', payload);
             },
         },
         watch: {

@@ -110,7 +110,7 @@ export default new Vuex.Store({
                         name: 'onFinish'
                     },
                 ];
-                if (protocol.sync) {
+                if (protocol && protocol.sync) {
                     events.splice(1, 0, syncEvent);
                 }
                 return events

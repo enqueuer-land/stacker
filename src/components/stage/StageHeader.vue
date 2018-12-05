@@ -5,11 +5,9 @@
                 <ol class="breadcrumb my-0 py-0 pl-1" style="background-color: transparent;">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
-                        <a href="#"
-                           @click="$store.dispatch('runRequisition', breadCrumb)"
-                           :style="breadcrumbStyle">
-                            <i style="transform: scale(0.75); position: relative; top: calc(50% - 7px); color: var(--requisition-color)"
-                               class="material-icons">play_circle_filled</i>
+                        <a style="cursor: pointer;"
+                           @click="runClick(breadCrumb)">
+                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons">play_circle_filled</i>
                         </a>
                         <a :style="breadcrumbStyle" href="#"
                            @click="breadCrumbSelected(breadCrumb)">
@@ -43,10 +41,10 @@
                         </div>
                     </div>
                     <div v-else class="input-group-append stage-header-main-dropdown">
-                        <button class="btn pl-4 pr-4"
+                        <button :class="runButtonClass"
                                 id="runButton"
                                 style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
-                                @click="runButtonClick"
+                                @click="runClick(item)"
                                 type="button">RUN
                         </button>
                     </div>
@@ -62,6 +60,7 @@
 
 <script>
     import StageEvents from "./StageEvents";
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'StageHeader',
@@ -107,30 +106,34 @@
                 });
             }
             return {
-                // tabSelectedIndex: 0,
-                // tabs: this.refreshAvailableTabs(firstProtocol),
                 events: this.getEvents(),
                 selectedProtocol: firstProtocol
             }
         },
         methods: {
-            stageBodyChanged({attribute, payload, errors}) {
-                const itemId = this.item.component + '_' + this.selectedProtocol;
-                const item = $('#' + itemId);
-                if (errors) {
-                    item.addClass('invalid-input');
-                } else {
-                    item.removeClass('invalid-input');
-                }
-
-                if (attribute) {
-                    this.item[attribute] = payload;
-                } else {
-                    this.item = Object.assign(this.item, payload, {validation: errors});
+            propagateValidationToParents(valid) {
+                let parent = this.item.parent;
+                while (parent !== undefined) {
+                    parent.invalidChildrenId = parent.invalidChildrenId
+                        .filter(invalidChild => invalidChild !== this.item.id);
+                    if (!valid) {
+                        parent.invalidChildrenId.push(this.item.id);
+                    }
+                    parent = parent.parent;
                 }
             },
-            runButtonClick: async function () {
-                await this.$store.dispatch('runRequisition', this.item);
+            stageBodyChanged(payload) {
+                const valid = payload.errors === undefined || payload.errors.length === 0;
+                if (valid) {
+                    this.item.errors = [];
+                }
+                this.item = Object.assign(this.item, payload);
+                this.propagateValidationToParents(valid);
+            },
+            runClick: async function (item) {
+                if (new ComponentManager().isComponentValid(item)) {
+                    await this.$store.dispatch('runRequisition', item);
+                }
             },
             getEvents() {
                 let storeComponent = this.$store.state[this.item.component];
@@ -209,6 +212,12 @@
                     'color': 'var(--' + this.item.component + '-color)'
                 }
             },
+            runButtonClass() {
+                return {
+                    'btn pl-4 pr-4': true,
+                    disabled: !new ComponentManager().isComponentValid(this.item)
+                }
+            },
             protocolsListStyle() {
                 return {
                     border: '1px var(--' + this.item.component + '-color) solid',
@@ -232,7 +241,27 @@
                     'font-size': '0.8em',
                     'color': 'var(--' + this.item.component + '-color)'
                 }
-            }
+            },
+            breadcrumbIconStyle() {
+                return function (item) {
+                    const style = {
+                        'transform': 'scale(1.5)',
+                        'position': 'relative',
+                        'top': 'calc(50% - 13px)',
+                        padding: '0 3px',
+                        color: 'var(--requisition-color)',
+                        'text-decoration': 'none',
+                        'font-size': '0.8em',
+                        cursor: 'pointer',
+                    };
+                    if (!new ComponentManager().isComponentValid(item)) {
+                        style.color = 'var(--text-smooth-color)';
+                        style.cursor = 'default';
+                    }
+                    return style
+
+                }
+            },
         }
     }
 </script>

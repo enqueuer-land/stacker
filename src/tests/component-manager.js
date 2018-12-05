@@ -37,6 +37,8 @@ export default class ComponentManager {
             subscriptions: [],
             requisitions: [],
             parent: parent,
+            errors: [],
+            invalidChildrenId: [],
             component: "requisition"
         };
         newRequisition.publishers = (base.publishers || []).map(publisher => this.createPublisher(publisher, newRequisition));
@@ -51,6 +53,7 @@ export default class ComponentManager {
             name: base.name || 'Publisher #' + parent.publishers.length,
             type: base.type || "HTTP",
             parent: parent,
+            errors: [],
             component: "publisher"
         };
     };
@@ -61,6 +64,7 @@ export default class ComponentManager {
             name: base.name || 'Subscription #' + parent.subscriptions.length,
             type: base.type || "HTTP",
             parent: parent,
+            errors: [],
             component: "subscription"
         };
     };
@@ -90,7 +94,13 @@ export default class ComponentManager {
     }
 
     isComponentValid(component) {
-        return Object.keys(component.errors || {}).length === 0;
+        if (component.errors && component.errors.length > 0) {
+            return false;
+        }
+        if (component.invalidChildrenId && component.invalidChildrenId.length > 0) {
+            return false;
+        }
+        return true;
     }
 
     findItem(id) {

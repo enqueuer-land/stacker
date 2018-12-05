@@ -82,22 +82,21 @@
                 }
             },
             emit() {
-                const payload = Object.assign({}, this.http);
+                const toEmit = Object.assign({}, this.http);
                 if (this.http.method === 'GET') {
-                    payload.payload = null;
+                    toEmit.payload = null;
                 }
-                let inputPayload = {payload};
                 const valid = (this.http.url !== undefined && this.http.url.length > 0);
                 if (!valid) {
-                    inputPayload.errors = 'Http publisher url cannot be empty'
+                    toEmit.errors = ['Http publisher url cannot be empty']
                 }
-                this.$emit('input', inputPayload);
                 const item = $('#httpPublisherUrlId');
                 if (!valid) {
                     item.addClass('invalid-input');
                 } else {
                     item.removeClass('invalid-input');
                 }
+                this.$emit('input', toEmit);
             },
         },
         computed: {},

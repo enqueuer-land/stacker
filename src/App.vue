@@ -82,6 +82,9 @@
 
     .invalid-input {
         box-shadow: 0 0 15px var(--invalid-color);
+    }
+
+    .invalid-name {
         text-decoration: underline wavy var(--invalid-color);
     }
 
