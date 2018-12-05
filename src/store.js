@@ -84,7 +84,6 @@ export default new Vuex.Store({
                 {
                     name: "Delete",
                     click: (commit, item, router) => {
-                        console.log('Deleting requisition: ' + commit);
                         commit('deleteComponent', {item: item, router: router});
                     }
                 }
@@ -111,7 +110,6 @@ export default new Vuex.Store({
                         name: 'onFinish'
                     },
                 ];
-                console.log(protocol);
                 if (protocol && protocol.sync) {
                     events.splice(1, 0, syncEvent);
                 }
@@ -123,7 +121,6 @@ export default new Vuex.Store({
                 {
                     name: "Delete",
                     click: (commit, item, router) => {
-                        console.log('Deleting requisition: ' + commit);
                         commit('deleteComponent', {item: item, router: router});
                     }
                 }
@@ -274,13 +271,11 @@ export default new Vuex.Store({
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;
                 let newPath = '/' + payload.item.component + '/' + payload.item.id;
-                console.log('Going to new path: ' + newPath);
                 payload.router.push({path: newPath});
             }
         },
         selectItemById(state, payload) {
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
-            console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.id);
             if (currentSelectedId !== payload.id) {
                 const item = new ComponentManager().findItem(payload.id);
                 if (item) {
@@ -301,11 +296,11 @@ export default new Vuex.Store({
     actions: {
         runRequisition: function ({commit}, requisition) {
             const decycle = new ObjectDecycler().decycle(requisition);
-            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 100));
+            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 200));
             window.ipcRenderer.send('runRequisition', decycle);
 
             window.ipcRenderer.once('runRequisitionReply', (event, report) => {
-                console.log('Renderer got report: ' + JSON.stringify(report, null, 2).substr(0, 100));
+                console.log('Renderer got report: ' + JSON.stringify(report, null, 2).substr(0, 200));
                 commit('setRequisitionResult', {report: report});
             });
 

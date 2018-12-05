@@ -52,8 +52,6 @@ export default class FlattenTestsSummary {
                         const updatedHierarchy = clonedHierarchy.concat(value);
                         this.findTests(value, updatedHierarchy);
                     }
-                } else {
-                    console.log('Skipping messageReceived');
                 }
             }
         });

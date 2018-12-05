@@ -2,22 +2,20 @@
     <div class="side-bar">
         <SideBarHeader></SideBarHeader>
         <SideBarTree></SideBarTree>
-        <div :style="side">
-        </div>
+        <div :style="remainingSideBarStyle"></div>
     </div>
 </template>
 
 <script>
 import SideBarHeader from "./SideBarHeader";
 import SideBarTree from "./SideBarTree";
-//http://jsfiddle.net/Bek9L/3020/
 export default {
     name: 'SideBar',
     components: {
         SideBarHeader, SideBarTree
     },
     computed: {
-        side: function () {
+        remainingSideBarStyle: function () {
             let style = {
                 'height': '100%',
                 'background-color': 'var(--stacker-header-background-color)',

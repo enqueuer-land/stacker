@@ -42,7 +42,7 @@
                     </div>
                     <div v-else class="input-group-append stage-header-main-dropdown">
                         <button :class="runButtonClass"
-                                id="runButton"
+                                id="run-button"
                                 style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
                                 @click="runClick(item)"
                                 type="button">RUN
@@ -67,7 +67,6 @@
         components: {StageEvents},
         props: ['item', 'id'],
         mounted: function () {
-            console.log('Mounted: ' + this.item.component + '/' + this.item.id);
             if (this.isRequisition()) {
                 this.$router.push({
                     path: '/' + this.item.component + '/' + this.item.id + '/general',
@@ -121,9 +120,9 @@
                 this.item = Object.assign(this.item, payload);
                 new ComponentManager().propagateValidationToParents(this.item, valid);
             },
-            runClick: async function (item) {
+            runClick: function (item) {
                 if (new ComponentManager().isComponentValid(item)) {
-                    await this.$store.dispatch('runRequisition', item);
+                    this.$store.dispatch('runRequisition', item);
                 }
             },
             getEvents() {
@@ -141,7 +140,6 @@
                 this.selectedProtocol = protocol;
                 this.item.type = protocol;
                 if (this.isRequisition()) {
-                    console.log('Going to: ' + '/' + this.item.component + '/' + this.item.id + '/general');
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/general',
                         props: {
@@ -150,7 +148,6 @@
                     });
                 }
                 else {
-                    console.log('Going to: ' + '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol);
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,
                         props: {
@@ -180,7 +177,6 @@
                     });
                 }
                 else {
-                    console.log('Item protocol: ' + this.item.type);
                     this.selectedProtocol = this.item.type;
                     if (!this.selectedProtocol) {
                         const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
@@ -197,7 +193,6 @@
         },
         watch: {
             item: function () {
-                console.log('Item changed');
             },
             id: function () {
                 console.log('Id changed');
@@ -284,4 +279,8 @@
         display: none;
     }
 
+    #run-button:focus, #run-button.focus {
+        outline: 0;
+        box-shadow: 0 0 15px var(--requisition-color);
+    }
 </style>

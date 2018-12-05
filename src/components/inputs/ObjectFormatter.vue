@@ -67,7 +67,6 @@
         },
         data: function () {
             const content = this.getContent();
-            console.log(JSON.stringify(content));
             return {
                 payload: content.payload,
                 alert: null,

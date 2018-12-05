@@ -8,7 +8,6 @@ import path from 'path';
 
 export default class ComponentManager {
     openRequisitionsDirectory(filename) {
-        console.log('Reading dir ' + filename);
         const requisitionFiles = fs.readdirSync(filename)
             .map(file => filename + '/' + file)
             .filter(file => fs.lstatSync(file).isFile())
@@ -20,7 +19,6 @@ export default class ComponentManager {
         if (fs.lstatSync(filename).isDirectory()) {
             return this.openRequisitionsDirectory(filename);
         } else {
-            console.log('Reading ' + filename);
             const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
 
             let nameWithNoExtension = path.basename(filename);
@@ -28,7 +26,6 @@ export default class ComponentManager {
             if (dotIndex !== -1) {
                 nameWithNoExtension = nameWithNoExtension.substring(0, dotIndex);
             }
-            console.log('nameWithNoExtension: ' + nameWithNoExtension);
             if (Array.isArray(fileRequisition)) {
                 return this.createRequisition({name: nameWithNoExtension, requisitions: fileRequisition});
             } else {

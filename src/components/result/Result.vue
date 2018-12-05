@@ -66,7 +66,7 @@
         height: 100vh;
         position: relative;
         background-color: var(--stacker-background-color);
-        border-left: 1px solid var(--stacker-background-alternative-color);
+        /*border-left: 1px solid var(--stacker-background-alternative-color);*/
     }
 
     .progress-bar-container {
