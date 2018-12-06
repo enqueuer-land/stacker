@@ -8,6 +8,6 @@
 - [ ] Create Object Builder
 - [x] Fix SideBarNode open bug
 - [ ] Pack it up
-- [ ] Open directories as single requisitions
+- [x] Open directories as single requisitions
 
 

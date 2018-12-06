@@ -12,7 +12,7 @@ export default class ComponentManager {
             .map(file => filename + '/' + file)
             .filter(file => fs.lstatSync(file).isFile())
             .map(file => this.openRequisitionFile(file));
-        return requisitionFiles;
+        return this.createRequisition({name: this.removeFilenameExtension(filename), requisitions: requisitionFiles});
     };
 
     openRequisitionFile(filename) {
@@ -20,12 +20,7 @@ export default class ComponentManager {
             return this.openRequisitionsDirectory(filename);
         } else {
             const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
-
-            let nameWithNoExtension = path.basename(filename);
-            const dotIndex = nameWithNoExtension.lastIndexOf(".");
-            if (dotIndex !== -1) {
-                nameWithNoExtension = nameWithNoExtension.substring(0, dotIndex);
-            }
+            let nameWithNoExtension = this.removeFilenameExtension(filename);
             if (Array.isArray(fileRequisition)) {
                 return this.createRequisition({name: nameWithNoExtension, requisitions: fileRequisition});
             } else {
@@ -36,6 +31,15 @@ export default class ComponentManager {
             }
         }
     };
+
+    removeFilenameExtension(filename) {
+        let nameWithNoExtension = path.basename(filename);
+        const dotIndex = nameWithNoExtension.lastIndexOf(".");
+        if (dotIndex !== -1) {
+            nameWithNoExtension = nameWithNoExtension.substring(0, dotIndex);
+        }
+        return nameWithNoExtension;
+    }
 
     saveRequisitionFile(name, requisition) {
         const decycle = new ObjectDecycler().decycle(requisition);
