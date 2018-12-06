@@ -115,8 +115,6 @@
                 const valid = payload.errors === undefined || payload.errors.length === 0;
                 if (valid) {
                     this.item.errors = [];
-                } else {
-                    console.log('Item errors: ' + JSON.stringify(payload.errors));
                 }
                 this.item = Object.assign(this.item, payload);
                 new ComponentManager().propagateValidationToParents(this.item, valid);

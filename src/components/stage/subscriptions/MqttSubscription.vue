@@ -64,14 +64,14 @@
                 const topicElement = $('#mqttSubscriptionTopic');
                 topicElement.removeClass('invalid-input');
                 if (this.mqtt.topic === undefined || this.mqtt.topic.length === 0) {
-                    input.errors.push('Mqtt subscription has to have a topic');
+                    input.errors.push('Topic can not be empty');
                     topicElement.addClass('invalid-input');
                 }
 
                 const brokerElement = $('#mqttSubscriptionBroker');
                 brokerElement.removeClass('invalid-input');
                 if (this.mqtt.brokerAddress === undefined || this.mqtt.brokerAddress.length === 0) {
-                    input.errors.push('Mqtt subscription has to have a broker address');
+                    input.errors.push('Broker address can not be empty');
                     brokerElement.addClass('invalid-input');
                 }
 

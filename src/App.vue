@@ -182,6 +182,21 @@
         background-color: var(--stacker-header-background-color);
     }
 
+    .tooltip-inner {
+        max-width: none;
+        padding: 5px;
+        color: var(--text-color);
+        /*opacity: 0.9;*/
+        text-align: left;
+        border: 2px solid var(--stacker-background-alternative-color);
+        background-color: var(--stacker-header-background-color);
+        border-radius: .25rem;
+    }
+
+    .bs-tooltip-top .arrow::before {
+        border-top-color: var(--stacker-background-alternative-color);
+    }
+
     .invalid-input {
         box-shadow: 0 0 15px var(--invalid-color);
     }

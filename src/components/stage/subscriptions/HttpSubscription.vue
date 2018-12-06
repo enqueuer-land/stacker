@@ -105,7 +105,7 @@
                 const value = this.http.port;
                 if (value === undefined || value.length === 0) {
                     item.addClass('invalid-input');
-                    return 'Http subscription port cannot be empty';
+                    return 'Port cannot be empty';
                 } else {
                     item.removeClass('invalid-input');
                 }
@@ -115,7 +115,7 @@
                 const value = this.http.endpoint;
                 if (value === undefined || value.length === 0) {
                     item.addClass('invalid-input');
-                    return 'Http subscription endpoint cannot be empty';
+                    return 'Endpoint cannot be empty';
                 } else {
                     item.removeClass('invalid-input');
                 }
@@ -125,7 +125,7 @@
                 const value = this.http.response.status;
                 if (value === undefined || value.length === 0) {
                     item.addClass('invalid-input');
-                    return 'Http subscription status code cannot be empty';
+                    return 'Status code cannot be empty';
                 } else {
                     item.removeClass('invalid-input');
                 }

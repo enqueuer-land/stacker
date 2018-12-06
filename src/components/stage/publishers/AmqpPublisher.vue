@@ -71,7 +71,7 @@
 
                 const valid = (this.amqp.routingKey !== undefined && this.amqp.routingKey.length > 0);
                 if (!valid) {
-                    input.errors = ['Amqp publisher routing key cannot be empty']
+                    input.errors = ['Routing key cannot be empty']
                 }
                 const item = $('#amqpPublisherRoutingKey');
                 if (!valid) {

@@ -1,11 +1,12 @@
 <template>
     <div class="side-bar-node mb-0 mt-0">
         <div class="card" style="border: none;">
-            <div @click="onClick" :id="'collapsible' + node.id" data-toggle="collapse" :data-target="'#' + node.id">
+            <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id">
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>
             <div :id="node.id" class="collapse">
-                <div class="p-0 pl-3" style="background-color: var(--stacker-header-background-color); border-left: 2px solid var(--requisition-color);">
+                <div class="p-0 pl-3"
+                     style="background-color: var(--stacker-header-background-color); border-left: 2px solid var(--requisition-color);">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in filteredRequisitions" :index="index"
                                      :key="requisition.id" :node="requisition"/>

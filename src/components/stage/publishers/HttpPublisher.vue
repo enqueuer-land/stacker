@@ -88,7 +88,7 @@
                 }
                 const valid = (this.http.url !== undefined && this.http.url.length > 0);
                 if (!valid) {
-                    toEmit.errors = ['Http publisher url cannot be empty']
+                    toEmit.errors = ['Url cannot be empty']
                 }
                 const item = $('#httpPublisherUrlId');
                 if (!valid) {

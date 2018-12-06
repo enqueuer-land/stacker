@@ -78,11 +78,11 @@
                 const valid = queueIsSet || (exchangeIsSet && routingKeyIsSet);
                 if (!valid) {
                     if (exchangeIsSet) {
-                        input.errors = ['Amqp subscription routing key cannot be empty when an exchange is set'];
+                        input.errors = ['Routing key cannot be empty when an exchange is set'];
                     } else if (routingKeyIsSet) {
-                        input.errors = ['Amqp subscription exchange cannot be empty when a routing key is set'];
+                        input.errors = ['Exchange cannot be empty when a routing key is set'];
                     } else {
-                        input.errors = ['Amqp subscription has to have a) queue or b) routing key and exchange set '];
+                        input.errors = ['Queue, or routing key and exchange, have to be set'];
                     }
                 }
 

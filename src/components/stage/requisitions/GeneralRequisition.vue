@@ -50,17 +50,17 @@
 
         <div class="row pt-5">
             <button type="button" class="btn btn-sm col mx-3"
-                    style="background-color: var(--requisition-color); color: var(--stacker-background-color);"
+                    style="border-color: var(--requisition-color); color: var(--requisition-color); background-color: transparent"
                     @click="addRequisition">
                 Add requisition
             </button>
             <button type="button" class="btn btn-sm col mx-3"
-                    style="background-color: var(--publisher-color); color: var(--stacker-background-color);"
+                    style="border-color: var(--publisher-color); color: var(--publisher-color); background-color: transparent"
                     @click="addPublisher">
                 Add publisher
             </button>
             <button type="button" class="btn btn-sm col mx-3"
-                    style="background-color: var(--subscription-color); color: var(--stacker-background-color);"
+                    style="border-color: var(--subscription-color); color: var(--subscription-color); background-color: transparent"
                     @click="addSubscription">
                 Add subscription
             </button>

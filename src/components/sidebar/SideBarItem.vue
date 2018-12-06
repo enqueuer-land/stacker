@@ -1,11 +1,11 @@
 <template>
     <div :style="sideBarItemStyle">
         <a class="row no-gutters mainSideBarItem'"
-           style="color: var(--text-smooth-color); cursor: pointer;"
+           :id="item.id + 'SideBarItem'"
+           @mouseenter="mouseEnterHeader"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
-           @mouseleave="mouseIsOver = false"
-        >
+           @mouseleave="mouseIsOver = false">
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
                     <div data-toggle="dropdown" id="more-icon">
@@ -75,12 +75,30 @@
                 const selectedItem = this.$store.state.selectedItem;
                 return selectedItem && selectedItem.id === this.item.id;
             },
+            mouseEnterHeader(event) {
+                const errors = (this.item.invalidChildren || [])
+                    .map(invalid => `<li><span style="color: var(--${invalid.component}-color);">${invalid.name + ': '}</span>${invalid.errors.join('; ')}</li>`)
+                    .concat((this.item.errors || []).map(error => `<li>${error}</li>`))
+                    .join('');
+
+                const target = $('#' + event.target.id);
+                if (errors.length > 0) {
+                    console.log(errors);
+                    target
+                        .attr('data-html', true)
+                        .attr('data-original-title', `<ul>${errors}</ul>`)
+                        .tooltip('show');
+                } else {
+                    target.tooltip('hide');
+                }
+            }
         },
         watch: {},
         computed: {
             sideBarItemStyle: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
+                    cursor: 'pointer',
                     height: '30px',
                     'border-bottom': '1px solid var(--stacker-background-alternative-color)',
                     'background-color': 'var(--stacker-header-background-color)',
@@ -153,14 +171,6 @@
 
     .mainSideBarItem:hover {
         text-decoration: none;
-    }
-
-    #more-icon {
-        color: var(--text-color);
-    }
-
-    #more-icon:hover {
-        color: var(--text-smooth-color);
     }
 
 </style>

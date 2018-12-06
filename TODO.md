@@ -1,4 +1,4 @@
-- [x] Validate input fields (https://getbootstrap.com/docs/4.0/components/forms/#validation)
+- [x] Validate input fields
 - [x] Load yml and json files
 - [x] Result item hierarchy to be a new line
 - [x] Filter Result Items
