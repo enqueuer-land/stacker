@@ -4,7 +4,7 @@
             <div class="mb-1 stacker-label">
                 Name
             </div>
-            <input v-model="name" type="text" class="form-control input-class" style="height: 32px">
+            <input v-model="name" type="text" class="form-control input-class stacker-input" style="height: 32px">
         </div>
         <div class="input-group input-group-sm mb-1 ml-0 mr-0">
             <div class="input-group-append" style="font-size: 0.8em">
@@ -16,7 +16,7 @@
                        @click="currentAssertionIndex = index">{{assertion.label}}</a>
                 </div>
             </div>
-            <input v-model="assertionValue" type="text" class="form-control mr-2 input-class"
+            <input v-model="assertionValue" type="text" class="form-control mr-2 stacker-input"
                    placeholder="expectation">
             <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
                  class="input-group-append"
@@ -35,7 +35,7 @@
             <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
                    type="text"
                    placeholder="condition"
-                   class="form-control input-class"
+                   class="form-control stacker-input"
                    v-model="criteriumValue">
         </div>
     </div>
@@ -137,17 +137,10 @@
         border-bottom: 1px solid var(--stacker-background-alternative-color);
     }
 
-
     .button-label-class {
         background-color: var(--stacker-background-color);
         color: var(--text-color);
         border-color: var(--text-smooth-color)
-    }
-
-    .input-class {
-        background-color: var(--stacker-background-color);
-        color: var(--text-color);
-        border-color: var(--stacker-background-alternative-color)
     }
 
 </style>

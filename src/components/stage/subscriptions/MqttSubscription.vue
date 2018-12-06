@@ -10,9 +10,8 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="mqtt.brokerAddress" type="text" class="form-control stacker-label"
-                       placeholder="mqtt://iot.eclipse.org"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+                <input v-model="mqtt.brokerAddress" type="text" class="form-control stacker-label stacker-input"
+                       placeholder="mqtt://iot.eclipse.org">
             </div>
         </div>
         <key-value-input v-model="mqtt.options" title="Connection Options"/>
@@ -23,8 +22,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="mqtt.topic" type="text" class="form-control" id="mqttSubscriptionTopic"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+                <input v-model="mqtt.topic" type="text" class="form-control stacker-input" id="mqttSubscriptionTopic">
             </div>
         </div>
     </div>

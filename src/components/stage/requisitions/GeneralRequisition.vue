@@ -9,8 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="timeout" type="text" class="form-control"
-                               style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                        <input v-model="timeout" type="text" class="form-control stacker-input"
                                placeholder="5000">
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
@@ -26,8 +25,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="delay" type="text" class="form-control"
-                               style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                        <input v-model="delay" type="text" class="form-control stacker-input"
                                placeholder="0">
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
@@ -43,8 +41,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="iterations" type="text" class="form-control"
-                               style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                        <input v-model="iterations" type="text" class="form-control stacker-input"
                                placeholder="1">
                     </div>
                 </div>

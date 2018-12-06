@@ -26,9 +26,9 @@
             <div class="row no-gutters">
                 <div class="col-11 pl-0">
                     <div class="input-group input-group-sm pl-2 pr-1">
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control stacker-input"
                                v-model="filter"
-                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color); border-radius: 10px"
+                               style="border-radius: 10px"
                                placeholder="Filter">
                     </div>
                 </div>

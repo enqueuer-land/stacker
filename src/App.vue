@@ -203,6 +203,19 @@
         color: var(--text-smooth-color);
     }
 
+    .stacker-input {
+        background-color: transparent;
+        border-color: var(--stacker-background-alternative-color);
+        color: var(--text-color);
+    }
+
+    .stacker-input:focus {
+        background-color: transparent;
+        border-color: var(--stacker-background-alternative-color);
+        color: var(--text-color);
+        box-shadow: 0 0 5px var(--text-smooth-color);
+    }
+
     #side-bar {
         flex: 0 0 calc(22% - 2px);
         max-width: calc(22% - 2px);

@@ -24,8 +24,7 @@
             </div>
             <div class="row pt-1">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="item.name" type="text" class="form-control"
-                           style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color)"
+                    <input v-model="item.name" type="text" class="form-control stacker-input"
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
@@ -290,4 +289,5 @@
         outline: 0;
         box-shadow: none;
     }
+
 </style>

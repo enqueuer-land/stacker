@@ -36,8 +36,8 @@
             <div class="row">
                 <div class="col pt-0 pl-4">
                     <div class="input-group input-group-sm">
-                        <input type="text" class="form-control"
-                               style="background-color: transparent; border-color: var(--stacker-background-alternative-color); color: var(--text-color); border-radius: 10px"
+                        <input type="text" class="form-control stacker-input"
+                               style="border-radius: 10px"
                                placeholder="Filter">
                     </div>
                 </div>

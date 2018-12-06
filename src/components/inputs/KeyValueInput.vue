@@ -6,10 +6,10 @@
         <div class="row px-2">
             <div class="input-group input-group-sm mb-1" v-for="(pair, index) in pairs" :key="index">
                 <input @input="update(index, 'key', $event.target.value)" :value="pair.key" type="text"
-                       class="form-control" style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                       class="form-control stacker-input"
                        placeholder="key">
                 <input @input="update(index, 'value', $event.target.value)" :value="pair.value" type="text"
-                       class="form-control input-group-append ml-2" style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)"
+                       class="form-control input-group-append ml-2 stacker-input"
                        placeholder="value">
                 <div class="input-group-append pl-1">
                     <a href="#" style="color: var(--text-color)">

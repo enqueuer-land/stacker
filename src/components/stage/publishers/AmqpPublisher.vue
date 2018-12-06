@@ -8,8 +8,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.exchange" type="text" class="form-control"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+                <input v-model="amqp.exchange" type="text" class="form-control stacker-input">
             </div>
         </div>
         <key-value-input v-model="amqp.exchangeOptions" title="Exchange Options"/>
@@ -21,8 +20,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                 <input v-model="amqp.routingKey" id="amqpPublisherRoutingKey"
-                       type="text" class="form-control"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+                       type="text" class="form-control stacker-input">
             </div>
         </div>
         <key-value-input v-model="amqp.messageOptions.headers" title="Message Headers"/>

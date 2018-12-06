@@ -2,13 +2,13 @@
     <div class="rounded-switch container-fluid">
         <div class="row no-gutters" style="position: relative; top: 4px;">
             <div class="col-2">
-
                 <label class="switch">
-                    <input v-model="enabled" type="checkbox">
+                    <input id="input-slider" v-model="enabled" type="checkbox">
                     <span class="slider round"></span>
                 </label>
             </div>
             <a :href="'#' + label" :class="['col pl-1', enabled ? 'enabled-label' : 'disabled-label']"
+               @click="labelClicked"
                   style="position: relative; top: 2px; left: 8px; text-decoration: none">
                 {{label}}
             </a>
@@ -23,6 +23,11 @@
         data: function () {
             return {
                 enabled: !!this.value
+            }
+        },
+        methods: {
+            labelClicked() {
+                this.enabled = !this.enabled;
             }
         },
         watch: {
