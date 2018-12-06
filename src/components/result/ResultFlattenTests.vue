@@ -1,7 +1,7 @@
 <template>
     <div class="result-flatten-tests">
-        <result-flatten-tests-item v-for="(test, index) in testsSummary" :key="index" :test="test"
-                                :index="index"/>
+        <result-flatten-tests-item v-for="(test, index) in filteredTestsSummary" :key="index" :test="test"
+                                   :index="index"/>
     </div>
 </template>
 
@@ -29,6 +29,18 @@
                 testsSummary: testsSummary.getTests()
             }
         },
+        computed: {
+            filteredTestsSummary() {
+                const resultFilter = this.$store.state.resultFilter;
+                const filterString = resultFilter.string.toLowerCase();
+                return this.testsSummary
+                    .filter(test => (resultFilter.showPassingTests && test.valid) ||
+                                    (resultFilter.showFailingTests && !test.valid))
+                    .filter(test => test.name.toLowerCase().indexOf(filterString) !== -1 ||
+                                    test.description.toLowerCase().indexOf(filterString) !== -1 ||
+                                    test.hierarchy.some(hierarchy => hierarchy.name.toLowerCase().indexOf(filterString) !== -1));
+            }
+        }
     }
 </script>
 

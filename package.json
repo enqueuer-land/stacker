@@ -10,6 +10,8 @@
     "lint": "node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
+    "amqp": "^0.2.7",
+    "mqtt": "^2.18.8",
     "enqueuer": "^3.5.23",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
@@ -51,9 +53,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "optionalDependencies": {
-    "amqp": "^0.2.7",
-    "mqtt": "^2.18.8"
-  }
+  ]
 }

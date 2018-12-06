@@ -9,6 +9,11 @@ export default new Vuex.Store({
     state: {
         results: [],
         filter: '',
+        resultFilter: {
+            string: '',
+            showPassingTests: true,
+            showFailingTests: true,
+        },
         selectedItem: null,
         requisitions: [],
         requisition: {
@@ -215,6 +220,9 @@ export default new Vuex.Store({
                     new ComponentManager().saveRequisitionFile(filename, payload.item);
                 }
             })
+        },
+        changeResultFilter(state, value) {
+            state.resultFilter = value;
         },
         changeFilter(state, value) {
             state.filter = value;

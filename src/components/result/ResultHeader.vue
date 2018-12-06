@@ -9,6 +9,7 @@
                     {{result.name}}
                 </span>
             </div>
+            <div class="row" style="height: 8%"/>
             <div class="row no-gutters pb-1 pl-2 pt-0 justify-content-between">
                 <div class="col-md-auto">
                             <span class="title">
@@ -32,18 +33,30 @@
                             {{timeAgo}}
                         </span>
             </div>
-            <div class="row" style="height: 15%"/>
-            <div class="row">
-                <div class="col pt-0 pl-4">
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control stacker-input"
-                               style="border-radius: 10px"
-                               placeholder="Filter">
+            <div class="row" style="height: 7%"/>
+            <div class="row no-gutters">
+                <div class="col-8 row no-gutters">
+                    <div class="col pt-0 pl-2 pr-1">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control stacker-input"
+                                   v-model="filter.string"
+                                   style="border-radius: 10px"
+                                   placeholder="Filter">
+                        </div>
                     </div>
+                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
+                        <i class="material-icons"
+                           style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
+                    </a>
                 </div>
-                <a class="pl-0 col-1 pr-1 align-self-center pt-1" href="#">
-                    <i class="material-icons" style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
-                </a>
+                <div class="col row no-gutters justify-content-end pr-1">
+                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
+                        <i @click="filter.showPassingTests = !filter.showPassingTests" :class="showPassingTestsButtonClass">check_circle_outline</i>
+                    </a>
+                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
+                        <i @click="filter.showFailingTests = !filter.showFailingTests" :class="showFailingTestsButtonClass">highlight_off</i>
+                    </a>
+                </div>
             </div>
         </a>
     </div>
@@ -61,14 +74,19 @@
         },
         data: function () {
             return {
+                filter: {
+                    string: '',
+                    showPassingTests: true,
+                    showFailingTests: true,
+                },
                 mouseIsOver: false,
                 timeAgo: '',
                 timerInterval: null,
             }
         },
         watch: {
-            //TODO verify bug here
             result() {
+                //TODO verify bug here. Sometimes it disappears
                 const timeUpdater = () => {
                     if (this.result) {
                         this.timeAgo = new TimeHandler().getTimeAgo(this.result.time.endTime);
@@ -79,6 +97,12 @@
                     clearInterval(this.timerInterval);
                 }
                 this.timerInterval = setInterval(timeUpdater, 30000);
+            },
+            filter: {
+                handler(value) {
+                    this.$store.commit('changeResultFilter', value);
+                },
+                deep: true
             }
         },
         computed: {
@@ -97,7 +121,19 @@
                     }
                 }
                 return result;
-            }
+            },
+            showPassingTestsButtonClass() {
+                return {
+                    'material-icons small-button': true,
+                    'small-button-passing-tests': this.filter.showPassingTests
+                }
+            },
+            showFailingTestsButtonClass() {
+                return {
+                    'material-icons small-button': true,
+                    'small-button-failing-tests': this.filter.showFailingTests
+                }
+            },
         },
         methods: {
             printTime: function () {
@@ -119,10 +155,6 @@
         display: none !important;
     }
 
-    #moreOptions :hover {
-        color: var(--text-smooth-color);
-    }
-
     .tag {
         font-size: 0.8em;
         text-align: right;
@@ -142,4 +174,34 @@
         color: var(--passing-test-color);
     }
 
+    .small-button {
+        color: var(--text-smooth-color);
+        transform: scale(0.75) rotate(30deg);
+        transition: transform 100ms ease
+    }
+
+    .small-button:hover {
+        color: var(--text-color);
+        transform: scale(0.8) rotate(20deg);
+    }
+
+    .small-button-passing-tests {
+        color: var(--passing-test-color);
+        transform: scale(0.85);
+    }
+
+    .small-button-passing-tests:hover {
+        color: var(--passing-test-color);
+        transform: scale(0.95);
+    }
+
+    .small-button-failing-tests {
+        color: var(--failing-test-color);
+        transform: scale(0.85);
+    }
+
+    .small-button-failing-tests:hover {
+        color: var(--failing-test-color);
+        transform: scale(0.95);
+    }
 </style>
