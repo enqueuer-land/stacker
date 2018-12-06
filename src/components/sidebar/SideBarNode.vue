@@ -5,7 +5,7 @@
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>
             <div :id="node.id" class="collapse">
-                <div class="card-body p-0 pl-1" style="background-color: var(--requisition-color);">
+                <div class="p-0 pl-3" style="background-color: var(--stacker-header-background-color); border-left: 2px solid var(--requisition-color);">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in filteredRequisitions" :index="index"
                                      :key="requisition.id" :node="requisition"/>
@@ -38,7 +38,7 @@
         },
         methods: {
             onClick: function () {
-                this.opened = $('#collapsible' + this.node.id).hasClass('collapsed');
+                this.opened = !$('#' + this.node.id).hasClass('show');
             },
         },
         computed: {
@@ -63,6 +63,7 @@
                         this.opened = true;
                         item.addClass('show');
                     } else {
+                        //TODO is it a good idea? Keep just one requisition opened at a time
                         // this.opened = false;
                         // item.removeClass('show');
                     }
