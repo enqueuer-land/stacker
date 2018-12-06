@@ -16,10 +16,10 @@
                        @click="currentAssertionIndex = index">{{assertion.label}}</a>
                 </div>
             </div>
-            <input v-model="assertionValue" type="text" class="form-control mr-2 stacker-input"
+            <input v-model="assertionValue" type="text" class="form-control stacker-input"
                    placeholder="expectation">
             <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
-                 class="input-group-append"
+                 class="input-group-append ml-2"
                  style="font-size: 0.8em">
                 <button class="btn dropdown-toggle button-label-class" type="button" data-toggle="dropdown">
                     {{possibleAssertions[currentAssertionIndex].criteria[currentCriteriaIndex].label}}

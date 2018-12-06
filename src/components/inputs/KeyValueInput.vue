@@ -20,9 +20,9 @@
             </div>
         </div>
         <div class="row px-2">
-            <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
+            <button type="button" :class="['btn btn-block btn-sm col', addButtonClass]"
                     id="addButton"
-                    style="background-color: transparent; color: var(--text-color); border-color: var(--text-color)"
+                    :style="addButtonStyle"
                     @click="addPair">Add
             </button>
         </div>
@@ -68,7 +68,7 @@
                 }
             },
             canAddPair: function () {
-                return this.pairs.every(pair => pair.key.length > 0);
+                return this.pairs.every(pair => pair.key.length > 0 && pair.value.length > 0);
             },
             removePair: function (index) {
                 this.pairs = this.pairs.filter((_, itemIndex) => itemIndex !== index);
@@ -80,9 +80,23 @@
             }
         },
         computed: {
-            isAddButtonDisabled: function () {
+            addButtonClass() {
                 return {
                     'disabled': !this.canAddPair()
+                }
+            },
+            addButtonStyle() {
+                if (this.canAddPair()) {
+                    return {
+                        'background-color': 'transparent',
+                        color: 'var(--text-color)',
+                        'border-color': 'var(--text-smooth-color)',
+                    }
+                }
+                return {
+                    'background-color': 'var(--stacker-header-background-color)',
+                    color: 'var(--stacker-background-alternative-color)',
+                    'border-color': 'var(--stacker-background-alternative-color)',
                 }
             }
         }

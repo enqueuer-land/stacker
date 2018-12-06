@@ -9,5 +9,6 @@
 - [x] Fix SideBarNode open bug
 - [ ] Pack it up
 - [x] Open directories as single requisitions
+- [x] Add KeyValue and Assertions only when all previous ones are valid
 
 

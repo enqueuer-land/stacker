@@ -7,9 +7,11 @@
         </div>
         <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2">
             <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
-            <div class="col-1 px-0 mb-2">
-                <div class="x-button">
-                    <a href="#" style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);" id="removeIcon">
+            <div class="col-md-auto px-0 mb-2">
+                <div class="x-button pr-2">
+                    <a href="#"
+                       style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);"
+                       id="removeIcon">
                         <i @click="removeAssertion(index)" class="material-icons"
                            style="">highlight_off</i>
                     </a>
@@ -18,6 +20,7 @@
         </div>
         <div class="row px-2">
             <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
+                    :style="addButtonStyle"
                     @click="addAssertion">Add
             </button>
         </div>
@@ -43,13 +46,21 @@
         },
         methods: {
             addAssertion: function () {
-                this.ids.push(generateId());
-                this.assertions.push({})
+                if (this.canAddAssertion()) {
+                    this.ids.push(generateId());
+                    this.assertions.push({
+                        name: `Assertion #${this.assertions.length}`,
+                        expect: ''
+                    })
+                }
             },
             removeAssertion: function (indexToRemove) {
                 this.ids = this.ids.splice(indexToRemove, 1);
                 this.assertions = this.assertions.filter((assertion, index) => index !== indexToRemove);
-            }
+            },
+            canAddAssertion: function () {
+                return this.assertions.every(assertion => Object.keys(assertion).every(key => assertion[key].length > 0));
+            },
         },
         watch: {
             assertions: function () {
@@ -64,6 +75,22 @@
                     });
                 }
             },
+        },
+        computed: {
+            addButtonStyle() {
+                if (this.canAddAssertion()) {
+                    return {
+                        'background-color': 'transparent',
+                        color: 'var(--text-color)',
+                        'border-color': 'var(--text-smooth-color)',
+                    }
+                }
+                return {
+                    'background-color': 'var(--stacker-header-background-color)',
+                    color: 'var(--stacker-background-alternative-color)',
+                    'border-color': 'var(--stacker-background-alternative-color)',
+                }
+            }
         }
     }
 </script>
@@ -75,12 +102,6 @@
 
     #removeIcon :hover {
         color: var(--text-smooth-color);
-    }
-
-    #addButton {
-        background-color: transparent;
-        color: var(--text-color);
-        border-color: var(--text-color);
     }
 
     #addButton:focus, #addButton.focus {
@@ -95,5 +116,7 @@
         border-right: 1px solid var(--stacker-background-alternative-color);
         border-top: 1px solid var(--stacker-background-alternative-color);
         border-bottom: 1px solid var(--stacker-background-alternative-color);
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 </style>
