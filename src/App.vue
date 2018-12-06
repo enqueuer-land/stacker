@@ -10,7 +10,8 @@
             <div id="stage">
                 <Stage/>
             </div>
-            <div id="drag-resultbar" class="dragbar" @mousedown="dragResultBarDown" style="color: var(--stacker-background-alternative-color);"></div>
+            <div id="drag-resultbar" class="dragbar" @mousedown="dragResultBarDown"
+                 style="color: var(--stacker-background-alternative-color);"></div>
             <div id="result">
                 <Result/>
             </div>
@@ -207,6 +208,8 @@
         background-color: transparent;
         border-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
+        height: 32px;
+        font-size: 14px;
     }
 
     .stacker-input:focus {
@@ -228,7 +231,7 @@
 
     #result {
         flex: 0 0 calc(30% - 2px);
-        max-width:  calc(30% - 2px);
+        max-width: calc(30% - 2px);
     }
 
     .dragbar {
