@@ -1,21 +1,22 @@
 <template>
     <div class="assertions container-fluid">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 pb-1" style="font-size: 0.8em; color: var(--text-color)">
                 Assertions
             </div>
         </div>
-        <div v-for="(_, index) in assertions" :key="ids[index]" class="row no-gutter">
-            <assertion v-model="assertions[index]" class="col pr-0"/>
-            <div class="col-1">
-                <a href="#" style="color: var(--text-color)" id="removeIcon">
-                    <i @click="removeAssertion(index)" class="material-icons"
-                       style="transform: scale(0.75)">highlight_off</i>
-                </a>
+        <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2">
+            <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
+            <div class="col-1 px-0 mb-2">
+                <div style="height: 100%; width: 100%; background-color: var(--stacker-background-alternative-color);">
+                    <a href="#" style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);" id="removeIcon">
+                        <i @click="removeAssertion(index)" class="material-icons"
+                           style="">highlight_off</i>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="row px-2">
-            <!--style="background-color: var(--text-color); color: var(&#45;&#45;stacker-background-color); border-color: var(--text-color)"-->
             <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
                     @click="addAssertion">Add
             </button>
@@ -76,8 +77,15 @@
         color: var(--text-smooth-color);
     }
 
-    #addButton :hover {
-        /*border: 2px solid var(--text-smooth-color);*/
+    #addButton {
+        background-color: transparent;
+        color: var(--text-color);
+        border-color: var(--text-color);
+    }
+
+    #addButton:focus, #addButton.focus {
+        outline: 0;
+        box-shadow: 0 0 15px var(--text-smooth-color);
     }
 
 </style>

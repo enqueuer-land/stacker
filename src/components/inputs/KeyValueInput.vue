@@ -14,14 +14,15 @@
                 <div class="input-group-append pl-1">
                     <a href="#" style="color: var(--text-color)">
                         <i @click="removePair(index)" class="material-icons"
-                           style="transform: scale(0.75)">highlight_off</i>
+                           style="">highlight_off</i>
                     </a>
                 </div>
             </div>
         </div>
         <div class="row px-2">
             <button type="button" :class="['btn btn-block btn-sm col', isAddButtonDisabled]"
-                    style="background-color: var(--text-color); color: var(--stacker-background-color); border-color: var(--text-color)"
+                    id="addButton"
+                    style="background-color: transparent; color: var(--text-color); border-color: var(--text-color)"
                     @click="addPair">Add
             </button>
         </div>
@@ -92,5 +93,11 @@
     .key-value-input {
 
     }
+
+    #addButton:focus, #addButton.focus {
+        outline: 0;
+        box-shadow: 0 0 15px var(--text-smooth-color);
+    }
+
 
 </style>

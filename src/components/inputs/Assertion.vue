@@ -1,40 +1,42 @@
 <template>
-    <div class="assertion container-fluid">
-        <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <div class="input-group-append" style="font-size: 0.8em">
-                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        {{possibleAssertions[currentAssertionIndex].label}}
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="(assertion, index) in possibleAssertions" :key="index"
-                           @click="currentAssertionIndex = index">{{assertion.label}}</a>
-                    </div>
-                </div>
-                <input v-model="assertionValue" type="text" class="form-control"
-                       placeholder="expectation"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
-                <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
-                     class="input-group-append"
-                     style="font-size: 0.8em">
-                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        {{possibleAssertions[currentAssertionIndex].criteria[currentCriteriaIndex].label}}
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"
-                           v-for="(criterium, index) in possibleAssertions[currentAssertionIndex].criteria"
-                           :key="index"
-                           @click="currentCriteriaIndex = index"
-                        >{{criterium.label}}</a>
-                    </div>
-                </div>
-                <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
-                       type="text"
-                       placeholder="condition"
-                       class="form-control input-group-append"
-                       v-model="criteriumValue"
-                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
+    <div class="assertion">
+        <div class="row mt-1 pb-2 mx-0">
+            <div style="font-size: 0.8em; color: var(--text-color)">
+                Name
             </div>
+            <input v-model="name" type="text" class="form-control input-class" style="height: 32px">
+        </div>
+        <div class="input-group input-group-sm mb-1 ml-0 mr-0">
+            <div class="input-group-append" style="font-size: 0.8em">
+                <button class="btn dropdown-toggle button-label-class" type="button" data-toggle="dropdown">
+                    {{possibleAssertions[currentAssertionIndex].label}}
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" v-for="(assertion, index) in possibleAssertions" :key="index"
+                       @click="currentAssertionIndex = index">{{assertion.label}}</a>
+                </div>
+            </div>
+            <input v-model="assertionValue" type="text" class="form-control mr-2 input-class"
+                   placeholder="expectation">
+            <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
+                 class="input-group-append"
+                 style="font-size: 0.8em">
+                <button class="btn dropdown-toggle button-label-class" type="button" data-toggle="dropdown">
+                    {{possibleAssertions[currentAssertionIndex].criteria[currentCriteriaIndex].label}}
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"
+                       v-for="(criterium, index) in possibleAssertions[currentAssertionIndex].criteria"
+                       :key="index"
+                       @click="currentCriteriaIndex = index"
+                    >{{criterium.label}}</a>
+                </div>
+            </div>
+            <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
+                   type="text"
+                   placeholder="condition"
+                   class="form-control input-class"
+                   v-model="criteriumValue">
         </div>
     </div>
 </template>
@@ -50,6 +52,7 @@
         data: function () {
             const initialContent = this.getContent();
             return {
+                name: initialContent.name,
                 currentAssertionIndex: initialContent.currentAssertionIndex,
                 currentCriteriaIndex: initialContent.currentCriteriaIndex,
                 assertionValue: initialContent.assertionValue,
@@ -61,6 +64,7 @@
             getContent() {
                 const value = this.value || {};
                 const content = {
+                    name: value.name || '',
                     currentAssertionIndex: 0,
                     currentCriteriaIndex: 0,
                     assertionValue: '',
@@ -86,7 +90,9 @@
                 return content;
             },
             emitChanges: function () {
-                let assertion = {};
+                let assertion = {
+                    name: this.name
+                };
                 let currentAssertion = this.possibleAssertions[this.currentAssertionIndex];
                 assertion[currentAssertion.name] = this.assertionValue;
                 if (currentAssertion.criteria && currentAssertion.criteria.length > 0) {
@@ -96,6 +102,9 @@
             }
         },
         watch: {
+            name() {
+                this.emitChanges();
+            },
             currentAssertionIndex() {
                 this.emitChanges();
             },
@@ -121,7 +130,20 @@
 
 <style scoped>
     .assertion {
+        /*border: 1px solid var(--text-smooth-color);*/
+        background-color: var(--stacker-background-alternative-color);
+    }
 
+    .button-label-class {
+        background-color: var(--stacker-background-color);
+        color: var(--text-color);
+        border-color: var(--text-smooth-color)
+    }
+
+    .input-class {
+        background-color: var(--stacker-background-color);
+        color: var(--text-color);
+        border-color: var(--stacker-background-alternative-color)
     }
 
 </style>
