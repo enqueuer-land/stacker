@@ -1,6 +1,6 @@
 <template>
     <div class="key-value-input container-fluid p-0">
-        <div class="row pt-1 px-2" style="font-size: 0.8em; color: var(--text-color)">
+        <div class="row pt-1 px-2 stacker-label">
             {{title}}
         </div>
         <div class="row px-2">
@@ -14,7 +14,7 @@
                 <div class="input-group-append pl-1">
                     <a href="#" style="color: var(--text-color)">
                         <i @click="removePair(index)" class="material-icons"
-                           style="">highlight_off</i>
+                           style="position: relative; top: calc(50% - 12px)">highlight_off</i>
                     </a>
                 </div>
             </div>
@@ -99,5 +99,7 @@
         box-shadow: 0 0 15px var(--text-smooth-color);
     }
 
-
+    a i.hover, a i:hover {
+        color: var(--text-smooth-color);
+    }
 </style>

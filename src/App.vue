@@ -198,6 +198,11 @@
         background-color: var(--stacker-header-background-color);
     }
 
+    .stacker-label {
+        font-size: 0.8em;
+        color: var(--text-smooth-color);
+    }
+
     #side-bar {
         flex: 0 0 calc(22% - 2px);
         max-width: calc(22% - 2px);

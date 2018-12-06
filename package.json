@@ -53,6 +53,7 @@
     "not ie <= 8"
   ],
   "optionalDependencies": {
-    "amqp": "^0.2.7"
+    "amqp": "^0.2.7",
+    "mqtt": "^2.18.8"
   }
 }

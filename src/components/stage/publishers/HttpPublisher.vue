@@ -1,7 +1,7 @@
 <template>
     <div class="http-publisher container-fluid px-4">
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Timeout
             </div>
         </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 URL
             </div>
         </div>
@@ -37,7 +37,7 @@
         </div>
         <key-value-input v-model="http.headers" title="Headers"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Body
             </div>
         </div>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-3 pr-2 pt-2 pl-2">
                 <div class="row">
-                    <div class="col" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="col stacker-label">
                         Timeout
                     </div>
                 </div>

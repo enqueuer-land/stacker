@@ -2,7 +2,7 @@
     <div class="amqp-publisher container-fluid px-4">
         <key-value-input v-model="amqp.options" title="Connection Options"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Exchange
             </div>
         </div>
@@ -14,7 +14,7 @@
         </div>
         <key-value-input v-model="amqp.exchangeOptions" title="Exchange Options"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Routing Key
             </div>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <key-value-input v-model="amqp.messageOptions.headers" title="Message Headers"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Message
             </div>
         </div>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col pr-2">
                 <div class="row">
-                    <div class="pl-3 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="pl-3 pt-2 stacker-label">
                         Time out
                     </div>
                 </div>
@@ -20,7 +20,7 @@
             </div>
             <div class="col pl-0 pr-2">
                 <div class="row">
-                    <div class="pl-3 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="pl-3 pt-2 stacker-label">
                         Delay
                     </div>
                 </div>
@@ -37,7 +37,7 @@
             </div>
             <div class="col pl-0">
                 <div class="row">
-                    <div class="pl-3 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="pl-3 pt-2 stacker-label">
                         Iterations
                     </div>
                 </div>

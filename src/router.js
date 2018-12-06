@@ -4,6 +4,8 @@ import StageHeader from './components/stage/StageHeader'
 import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import HttpPublisher from './components/stage/publishers/HttpPublisher'
 import AmqpPublisher from './components/stage/publishers/AmqpPublisher'
+import MqttPublisher from './components/stage/publishers/MqttPublisher'
+import MqttSubscription from './components/stage/subscriptions/MqttSubscription'
 import AmqpSubscription from './components/stage/subscriptions/AmqpSubscription'
 import HttpSubscription from './components/stage/subscriptions/HttpSubscription'
 import store from './store'
@@ -61,7 +63,12 @@ export default new Router({
                     path: "amqp",
                     component: AmqpPublisher,
                     props: (route) => stageBodyPropsBuilder(route)
-                }
+                },
+                {
+                    path: "mqtt",
+                    component: MqttPublisher,
+                    props: (route) => stageBodyPropsBuilder(route)
+                },
             ],
 
         },
@@ -78,6 +85,11 @@ export default new Router({
                 {
                     path: "amqp",
                     component: AmqpSubscription,
+                    props: (route) => stageBodyPropsBuilder(route)
+                },
+                {
+                    path: "mqtt",
+                    component: MqttSubscription,
                     props: (route) => stageBodyPropsBuilder(route)
                 }
             ],

@@ -1,14 +1,14 @@
 <template>
     <div class="assertions container-fluid">
         <div class="row">
-            <div class="pl-2 pt-2 pb-1" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Assertions
             </div>
         </div>
         <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2">
             <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
             <div class="col-1 px-0 mb-2">
-                <div style="height: 100%; width: 100%; background-color: var(--stacker-background-alternative-color);">
+                <div class="x-button">
                     <a href="#" style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);" id="removeIcon">
                         <i @click="removeAssertion(index)" class="material-icons"
                            style="">highlight_off</i>
@@ -88,4 +88,12 @@
         box-shadow: 0 0 15px var(--text-smooth-color);
     }
 
+    .x-button {
+        height: 100%;
+        width: 100%;
+        background-color: var(--stacker-header-background-color);
+        border-right: 1px solid var(--stacker-background-alternative-color);
+        border-top: 1px solid var(--stacker-background-alternative-color);
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
+    }
 </style>

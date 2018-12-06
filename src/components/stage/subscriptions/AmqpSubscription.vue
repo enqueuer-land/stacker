@@ -1,11 +1,11 @@
 <template>
-    <div class="amqp-publisher container-fluid px-4">
+    <div class="amqp-subscription container-fluid px-4">
         <div class="row">
             <common-subscription :timeout.sync="amqp.timeout" :avoid.sync="amqp.avoid"></common-subscription>
         </div>
         <key-value-input v-model="amqp.options" title="Connection Options"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Queue
             </div>
         </div>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Exchange
             </div>
         </div>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Routing Key
             </div>
         </div>
@@ -47,7 +47,7 @@
     import CommonSubscription from "../../inputs/CommonSubscription";
 
     export default {
-        name: 'AmqpPublisher',
+        name: 'AmqpSubscription',
         components: {CommonSubscription, ObjectFormatter, KeyValueInput},
         props: {
             item: {},
@@ -118,7 +118,7 @@
 </script>
 
 <style scoped>
-    .amqp-publisher {
+    .amqp-subscription {
 
     }
 

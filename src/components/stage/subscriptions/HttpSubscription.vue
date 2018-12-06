@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-3 pl-2 pr-1">
                 <div class="row">
-                    <div class="pt-2 pl-3" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="pt-2 pl-3 stacker-label">
                         Port
                     </div>
                 </div>
@@ -19,7 +19,7 @@
             </div>
             <div class="col pr-4">
                 <div class="row">
-                    <div class="pt-2 pl-1" style="font-size: 0.8em; color: var(--text-color)">
+                    <div class="pt-2 pl-1 stacker-label">
                         Endpoint
                     </div>
                 </div>
@@ -45,7 +45,7 @@
         </div>
         <key-value-input v-model="http.response.headers" title="Headers"/>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Status Code
             </div>
         </div>
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="pl-2 pt-2" style="font-size: 0.8em; color: var(--text-color)">
+            <div class="pl-2 pt-2 stacker-label">
                 Payload
             </div>
         </div>
@@ -165,4 +165,5 @@
     .http-subscription {
 
     }
+
 </style>

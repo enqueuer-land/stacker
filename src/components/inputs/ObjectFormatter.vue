@@ -3,8 +3,7 @@
         <div class="row" style="background-color: var(--stacker-background-alternative-color); border-radius: 4px;">
             <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons">
                 <a v-for="(formatter, index) in formatters" :key="index" @click="selectIndex(index)" href="#"
-                   :class="['btn', index === selectedIndex ? 'active enabled-label' : 'disabled-label']"
-                >
+                   :class="['btn', index === selectedIndex ? 'active enabled-label' : 'disabled-label']">
                     <input type="radio" name="formatters">{{formatter.name}}
                 </a>
             </div>

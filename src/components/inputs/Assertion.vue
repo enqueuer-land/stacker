@@ -1,7 +1,7 @@
 <template>
     <div class="assertion">
         <div class="row mt-1 pb-2 mx-0">
-            <div style="font-size: 0.8em; color: var(--text-color)">
+            <div class="mb-1 stacker-label">
                 Name
             </div>
             <input v-model="name" type="text" class="form-control input-class" style="height: 32px">
@@ -131,8 +131,12 @@
 <style scoped>
     .assertion {
         /*border: 1px solid var(--text-smooth-color);*/
-        background-color: var(--stacker-background-alternative-color);
+        background-color: var(--stacker-header-background-color);
+        border-left: 1px solid var(--stacker-background-alternative-color);
+        border-top: 1px solid var(--stacker-background-alternative-color);
+        border-bottom: 1px solid var(--stacker-background-alternative-color);
     }
+
 
     .button-label-class {
         background-color: var(--stacker-background-color);
