@@ -11,7 +11,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
                 <input v-model="mqtt.brokerAddress" type="text" class="form-control stacker-label"
-                       placeholder="mqtt://localhost"
+                       placeholder="mqtt://iot.eclipse.org"
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>

@@ -9,34 +9,30 @@
                     {{result.name}}
                 </span>
             </div>
-            <div class="row no-gutters pb-1">
-                <div class="col-12 align-self-center pl-2 pt-0">
-                    <div class="row no-gutters">
-                        <div class="col-4">
+            <div class="row no-gutters pb-1 pl-2 pt-0 justify-content-between">
+                <div class="col-md-auto">
                             <span class="title">
                                 Tests:
                             </span>
-                            <span class="tag"
-                                  :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
+                    <span class="tag"
+                          :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
                                 {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
                                 ({{Math.trunc(tests.getPercentage())}}%)
                             </span>
-                        </div>
-                        <div class="col-4 pl-3">
+                </div>
+                <div class="col-md-auto">
                             <span class="title">
                                 Time:
                             </span>
-                            <span class="time align-self-center">
+                    <span class="time align-self-center">
                                 {{printTime()}}
                             </span>
-                        </div>
-                        <span class="col-4 align-self-end pr-1 title" style="text-align: right; font-size: 0.75em">
+                </div>
+                <span class="col-md-auto align-self-end title pr-2" style="text-align: right; font-size: 0.75em">
                             {{timeAgo}}
                         </span>
-                    </div>
-                </div>
             </div>
-            <div class="row" style="height: 15%" />
+            <div class="row" style="height: 15%"/>
             <div class="row">
                 <div class="col pt-0 pl-4">
                     <div class="input-group input-group-sm">
@@ -127,25 +123,20 @@
         color: var(--text-smooth-color);
     }
 
-    .custom-file-input {
-        height: 100%;
-        opacity: 0;
-    }
-
     .tag {
-        font-size: 0.9em;
+        font-size: 0.8em;
         text-align: right;
     }
 
     .title {
-        font-size: 0.9em;
+        font-size: 0.8em;
         text-align: right;
         font-weight: lighter;
         color: var(--text-smooth-color);
     }
 
     .time {
-        font-size: 0.9em;
+        font-size: 0.8em;
         text-align: right;
         font-weight: lighter;
         color: var(--passing-test-color);

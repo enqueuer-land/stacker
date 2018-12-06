@@ -29,6 +29,8 @@
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                                @click="console.log('list')"
+                                id="protocol-list-button"
                                 :style="protocolsListStyle">
                             {{selectedProtocol}}
                         </button>
@@ -282,5 +284,10 @@
     #run-button:focus, #run-button.focus {
         outline: 0;
         box-shadow: 0 0 15px var(--requisition-color);
+    }
+
+    #protocol-list-button:focus, #protocol-list-button.focus {
+        outline: 0;
+        box-shadow: none;
     }
 </style>

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
                 <input v-model="mqtt.brokerAddress" type="text" class="form-control" id="mqttPublisherBroker"
-                       placeholder="mqtt://localhost"
+                       placeholder="mqtt://iot.eclipse.org"
                        style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="input-group input-group-sm ml-2 mr-2">
                 <input v-model="mqtt.topic" type="text" class="form-control" id="mqttPublisherTopic"
-                       style="background-color: transparent; color: var(--text-smooth-color); border-color: var(--stacker-background-alternative-color)">
+                       style="background-color: transparent; color: var(--text-color); border-color: var(--stacker-background-alternative-color)">
             </div>
         </div>
         <div class="row">
