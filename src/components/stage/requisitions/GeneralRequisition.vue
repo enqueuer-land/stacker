@@ -51,18 +51,18 @@
         <div class="row pt-5">
             <button type="button" class="btn btn-sm col mx-3"
                     style="border-color: var(--requisition-color); color: var(--requisition-color); background-color: transparent"
-                    @click="addRequisition">
-                Add requisition
+                    @click="newRequisition">
+                New requisition
             </button>
             <button type="button" class="btn btn-sm col mx-3"
                     style="border-color: var(--publisher-color); color: var(--publisher-color); background-color: transparent"
-                    @click="addPublisher">
-                Add publisher
+                    @click="newPublisher">
+                New publisher
             </button>
             <button type="button" class="btn btn-sm col mx-3"
                     style="border-color: var(--subscription-color); color: var(--subscription-color); background-color: transparent"
-                    @click="addSubscription">
-                Add subscription
+                    @click="newSubscription">
+                New subscription
             </button>
 
         </div>
@@ -93,13 +93,13 @@
                 };
                 this.$emit('input', payload);
             },
-            addRequisition() {
+            newRequisition() {
                 this.$store.commit('addRequisition', {parent: this.item, router: this.$router});
             },
-            addPublisher() {
+            newPublisher() {
                 this.$store.commit('addPublisher', {parent: this.item, router: this.$router});
             },
-            addSubscription() {
+            newSubscription() {
                 this.$store.commit('addSubscription', {parent: this.item, router: this.$router});
             },
         },

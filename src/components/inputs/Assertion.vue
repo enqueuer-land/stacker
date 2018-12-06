@@ -143,4 +143,8 @@
         border-color: var(--text-smooth-color)
     }
 
+    .button-label-class:focus, .button-label-class.focus {
+        outline: 0;
+        box-shadow: 0 0 15px var(--text-smooth-color);
+    }
 </style>

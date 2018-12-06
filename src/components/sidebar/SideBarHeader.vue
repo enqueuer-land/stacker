@@ -12,10 +12,8 @@
                 </header>
                 <div class="col align-self-end">
                     <div class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"
-                           style="color: var(--enqueuer-color); position: relative; top: -10px; left: 0px">
-                            <i class="material-icons"
-                               style="transform: scale(1.1); text-shadow: 0 0 30px var(--stacker-background-alternative-color);">add_circle</i>
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="material-icons add-button-class">add_circle</i>
                         </a>
                         <dropdown-component :value="actions"></dropdown-component>
                     </div>
@@ -48,13 +46,16 @@
     export default {
         name: 'SideBarHeader',
         components: {DropdownComponent},
+        beforeCreate() {
+            setInterval(() => {
+                const addButtonClass = $('.add-button-class');
+                addButtonClass.addClass('rotated-add-button-class');
+                setTimeout(() => addButtonClass.removeClass('rotated-add-button-class'), 800);
+            }, 10000);
+        },
         data: function () {
             return {
                 actions: [
-                    {
-                      name: 'Requisition',
-                      header: true,
-                    },
                     {
                         name: "Import requisitions",
                         click: () => {
@@ -77,10 +78,6 @@
                     },
                     {
                         divider: true,
-                    },
-                    {
-                        name: 'Response',
-                        header: true,
                     },
                     {
                         name: "Import responses",
@@ -119,7 +116,6 @@
 <style scoped>
 
     #side-bar-header {
-        /*height: 120px;*/
         transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
         font-size: 550%;
@@ -128,17 +124,22 @@
         letter-spacing: -15px;
     }
 
-    .dropdown-toggle > i:hover {
-        color: var(--text-smooth-color);
-    }
-
     .dropdown-toggle::after {
         display: none !important;
     }
 
-    .custom-file-input {
-        height: 100%;
-        opacity: 0;
+    .add-button-class {
+        transform: scale(1.2) rotate(10deg);
+        text-shadow: 0 0 30px var(--stacker-background-alternative-color);
+        color: var(--enqueuer-color);
+        position: relative;
+        top: -5px;
+        left: 0;
+        transition: transform 400ms ease, top 400ms ease;
     }
 
+    .add-button-class:hover, .rotated-add-button-class {
+        transform: scale(1.8);
+        top: 0;
+    }
 </style>

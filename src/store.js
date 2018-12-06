@@ -25,40 +25,6 @@ export default new Vuex.Store({
                         commit('saveRequisition', {item: item});
                     }
                 },
-                // {
-                //     name: "Expand",
-                //     click: (commit, item) => {
-                //         commit('expandRequisition', {item: item});
-                //     }
-                // },
-                {
-                    divider: true,
-                    name: null,
-                    click: () => null
-                },
-                {
-                    header: true,
-                    name: "Create",
-                    click: () => null
-                },
-                {
-                    name: "Add requisition",
-                    click: (commit, item, router) => {
-                        commit('addRequisition', {parent: item, router: router});
-                    }
-                },
-                {
-                    name: "Add publisher",
-                    click: (commit, item, router) => {
-                        commit('addPublisher', {parent: item, router: router});
-                    }
-                },
-                {
-                    name: "Add subscription",
-                    click: (commit, item, router) => {
-                        commit('addSubscription', {parent: item, router: router});
-                    }
-                },
                 {
                     divider: true,
                     name: null,
@@ -213,7 +179,7 @@ export default new Vuex.Store({
     mutations: {
         saveRequisition(state, payload) {
             window.remote.dialog.showSaveDialog({
-                defaultPath: payload.item.name + '.stk.json',
+                defaultPath: payload.item.name + '.stk',
                 showsTagField: false,
             }, (filename) => {
                 if (filename) {

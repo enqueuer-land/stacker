@@ -85,6 +85,7 @@
                         };
                     } else {
                         return {
+                            'font-weight': 'lighter',
                             'color': this.color,
                             'border-bottom': '2px solid ' + this.color,
                         }

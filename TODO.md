@@ -7,6 +7,8 @@
 - [x] Fix SideBarNode open bug
 - [x] Open directories as single requisitions
 - [x] Add KeyValue and Assertions only when all previous ones are valid
+- [x] Tooltips tell what's wrong with stage bodies
+- [ ] Import requisition inside requisition
 - [ ] Create Object Builder
 - [ ] Create Stage Header Header
 - [ ] Pack it up

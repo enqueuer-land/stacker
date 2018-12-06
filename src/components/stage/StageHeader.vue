@@ -28,7 +28,6 @@
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
                         <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                @click="console.log('list')"
                                 id="protocol-list-button"
                                 :style="protocolsListStyle">
                             {{selectedProtocol}}
@@ -264,6 +263,7 @@
     .breadcrumb-item::before {
         content: '›';
         padding-right: 3px;
+        color: var(--text-color);
     }
 
     .breadcrumb-item a:hover {
