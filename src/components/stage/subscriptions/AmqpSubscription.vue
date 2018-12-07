@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.queueName" type="text" class="form-control stacker-input" id="amqpSubscriptionQueue">
+                <input v-model="amqp.queueName" type="text" class="form-control stacker-input" id="amqpSubscriptionQueue" placeholder="Queue Name">
             </div>
         </div>
         <div class="row">
@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.exchange" type="text" class="form-control stacker-input"  id="amqpSubscriptionExchange">
+                <input v-model="amqp.exchange" type="text" class="form-control stacker-input"  id="amqpSubscriptionExchange" placeholder="Exchange Name">
             </div>
         </div>
         <div class="row">

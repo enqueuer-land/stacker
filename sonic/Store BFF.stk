@@ -427,8 +427,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"storeId\":\"<<storeNumber>>\",\"status\":\"INITIATED\",\"visitLocator\":12,\"visitorId\":\"<<user.id>>\",\"createdAt\":987,\"updatedAt\":987,\"optionalClientId\":987}",
-                "format": "raw",
+                "payload": "{\n    \"storeId\": \"<<storeNumber>>\",\n    \"status\": \"INITIATED\",\n    \"visitLocator\": 12,\n    \"visitorId\": \"<<user.id>>\",\n    \"createdAt\": 987,\n    \"updatedAt\": 987,\n    \"optionalClientId\": 987\n}",
+                "format": "json",
                 "status": "200"
               }
             },
@@ -462,8 +462,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"profilePictureUrl\":\"http://profilepicture.com\"}",
-                "format": "raw",
+                "payload": "{\n    \"profilePictureUrl\": \"http://profilepicture.com\"\n}",
+                "format": "json",
                 "status": "200"
               }
             },
@@ -499,8 +499,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"orderId\":123456}",
-                "format": "raw",
+                "payload": "{\n    \"orderId\": 123456\n}",
+                "format": "json",
                 "status": "200"
               }
             },
@@ -531,8 +531,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"posTicketId\":\"posTickerId\"}",
-                "format": "raw",
+                "payload": "{\n    \"posTicketId\": \"posTickerId\"\n}",
+                "format": "json",
                 "status": "200"
               }
             },
@@ -764,8 +764,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"orderId\":123456}",
-                "format": "raw",
+                "payload": "{\n    \"orderId\": 123456\n}",
+                "format": "json",
                 "status": "200"
               }
             },
@@ -796,8 +796,8 @@
               "method": "GET",
               "headers": {},
               "response": {
-                "payload": "{\"posTicketId\":\"posTickerId\"}",
-                "format": "raw",
+                "payload": "{\n    \"posTicketId\": \"posTickerId\"\n}",
+                "format": "json",
                 "status": "200"
               }
             },

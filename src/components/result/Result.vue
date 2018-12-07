@@ -48,14 +48,14 @@
         },
         watch: {
             '$store.state.results'() {
-                const now = new Date().getTime();
-                const elapsedTime = now - this.running;
-                setTimeout(() => {
+                // const now = new Date().getTime();
+                // const elapsedTime = now - this.running;
+                // setTimeout(() => {
                     $('#runningModal').modal('hide');
                     this.running = null;
                     const results = this.$store.state.results;
                     this.result = this.$store.state.results[results.length - 1];
-                }, minAnimationTime - elapsedTime);
+                // }, Math.abs(minAnimationTime - elapsedTime));
             }
         }
     }

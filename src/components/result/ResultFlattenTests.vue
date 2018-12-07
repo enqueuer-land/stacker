@@ -17,9 +17,15 @@
         },
         watch: {
             node: function () {
+                let now = new Date();
+                console.log('Start parsing');
+                console.log('Now: ' + now.toISOString());
                 let testsSummary = new FlattenTestsSummary();
                 testsSummary.addTest(this.node);
                 this.testsSummary = testsSummary.getTests();
+                now = new Date();
+                console.log('Now: ' + now.toISOString());
+                console.log('Parsing is over');
             }
         },
         data: function () {

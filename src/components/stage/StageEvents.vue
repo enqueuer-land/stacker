@@ -142,7 +142,7 @@
     }
 
     .button-icon {
-        transform: scale(0.75);
+        transform: scale(0.75) rotate(90deg);
         position: relative;
         top: 6px;
         transition: transform 400ms ease

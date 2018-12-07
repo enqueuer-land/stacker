@@ -164,9 +164,10 @@
         background-color: var(--stacker-background-alternative-color);
     }
 
-    .dropdown-item :active {
-        /*color: var(--text-color);*/
-        background-color: var(--stacker-background-alternative-color) !important;
+    .dropdown-item.active, .dropdown-item:active {
+        text-decoration: none;
+        background-color: var(--stacker-background-color);
+        color: var(--text-smooth-color);
     }
 
     .dropdown-item :hover {
@@ -178,16 +179,12 @@
         height: 0;
         margin: .01rem 0;
         overflow: hidden;
-        /*border-top: 1px solid var(--text-smooth-color);*/
     }
 
     .dropdown-header {
-        /*display: block;*/
         padding: .1rem .5rem;
-        /*margin-bottom: 0;*/
         font-size: .75em;
         color: var(--text-smooth-color);
-        /*white-space: nowrap;*/
         background-color: var(--stacker-header-background-color);
     }
 

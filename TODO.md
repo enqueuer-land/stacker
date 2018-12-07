@@ -9,9 +9,9 @@
 - [x] Add KeyValue and Assertions only when all previous ones are valid
 - [x] Tooltips tell what's wrong with stage bodies
 - [x] Individuals vertical scroll bars
-- [ ] Do not close requisitions when select it and it was not previously selected
 - [x] Collapsible KeyValueInput items
-- [ ] Collapsible Assertions
+- [x] Collapsible Assertions
+- [ ] Do not close requisitions when select it and it was not previously selected
 - [ ] Collapsible Assertion
 - [ ] Clipboard events
 - [ ] Set Icon
