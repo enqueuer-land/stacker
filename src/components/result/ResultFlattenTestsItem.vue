@@ -197,7 +197,7 @@
         min-height: 32px;
         color: var(--text-smooth-color);
         background-color: var(--stacker-background-color);
-        border-top: 1px solid var(--stacker-header-background-color);
+        border-top: 1px solid var(--stacker-background-alternative-color);
         border-left: 5px solid var(--stacker-background-alternative-color);
     }
 

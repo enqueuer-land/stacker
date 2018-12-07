@@ -1,6 +1,7 @@
 <template>
     <div class="stacker-header" :style="resultHeaderStyle">
         <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
+           @mousemove="updateTooltips"
            @mouseleave="mouseIsOver = false">
             <div class="row no-gutters">
                 <span class="col-11 pt-2 align-self-end pl-2"
@@ -51,10 +52,14 @@
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
                     <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i @click="filter.showPassingTests = !filter.showPassingTests" :class="showPassingTestsButtonClass">check_circle_outline</i>
+                        <i @click="filter.showPassingTests = !filter.showPassingTests"
+                           id="showPassingTests"
+                           :class="showPassingTestsButtonClass">check_circle_outline</i>
                     </a>
                     <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i @click="filter.showFailingTests = !filter.showFailingTests" :class="showFailingTestsButtonClass">highlight_off</i>
+                        <i @click="filter.showFailingTests = !filter.showFailingTests"
+                           id="showFailingTests"
+                           :class="showFailingTestsButtonClass">highlight_off</i>
                     </a>
                 </div>
             </div>
@@ -140,7 +145,21 @@
                 if (this.result) {
                     return new TimeHandler().getTotalTime(this.result.time.totalTime);
                 }
-            }
+            },
+            updateTooltips() {
+                const toolTipProperties = {
+                    html: true,
+                    placement: 'auto'
+                };
+
+                toolTipProperties.title = `Show <b style="color: var(--passing-test-color);">passing</b> tests`,
+                $('#showPassingTests')
+                    .tooltip(toolTipProperties);
+
+                toolTipProperties.title = `Show <b style="color: var(--failing-test-color);">failing</b> tests`,
+                $('#showFailingTests')
+                    .tooltip(toolTipProperties);
+            },
         }
     }
 </script>
@@ -176,32 +195,32 @@
 
     .small-button {
         color: var(--text-smooth-color);
-        transform: scale(0.75) rotate(30deg);
+        transform: scale(1) rotate(30deg);
         transition: transform 100ms ease
     }
 
     .small-button:hover {
         color: var(--text-color);
-        transform: scale(0.8) rotate(20deg);
+        transform: scale(1.05) rotate(20deg);
     }
 
     .small-button-passing-tests {
         color: var(--passing-test-color);
-        transform: scale(0.85);
+        transform: scale(1.1);
     }
 
     .small-button-passing-tests:hover {
         color: var(--passing-test-color);
-        transform: scale(0.95);
+        transform: scale(1.4);
     }
 
     .small-button-failing-tests {
         color: var(--failing-test-color);
-        transform: scale(0.85);
+        transform: scale(1.1);
     }
 
     .small-button-failing-tests:hover {
         color: var(--failing-test-color);
-        transform: scale(0.95);
+        transform: scale(1.4);
     }
 </style>
