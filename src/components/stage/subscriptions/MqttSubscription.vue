@@ -14,7 +14,11 @@
                        placeholder="mqtt://iot.eclipse.org">
             </div>
         </div>
-        <key-value-input v-model="mqtt.options" title="Connection Options"/>
+        <div class="row">
+            <div class="col px-2">
+                <key-value-input v-model="mqtt.options" title="Connection Options"/>
+            </div>
+        </div>
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 Topic

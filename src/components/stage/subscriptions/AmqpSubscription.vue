@@ -3,7 +3,9 @@
         <div class="row">
             <common-subscription :timeout.sync="amqp.timeout" :avoid.sync="amqp.avoid"></common-subscription>
         </div>
-        <key-value-input v-model="amqp.options" title="Connection Options"/>
+        <div class="row">
+            <key-value-input class="col px-2" v-model="amqp.options" title="Connection Options"/>
+        </div>
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 Queue

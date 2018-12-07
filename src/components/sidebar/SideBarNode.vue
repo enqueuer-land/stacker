@@ -1,6 +1,6 @@
 <template>
     <div class="side-bar-node mb-0 mt-0">
-        <div class="card" style="border: none;">
+        <div style="border: none;">
             <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id">
                 <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
             </div>

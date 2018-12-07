@@ -8,9 +8,9 @@
 - [x] Open directories as single requisitions
 - [x] Add KeyValue and Assertions only when all previous ones are valid
 - [x] Tooltips tell what's wrong with stage bodies
-- [ ] Do not close requisitions when select it and it was not previously selected
 - [x] Individuals vertical scroll bars
-- [ ] Collapsible KeyValueInput items
+- [ ] Do not close requisitions when select it and it was not previously selected
+- [x] Collapsible KeyValueInput items
 - [ ] Collapsible Assertions
 - [ ] Collapsible Assertion
 - [ ] Clipboard events

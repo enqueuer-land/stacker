@@ -1,5 +1,5 @@
 <template>
-    <div class="event px-4">
+    <div class="event px-3">
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 Script
@@ -15,7 +15,9 @@
         <div class="row pb-1">
             <assertions v-model="assertions"/>
         </div>
-        <key-value-input v-model="store" title="Store"/>
+        <div class="row">
+            <key-value-input class="col px-2" v-model="store" title="Store"/>
+        </div>
     </div>
 </template>
 

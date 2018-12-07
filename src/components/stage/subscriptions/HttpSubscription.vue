@@ -41,7 +41,11 @@
                 </div>
             </div>
         </div>
-        <key-value-input v-model="http.response.headers" title="Headers"/>
+        <div class="row">
+            <div class="col px-2">
+                <key-value-input v-model="http.response.headers" title="Headers"/>
+            </div>
+        </div>
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 Status Code
