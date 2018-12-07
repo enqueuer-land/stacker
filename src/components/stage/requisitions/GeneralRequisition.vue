@@ -49,18 +49,18 @@
         </div>
 
         <div class="row pt-5">
-            <button type="button" class="btn btn-sm col mx-3"
-                    style="border-color: var(--requisition-color); color: var(--requisition-color); background-color: transparent"
+            <button type="button" class="btn btn-sm col mx-3 add-button"
+                    style="border-color: var(--requisition-color); color: var(--requisition-color);"
                     @click="newRequisition">
                 New requisition
             </button>
-            <button type="button" class="btn btn-sm col mx-3"
-                    style="border-color: var(--publisher-color); color: var(--publisher-color); background-color: transparent"
+            <button type="button" class="btn btn-sm col mx-3 add-button"
+                    style="border-color: var(--publisher-color); color: var(--publisher-color);"
                     @click="newPublisher">
                 New publisher
             </button>
-            <button type="button" class="btn btn-sm col mx-3"
-                    style="border-color: var(--subscription-color); color: var(--subscription-color); background-color: transparent"
+            <button type="button" class="btn btn-sm col mx-3 add-button"
+                    style="border-color: var(--subscription-color); color: var(--subscription-color);"
                     @click="newSubscription">
                 New subscription
             </button>
@@ -126,6 +126,16 @@
 <style scoped>
     .general-requisition {
 
+    }
+
+    .add-button {
+        background-color: transparent;
+    }
+
+    .add-button:hover, .add-button.hover {
+        outline: 0;
+        background-color: var(--stacker-background-alternative-color);
+        box-shadow: 0 0 5px var(--text-color);
     }
 
 </style>

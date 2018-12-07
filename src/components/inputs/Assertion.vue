@@ -12,8 +12,8 @@
                     {{possibleAssertions[currentAssertionIndex].label}}
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" v-for="(assertion, index) in possibleAssertions" :key="index"
-                       @click="currentAssertionIndex = index">{{assertion.label}}</a>
+                    <div style="cursor :pointer;" class="dropdown-item" v-for="(assertion, index) in possibleAssertions" :key="index"
+                       @click="currentAssertionIndex = index">{{assertion.label}}</div>
                 </div>
             </div>
             <input v-model="assertionValue" type="text" class="form-control stacker-input"
@@ -25,11 +25,11 @@
                     {{possibleAssertions[currentAssertionIndex].criteria[currentCriteriaIndex].label}}
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"
+                    <div style="cursor :pointer;"  class="dropdown-item"
                        v-for="(criterium, index) in possibleAssertions[currentAssertionIndex].criteria"
                        :key="index"
                        @click="currentCriteriaIndex = index"
-                    >{{criterium.label}}</a>
+                    >{{criterium.label}}</div>
                 </div>
             </div>
             <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"

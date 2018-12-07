@@ -1,29 +1,38 @@
 <template>
-    <div class="assertions container-fluid">
-        <div class="row">
-            <div class="pl-2 pt-2 stacker-label">
-                Assertions
+    <div class="assertions container pl-0">
+        <div class="row no-gutters pt-1 stacker-label"
+             data-toggle="collapse" :data-target="'#' + id"
+             @click="headerClick">
+            <div class="col-4 row no-gutters">
+                <div class="col-md-auto pl-2 title-class">
+                    Assertions {{`(${assertions.length})`}}
+                </div>
+                <i class="col-md-auto material-icons showing-icon" :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
             </div>
+            <div v-if="!showValues" class="col" style="border-top: var(--text-smooth-color) 1px solid; position: relative; top: 10px"></div>
         </div>
-        <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2">
-            <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
-            <div class="col-md-auto px-0 mb-2">
-                <div class="x-button pr-2">
-                    <a href="#"
-                       style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);"
-                       id="removeIcon">
-                        <i @click="removeAssertion(index)" class="material-icons"
-                           style="">highlight_off</i>
-                    </a>
+        <div :id="id" class="collapse">
+            <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2 no-gutters">
+                <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
+                <div class="col-md-auto px-0 mb-2">
+                    <div class="x-button pr-2">
+                        <a href="#"
+                           style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);"
+                           id="removeIcon">
+                            <i @click="removeAssertion(index)" class="material-icons"
+                               style="">highlight_off</i>
+                        </a>
+                    </div>
                 </div>
             </div>
+            <div class="row px-2 no-gutters">
+                <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
+                        :style="addButtonStyle"
+                        @click="addAssertion">Add
+                </button>
+            </div>
         </div>
-        <div class="row px-2">
-            <button type="button" :class="['btn btn-block btn-sm col']" id="addButton"
-                    :style="addButtonStyle"
-                    @click="addAssertion">Add
-            </button>
-        </div>
+        <div v-if="showValues" class="row no-gutters mt-3 mx-4" style="border-bottom: var(--text-smooth-color) 1px solid;"></div>
     </div>
 </template>
 
@@ -40,11 +49,24 @@
         },
         data: function () {
             return {
+                id: generateId(),
+                showValues: false,
                 ids: (this.value || []).map(() => generateId()),
                 assertions: this.value || [],
             }
         },
         methods: {
+            headerClick() {
+                const isShowing = !$('#' + this.id).hasClass('show');
+                const showingIcon = $('#' + this.id + 'ShowingIcon');
+                if (isShowing) {
+                    showingIcon.addClass('showing-icon-active');
+                    this.showValues = true;
+                } else {
+                    this.showValues = false;
+                    showingIcon.removeClass('showing-icon-active');
+                }
+            },
             addAssertion: function () {
                 if (this.canAddAssertion()) {
                     this.ids.push(generateId());
@@ -109,6 +131,11 @@
         box-shadow: 0 0 15px var(--text-smooth-color);
     }
 
+    #addButton:hover, #addButton.hover {
+        outline: 0;
+        box-shadow: 0 0 5px var(--text-color);
+    }
+
     .x-button {
         height: 100%;
         width: 100%;
@@ -119,4 +146,32 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+
+
+    .title-class {
+        color: var(--text-smooth-color);
+        cursor: pointer;
+    }
+
+    .title-class:hover, .title-class.hover {
+        color: var(--text-color);
+    }
+
+    .showing-icon {
+        color: var(--text-color);
+        transform: scale(0.9);
+        position: relative;
+        top: -2px;
+        transition: transform 50ms ease;
+        cursor: pointer;
+    }
+
+    .showing-icon:hover {
+        transform: scale(0.85) rotate(45deg);
+    }
+
+    .showing-icon-active {
+        transform: scale(0.7) rotate(90deg);
+    }
+
 </style>

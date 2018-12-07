@@ -6,7 +6,7 @@
              @click="headerClick">
             <div class="col-4 row no-gutters">
                 <div class="col-md-auto title-class">
-                    {{title}}
+                    {{title}}{{` (${pairs.length})`}}
                 </div>
                 <i class="col-md-auto material-icons showing-icon" :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
             </div>
@@ -138,6 +138,11 @@
     #addButton:focus, #addButton.focus {
         outline: 0;
         box-shadow: 0 0 15px var(--text-smooth-color);
+    }
+
+    #addButton:hover, #addButton.hover {
+        outline: 0;
+        box-shadow: 0 0 5px var(--text-color);
     }
 
     .title-class {

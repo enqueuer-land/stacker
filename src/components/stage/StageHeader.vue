@@ -27,8 +27,7 @@
                     <input v-model="item.name" type="text" class="form-control stacker-input"
                            placeholder="Name">
                     <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
-                        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
-                                id="protocol-list-button"
+                        <button class="btn dropdown-toggle select-protocol-button" type="button" data-toggle="dropdown"
                                 :style="protocolsListStyle">
                             {{selectedProtocol}}
                         </button>
@@ -41,8 +40,7 @@
                         </div>
                     </div>
                     <div v-else class="input-group-append stage-header-main-dropdown">
-                        <button :class="runButtonClass"
-                                id="run-button"
+                        <button :class="[runButtonClass, 'run-button']"
                                 style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
                                 @click="runClick(item)"
                                 type="button">RUN
@@ -266,11 +264,7 @@
         color: var(--text-color);
     }
 
-    .breadcrumb-item a:hover {
-        color: var(--text-color);
-    }
-
-    .breadcrumb-item a:focus {
+    .breadcrumb-item :hover, .breadcrumb-item .hover, .breadcrumb-item :focus, .breadcrumb-item .focus {
         color: var(--text-color);
     }
 
@@ -278,14 +272,12 @@
         display: none;
     }
 
-    #run-button:focus, #run-button.focus {
+    .run-button:focus, .run-button.focus,
+    .run-button:hover, .run-button.hover,
+    .select-protocol-button:focus, .select-protocol-button.focus,
+    .select-protocol-button:hover, .select-protocol-button.hover {
         outline: 0;
-        box-shadow: 0 0 15px var(--requisition-color);
-    }
-
-    #protocol-list-button:focus, #protocol-list-button.focus {
-        outline: 0;
-        box-shadow: none;
+        box-shadow: 0 0 15px var(--text-color);
     }
 
 </style>
