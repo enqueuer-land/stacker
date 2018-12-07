@@ -412,7 +412,7 @@
                 "script": "params.visitId",
                 "assertions": [
                   {
-                    "name": "Assertion #0",
+                    "name": "Publish Response Code",
                     "expect": "params.visitId",
                     "toBeEqualTo": "subscription.parent.publishers[0].payload.body.visitId"
                   }
@@ -446,7 +446,7 @@
                 "script": "\n",
                 "assertions": [
                   {
-                    "name": "Assertion #0",
+                    "name": "Publish Response Code",
                     "expect": "params.customerId",
                     "toBeEqualTo": "store.user.id"
                   }
@@ -479,7 +479,7 @@
               "onMessageReceived": {
                 "assertions": [
                   {
-                    "name": "Assertion #0",
+                    "name": "Publish Response Code",
                     "expect": "query.storeId",
                     "toBeEqualTo": "<<storeNumber>>"
                   },
@@ -516,7 +516,7 @@
               "onMessageReceived": {
                 "assertions": [
                   {
-                    "name": "Assertion #0",
+                    "name": "Publish Response Code",
                     "expect": "params.orderId",
                     "toBeEqualTo": "subscription.parent.subscriptions[2].response.payload.orderId"
                   }
@@ -549,7 +549,7 @@
                 "script": "payload = JSON.parse(Buffer.from(payload.data).toString());\nbody = payload.body;\n",
                 "assertions": [
                   {
-                    "name": "Assertion #0",
+                    "name": "Publish Response Code",
                     "expect": "payload.headers.type",
                     "toBeEqualTo": "'checkin'"
                   },
@@ -626,10 +626,9 @@
           },
           "onFinish": {
             "assertions": []
-          },
-          "delay": "2000"
+          }
         },
-{
+        {
           "id": "id1544190745829fOZruj4zvV",
           "name": "Known customer",
           "publishers": [
@@ -892,8 +891,7 @@
           },
           "onFinish": {
             "assertions": []
-          },
-          "delay": "10000"
+          }
         }
       ],
       "errors": [],
@@ -905,8 +903,7 @@
       "onFinish": {
         "assertions": []
       },
-      "timeout": "",
-      "delay": "2000"
+      "timeout": ""
     }
   ],
   "id": "id1544130218389iQoJdU7LLE",
