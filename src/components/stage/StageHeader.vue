@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="stacker-header container-fluid">
-            <div class="row" style="min-height: 30px">
+            <div class="row scroll-div" style="height: 30px">
                 <ol class="breadcrumb my-0 py-0 pl-1" style="background-color: transparent;">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
@@ -54,7 +54,7 @@
                           :color="'var(--' + item.component + '-color)'"
                           :events="events"></stage-events>
         </div>
-        <router-view @input="stageBodyChanged" class="pt-2"/>
+        <router-view @input="stageBodyChanged" class="pt-2 scroll-div"/>
     </div>
 </template>
 

@@ -61,7 +61,7 @@ app.on('ready', () => {
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
 
-    // window.webContents.openDevTools({mode: 'bottom'});
+    window.webContents.openDevTools({mode: 'bottom'});
     // window.webContents.on("devtools-opened", () => {
     //     window.webContents.closeDevTools();
     // });

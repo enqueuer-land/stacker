@@ -20,7 +20,7 @@
              data-parent="#stage-event-group-parent">
             <div class="card card-body px-2"
                  :style="eventStyle">
-                <event v-model="item[event.name]" :eventName="event.name"></event>
+                <event class="scroll-div" v-model="item[event.name]" :eventName="event.name"></event>
             </div>
         </div>
         <div v-show="selectedIndex !== null" class="row" style="height: 100vh; opacity: .5; background-color: black"></div>

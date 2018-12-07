@@ -2,7 +2,7 @@
     <div class="result" @click="hideModal">
 
         <result-header :result="result"/>
-        <result-tree :result="result"/>
+        <result-tree :result="result" class="scroll-div"/>
 
         <div id="runningModal" class="modal">
             <div class="progress px-4 progress-bar-container">

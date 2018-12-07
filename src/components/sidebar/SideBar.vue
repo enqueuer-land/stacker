@@ -1,8 +1,10 @@
 <template>
     <div class="side-bar">
         <SideBarHeader></SideBarHeader>
-        <SideBarTree></SideBarTree>
-        <div :style="remainingSideBarStyle"></div>
+        <div class="scroll-div">
+            <SideBarTree></SideBarTree>
+            <div :style="remainingSideBarStyle"></div>
+        </div>
     </div>
 </template>
 
@@ -32,7 +34,7 @@ export default {
 
 <style scoped>
     .side-bar {
-        height: 100vh;
+        height: 100%;
         background-color: var(--stacker-header-background-color);
     }
 
