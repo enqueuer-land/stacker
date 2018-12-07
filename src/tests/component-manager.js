@@ -6,6 +6,8 @@ import MultipleObjectNotation from "./multiple-object-notation";
 const fs = window.remote.require('fs');
 import path from 'path';
 
+
+//TODO split it in several several classes
 export default class ComponentManager {
     openRequisitionsDirectory(filename) {
         const requisitionFiles = fs.readdirSync(filename)
@@ -159,26 +161,43 @@ export default class ComponentManager {
             .filter(component => !!component)[0];
     }
 
-    nodeFilter(node) {
-        if (this.itemFilter(node)) {
-            return true;
-        }
-        if (node.publishers.some(leaf => this.itemFilter(leaf))) {
-            return true;
-        }
-        if (node.subscriptions.some(leaf => this.itemFilter(leaf))) {
-            return true;
-        }
-        return node.requisitions.some(node => this.nodeFilter(node));
-
+    itemFilter(node) {
+        return this.decycledItemFilter(new ObjectDecycler().decycle(node));
     }
 
-    itemFilter(leaf) {
+    decycledItemFilter(node) {
         const filter = store.state.filter.toLowerCase();
-        if (leaf.type && leaf.type.toLowerCase().indexOf(filter) !== -1) {
+        if (node === undefined || node === null || filter.length < 1) {
             return true;
         }
-        return leaf.name.toLowerCase().indexOf(filter) !== -1;
+
+        for (let key of Object.keys(node)) {
+            const value = node[key];
+            if (typeof value !== 'object') {
+                if (value.toString().toLowerCase().indexOf(filter) !== -1) {
+                    console.log('FOUND IT: ' + value + ' => ' + filter);
+                    return true;
+                }
+            } else {
+                if (Array.isArray(value)) {
+                    for (let index in value) {
+                        if (value[index]) {
+                            if (this.decycledItemFilter(value[index])) {
+                                return true;
+                            }
+
+                        }
+                    }
+                } else {
+                    if (key !== 'parent') {
+                        if (this.decycledItemFilter(value)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     propagateValidationToParents(item, valid) {

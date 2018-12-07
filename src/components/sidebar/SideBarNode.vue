@@ -44,7 +44,7 @@
         },
         computed: {
             filteredRequisitions() {
-                return (this.node.requisitions || []).filter(requisition => new ComponentManager().nodeFilter(requisition));
+                return (this.node.requisitions || []).filter(requisition => new ComponentManager().itemFilter(requisition));
             },
             filteredPublishers() {
                 return (this.node.publishers || []).filter(leaf => new ComponentManager().itemFilter(leaf));

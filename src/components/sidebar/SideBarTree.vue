@@ -15,7 +15,8 @@
         components: {SideBarNode},
         computed: {
             filteredRequisitions() {
-                return this.$store.state.requisitions.filter(requisition => new ComponentManager().nodeFilter(requisition));
+                return this.$store.state.requisitions
+                    .filter(requisition => new ComponentManager().itemFilter(requisition));
             }
         }
     }
