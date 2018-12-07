@@ -114,7 +114,7 @@
                     // style['border-top'] = '1px var(--' + selectedItem.component + '-color) solid';
                 }
                 if (this.mouseIsOver) {
-                    style['color'] = 'var(--text-color)';
+                    // style['color'] = 'var(--text-color)';
                     style['background-color'] = 'var(--stacker-background-alternative-color)';
                     style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
                 }
@@ -167,6 +167,10 @@
         font-size: 0.75em;
         text-transform: uppercase;
         /*font-weight: bolder;*/
+    }
+
+    #more-icon:hover {
+        color: var(--text-color);
     }
 
 </style>

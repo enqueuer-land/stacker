@@ -1,18 +1,23 @@
 {
   "name": "stacker",
-  "description": "Multi IPC protocol GUI testing tool",
   "version": "0.1.0",
   "private": true,
+  "description": "Multi IPC protocol GUI testing tool",
+  "author": "Virgs",
   "scripts": {
-    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron electron.js",
     "serve": "node_modules/.bin/vue-cli-service serve",
     "build": "node_modules/.bin/vue-cli-service build",
-    "lint": "node_modules/.bin/vue-cli-service lint"
+    "lint": "node_modules/.bin/vue-cli-service lint",
+    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron electron.js",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "amqp": "^0.2.7",
-    "mqtt": "^2.18.8",
     "enqueuer": "^3.5.23",
+    "mqtt": "^2.18.8",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
     "vue-router": "^3.0.1",
@@ -25,9 +30,11 @@
     "@vue/cli-service": "^3.1.4",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.9",
+    "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0-beta.4",
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -53,5 +60,12 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "bin": {},
+  "license": "MIT",
+  "main": "background.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopidio/stacker"
+  }
 }

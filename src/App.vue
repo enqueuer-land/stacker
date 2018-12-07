@@ -1,7 +1,6 @@
 <template>
     <div id="app" class="container-fluid pr-0 pl-0">
-        <!--//http://jsfiddle.net/Bek9L/3020/-->
-
+        <div style="height: 10px; background-color: var(--stacker-header-background-color"></div>
         <div class="row no-gutters">
             <div id="side-bar">
                 <SideBar/>
@@ -162,17 +161,17 @@
         padding-left: 15px;
         font-weight: lighter;
         color: var(--text-color);
-        background-color: var(--stacker-header-background-color);
+        background-color: var(--stacker-background-alternative-color);
     }
 
-    .dropdown-item:active {
+    .dropdown-item :active {
+        /*color: var(--text-color);*/
+        background-color: var(--stacker-background-alternative-color) !important;
+    }
+
+    .dropdown-item :hover {
         color: var(--text-color);
         background-color: var(--stacker-background-color);
-    }
-
-    .dropdown-item:hover {
-        color: var(--text-color);
-        background-color: var(--stacker-background-alternative-color);
     }
 
     .dropdown-divider {
