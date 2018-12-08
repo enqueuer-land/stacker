@@ -2,8 +2,15 @@
   "name": "stacker",
   "version": "0.1.0",
   "private": true,
-  "description": "Multi IPC protocol GUI testing tool",
-  "author": "Virgs",
+  "description": "Multi IPC protocol GUI client testing tool",
+  "author": {
+    "name": "Virgs",
+    "email": "guilherme.moraes@outlook.com",
+    "url": "http://github.com/lopidio"
+  },
+  "build": {
+    "appId": "com.example.app"
+  },
   "scripts": {
     "serve": "node_modules/.bin/vue-cli-service serve",
     "build": "node_modules/.bin/vue-cli-service build",

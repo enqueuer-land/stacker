@@ -3,7 +3,7 @@
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 55%">
                 <div class="col-3">
-                    <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block logo-class">
+                    <img src="../../../src/assets/logo.png" class="img-fluid logo-class">
                 </div>
                 <header class="col-8 align-self-center side-bar-header">
                     stacker
@@ -158,15 +158,15 @@
     }
 
     .logo-class {
-        transform: scale(-1.3, 1.3) rotate(90deg);
+        transform: scale(1.3);
         position: relative;
-        top: 5px;
-        left: -10px;
+        top: -10px;
+        left: -5px;
         transition: transform 500ms ease;
     }
 
     .logo-class:hover {
-        transform: scale(-1.3, 1.3) rotate(270deg);
+        transform: scale(1.5);
     }
 
     .search-icon {
