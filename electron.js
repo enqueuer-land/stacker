@@ -33,7 +33,8 @@ app.on('ready', () => {
             nodeIntegration: false,
             preload: __dirname + '/preload.js'
         },
-        titleBarStyle: 'hidden',
+        // titleBarStyle: 'hidden',
+        frame: false,
         show: false,
         icon: __dirname + '/src/assets/symbol1.png'
     });

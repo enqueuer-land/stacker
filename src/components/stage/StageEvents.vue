@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-events p-0" style="position: relative; top: calc(100% - 134px)"
+    <div class="stage-events p-0" style="position: relative; top: calc(100% - 136px)"
          id="stage-event-group-parent">
         <div class="row justify-content-end mb-0">
             <button v-for="(event, index) in events"

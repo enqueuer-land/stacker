@@ -1,10 +1,8 @@
 <template>
     <div class="side-bar">
         <SideBarHeader></SideBarHeader>
-        <div class="scroll-div">
-            <SideBarTree></SideBarTree>
-            <div :style="remainingSideBarStyle"></div>
-        </div>
+        <SideBarTree class="scroll-div" style="max-height: calc(100vh - 150px);"></SideBarTree>
+        <!--<div :style="remainingSideBarStyle"></div>-->
     </div>
 </template>
 
