@@ -1,12 +1,14 @@
 <template>
     <div class="stacker-header" :style="resultHeaderStyle">
         <div v-if="result" style="text-decoration: none;" @mouseover="mouseIsOver = true"
-           @mousemove="updateTooltips"
-           @mouseleave="mouseIsOver = false">
+             @mousemove="updateTooltips"
+             @mouseleave="mouseIsOver = false">
             <div class="row no-gutters pt-1"
                  style="cursor: pointer"
                  @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
-                <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">{{tests.isValid() ? 'PASS' : 'FAIL'}}</button>
+                <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">
+                    {{tests.isValid() ? 'PASS' : 'FAIL'}}
+                </button>
                 <span class="col align-self-center pl-3 result-name"
                       :style="resultNameStyle">
                     {{result.name}}
@@ -45,9 +47,7 @@
                                    placeholder="Filter">
                         </div>
                     </div>
-                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i class="material-icons stacker-icon">search</i>
-                    </a>
+                    <i class="pl-0 col-md-auto pr-1 align-self-center material-icons stacker-icon">search</i>
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
                     <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
@@ -208,7 +208,6 @@
 
     .small-button-passing-tests {
         color: var(--enqueuer-color);
-        transform: scale(1.1);
     }
 
     .small-button-passing-tests:hover {
@@ -222,7 +221,6 @@
 
     .small-button-failing-tests {
         color: var(--failing-test-color);
-        transform: scale(1.1);
     }
 
     .small-button-failing-tests:hover {

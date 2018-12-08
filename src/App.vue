@@ -274,6 +274,7 @@
     }
 
     .stacker-icon {
+        cursor: pointer;
         color: var(--text-smooth-color);
         transform: scale(0.85) rotate(10deg);
         transition: 100ms ease transform;

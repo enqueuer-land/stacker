@@ -10,9 +10,7 @@
                 </header>
                 <div class="col align-self-end">
                     <div class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                            <i class="material-icons add-button-class">add_circle</i>
-                        </a>
+                        <i class="dropdown-toggle material-icons add-button-class" data-toggle="dropdown">add_circle</i>
                         <dropdown-component :value="actions"></dropdown-component>
                     </div>
                 </div>
@@ -28,9 +26,7 @@
                                placeholder="Filter">
                     </div>
                 </div>
-                <a class="col-1 pr-0 align-self-center pt-1" href="#">
-                    <i class="material-icons stacker-icon">search</i>
-                </a>
+                <i class="col-1 pr-0 align-self-center pt-1 material-icons stacker-icon">search</i>
             </div>
         </a>
     </div>

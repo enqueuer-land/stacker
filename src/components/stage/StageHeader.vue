@@ -2,12 +2,12 @@
     <div>
         <div class="stacker-header container-fluid">
             <div class="row scroll-div" style="height: 30px">
-                <ol class="breadcrumb my-0 pb-0 pt-1 pl-1" style="background-color: transparent;">
+                <ol class="breadcrumb my-0 pb-0 pt-0 pl-1" style="background-color: transparent;">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
                         <a style="cursor: pointer;"
                            @click="runClick(breadCrumb)">
-                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons">play_circle_outline</i>
+                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons stacker-icon">play_circle_outline</i>
                         </a>
                         <a :style="breadcrumbStyle" href="#"
                            @click="breadCrumbSelected(breadCrumb)">
@@ -235,13 +235,13 @@
             breadcrumbIconStyle() {
                 return function (item) {
                     const style = {
-                        'transform': 'scale(1.5)',
+                        // 'transform': 'scale(1.5)',
                         'position': 'relative',
                         'top': 'calc(50% - 10px)',
                         padding: '0 3px',
                         color: 'var(--requisition-color)',
-                        'text-decoration': 'none',
-                        'font-size': '0.8em',
+                        // 'text-decoration': 'none',
+                        // 'font-size': '0.8em',
                         cursor: 'pointer',
                     };
                     if (!new ComponentManager().isComponentValid(item)) {
