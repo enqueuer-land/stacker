@@ -3,7 +3,7 @@
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 55%">
                 <div class="col-3">
-                    <img src="../../../src/assets/logo.png" class="img-fluid logo-class">
+                    <img src="../../../build/logo-small.png" class="img-fluid rounded float-left logo-class">
                 </div>
                 <header class="col-8 align-self-center side-bar-header">
                     stacker
@@ -135,7 +135,7 @@
     }
 
     .side-bar-header:hover {
-        text-shadow: 0 0 5px var(--enqueuer-color);
+        text-shadow: 0 0 8px var(--enqueuer-color);
     }
 
     .dropdown-toggle::after {
@@ -158,7 +158,7 @@
     }
 
     .logo-class {
-        transform: scale(1.3);
+        transform: scale(0.75);
         position: relative;
         top: -10px;
         left: -5px;
@@ -166,7 +166,7 @@
     }
 
     .logo-class:hover {
-        transform: scale(1.5);
+        transform: scale(.7) rotate(-2deg);
     }
 
     .search-icon {

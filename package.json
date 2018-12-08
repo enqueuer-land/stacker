@@ -8,18 +8,15 @@
     "email": "guilherme.moraes@outlook.com",
     "url": "http://github.com/lopidio"
   },
-  "build": {
-    "appId": "com.example.app"
-  },
   "scripts": {
     "serve": "node_modules/.bin/vue-cli-service serve",
     "build": "node_modules/.bin/vue-cli-service build",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron electron.js",
+    "dist": "electron-builder",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "dist": "electron-builder"
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "amqp": "^0.2.7",
