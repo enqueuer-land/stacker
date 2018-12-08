@@ -161,6 +161,7 @@
         transform: scale(-1.3, 1.3) rotate(90deg);
         position: relative;
         top: 5px;
+        left: -10px;
         transition: transform 500ms ease;
     }
 

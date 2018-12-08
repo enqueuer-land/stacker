@@ -1,9 +1,10 @@
 <template>
     <div class="stacker-header" :style="resultHeaderStyle">
-        <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
+        <div v-if="result" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mousemove="updateTooltips"
            @mouseleave="mouseIsOver = false">
-            <div class="row no-gutters"
+            <div class="row no-gutters pt-1"
+                 style="cursor: pointer"
                  @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
                 <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">{{tests.isValid() ? 'PASS' : 'FAIL'}}</button>
                 <span class="col align-self-center pl-3 result-name"
@@ -11,8 +12,7 @@
                     {{result.name}}
                 </span>
             </div>
-            <div class="row" style="height: 8%"/>
-            <div class="row no-gutters pb-1 pl-2 pt-0 justify-content-between">
+            <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between">
                 <div class="col-md-auto">
                             <span class="title">
                                 Tests:
@@ -35,8 +35,7 @@
                             {{timeAgo}}
                         </span>
             </div>
-            <div class="row" style="height: 7%"/>
-            <div class="row no-gutters">
+            <div class="row no-gutters pt-3">
                 <div class="col-8 row no-gutters">
                     <div class="col pt-0 pl-2 pr-1">
                         <div class="input-group input-group-sm">
@@ -63,7 +62,7 @@
                     </a>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
 </template>
 <script>
