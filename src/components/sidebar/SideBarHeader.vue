@@ -125,7 +125,7 @@
     .side-bar-header {
         transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
-        font-size: 550%;
+        font-size: 5.2vw;
         color: var(--text-color);
         text-align: left;
         letter-spacing: -15px;

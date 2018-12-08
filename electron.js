@@ -25,8 +25,8 @@ app.on('ready', () => {
         width: 1600,
         height: 1200,
         title: 'Stacker',
-        // minWidth: 800,
-        // minHeight: 600,
+        minWidth: 1400,
+        minHeight: 800,
         // resizable: true,
         center: true,
         webPreferences: {
@@ -34,7 +34,7 @@ app.on('ready', () => {
             preload: __dirname + '/preload.js'
         },
         // titleBarStyle: 'hidden',
-        frame: false,
+        // frame: false,
         show: false
     });
     window.loadURL(url);
