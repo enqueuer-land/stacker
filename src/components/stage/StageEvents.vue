@@ -21,9 +21,8 @@
         <div v-for="event in events" :key="event.name" class="collapse event-body row" :id="event.name + 'Body'"
              :style="cardBodyStyle"
              data-parent="#stage-event-group-parent">
-            <div class="card card-body px-2"
-                 :style="eventStyle">
-                <event class="scroll-div" v-model="item[event.name]" :eventName="event.name"></event>
+            <div class="card card-body px-2 pt-2" :style="eventStyle">
+                <event class="scroll-div" style="max-height: calc(80vh - 150px)" v-model="item[event.name]" :eventName="event.name"></event>
             </div>
         </div>
         <div v-show="selectedIndex !== null" class="row" style="height: 100vh; opacity: .5; background-color: black"></div>

@@ -461,7 +461,20 @@
             "assertions": []
           },
           "onMessageReceived": {
-            "assertions": []
+            "script": "payload = Buffer.from(message.payload);",
+            "assertions": [
+              {
+                "name": "Payload",
+                "expect": "topic",
+                "toBeEqualTo": "'virgs/topic/special'"
+              },
+              {
+                "name": "Payload",
+                "expect": "payload",
+                "toContain": "'essage'"
+              }
+            ],
+            "store": {}
           },
           "onFinish": {
             "assertions": []
