@@ -52,7 +52,7 @@
                           :color="'var(--' + item.component + '-color)'"
                           :events="events"></stage-events>
         </div>
-        <router-view @input="stageBodyChanged" class="pt-2 scroll-div"/>
+        <router-view @input="stageBodyChanged" class="pt-2 scroll-div" style="max-height: calc(100vh - 150px)"/>
     </div>
 </template>
 

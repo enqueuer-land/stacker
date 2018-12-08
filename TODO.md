@@ -12,7 +12,7 @@
 - [x] Collapsible Assertions
 - [x] Do not close requisitions when select it and it was not previously selected
 - [x] Collapsible Assertion
-- [ ] Individuals vertical scroll bars
+- [x] Individuals vertical scroll bars
 - [ ] Set Icon
 - [ ] Pack it up
 - [ ] Create githubPage
