@@ -9,13 +9,11 @@
     "url": "http://github.com/lopidio"
   },
   "scripts": {
-    "serve": "node_modules/.bin/vue-cli-service serve",
-    "build": "node_modules/.bin/vue-cli-service build",
     "lint": "node_modules/.bin/vue-cli-service lint",
-    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron electron.js",
+    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js",
     "dist": "electron-builder",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
+    "electron:build": "node_modules/.bin/vue-cli-service electron:build",
+    "electron:serve": "node_modules/.bin/vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
@@ -67,9 +65,22 @@
   ],
   "bin": {},
   "license": "MIT",
-  "main": "background.js",
+  "main": "../electron.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lopidio/stacker"
+  },
+  "build": {
+    "appId": "com.virgs.stacker",
+    "productName": "stacker",
+    "files": [
+      "build/**/*",
+      "public/**/*",
+      "preload.js",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }

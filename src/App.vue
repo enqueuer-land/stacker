@@ -55,7 +55,6 @@
                     ghostBar.css("left", event.pageX + 2);
                 });
                 $(document).mouseup((event) => {
-                    console.log('side bar up')
                     if (this.dragging) {
                         const eventX = event.pageX;
                         const resultWidth = parseInt($('#result').css('width'));

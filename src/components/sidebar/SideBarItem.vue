@@ -85,7 +85,6 @@
 
                 const target = $('#' + event.target.id);
                 if (errors.length > 0) {
-                    console.log(errors);
                     target
                         .attr('data-html', true)
                         .attr('data-original-title', `<ul>${errors}</ul>`)

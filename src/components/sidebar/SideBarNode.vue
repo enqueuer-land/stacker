@@ -39,14 +39,12 @@
         },
         methods: {
             headerChildClick: function () {
-                if (this.$store.state.selectedItem.id != this.node.id) {
+                if (this.$store.state.selectedItem && this.$store.state.selectedItem.id != this.node.id) {
                     $('#' + this.node.id).removeClass('show');
                 }
                 // this.opened = !$('#' + this.node.id).hasClass('show');
             },
             onClick: function () {
-                console.log('selected: ' + this.$store.state.selectedItem.id);
-                console.log('me: ' + this.node.id);
                 this.opened = !$('#' + this.node.id).hasClass('show');
             },
         },

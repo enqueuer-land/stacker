@@ -241,7 +241,7 @@ export default new Vuex.Store({
         },
         selectItem(state, payload) {
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
-            console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
+            // console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
             if (currentSelectedId !== payload.item.id) {
                 state.selectedItem = payload.item;
                 let newPath = '/' + payload.item.component + '/' + payload.item.id;
@@ -255,7 +255,7 @@ export default new Vuex.Store({
                 if (item) {
                     state.selectedItem = item;
                     let newPath = '/' + item.component + '/' + payload.id;
-                    console.log('Going to new path: ' + newPath);
+                    // console.log('Going to new path: ' + newPath);
                     payload.router.push({path: newPath});
                 } else {
                     console.log('No item was find with: ' + payload.id);
@@ -264,14 +264,14 @@ export default new Vuex.Store({
             }
         },
         setRequisitionResult(state, payload) {
-            console.log('Report added to history');
+            // console.log('Report added to history');
             state.results.push(payload.report);
         }
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            const decycle = new ObjectDecycler().decycle(requisition);
-            console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 1000));
+            const decycle = new ObjectDecycler().decycle(Object.assign({}, requisition, {parent: {}}));
+            // console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2).substr(0, 1000));
             window.ipcRenderer.send('runRequisition', decycle);
 
             window.ipcRenderer.once('runRequisitionReply', (event, report) => {

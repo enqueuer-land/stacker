@@ -191,7 +191,6 @@
             item: function () {
             },
             id: function () {
-                console.log('Id changed');
                 this.getContent();
             }
         },

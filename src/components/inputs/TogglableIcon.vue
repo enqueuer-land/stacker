@@ -63,7 +63,6 @@
         },
         watch: {
             toggle() {
-                console.log(this.tooltip);
                 this.$emit('input', this.toggle);
             }
         },

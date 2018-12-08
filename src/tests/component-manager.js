@@ -175,7 +175,6 @@ export default class ComponentManager {
             const value = node[key];
             if (typeof value !== 'object') {
                 if (value.toString().toLowerCase().indexOf(filter) !== -1) {
-                    console.log('FOUND IT: ' + value + ' => ' + filter);
                     return true;
                 }
             } else {
