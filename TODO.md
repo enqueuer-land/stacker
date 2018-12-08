@@ -12,7 +12,7 @@
 - [x] Collapsible KeyValueInput items
 - [x] Collapsible Assertions
 - [x] Do not close requisitions when select it and it was not previously selected
-- [ ] Collapsible Assertion
+- [x] Collapsible Assertion
 - [ ] Clipboard events
 - [ ] Set Icon
 - [ ] Import requisition inside requisition
