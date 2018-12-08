@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <a class="col-1 pr-0 align-self-center pt-1" href="#">
-                    <i class="material-icons search-icon">search</i>
+                    <i class="material-icons stacker-icon">search</i>
                 </a>
             </div>
         </a>
@@ -169,12 +169,4 @@
         transform: scale(.7) rotate(-2deg);
     }
 
-    .search-icon {
-        color: var(--text-smooth-color);
-        transform: scale(0.85);
-    }
-
-    .search-icon:hover {
-        color: var(--text-color);
-    }
 </style>

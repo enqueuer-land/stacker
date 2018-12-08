@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i class="material-icons search-icon">search</i>
+                        <i class="material-icons stacker-icon">search</i>
                     </a>
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
@@ -128,13 +128,13 @@
             },
             showPassingTestsButtonClass() {
                 return {
-                    'material-icons small-button': true,
+                    'material-icons stacker-icon': true,
                     'small-button-passing-tests': this.filter.showPassingTests
                 }
             },
             showFailingTestsButtonClass() {
                 return {
-                    'material-icons small-button': true,
+                    'material-icons stacker-icon small-button-failing-tests-hover': true,
                     'small-button-failing-tests': this.filter.showFailingTests
                 }
             },
@@ -206,25 +206,18 @@
         color: var(--passing-test-color);
     }
 
-    .small-button {
-        color: var(--text-smooth-color);
-        transform: scale(1) rotate(30deg);
-        transition: transform 100ms ease
-    }
-
-    .small-button:hover {
-        color: var(--text-color);
-        transform: scale(1.05) rotate(20deg);
-    }
-
     .small-button-passing-tests {
-        color: var(--passing-test-color);
+        color: var(--enqueuer-color);
         transform: scale(1.1);
     }
 
     .small-button-passing-tests:hover {
-        color: var(--passing-test-color);
+        color: var(--enqueuer-color);
         transform: scale(1.4);
+    }
+
+    .small-button-failing-tests-hover:hover {
+        color: var(--failing-test-color);
     }
 
     .small-button-failing-tests {
@@ -243,15 +236,6 @@
 
     .test-badge:hover {
         box-shadow: 0 0 5px var(--text-color);
-    }
-
-    .search-icon {
-        color: var(--text-smooth-color);
-        transform: scale(0.85);
-    }
-
-    .search-icon:hover {
-        color: var(--text-color);
     }
 
 </style>

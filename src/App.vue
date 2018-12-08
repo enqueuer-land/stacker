@@ -273,6 +273,17 @@
         z-index: 999
     }
 
+    .stacker-icon {
+        color: var(--text-smooth-color);
+        transform: scale(0.85) rotate(10deg);
+        transition: 100ms ease transform;
+    }
+
+    .stacker-icon:hover {
+        transform: scale(1);
+        color: var(--enqueuer-color);
+    }
+
     .scroll-div {
         display: block;
         max-height: 100%;
