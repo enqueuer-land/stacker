@@ -8,16 +8,20 @@
 - [x] Open directories as single requisitions
 - [x] Add KeyValue and Assertions only when all previous ones are valid
 - [x] Tooltips tell what's wrong with stage bodies
-- [x] Individuals vertical scroll bars
 - [x] Collapsible KeyValueInput items
 - [x] Collapsible Assertions
 - [x] Do not close requisitions when select it and it was not previously selected
 - [x] Collapsible Assertion
-- [ ] Clipboard events
+- [ ] Individuals vertical scroll bars
 - [ ] Set Icon
-- [ ] Import requisition inside requisition
-- [ ] Create Object Builder
-- [ ] Create Stage Header Header
 - [ ] Pack it up
-
-
+- [ ] Create githubPage
+- [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
+- [ ] Import requisition inside requisition
+- [ ] Create Stage Header Header
+- [ ] Create Result Not Flatten Tests
+- [ ] Create Object Builder
+- [ ] Clipboard events 
+            - https://codepen.io/PJCHENder/pen/jamJpj?editors=1010 
+            - https://vuejsexamples.com/a-simple-vue2-binding-to-clipboard-js/ 
+            - https://vuejsexamples.com/a-clipboard-library-with-vue-js/

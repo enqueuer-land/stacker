@@ -48,13 +48,15 @@
         },
         watch: {
             '$store.state.results'() {
+                console.log('Result watched report arrival');
                 // const now = new Date().getTime();
                 // const elapsedTime = now - this.running;
                 // setTimeout(() => {
                     $('#runningModal').modal('hide');
                     this.running = null;
                     const results = this.$store.state.results;
-                    this.result = this.$store.state.results[results.length - 1];
+                    this.result = results[results.length - 1];
+                console.log('Result updated own prop');
                 // }, Math.abs(minAnimationTime - elapsedTime));
             }
         }

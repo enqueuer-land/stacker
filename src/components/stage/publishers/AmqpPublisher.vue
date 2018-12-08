@@ -15,7 +15,7 @@
                 <input v-model="amqp.exchange" type="text" class="form-control stacker-input">
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-2">
             <key-value-input class="col px-2" v-model="amqp.exchangeOptions" title="Exchange Options"/>
         </div>
 
@@ -30,7 +30,7 @@
                        type="text" class="form-control stacker-input">
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-2">
             <key-value-input class="col px-2" v-model="amqp.messageOptions.headers" title="Message Headers"/>
         </div>
 

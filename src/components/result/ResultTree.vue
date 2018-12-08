@@ -17,6 +17,11 @@
         components: {
             ResultFlattenTests
         },
+        watch: {
+            result() {
+                console.log('Result tree got it');
+            }
+        }
     }
 </script>
 

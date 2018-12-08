@@ -94,7 +94,7 @@
                 }
             },
             canAddPair: function () {
-                return this.pairs.every(pair => pair.key.length > 0 && pair.value.length > 0);
+                return this.pairs.every(pair => pair.key.length > 0 && (pair.value.length > 0 || typeof pair.value === 'number'));
             },
             removePair: function (index) {
                 this.pairs = this.pairs.filter((_, itemIndex) => itemIndex !== index);

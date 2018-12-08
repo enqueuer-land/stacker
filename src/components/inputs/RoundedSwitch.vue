@@ -7,7 +7,7 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-            <a :href="'#' + label" :class="['col pl-1', enabled ? 'enabled-label' : 'disabled-label']"
+            <a :href="'#' + label" :class="['col pl-0', enabled ? 'enabled-label' : 'disabled-label']"
                @click="labelClicked"
                   style="position: relative; top: 2px; left: 8px; text-decoration: none">
                 {{label}}
@@ -100,16 +100,17 @@
     }
 
     input:checked + .slider:before {
-        /*-webkit-transform: translateX(26px);*/
-        /*-ms-transform: translateX(26px);*/
         transform: translateX(18px);
         background-color: var(--text-color);
-        /*transform: translateX(18px);*/
     }
 
     /* Rounded sliders */
     .slider.round {
         border-radius: 32px;
+    }
+
+    .slider.round:hover, input:hover + .slider:before {
+        border: 1px solid var(--text-color);
     }
 
     .slider.round:before {

@@ -30,18 +30,20 @@
           "requisitions": [],
           "errors": [],
           "invalidChildren": [],
-          "component": "requisition"
+          "component": "requisition",
+          "onInit": {
+            "assertions": []
+          },
+          "onFinish": {
+            "assertions": []
+          }
         },
         {
           "name": "using just created exchange",
           "publishers": [
             {
               "type": "amqp",
-              "payload": {
-                "how": {
-                  "about": "a new object?"
-                }
-              },
+              "payload": "{\n    \"how\": {\n        \"about\": \"a new object?\"\n    }\n}",
               "options": {
                 "host": "localhost",
                 "port": 5672
@@ -60,6 +62,7 @@
               "onInit": {
                 "assertions": [
                   {
+                    "name": "Checking port",
                     "expect": "publisher.options.port",
                     "toBeEqualTo": 5672
                   }
@@ -68,7 +71,11 @@
               "id": "id15442382443794VWsQ4mD20",
               "name": "Publisher #0",
               "errors": [],
-              "component": "publisher"
+              "component": "publisher",
+              "format": "json",
+              "onFinish": {
+                "assertions": []
+              }
             }
           ],
           "subscriptions": [
@@ -108,14 +115,26 @@
               "id": "id1544238244379CvD980Vg7E",
               "name": "Subscription #0",
               "errors": [],
-              "component": "subscription"
+              "component": "subscription",
+              "onInit": {
+                "assertions": []
+              },
+              "onFinish": {
+                "assertions": []
+              }
             }
           ],
           "id": "id1544238244379Ib12Q0HXtg",
           "requisitions": [],
           "errors": [],
           "invalidChildren": [],
-          "component": "requisition"
+          "component": "requisition",
+          "onInit": {
+            "assertions": []
+          },
+          "onFinish": {
+            "assertions": []
+          }
         },
         {
           "name": "default exhange",
@@ -131,7 +150,17 @@
               "id": "id1544238244379DZA366PPnN",
               "name": "Publisher #0",
               "errors": [],
-              "component": "publisher"
+              "component": "publisher",
+              "exchangeOptions": {},
+              "messageOptions": {
+                "headers": {}
+              },
+              "onInit": {
+                "assertions": []
+              },
+              "onFinish": {
+                "assertions": []
+              }
             }
           ],
           "subscriptions": [
@@ -147,22 +176,36 @@
                 "script": "data = Buffer.from(message.payload.data).toString();",
                 "assertions": [
                   {
+                    "name": "Check Payload",
                     "expect": "data",
                     "toBeEqualTo": "`default exchange`"
                   }
-                ]
+                ],
+                "store": {}
               },
               "id": "id15442382443798z3hJ0Perw",
               "name": "Subscription #0",
               "errors": [],
-              "component": "subscription"
+              "component": "subscription",
+              "onInit": {
+                "assertions": []
+              },
+              "onFinish": {
+                "assertions": []
+              }
             }
           ],
           "id": "id1544238244379C587Q7D3ez",
           "requisitions": [],
           "errors": [],
           "invalidChildren": [],
-          "component": "requisition"
+          "component": "requisition",
+          "onInit": {
+            "assertions": []
+          },
+          "onFinish": {
+            "assertions": []
+          }
         }
       ],
       "id": "id1544238244378aTfo0X4zET",
@@ -170,7 +213,13 @@
       "subscriptions": [],
       "errors": [],
       "invalidChildren": [],
-      "component": "requisition"
+      "component": "requisition",
+      "onInit": {
+        "assertions": []
+      },
+      "onFinish": {
+        "assertions": []
+      }
     },
     {
       "id": "id1543000638523m9VUBwwaZQ",
@@ -313,7 +362,13 @@
       "requisitions": [],
       "component": "requisition",
       "errors": [],
-      "invalidChildren": []
+      "invalidChildren": [],
+      "onInit": {
+        "assertions": []
+      },
+      "onFinish": {
+        "assertions": []
+      }
     },
     {
       "publishers": [
@@ -493,7 +548,7 @@
       "onFinish": {
         "assertions": [
           {
-            "name": "3 exponential to 3",
+            "name": "3 exponential to 4",
             "expect": "store.counter",
             "toBeEqualTo": "3*3*3*3"
           }

@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-2">
             <div class="col px-2">
                 <key-value-input v-model="http.headers" title="Headers"/>
             </div>

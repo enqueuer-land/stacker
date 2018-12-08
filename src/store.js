@@ -264,6 +264,7 @@ export default new Vuex.Store({
             }
         },
         setRequisitionResult(state, payload) {
+            console.log('Report added to history');
             state.results.push(payload.report);
         }
     },
@@ -274,7 +275,7 @@ export default new Vuex.Store({
             window.ipcRenderer.send('runRequisition', decycle);
 
             window.ipcRenderer.once('runRequisitionReply', (event, report) => {
-                console.log('Renderer got report: ' + JSON.stringify(report, null, 2).substr(0, 200));
+                console.log('Renderer got report!');
                 commit('setRequisitionResult', {report: report});
             });
 

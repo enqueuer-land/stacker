@@ -18,12 +18,12 @@
             </div>
             <div class="col pr-4">
                 <div class="row">
-                    <div class="pt-2 pl-1 stacker-label">
+                    <div class="pt-2 pl-2 stacker-label">
                         Endpoint
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-group input-group-sm mb-1 pl-1">
+                    <div class="input-group input-group-sm mb-1 pl-2">
                         <input v-model="http.endpoint" placeholder="/stacker" type="text"
                                class="form-control input-group-append stacker-input"
                                id="httpSubscriptionEndpoint">
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-2">
             <div class="col px-2">
                 <key-value-input v-model="http.response.headers" title="Headers"/>
             </div>
