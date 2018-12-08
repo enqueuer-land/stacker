@@ -13,11 +13,12 @@
 - [x] Do not close requisitions when select it and it was not previously selected
 - [x] Collapsible Assertion
 - [x] Individuals vertical scroll bars
-- [ ] Set Icon
+- [x] Set Icon
 - [ ] Pack it up
 - [ ] Create githubPage
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
+- [ ] Tests result buttons (expandAll, collapse all, export)
 - [ ] Create Stage Header Header
 - [ ] Create Result Not Flatten Tests
 - [ ] Create Object Builder

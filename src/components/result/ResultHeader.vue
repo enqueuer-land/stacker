@@ -105,7 +105,6 @@
             },
             filter: {
                 handler(value) {
-                    console.log(value);
                     this.$store.commit('changeResultFilter', value);
                 },
                 deep: true
