@@ -7,7 +7,7 @@
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
                         <a style="cursor: pointer;"
                            @click="runClick(breadCrumb)">
-                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons">play_circle_filled</i>
+                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons">play_circle_outline</i>
                         </a>
                         <a :style="breadcrumbStyle" href="#"
                            @click="breadCrumbSelected(breadCrumb)">

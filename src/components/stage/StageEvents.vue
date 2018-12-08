@@ -4,14 +4,17 @@
         <div class="row justify-content-end mb-0">
             <button v-for="(event, index) in events"
                     :key="index"
-                    class="btn event-item py-1 pr-1"
+                    class="btn event-item py-1 px-3"
                     type="button"
                     data-toggle="collapse"
                     :style="buttonStyle(index)"
                     @click="selectIndex(index)"
                     :id="event.name + 'Button'"
                     :data-target="'#' + event.name + 'Body'">
-                {{event.label}}
+                <i v-show="hasContent(event)" style="transform: scale(0.5); position: relative; top: 5px;" class="material-icons">fiber_manual_record</i>
+                <span>
+                    {{event.label}}
+                </span>
                 <i class="material-icons button-icon">keyboard_arrow_up</i>
             </button>
         </div>
@@ -74,6 +77,17 @@
             },
         },
         computed: {
+            hasContent() {
+                return function (button) {
+                    // (this.events || []).forEach(event => this.item[event.name] = this.item[event.name] || {});
+                    const event = this.item[button.name];
+                    console.log(JSON.stringify(event));
+                    return Object.keys(event).some(key => {
+                        const item = event[key];
+                        return item !== undefined && (item.length > 0 || Object.keys(item).length > 0) && item !== '\n';
+                    });
+                }
+            },
             buttonStyle() {
                 return function (index) {
                     if (this.selectedIndex === index) {
