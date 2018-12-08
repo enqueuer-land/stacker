@@ -1,8 +1,6 @@
 <template>
     <div class="stacker-header" :style="resultHeaderStyle">
-        <div v-if="result" style="text-decoration: none;" @mouseover="mouseIsOver = true"
-             @mousemove="updateTooltips"
-             @mouseleave="mouseIsOver = false">
+        <div v-if="result" style="text-decoration: none;">
             <div class="row no-gutters pt-1"
                  style="cursor: pointer"
                  @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
@@ -50,16 +48,19 @@
                     <i class="pl-0 col-md-auto pr-1 align-self-center material-icons stacker-icon">search</i>
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
-                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i @click="filter.showPassingTests = !filter.showPassingTests"
-                           id="showPassingTests"
-                           :class="showPassingTestsButtonClass">check_circle_outline</i>
-                    </a>
-                    <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i @click="filter.showFailingTests = !filter.showFailingTests"
-                           id="showFailingTests"
-                           :class="showFailingTestsButtonClass">highlight_off</i>
-                    </a>
+                    <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
+                        <togglable-icon v-model="filter.showPassingTests"
+                                        color="var(--passing-test-color)"
+                                        name="check_circle_outline"
+                                        tooltip='Show <b style="color: var(--passing-test-color);">passing</b> tests'></togglable-icon>
+                    </div>
+                    <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
+                        <togglable-icon v-model="filter.showFailingTests"
+                                        color="var(--failing-test-color)"
+                                        name="highlight_off"
+                                        tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></togglable-icon>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,10 +70,11 @@
 
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import TimeHandler from "../../tests/time-handler";
+    import TogglableIcon from "../inputs/TogglableIcon";
 
     export default {
         name: 'ResultHeader',
-        components: {},
+        components: {TogglableIcon},
         props: {
             result: {}
         },
@@ -83,7 +85,6 @@
                     showPassingTests: true,
                     showFailingTests: true,
                 },
-                mouseIsOver: false,
                 timeAgo: '',
                 timerInterval: null,
             }
@@ -104,6 +105,7 @@
             },
             filter: {
                 handler(value) {
+                    console.log(value);
                     this.$store.commit('changeResultFilter', value);
                 },
                 deep: true
@@ -158,21 +160,7 @@
                 if (this.result) {
                     return new TimeHandler().getTotalTime(this.result.time.totalTime);
                 }
-            },
-            updateTooltips() {
-                const toolTipProperties = {
-                    html: true,
-                    placement: 'auto'
-                };
-
-                toolTipProperties.title = `Show <b style="color: var(--passing-test-color);">passing</b> tests`,
-                    $('#showPassingTests')
-                        .tooltip(toolTipProperties);
-
-                toolTipProperties.title = `Show <b style="color: var(--failing-test-color);">failing</b> tests`,
-                    $('#showFailingTests')
-                        .tooltip(toolTipProperties);
-            },
+            }
         }
     }
 </script>
@@ -204,28 +192,6 @@
         text-align: right;
         font-weight: lighter;
         color: var(--passing-test-color);
-    }
-
-    .small-button-passing-tests {
-        color: var(--enqueuer-color);
-    }
-
-    .small-button-passing-tests:hover {
-        color: var(--enqueuer-color);
-        transform: scale(1.4);
-    }
-
-    .small-button-failing-tests-hover:hover {
-        color: var(--failing-test-color);
-    }
-
-    .small-button-failing-tests {
-        color: var(--failing-test-color);
-    }
-
-    .small-button-failing-tests:hover {
-        color: var(--failing-test-color);
-        transform: scale(1.4);
     }
 
     .result-name:hover, .result-name.hover {
