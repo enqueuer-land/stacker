@@ -3,10 +3,11 @@
         <a v-if="result" href="#" style="text-decoration: none;" @mouseover="mouseIsOver = true"
            @mousemove="updateTooltips"
            @mouseleave="mouseIsOver = false">
-            <div class="row no-gutters">
-                <span class="col-11 pt-2 align-self-end pl-2 result-name"
-                      :style="resultNameStyle"
-                      @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
+            <div class="row no-gutters"
+                 @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
+                <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">{{tests.isValid() ? 'PASS' : 'FAIL'}}</button>
+                <span class="col align-self-center pl-3 result-name"
+                      :style="resultNameStyle">
                     {{result.name}}
                 </span>
             </div>
@@ -138,6 +139,13 @@
                     'small-button-failing-tests': this.filter.showFailingTests
                 }
             },
+            testBadgeStyle() {
+                return {
+                    'background-color': this.tests.isValid() ? 'var(--passing-test-color)' : 'var(--failing-test-color)',
+                    'color': 'var(--stacker-header-background-color)',
+                    'font-weight': 'bold'
+                }
+            },
             resultNameStyle() {
                 return {
                     'text-align': 'left',
@@ -232,6 +240,10 @@
 
     .result-name:hover, .result-name.hover {
         color: var(--text-color) !important;
+    }
+
+    .test-badge:hover {
+        box-shadow: 0 0 5px var(--text-color);
     }
 
     .search-icon {
