@@ -4,8 +4,8 @@
            @mousemove="updateTooltips"
            @mouseleave="mouseIsOver = false">
             <div class="row no-gutters">
-                <span class="col-11 pt-2 align-self-end pl-2"
-                      :style="{'text-align': 'left', 'font-size': '30px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}"
+                <span class="col-11 pt-2 align-self-end pl-2 result-name"
+                      :style="resultNameStyle"
                       @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
                     {{result.name}}
                 </span>
@@ -46,8 +46,7 @@
                         </div>
                     </div>
                     <a class="pl-0 col-md-auto pr-1 align-self-center pt-1" href="#">
-                        <i class="material-icons"
-                           style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
+                        <i class="material-icons search-icon">search</i>
                     </a>
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
@@ -139,6 +138,13 @@
                     'small-button-failing-tests': this.filter.showFailingTests
                 }
             },
+            resultNameStyle() {
+                return {
+                    'text-align': 'left',
+                    'font-size': '30px',
+                    color: this.tests.isValid() ? 'var(--passing-test-color)' : 'var(--failing-test-color)'
+                }
+            }
         },
         methods: {
             printTime: function () {
@@ -153,12 +159,12 @@
                 };
 
                 toolTipProperties.title = `Show <b style="color: var(--passing-test-color);">passing</b> tests`,
-                $('#showPassingTests')
-                    .tooltip(toolTipProperties);
+                    $('#showPassingTests')
+                        .tooltip(toolTipProperties);
 
                 toolTipProperties.title = `Show <b style="color: var(--failing-test-color);">failing</b> tests`,
-                $('#showFailingTests')
-                    .tooltip(toolTipProperties);
+                    $('#showFailingTests')
+                        .tooltip(toolTipProperties);
             },
         }
     }
@@ -223,4 +229,18 @@
         color: var(--failing-test-color);
         transform: scale(1.4);
     }
+
+    .result-name:hover, .result-name.hover {
+        color: var(--text-color) !important;
+    }
+
+    .search-icon {
+        color: var(--text-smooth-color);
+        transform: scale(0.85);
+    }
+
+    .search-icon:hover {
+        color: var(--text-color);
+    }
+
 </style>

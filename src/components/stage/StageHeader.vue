@@ -265,7 +265,7 @@
     }
 
     .breadcrumb-item :hover, .breadcrumb-item .hover, .breadcrumb-item :focus, .breadcrumb-item .focus {
-        color: var(--text-color);
+        color: var(--text-color) !important;
     }
 
     .breadcrumb-item:nth-child(1)::before {

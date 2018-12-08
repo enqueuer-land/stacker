@@ -1,5 +1,5 @@
 <template>
-    <div :class="resultFlattenTestsItem">
+    <div class="mb-0 mt-0" :style="resultFlattenTestsItem">
         <div class="card" style="border: none">
             <div data-toggle="collapse" :data-target="'#' + id">
                 <div class="result-flatten-tests-item-header">
@@ -97,9 +97,7 @@
             },
             resultFlattenTestsItem: function () {
                 return {
-                    'valid-result-flatten-tests-item': this.test.valid,
-                    'invalid-result-flatten-tests-item': !this.test.valid,
-                    'mb-0 mt-0': true
+                    'border-left': `4px var(--${this.test.valid ? 'passing' : 'failing'}-test-color) solid`
                 }
             }
         }
@@ -126,20 +124,6 @@
     .breadcrumb-item a:hover {
         text-decoration: none;
         color: var(--text-color);
-    }
-
-    .valid-result-flatten-tests-item {
-        /*background-color: var(--stacker-background-color);*/
-        /*border-top: 1px var(--passing-test-color) solid;*/
-        border-left: 2px var(--passing-test-color) solid;
-        /*border-right: 2px var(--passing-test-color) solid;*/
-    }
-
-    .invalid-result-flatten-tests-item {
-        /*background-color: var(--stacker-background-color);*/
-        /*border-top: 1px var(--failing-test-color) solid;*/
-        border-left: 2px var(--failing-test-color) solid;
-        /*border-right: 2px var(--failing-test-color) solid;*/
     }
 
     .result-flatten-tests-item-header {
@@ -181,8 +165,9 @@
         background-color: var(--stacker-background-alternative-color);
     }
 
-    .breadcrumb-anchor a:hover {
-        color: var(--text-color);
+    .breadcrumb-item a:hover {
+        text-decoration: none;
+        color: var(--text-color) !important;
     }
 
     .index-class {

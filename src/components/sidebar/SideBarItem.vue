@@ -70,6 +70,7 @@
         },
         methods: {
             itemSelected: function () {
+                this.$emit('clicked');
                 this.$store.commit('selectItem', {item: this.item, router: this.$router, route: this.$route});
             },
             isSelected: function () {

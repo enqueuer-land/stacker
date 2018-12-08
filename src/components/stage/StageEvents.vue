@@ -92,14 +92,14 @@
                         return {
                             'color': 'var(--text-color)',
                             'background-color': 'var(--stacker-background-color)',
-                            'border-right': '2px solid ' + this.color,
+                            // 'border-right': '2px solid ' + this.color,
                             'border-top': '2px solid ' + this.color,
                         };
                     } else {
                         return {
                             'font-weight': 'lighter',
                             'color': this.color,
-                            'border-bottom': '2px solid ' + this.color,
+                            // 'border-bottom': '2px solid ' + this.color,
                         }
                     }
                 };

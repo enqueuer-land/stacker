@@ -11,7 +11,7 @@
 - [x] Individuals vertical scroll bars
 - [x] Collapsible KeyValueInput items
 - [x] Collapsible Assertions
-- [ ] Do not close requisitions when select it and it was not previously selected
+- [x] Do not close requisitions when select it and it was not previously selected
 - [ ] Collapsible Assertion
 - [ ] Clipboard events
 - [ ] Set Icon

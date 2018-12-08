@@ -235,9 +235,12 @@
 
     .stacker-input:focus {
         background-color: transparent;
-        border-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
         box-shadow: 0 0 5px var(--text-smooth-color);
+    }
+
+    .stacker-input:hover {
+        box-shadow: 0 0 5px var(--text-color);
     }
 
     #side-bar {

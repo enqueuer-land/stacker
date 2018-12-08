@@ -3,11 +3,9 @@
         <a href="#" style="text-decoration: none">
             <div class="row no-gutters" style="height: 55%">
                 <div class="col-3">
-                    <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block"
-                         style="transform: scale(-1.3, 1.3) rotate(90deg); position: relative; top: 5px;">
+                    <img src="../../../src/assets/symbol1.png" class="img-fluid mx-auto rounded d-block logo-class">
                 </div>
-                <header id="side-bar-header" class="col-8 align-self-center"
-                        style="position: relative; top: 0px; left: -15px">
+                <header class="col-8 align-self-center side-bar-header">
                     stacker
                 </header>
                 <div class="col align-self-end">
@@ -31,7 +29,7 @@
                     </div>
                 </div>
                 <a class="col-1 pr-0 align-self-center pt-1" href="#">
-                    <i class="material-icons" style="color: var(--text-smooth-color); transform: scale(0.85)">search</i>
+                    <i class="material-icons search-icon">search</i>
                 </a>
             </div>
         </a>
@@ -46,15 +44,9 @@
     export default {
         name: 'SideBarHeader',
         components: {DropdownComponent},
-        beforeCreate() {
-            setInterval(() => {
-                const addButtonClass = $('.add-button-class');
-                addButtonClass.addClass('rotated-add-button-class');
-                setTimeout(() => addButtonClass.removeClass('rotated-add-button-class'), 800);
-            }, 10000);
-        },
         data: function () {
             return {
+                addButtonPulseInterval: null,
                 actions: [
                     {
                         name: "Import requisitions",
@@ -109,19 +101,41 @@
                     return this.$store.commit('changeFilter', value);
                 }
             }
+        },
+        watch: {
+            '$store.state.requisitions'(value) {
+                if (value.length === 0) {
+                    this.addButtonPulseInterval = setInterval(() => {
+                        const addButtonClass = $('.add-button-class');
+                        addButtonClass.addClass('rotated-add-button-class');
+                        setTimeout(() => addButtonClass.removeClass('rotated-add-button-class'), 800);
+                    }, 5000);
+                } else {
+                    clearInterval(this.addButtonPulseInterval);
+                    this.addButtonPulseInterval = null;
+                }
+            }
         }
+
     }
 </script>
 
 <style scoped>
 
-    #side-bar-header {
+    .side-bar-header {
         transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
         font-size: 550%;
         color: var(--text-color);
         text-align: left;
         letter-spacing: -15px;
+        position: relative;
+        top: 0px;
+        left: -15px
+    }
+
+    .side-bar-header:hover {
+        text-shadow: 0 0 5px var(--enqueuer-color);
     }
 
     .dropdown-toggle::after {
@@ -141,5 +155,25 @@
     .add-button-class:hover, .rotated-add-button-class {
         transform: scale(1.8);
         top: 0;
+    }
+
+    .logo-class {
+        transform: scale(-1.3, 1.3) rotate(90deg);
+        position: relative;
+        top: 5px;
+        transition: transform 500ms ease;
+    }
+
+    .logo-class:hover {
+        transform: scale(-1.3, 1.3) rotate(270deg);
+    }
+
+    .search-icon {
+        color: var(--text-smooth-color);
+        transform: scale(0.85);
+    }
+
+    .search-icon:hover {
+        color: var(--text-color);
     }
 </style>

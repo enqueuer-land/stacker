@@ -2,7 +2,7 @@
     <div class="side-bar-node mb-0 mt-0">
         <div style="border: none;">
             <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id">
-                <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened"/>
+                <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened" @clicked="headerChildClick"/>
             </div>
             <div :id="node.id" class="collapse">
                 <div class="p-0 pl-3"
@@ -38,7 +38,15 @@
             }
         },
         methods: {
+            headerChildClick: function () {
+                if (this.$store.state.selectedItem.id != this.node.id) {
+                    $('#' + this.node.id).removeClass('show');
+                }
+                // this.opened = !$('#' + this.node.id).hasClass('show');
+            },
             onClick: function () {
+                console.log('selected: ' + this.$store.state.selectedItem.id);
+                console.log('me: ' + this.node.id);
                 this.opened = !$('#' + this.node.id).hasClass('show');
             },
         },
