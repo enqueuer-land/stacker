@@ -23,8 +23,7 @@
                            placeholder="value">
                     <div class="input-group-append pl-1">
                         <a href="#" style="color: var(--text-color)">
-                            <i @click="removePair(index)" class="material-icons"
-                               style="position: relative; top: calc(50% - 12px)">highlight_off</i>
+                            <i @click="removePair(index)" class="material-icons remove-button">highlight_off</i>
                         </a>
                     </div>
                 </div>
@@ -169,4 +168,14 @@
         transform: scale(0.7) rotate(90deg);
     }
 
+    .remove-button {
+        position: relative;
+        top: calc(50% - 12px);
+        transition: transform 50ms ease;
+    }
+
+    .remove-button.hover, .remove-button:hover {
+        transform: scale(0.9) rotate(10deg);
+        color: var(--failing-test-color);
+    }
 </style>

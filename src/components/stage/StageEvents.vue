@@ -79,9 +79,7 @@
         computed: {
             hasContent() {
                 return function (button) {
-                    // (this.events || []).forEach(event => this.item[event.name] = this.item[event.name] || {});
                     const event = this.item[button.name];
-                    console.log(JSON.stringify(event));
                     return Object.keys(event).some(key => {
                         const item = event[key];
                         return item !== undefined && (item.length > 0 || Object.keys(item).length > 0) && item !== '\n';
