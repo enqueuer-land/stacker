@@ -27,7 +27,7 @@
         components: {Stage, Result, SideBar},
         created() {
             // this.$store.commit('addRequisition', {router: this.$router});
-            this.$store.commit('openRequisitionFile', {router: this.$router, file: 'examples'});
+            this.$store.commit('openRequisitionFile', {router: this.$router, file: 'examples/examples.stk'});
         },
         data() {
             return {
