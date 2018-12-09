@@ -63,8 +63,8 @@
                         <li>HTTP</li>
                         <li>AMQP</li>
                         <li>MQTT</li>
-                        <li>TCP; SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP<span
-                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        <li><span
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-right: 2px">(WIP)</span>TCP; SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP
                         </li>
                     </ul>
                 </div>
@@ -88,10 +88,15 @@
                 <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/github-api-screenshot.png"
                      class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
             <!--</div>-->
-                <footer class="container" style="padding-top: 50px">
-                    <p>VirgStacker 2018
-                    </p>
-                </footer>
+                <div
+                        style="background-color: var(--stacker-header-background-color); height: 200px;">
+                    <!--<div class="row">-->
+                        <!--<span class="align-self-center" style="color: var(&#45;&#45;text-color); text-align: left;">VirgStacker 2018</span>-->
+                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/gui.png"
+                             class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
+
+                    <!--</div>-->
+                </div>
 
         </div> <!-- /container -->
     </div>
@@ -199,6 +204,10 @@
         box-shadow: 0 0 20px var(--enqueuer-color);
         /*background-color: var(--text-color);*/
         /*color: var(--stacker-header-background-color);*/
+    }
+
+    .gui-class:hover {
+        /*box-shadow: 0 0 20px var(--enqueuer-color);*/
     }
 </style>
 </html>
