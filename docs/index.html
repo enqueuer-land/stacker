@@ -27,7 +27,7 @@
                     <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
                          class="img-fluid logo-class">
                 </span>
-                <span class="col-md-auto align-self-center title-header">stacker</span>
+                <a class="col-md-auto align-self-center title-header" href="http://github.com/lopidio/stacker">stacker</a>
                 <div class="col-md-auto align-self-end">
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
                 </div>
@@ -45,20 +45,14 @@
         </div>
     </div>
     <div style="background-color: var(--text-color); color: var(--stacker-header-background-color)" class="pt-3">
-        <div class="container">
+        <div class="container" style="height: 600px">
             <!-- Example row of columns -->
             <div class="row">
                 <div class="col-md-4">
                     <h2>Publish and mock</h2>
                     <p>
-                        Publish something, in any protocol, it's your call, and verify how the system under test reacts
-                        to it.
-                        Check whether each flowing by message matches what is expected:
-                    <ul>
-                        <li>Was sent to the right path</li>
-                        <li>Contains what is should contain</li>
-                        <li>Was sent faster than the acceptable</li>
-                    </ul>
+                        Publish something in any protocol and verify how the system under test reacts
+                        to it by dynamically mocking its any protocol dependencies.
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -69,45 +63,40 @@
                         <li>HTTP</li>
                         <li>AMQP</li>
                         <li>MQTT</li>
-                        <li>TCP<span style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
-                        </li>
-                        <li>SQS<span style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
-                        </li>
-                        <li>AMQP1.0<span
-                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
-                        </li>
-                        <li>KAFKA<span
-                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
-                        </li>
-                        <li>ZEROMQ<span
-                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
-                        </li>
-                        <li>STOMP<span
+                        <li>TCP; SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP<span
                                 style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h2>Designed for tests</h2>
-                    <p>Tests are first class citizens. Get it added to your CI pipeline and assert against payload and
-                        message content when hitting your APIs.</p>
+                    <p>Tests are first class citizens.
+                        Get it added to the CI pipeline and improve your system reliability through easily created
+                        integration tests.
+                        Check whether each flowing by message matches what is expected:
+                    </p>
+                    <ul>
+                        <li>Sent to the right path</li>
+                        <li>Contains what is should contain</li>
+                        <li>Sent faster than the acceptable</li>
+                    </ul>
+
                 </div>
             </div>
-            <div class="row">
-                ScreenShots
-            </div>
-
             <hr>
+            <!--<div class="row">-->
+                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/github-api-screenshot.png"
+                     class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
+            <!--</div>-->
+                <footer class="container" style="padding-top: 50px">
+                    <p>VirgStacker 2018
+                    </p>
+                </footer>
 
         </div> <!-- /container -->
     </div>
 </main>
 
-<footer class="container">
-    <p>© Company 2017-2018
-        Virgs Icon
-    </p>
-</footer>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -155,6 +144,8 @@
 
     .title-header:hover {
         text-shadow: 0 0 20px var(--enqueuer-color);
+        color: var(--text-color);
+        text-decoration: none;
     }
 
     .logo-class {
