@@ -14,7 +14,7 @@
                                     </li>
                                 </ol>
                             </div>
-                            <div class="align-self-center pl-1">
+                            <div class="align-self-center pl-1 test-name-class">
                                 {{test.name}}
                             </div>
                         </div>
@@ -152,10 +152,10 @@
         font-size: 0.85em;
         font-weight: lighter;
         min-height: 32px;
-        color: var(--text-smooth-color);
-        background-color: var(--stacker-background-color);
+        color: var(--text-color);
+        background-color: var(--stacker-background-alternative-color);
         border-top: 1px solid var(--stacker-background-alternative-color);
-        border-left: 5px solid var(--stacker-background-alternative-color);
+        border-left: 20px solid var(--stacker-background-alternative-color);
     }
 
     .title-class {
@@ -165,7 +165,11 @@
         background-color: var(--stacker-background-color);
     }
 
-    .title-class:hover, .description-class:hover {
+    .test-name-class {
+        color: var(--text-smooth-color);
+    }
+
+    .title-class:hover, .description-class:hover, .title-class:active, .description-class:active, .test-name-class:hover, .test-name-class:active {
         background-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
     }

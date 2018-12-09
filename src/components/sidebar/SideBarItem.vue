@@ -114,13 +114,13 @@
                 };
                 if (this.isSelected()) {
                     style['color'] = 'var(--text-color)';
-                    style['background-color'] = 'var(--stacker-background-color)';
+                    style['background-color'] = 'var(--stacker-background-alternative-color)';
                     style['border-left'] = '2px var(--' + selectedItem.component + '-color) solid';
                     // style['border-top'] = '1px var(--' + selectedItem.component + '-color) solid';
                 }
                 if (this.mouseIsOver) {
                     // style['color'] = 'var(--text-color)';
-                    style['background-color'] = 'var(--stacker-background-alternative-color)';
+                    style['background-color'] = 'var(--stacker-background-color)';
                     style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
                 }
                 if (this.isRequisition && this.opened) {
