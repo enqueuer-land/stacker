@@ -22,21 +22,26 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron jumbotron-header">
         <div class="container-fluid">
-            <div class="row mx-auto" style="height: 20vh; margin-bottom: 0px">
-                <div class="offset-3"></div>
-                <span class="ml-3 col-1 ">
+            <div class="row justify-content-center" style="height: 20vh; margin-bottom: 0px">
+                <span class="ml-3 col-1">
                     <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
                          class="img-fluid logo-class">
                 </span>
                 <span class="col-md-auto align-self-center title-header">stacker</span>
-                <div class="col align-self-end">
+                <div class="col-md-auto align-self-end">
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
                 </div>
             </div>
-            <p style="color: var(--text-color); font-size: 25px; font-weight: lighter; text-align: center;"
-               class="mb-0">
-                The first and unique <b>multi IPC protocol</b> client <strong>TESTING</strong> tool
-            </p>
+            <div class="row pt-5 mb-0 justify-content-center">
+                <div class="offset-3"></div>
+                <p class="col-md-auto jumbotron-summary">
+                    Open source, cross-platform, <b>multi-protocol</b> client <strong>TESTING</strong> tool
+                </p>
+                <div class="offset-2"></div>
+                <div class="col-md-auto">
+                    <button type="button" class="btn btn-lg download-it-button">Get it now!</button>
+                </div>
+            </div>
         </div>
     </div>
     <div style="background-color: var(--text-color); color: var(--stacker-header-background-color)" class="pt-3">
@@ -44,35 +49,48 @@
             <!-- Example row of columns -->
             <div class="row">
                 <div class="col-md-4">
-                    <h2>What it does?</h2>
+                    <h2>Publish and mock</h2>
                     <p>
-                        It is a microservice integration testing tool that supports a range of protocols (HTTP, AMQP,
-                        MQTT
-                        etc.) and provides the following capabilities:
-
-                        Initiates requests
-                        Mock depended services
-                        Assert against payload and message content
-                        CLI easily added to CI pipelines
-                        Consider reading the instructions for further details</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                        Publish something, in any protocol, it's your call, and verify how the system under test reacts
+                        to it.
+                        Check whether each flowing by message matches what is expected:
+                    <ul>
+                        <li>Was sent to the right path</li>
+                        <li>Contains what is should contain</li>
+                        <li>Was sent faster than the acceptable</li>
+                    </ul>
+                    </p>
                 </div>
                 <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna
-                        mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    <h2>Range of protocols</h2>
+                    <p>Did it mention it supports multi-protocols? Yeap, it does. Out of the box, just one click away
+                        from each other:</p>
+                    <ul>
+                        <li>HTTP</li>
+                        <li>AMQP</li>
+                        <li>MQTT</li>
+                        <li>TCP<span style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                        <li>SQS<span style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                        <li>AMQP1.0<span
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                        <li>KAFKA<span
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                        <li>ZEROMQ<span
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                        <li>STOMP<span
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-left: 10px">(WIP)</span>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id
-                        ligula
-                        porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-                        nibh,
-                        ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    <h2>Designed for tests</h2>
+                    <p>Tests are first class citizens. Get it added to your CI pipeline and assert against payload and
+                        message content when hitting your APIs.</p>
                 </div>
             </div>
             <div class="row">
@@ -155,7 +173,7 @@
         color: var(--enqueuer-color);
         transform: scale(1.7);
         position: relative;
-        top: -30px;
+        /*top: -30px;*/
         left: -0.5vw;
         transition: 400ms ease all;
     }
@@ -166,11 +184,30 @@
     }
 
     .jumbotron-header {
-        background-image: radial-gradient(var(--stacker-header-background-color), var(--stacker-background-color));
-
-        /*background-color: var(--stacker-header-background-color);*/
+        /*background-image: radial-gradient(var(--stacker-header-background-color), var(--stacker-background-color));*/
+        background-color: var(--stacker-header-background-color);
+        padding-top: 40px;
         padding-bottom: 40px;
         margin-bottom: 0;
+    }
+
+    .jumbotron-summary {
+        color: var(--text-color);
+        font-size: 25px;
+        font-weight: lighter;
+        text-align: center;
+    }
+
+    .download-it-button {
+        background-color: transparent;
+        border: 1px solid var(--text-color);
+        color: var(--text-color);
+    }
+
+    .download-it-button:hover {
+        box-shadow: 0 0 20px var(--enqueuer-color);
+        /*background-color: var(--text-color);*/
+        /*color: var(--stacker-header-background-color);*/
     }
 </style>
 </html>
