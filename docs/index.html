@@ -20,13 +20,14 @@
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron"
-         style="background-color: var(--stacker-header-background-color); padding-bottom: 40px; margin-bottom: 0">
+    <div class="jumbotron jumbotron-header">
         <div class="container-fluid">
-            <div class="row mx-auto" style="height: 25vh; margin-bottom: 50px">
+            <div class="row mx-auto" style="height: 20vh; margin-bottom: 0px">
                 <div class="offset-3"></div>
-                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
-                     class="ml-3 col-1 img-fluid rounded float-left logo-class">
+                <span class="ml-3 col-1 ">
+                    <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
+                         class="img-fluid logo-class">
+                </span>
                 <span class="col-md-auto align-self-center title-header">stacker</span>
                 <div class="col align-self-end">
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
@@ -34,7 +35,7 @@
             </div>
             <p style="color: var(--text-color); font-size: 25px; font-weight: lighter; text-align: center;"
                class="mb-0">
-                The first and unique multi IPC protocol client testing tool
+                The first and unique <b>multi IPC protocol</b> client <strong>TESTING</strong> tool
             </p>
         </div>
     </div>
@@ -43,7 +44,7 @@
             <!-- Example row of columns -->
             <div class="row">
                 <div class="col-md-4">
-                    <h2>What id does?</h2>
+                    <h2>What it does?</h2>
                     <p>
                         It is a microservice integration testing tool that supports a range of protocols (HTTP, AMQP,
                         MQTT
@@ -139,9 +140,10 @@
     }
 
     .logo-class {
-        /*height: auto;*/
         transform: scale(1.5);
         transition: transform 500ms ease;
+        position: relative;
+        top: calc(10vh - 50px);
     }
 
     .logo-class:hover {
@@ -149,19 +151,26 @@
     }
 
     .small-green-ball {
+        cursor: pointer;
         color: var(--enqueuer-color);
         transform: scale(1.7);
         position: relative;
-        top: 10px;
+        top: -30px;
         left: -0.5vw;
         transition: 400ms ease all;
     }
 
     .small-green-ball:active {
         color: var(--enqueuer-color);
-        transform: scale(2) translateX(10vw);
+        transform: scale(2) translateX(8vw);
     }
 
+    .jumbotron-header {
+        background-image: radial-gradient(var(--stacker-header-background-color), var(--stacker-background-color));
 
+        /*background-color: var(--stacker-header-background-color);*/
+        padding-bottom: 40px;
+        margin-bottom: 0;
+    }
 </style>
 </html>
