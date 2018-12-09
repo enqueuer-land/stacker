@@ -7,7 +7,7 @@ const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 require('enqueuer/js/injectable-files-list');
-require('electron-debug')();
+// require('electron-debug')();
 
 let url;
 if (process.env.NODE_ENV === 'DEV') {
@@ -59,7 +59,7 @@ app.on('ready', () => {
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
 
-    // window.webContents.openDevTools({mode: 'bottom'});
+    window.webContents.openDevTools({mode: 'bottom'});
     // window.webContents.on("devtools-opened", () => {
     //     window.webContents.closeDevTools();
     // });
