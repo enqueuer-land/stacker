@@ -8,10 +8,13 @@
                     type="button"
                     data-toggle="collapse"
                     :style="buttonStyle(index)"
+                    @mouseenter="mouseOverIndex = index"
+                    @mouseleave="mouseOverIndex = null"
                     @click="selectIndex(index)"
                     :id="event.name + 'Button'"
                     :data-target="'#' + event.name + 'Body'">
-                <i v-show="hasContent(event)" style="transform: scale(0.5); position: relative; top: 5px;" class="material-icons">fiber_manual_record</i>
+                <i v-show="hasContent(event)" style="transform: scale(0.5); position: relative; top: 5px;"
+                   class="material-icons">fiber_manual_record</i>
                 <span>
                     {{event.label}}
                 </span>
@@ -22,10 +25,12 @@
              :style="cardBodyStyle"
              data-parent="#stage-event-group-parent">
             <div class="card card-body px-2 pt-2" :style="eventStyle">
-                <event class="scroll-div" style="max-height: calc(80vh - 150px)" v-model="item[event.name]" :eventName="event.name"></event>
+                <event class="scroll-div" style="max-height: calc(80vh - 150px)" v-model="item[event.name]"
+                       :eventName="event.name"></event>
             </div>
         </div>
-        <div v-show="selectedIndex !== null" class="row" style="height: 100vh; opacity: .5; background-color: black"></div>
+        <div v-show="selectedIndex !== null" class="row"
+             style="height: 100vh; opacity: .5; background-color: black"></div>
     </div>
 </template>
 
@@ -40,7 +45,8 @@
         data: function () {
             (this.events || []).forEach(event => this.item[event.name] = this.item[event.name] || {});
             return {
-                selectedIndex: null
+                selectedIndex: null,
+                mouseOverIndex: null
             }
         },
         methods: {
@@ -68,6 +74,16 @@
             }
         },
         watch: {
+            mouseOverIndex(value) {
+                this.events.forEach((_, index) => {
+                    const arrowElement = $('#' + this.events[index].name + 'Button i');
+                    if (value === index) {
+                        arrowElement.addClass('hover');
+                    } else {
+                        arrowElement.removeClass('hover');
+                    }
+                });
+            },
             eventName: function () {
                 this.getContent();
             },
@@ -148,15 +164,20 @@
         /*transition: none !important;*/
     }
 
-    .button-icon.active {
-        transform: scale(0.95) rotate(180deg);
-    }
-
     .button-icon {
         transform: scale(0.75) rotate(90deg);
         position: relative;
         top: 6px;
-        transition: transform 400ms ease
+        transition: transform 200ms ease
     }
+
+    .button-icon.active {
+        transform: scale(0.95) rotate(180deg);
+    }
+
+    .button-icon.hover, .button-icon:hover {
+        transform: scale(0.8) rotate(135deg);
+    }
+
 
 </style>
