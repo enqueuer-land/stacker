@@ -9,8 +9,8 @@
                                 <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                     <li class="breadcrumb-item"
                                         v-for="(breadCrumb, index) in test.hierarchy" :key="index">
-                                        <a href="#" :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
-                                           @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</a>
+                                        <span :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
+                                           @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</span>
                                     </li>
                                 </ol>
                             </div>
@@ -78,12 +78,11 @@
                     const item = new ComponentManager().findItem(breadCrumb.id);
                     let color = 'var(--text-smooth-color)';
                     if (item) {
-                        // color = `var(--text-color)`;
                         color = `var(--${item.component}-color)`;
                     }
                     return {
-
-                        color
+                        color,
+                        'padding-left': '3px'
                     }
                 }
             },
@@ -111,9 +110,9 @@
     }
 
     .breadcrumb-item::before {
-        content: '›';
-        color: var(--text-color);
-        padding-right: 3px;
+        content: '̷';
+        color: var(--text-smooth-color);
+        padding: 0 5px;
     }
 
     .breadcrumb-item {
@@ -139,34 +138,7 @@
         height: inherit;
     }
 
-    .result-flatten-tests-item-header > div:focus {
-        color: var(--text-color);
-    }
-
-    .result-flatten-tests-item-header > div:hover {
-        color: var(--text-color);
-        /*border-left: 4px solid;*/
-    }
-
-    .result-flatten-tests-item-header > a {
-        /*color: var(--text-smooth-color);*/
-    }
-
-    .list-unstyled > li > a {
-        color: var(--text-smooth-color);
-    }
-
-    .list-unstyled > li > a:hover {
-        color: var(--text-color);
-    }
-
-    .list-unstyled > li > a:focus {
-        color: var(--text-color);
-        background-color: var(--stacker-background-alternative-color);
-    }
-
-    .breadcrumb-item a:hover {
-        text-decoration: none;
+    .breadcrumb-anchor:hover, .breadcrumb-anchor.hover {
         color: var(--text-color) !important;
     }
 

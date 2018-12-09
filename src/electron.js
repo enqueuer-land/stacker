@@ -4,9 +4,9 @@ const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
-// const Store = require("enqueuer/js/configurations/store").Store;
-// const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
-// require('enqueuer/js/injectable-files-list');
+const Store = require("enqueuer/js/configurations/store").Store;
+const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
+require('enqueuer/js/injectable-files-list');
 // require('electron-debug')();
 
 let url;
@@ -23,7 +23,7 @@ app.on('ready', () => {
     let window = new BrowserWindow({
         width: 1600,
         height: 1200,
-        title: 'Stacker',
+        title: 'stacker',
         minWidth: 1400,
         minHeight: 800,
         center: true,
@@ -43,15 +43,15 @@ app.on('ready', () => {
     });
 
     ipcMain.on('runRequisition', (event, requisition) => {
-        // Store.refreshData();
-        // event.sender.send('runningRequisition');
-        // new RequisitionRunner(requisition, null).run()
-        //     .then(report => {
-        //         event.sender.send('runRequisitionReply', report)
-        //     })
-        //     .catch(err => {
-        //        console.log(`Error running requisition: ${err}`);
-        //     });
+        Store.refreshData();
+        event.sender.send('runningRequisition');
+        new RequisitionRunner(requisition, null).run()
+            .then(report => {
+                event.sender.send('runRequisitionReply', report)
+            })
+            .catch(err => {
+               console.log(`Error running requisition: ${err}`);
+            });
 
     });
 

@@ -518,28 +518,21 @@
                 {
                   "name": "second.2",
                   "iterations": 3,
-                  "requisitions": [
-                    {
-                      "name": "second.3",
-                      "iterations": 3,
-                      "onInit": {
-                        "script": "++store.counter"
-                      },
-                      "id": "id1544238244388ZB7n8oIWVA",
-                      "publishers": [],
-                      "subscriptions": [],
-                      "requisitions": [],
-                      "errors": [],
-                      "invalidChildren": [],
-                      "component": "requisition"
-                    }
-                  ],
+                  "requisitions": [],
                   "id": "id1544238244388f7xsbTpzX7",
                   "publishers": [],
                   "subscriptions": [],
                   "errors": [],
                   "invalidChildren": [],
-                  "component": "requisition"
+                  "component": "requisition",
+                  "onInit": {
+                    "script": "store.counter++",
+                    "assertions": [],
+                    "store": {}
+                  },
+                  "onFinish": {
+                    "assertions": []
+                  }
                 }
               ],
               "id": "id15442382443880R1s7epOgM",
@@ -547,7 +540,13 @@
               "subscriptions": [],
               "errors": [],
               "invalidChildren": [],
-              "component": "requisition"
+              "component": "requisition",
+              "onInit": {
+                "assertions": []
+              },
+              "onFinish": {
+                "assertions": []
+              }
             }
           ],
           "id": "id1544238244388xgo44eulxq",
@@ -555,15 +554,21 @@
           "subscriptions": [],
           "errors": [],
           "invalidChildren": [],
-          "component": "requisition"
+          "component": "requisition",
+          "onInit": {
+            "assertions": []
+          },
+          "onFinish": {
+            "assertions": []
+          }
         }
       ],
       "onFinish": {
         "assertions": [
           {
-            "name": "3 exponential to 4",
+            "name": "3 exponential to 3",
             "expect": "store.counter",
-            "toBeEqualTo": "3*3*3*3"
+            "toBeEqualTo": "3*3*3"
           }
         ]
       },

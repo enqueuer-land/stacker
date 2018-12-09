@@ -14,8 +14,9 @@
 - [x] Collapsible Assertion
 - [x] Individuals vertical scroll bars
 - [x] Set Icon
-- [ ] Pack it up
 - [ ] Create githubPage
+- [ ] Fix ObjectFormatter bug
+- [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
 - [ ] Tests result buttons (expandAll, collapse all, export)

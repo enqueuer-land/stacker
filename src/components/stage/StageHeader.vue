@@ -5,14 +5,14 @@
                 <ol class="breadcrumb my-0 pb-0 pt-0 pl-1" style="background-color: transparent;">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
-                        <a style="cursor: pointer;"
-                           @click="runClick(breadCrumb)">
-                            <i :style="breadcrumbIconStyle(breadCrumb)" class="material-icons stacker-icon">play_circle_outline</i>
-                        </a>
-                        <a :style="breadcrumbStyle" href="#"
+                        <i :style="breadcrumbIconStyle(breadCrumb)"
+                           @click="runClick(breadCrumb)"
+                           class="material-icons stacker-icon"
+                        >play_circle_outline</i>
+                        <span :style="breadcrumbStyle"
                            @click="breadCrumbSelected(breadCrumb)">
                             {{breadCrumb.name}}
-                        </a>
+                        </span>
                     </li>
                 </ol>
             </div>
@@ -116,9 +116,9 @@
                 this.item = Object.assign(this.item, payload);
                 new ComponentManager().propagateValidationToParents(this.item, valid);
             },
-            runClick: function (item) {
+            runClick: async function (item) {
                 if (new ComponentManager().isComponentValid(item)) {
-                    this.$store.dispatch('runRequisition', item);
+                    await this.$store.dispatch('runRequisition', item);
                 }
             },
             getEvents() {
@@ -228,23 +228,23 @@
                 return {
                     'text-decoration': 'none',
                     'font-size': '0.8em',
-                    'color': 'var(--' + this.item.component + '-color)'
+                    color: 'var(--' + this.item.component + '-color)',
+                    cursor: 'pointer',
                 }
             },
             breadcrumbIconStyle() {
                 return function (item) {
                     const style = {
-                        // 'transform': 'scale(1.5)',
-                        'position': 'relative',
-                        'top': 'calc(50% - 10px)',
+                        transform: 'rotate(2deg)',
+                        position: 'relative',
+                        top: 'calc(50% - 8px)',
                         padding: '0 3px',
                         color: 'var(--requisition-color)',
-                        // 'text-decoration': 'none',
-                        // 'font-size': '0.8em',
                         cursor: 'pointer',
                     };
                     if (!new ComponentManager().isComponentValid(item)) {
-                        style.color = 'var(--text-smooth-color)';
+                        style.transform = 'rotate(30deg) scale(0.75)';
+                        style.color = 'var(--text-smooth-color) !important';
                         style.cursor = 'default';
                     }
                     return style
@@ -258,9 +258,11 @@
 <style scoped>
 
     .breadcrumb-item::before {
-        content: '›';
+        content: '̷';
         padding-right: 3px;
-        color: var(--text-color);
+        top: 2px;
+        position: relative;
+        color: var(--text-smooth-color);
     }
 
     .breadcrumb-item :hover, .breadcrumb-item .hover, .breadcrumb-item :focus, .breadcrumb-item .focus {
