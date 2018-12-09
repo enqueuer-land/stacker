@@ -101,7 +101,7 @@
         },
         watch: {},
         computed: {
-            sideBarItemStyle: function () {
+            sideBarItemStyle() {
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
                     cursor: 'pointer',
@@ -112,20 +112,23 @@
                     'background-color': 'var(--stacker-header-background-color)',
                     'color': 'var(--text-smooth-color)'
                 };
-                if (this.isSelected()) {
-                    style['color'] = 'var(--text-color)';
-                    style['background-color'] = 'var(--stacker-background-alternative-color)';
-                    style['border-left'] = '2px var(--' + selectedItem.component + '-color) solid';
-                    // style['border-top'] = '1px var(--' + selectedItem.component + '-color) solid';
-                }
                 if (this.mouseIsOver) {
                     // style['color'] = 'var(--text-color)';
                     style['background-color'] = 'var(--stacker-background-color)';
                     style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
                 }
                 if (this.isRequisition && this.opened) {
-                    style['border-left'] = '2px var(--requisition-color) solid';
+                    // style['border-left'] = '2px var(--requisition-color) solid';
+                    style['border-left'] = '2px var(--enqueuer-color) solid';
+                    style['background-color'] = 'var(--stacker-background-color)';
                     // style['border-top'] = '1px var(--requisition-color) solid';
+                }
+                if (this.isSelected()) {
+                    style['color'] = 'var(--text-color)';
+                    style['background-color'] = 'var(--stacker-background-alternative-color)';
+                    // style['border-left'] = '2px var(--' + selectedItem.component + '-color) solid';
+                    style['border-left'] = '2px var(--enqueuer-color) solid';
+                    // style['border-top'] = '1px var(--' + selectedItem.component + '-color) solid';
                 }
                 if (selectedItem && selectedItem.id !== this.item.id) {
                     // style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';

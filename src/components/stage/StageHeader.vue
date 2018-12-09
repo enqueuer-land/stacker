@@ -189,8 +189,10 @@
         },
         watch: {
             item: function () {
+                console.log('item')
             },
             id: function () {
+                console.log('id')
                 this.getContent();
             }
         },
@@ -198,7 +200,9 @@
             nameStyle() {
                 return {
                     'font-size': '0.8em',
-                    'color': 'var(--' + this.item.component + '-color)'
+                    // 'color': 'var(--' + this.item.component + '-color)'
+                    // 'color': 'var(--text-smooth-color)'
+                    'color': 'var(--enqueuer-color)'
                 }
             },
             runButtonClass() {
@@ -228,7 +232,8 @@
                 return {
                     'text-decoration': 'none',
                     'font-size': '0.8em',
-                    color: 'var(--' + this.item.component + '-color)',
+                    // color: 'var(--' + this.item.component + '-color)',
+                    color: 'var(--enqueuer-color)',
                     cursor: 'pointer',
                 }
             },
@@ -238,7 +243,8 @@
                         position: 'relative',
                         top: 'calc(50% - 8px)',
                         padding: '0 3px',
-                        color: 'var(--requisition-color)',
+                        // color: 'var(--requisition-color)',
+                        color: 'var(--enqueuer-color)',
                         cursor: 'pointer',
                     };
                     if (!new ComponentManager().isComponentValid(item)) {

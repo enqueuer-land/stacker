@@ -7,7 +7,7 @@
             <div :id="node.id" class="collapse">
                 <div class="pr-0 pt-0 pl-3"
                      style="background-color: var(--stacker-header-background-color);
-                                border-left: 2px solid var(--requisition-color);;">
+                                border-left: 2px solid var(--enqueuer-color);">
                     <ul class="list-unstyled">
                         <SideBarNode v-for="(requisition, index) in filteredRequisitions" :index="index"
                                      :key="requisition.id" :node="requisition"/>

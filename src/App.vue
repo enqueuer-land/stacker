@@ -235,11 +235,13 @@
     .stacker-input:focus {
         background-color: transparent;
         color: var(--text-color);
-        box-shadow: 0 0 5px var(--text-smooth-color);
+        box-shadow: 0 0 5px var(--enqueuer-color);
         /*border-color: #80bdff;*/
+        border-color: var(--enqueuer-color);
     }
 
     .stacker-input:hover {
+        border-color: var(--enqueuer-color);
         box-shadow: 0 0 5px var(--text-color);
     }
 
