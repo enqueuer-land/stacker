@@ -1,8 +1,10 @@
 <template>
     <div :style="sideBarItemStyle">
-        <a class="row no-gutters mainSideBarItem'"
+        <div class="row no-gutters mainSideBarItem'"
            :id="item.id + 'SideBarItem'"
            style="height: 100%"
+           @keyup.ctrl.67="clipboardEvent"
+           @keyup.ctrl="clipboardEvent"
            @mouseenter="mouseEnterHeader"
            @click="itemSelected"
            @mouseover="mouseIsOver = true"
@@ -38,7 +40,7 @@
             <div class="align-self-center tag pr-2" :style="tagStyle">
                 {{tag}} #{{index}}
             </div>
-        </a>
+        </div>
 
     </div>
 </template>
@@ -76,6 +78,9 @@
             isSelected: function () {
                 const selectedItem = this.$store.state.selectedItem;
                 return selectedItem && selectedItem.id === this.item.id;
+            },
+            clipboardEvent() {
+              console.log('event')
             },
             mouseEnterHeader(event) {
                 const errors = (this.item.invalidChildren || [])

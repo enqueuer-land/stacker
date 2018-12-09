@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import ObjectDecycler from "./tests/object-decycler";
 import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 
@@ -271,7 +270,7 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            const decycle = new ParentRemover().remove(new ObjectDecycler().decycle(requisition));
+            const decycle = new ParentRemover().remove(requisition);
             console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
 

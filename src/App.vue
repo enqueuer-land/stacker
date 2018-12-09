@@ -235,6 +235,7 @@
         background-color: transparent;
         color: var(--text-color);
         box-shadow: 0 0 5px var(--text-smooth-color);
+        /*border-color: #80bdff;*/
     }
 
     .stacker-input:hover {

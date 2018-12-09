@@ -235,7 +235,6 @@
             breadcrumbIconStyle() {
                 return function (item) {
                     const style = {
-                        transform: 'rotate(2deg)',
                         position: 'relative',
                         top: 'calc(50% - 8px)',
                         padding: '0 3px',
@@ -243,7 +242,6 @@
                         cursor: 'pointer',
                     };
                     if (!new ComponentManager().isComponentValid(item)) {
-                        style.transform = 'rotate(30deg) scale(0.75)';
                         style.color = 'var(--text-smooth-color) !important';
                         style.cursor = 'default';
                     }
