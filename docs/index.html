@@ -20,50 +20,74 @@
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called a
-                jumbotron and three supporting pieces of content. Use it as a starting point to create something more
-                unique.</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+    <div class="jumbotron"
+         style="background-color: var(--stacker-header-background-color); padding-bottom: 40px; margin-bottom: 0">
+        <div class="container-fluid">
+            <div class="row mx-auto" style="height: 25vh; margin-bottom: 50px">
+                <div class="offset-3"></div>
+                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
+                     class="ml-3 col-1 img-fluid rounded float-left logo-class">
+                <span class="col-md-auto align-self-center title-header">stacker</span>
+                <div class="col align-self-end">
+                    <i class="material-icons small-green-ball">fiber_manual_record</i>
+                </div>
+            </div>
+            <p style="color: var(--text-color); font-size: 25px; font-weight: lighter; text-align: center;"
+               class="mb-0">
+                The first and unique multi IPC protocol client testing tool
+            </p>
         </div>
     </div>
+    <div style="background-color: var(--text-color); color: var(--stacker-header-background-color)" class="pt-3">
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>What id does?</h2>
+                    <p>
+                        It is a microservice integration testing tool that supports a range of protocols (HTTP, AMQP,
+                        MQTT
+                        etc.) and provides the following capabilities:
 
-    <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                    mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                    mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                        Initiates requests
+                        Mock depended services
+                        Assert against payload and message content
+                        CLI easily added to CI pipelines
+                        Consider reading the instructions for further details</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna
+                        mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id
+                        ligula
+                        porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+                        nibh,
+                        ut fermentum massa justo sit amet risus.</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                    mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
-                    mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <div class="row">
+                ScreenShots
             </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                    porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-                    ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-    </div> <!-- /container -->
-
+        </div> <!-- /container -->
+    </div>
 </main>
 
 <footer class="container">
-    <p>© Company 2017-2018</p>
+    <p>© Company 2017-2018
+        Virgs Icon
+    </p>
 </footer>
 
 <!-- Bootstrap core JavaScript
@@ -82,4 +106,62 @@
 
 
 </body>
+<style>
+
+    :root {
+        --requisition-color: #e8bf57;
+        --publisher-color: #c88022;;
+        --subscription-color: #589df6;
+        /*--passing-test-color: #42ba84;*/
+        --passing-test-color: #9FB630;
+        --failing-test-color: #a9524a;
+        --invalid-color: #a9524a;
+        /*--information-color: #7ed221;*/
+        --enqueuer-color: #9FB630;
+
+        --text-color: #eeeeee;
+        --text-smooth-color: #a4a4a4;
+        --stacker-header-background-color: #2b2a2e;
+        --stacker-background-color: #353535;
+        --stacker-background-alternative-color: #424242;
+    }
+
+    .title-header {
+        transform: scale(1, .7);
+        font-family: 'Nova Mono', monospace;
+        font-size: 175;
+        color: var(--text-color);
+        letter-spacing: -15px;
+    }
+
+    .title-header:hover {
+        text-shadow: 0 0 20px var(--enqueuer-color);
+    }
+
+    .logo-class {
+        /*height: auto;*/
+        transform: scale(1.5);
+        transition: transform 500ms ease;
+    }
+
+    .logo-class:hover {
+        transform: scale(1.45);
+    }
+
+    .small-green-ball {
+        color: var(--enqueuer-color);
+        transform: scale(1.7);
+        position: relative;
+        top: 10px;
+        left: -0.5vw;
+        transition: 400ms ease all;
+    }
+
+    .small-green-ball:active {
+        color: var(--enqueuer-color);
+        transform: scale(2) translateX(10vw);
+    }
+
+
+</style>
 </html>
