@@ -10,7 +10,7 @@
                            class="material-icons stacker-icon"
                         >play_circle_outline</i>
                         <span :style="breadcrumbStyle"
-                           @click="breadCrumbSelected(breadCrumb)">
+                              @click="breadCrumbSelected(breadCrumb)">
                             {{breadCrumb.name}}
                         </span>
                     </li>
@@ -189,10 +189,8 @@
         },
         watch: {
             item: function () {
-                console.log('item')
             },
             id: function () {
-                console.log('id')
                 this.getContent();
             }
         },
@@ -282,7 +280,7 @@
     .select-protocol-button:focus, .select-protocol-button.focus,
     .select-protocol-button:hover, .select-protocol-button.hover {
         outline: 0;
-        box-shadow: 0 0 15px var(--text-color);
+        box-shadow: 0 0 15px var(--enqueuer-color);
     }
 
 </style>

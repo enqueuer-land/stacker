@@ -28,8 +28,7 @@
                                class="form-control input-group-append stacker-input"
                                id="httpSubscriptionEndpoint">
                         <div class="input-group-append" style="font-size: 0.8em">
-                            <button class="btn dropdown-toggle"
-                                    style="background-color: transparent; color: var(--text-color); border: 1px solid var(--text-color)"
+                            <button class="btn dropdown-toggle method-button"
                                     type="button" data-toggle="dropdown">{{http.method}}
                             </button>
                             <div class="dropdown-menu">
@@ -166,5 +165,15 @@
     .http-subscription {
 
     }
+
+    .method-button {
+        background-color: transparent;
+        color: var(--text-color);
+        border: 1px solid var(--text-color);
+    }
+    .method-button:hover {
+        box-shadow: 0 0 5px var(--enqueuer-color);
+    }
+
 
 </style>

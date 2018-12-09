@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="row pt-5">
+        <div class="row py-5">
             <button type="button" class="btn btn-sm col mx-3 add-button"
                     style="border-color: var(--requisition-color); color: var(--requisition-color);"
                     @click="newRequisition">
@@ -134,8 +134,8 @@
 
     .add-button:hover, .add-button.hover {
         outline: 0;
-        background-color: var(--stacker-background-alternative-color);
-        box-shadow: 0 0 5px var(--text-color);
+        /*background-color: var(--stacker-background-alternative-color);*/
+        box-shadow: 0 0 15px var(--enqueuer-color);
     }
 
 </style>

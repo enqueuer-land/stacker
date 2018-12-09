@@ -242,7 +242,7 @@
 
     .stacker-input:hover {
         border-color: var(--enqueuer-color);
-        box-shadow: 0 0 5px var(--text-color);
+        box-shadow: 0 0 5px var(--enqueuer-color);
     }
 
     #side-bar {

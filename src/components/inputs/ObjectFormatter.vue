@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid stacker-input object-formatter">
+    <div class="container-fluid object-formatter stacker-input">
         <div class="row" style="background-color: var(--stacker-background-alternative-color); border-radius: 4px;">
             <button v-for="(formatter, index) in formatters" :key="index" @click="selectIndex(index)"
                     :class="btnClass(index)">
@@ -116,15 +116,16 @@
             },
             getContent() {
                 const defaultFormatterIndex = defaultFormatters.findIndex(formatter => formatter.raw);
+                const stringifiedText = typeof (this.text || "") !== "string" ? JSON.stringify(this.text) : this.text;
                 if (this.format) {
                     const formatterIndex = defaultFormatters.findIndex(formatter => formatter.name.toLowerCase() === this.format.toLowerCase());
                     return {
-                        payload: this.text,
+                        payload: stringifiedText,
                         selectedIndex: formatterIndex
                     }
                 }
                 return {
-                    payload: this.text,
+                    payload: stringifiedText,
                     selectedIndex: defaultFormatterIndex
                 }
 
