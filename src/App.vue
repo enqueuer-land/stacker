@@ -27,7 +27,8 @@
     export default {
         components: {Stage, Result, SideBar},
         created() {
-            // this.$store.commit('addRequisition', {router: this.$router});
+            window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
+            window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
             this.$store.commit('openRequisitionFile', {router: this.$router, file: 'examples/examples.stk'});
         },
         data() {

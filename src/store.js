@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        clipboard: null,
         results: [],
         filter: '',
         resultFilter: {
@@ -266,6 +267,18 @@ export default new Vuex.Store({
         setRequisitionResult(state, payload) {
             // console.log('Report added to history');
             state.results.push(payload.report);
+        },
+        clipboardCopy(state) {
+            state.clipboard = state.selectedItem;
+            if (state.clipboard) {
+                console.log('electron: ' + window.clipboard.readText('selection'));
+                console.log('Copied: ' + state.clipboard.name);
+            }
+        },
+        clipboardPaste(state) {
+            if (state.clipboard) {
+                console.log('Pasted: ' + state.clipboard.name);
+            }
         }
     },
     actions: {

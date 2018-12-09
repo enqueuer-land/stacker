@@ -1,13 +1,13 @@
-
 const {default: installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
 const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 require('enqueuer/js/injectable-files-list');
-// require('electron-debug')();
+require('electron-debug')();
 
 let url;
 if (process.env.NODE_ENV === 'DEV') {
@@ -50,7 +50,7 @@ app.on('ready', () => {
                 event.sender.send('runRequisitionReply', report)
             })
             .catch(err => {
-               console.log(`Error running requisition: ${err}`);
+                console.log(`Error running requisition: ${err}`);
             });
 
     });
@@ -63,4 +63,37 @@ app.on('ready', () => {
     // window.webContents.on("devtools-opened", () => {
     //     window.webContents.closeDevTools();
     // });
+    createMenu(window);
 });
+
+
+let createMenu = function (window) {
+// Create the Application's main menu
+    const template = [{
+        label: "Application",
+        submenu: [
+            {label: "Virgs", selector: "orderFrontStandardAboutPanel:"},
+            {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
+            {type: "separator"},
+            {
+                label: "Quit", accelerator: "Command+Q", click: function () {
+                    app.quit();
+                }
+            }
+        ]
+        }, {
+        label: "Edit",
+        submenu: [
+            {label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
+            {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"},
+            {type: "separator"},
+            {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
+            // {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:", click() {window.webContents.send('clipboardCopy')}},
+            // {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:", click() {window.webContents.send('clipboardPaste')}},
+            {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
+        ]
+    }
+    ];
+
+    // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+};
