@@ -3,12 +3,12 @@ import Vuex from 'vuex';
 import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
+import MultipleObjectNotation from "./tests/multiple-object-notation";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        clipboard: null,
         results: [],
         filter: '',
         resultFilter: {
@@ -308,46 +308,54 @@ export default new Vuex.Store({
             state.results.push(payload.report);
         },
         clipboardCopy(state, payload) {
-            state.clipboard = new IdReplacer().replace(new ParentRemover().remove(payload.item));
+            state.clipboard = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
             if (state.clipboard) {
-                console.log('Copied: ' + state.clipboard.name);
+                electron.clipboard.writeText(txt);
             }
         },
         clipboardPaste(state, payload) {
-            if (state.clipboard) {
-                console.log('Pasted: ' + state.clipboard.name);
-                // console.log('in: ' + payload ? payload.item.name : "state");
+            try {
 
-                const parent = payload ? payload.item : undefined;
-                switch (state.clipboard.component) {
-                    case 'requisition':
-                        const newRequisition = new ComponentManager().createRequisition(state.clipboard, parent);
-                        if (parent === undefined) {
-                            state.requisitions.push(newRequisition);
-                        } else {
-                            newRequisition.parent.requisitions.push(newRequisition);
-                        }
-                        state.selectedItem = newRequisition;
-                        payload.router.push({path: '/' + newRequisition.component + '/' + newRequisition.id});
-                        break;
-                    case 'publisher':
-                        if (parent) {
-                            const newPublisher = new ComponentManager().createPublisher(state.clipboard, payload.item);
-                            state.selectedItem = newPublisher;
-                            payload.item.publishers.push(newPublisher);
-                            payload.router.push({path: '/' + newPublisher.component + '/' + newPublisher.id});
-                        }
-                        break;
-                    case 'subscription':
-                        if (parent) {
-                            const newSubscription = new ComponentManager().createSubscription(state.clipboard, payload.item);
-                            state.selectedItem = newSubscription;
-                            payload.item.subscriptions.push(newSubscription);
-                            payload.router.push({path: '/' + newSubscription.component + '/' + newSubscription.id});
-                        }
-                        break;
+                const clipboard = electron.clipboard.readText();
+                const parsedClipboard = new MultipleObjectNotation().parse(clipboard);
+
+                if (parsedClipboard) {
+                    console.log('Pasted: ' + parsedClipboard.name);
+
+                    const parent = payload ? payload.item : undefined;
+                    switch (parsedClipboard.component) {
+                        case 'requisition':
+                            const newRequisition = new ComponentManager().createRequisition(parsedClipboard, parent);
+                            if (parent === undefined) {
+                                state.requisitions.push(newRequisition);
+                            } else {
+                                newRequisition.parent.requisitions.push(newRequisition);
+                            }
+                            state.selectedItem = newRequisition;
+                            payload.router.push({path: '/' + newRequisition.component + '/' + newRequisition.id});
+                            break;
+                        case 'publisher':
+                            if (parent) {
+                                const newPublisher = new ComponentManager().createPublisher(parsedClipboard, payload.item);
+                                state.selectedItem = newPublisher;
+                                payload.item.publishers.push(newPublisher);
+                                payload.router.push({path: '/' + newPublisher.component + '/' + newPublisher.id});
+                            }
+                            break;
+                        case 'subscription':
+                            if (parent) {
+                                const newSubscription = new ComponentManager().createSubscription(parsedClipboard, payload.item);
+                                state.selectedItem = newSubscription;
+                                payload.item.subscriptions.push(newSubscription);
+                                payload.router.push({path: '/' + newSubscription.component + '/' + newSubscription.id});
+                            }
+                            break;
+                    }
                 }
+            } catch (e) {
+                console.log(`Error pasting clipboard: ${e}`);
             }
+
         }
     },
     actions: {

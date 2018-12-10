@@ -16,8 +16,10 @@
 - [x] Set Icon
 - [x] Create githubPage
 - [x] Fix ObjectFormatter bug
-- [ ] Pack it up
 - [x] Clipboard events 
+- [ ] Github button in githubpage
+- [ ] Clear result tab
+- [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
 - [ ] Tests result buttons (expandAll, collapse all, export)

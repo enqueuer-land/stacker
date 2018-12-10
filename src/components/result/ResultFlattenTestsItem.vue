@@ -52,21 +52,21 @@
         },
         watch: {
             test() {
-                this.openCloseEffect();
+                // this.openCloseEffect();
             }
         },
         methods: {
             openCloseEffect() {
                 $('#' + this.id).removeClass('show');
 
-                // setTimeout(() => {
-                //     $('#' + this.id).addClass('show');
-                //
-                //     setTimeout(() => {
-                //         $('#' + this.id).removeClass('show');
-                //     }, 50);
-                //
-                // }, this.index * 50);
+                setTimeout(() => {
+                    $('#' + this.id).addClass('show');
+
+                    setTimeout(() => {
+                        $('#' + this.id).removeClass('show');
+                    }, 50);
+
+                }, this.index * 50);
             }
         },
         computed: {

@@ -3,7 +3,7 @@
         <SideBarHeader></SideBarHeader>
         <SideBarTree class="scroll-div" style="max-height: calc(100vh - 150px);"></SideBarTree>
         <div :style="remainingSideBarStyle">
-            <div class="row justify-content-end dropdown">
+            <div class="row justify-content-end dropdown pt-1">
                 <div data-toggle="dropdown">
                     <i class="col-4 material-icons stacker-icon">more_vert</i>
                 </div>
