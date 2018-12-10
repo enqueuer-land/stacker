@@ -135,6 +135,22 @@ export default class ComponentManager {
         return true;
     }
 
+    isAbleToBePastedIn(parentItem) {
+        try {
+            const clipboard = electron.clipboard.readText();
+            const parsedClipboard = new MultipleObjectNotation().parse(clipboard);
+            if (!parentItem) {
+                return parsedClipboard.component === 'requisition';
+            } else {
+                if (parentItem.component === 'requisition') {
+                    return parsedClipboard.component === 'requisition' || parsedClipboard.component === 'publisher' || parsedClipboard.component === 'subscription';
+                }
+            }
+        } catch (e) {
+        }
+        return false;
+    }
+
     findItem(id) {
         let any = (store.state.requisitions || [])
             .map(requisition => this.findIdInRequisition(id, requisition))

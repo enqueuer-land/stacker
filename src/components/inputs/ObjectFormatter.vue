@@ -150,8 +150,6 @@
         border: var(--stacker-background-alternative-color) 1px solid;
         border-radius: 4px;
 
-        font-size: 14px;
-        font-weight: lighter;
         height: auto;
     }
 

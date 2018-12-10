@@ -17,6 +17,7 @@
 - [x] Create githubPage
 - [x] Fix ObjectFormatter bug
 - [x] Clipboard events 
+- [ ] Disable dropdown items based on functions
 - [ ] Github button in githubpage
 - [ ] Clear result tab
 - [ ] Pack it up

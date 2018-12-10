@@ -175,6 +175,13 @@
         background-color: var(--stacker-background-color);
     }
 
+    .dropdown-item-disabled, .dropdown-item-disabled:hover, .dropdown-item-disabled.hover {
+        text-decoration: none;
+        pointer-events: none;
+        background-color: var(--stacker-header-background-color);
+        color: var(--text-smooth-color);
+    }
+
     .dropdown-divider {
         height: 0;
         margin: .01rem 0;
@@ -230,6 +237,7 @@
         border-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
         height: 32px;
+        font-weight: lighter;
         font-size: 14px;
     }
 

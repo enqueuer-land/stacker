@@ -40,6 +40,9 @@ export default new Vuex.Store({
                 {
                     name: "Paste",
                     icon: "file_copy",
+                    isEnabled(item) {
+                        return new ComponentManager().isAbleToBePastedIn(item);
+                    },
                     click: (commit, item, router) => {
                         commit('clipboardPaste', {item: item, router: router});
                     }
@@ -308,14 +311,11 @@ export default new Vuex.Store({
             state.results.push(payload.report);
         },
         clipboardCopy(state, payload) {
-            state.clipboard = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
-            if (state.clipboard) {
-                electron.clipboard.writeText(txt);
-            }
+            const stringifiedelement = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
+            electron.clipboard.writeText(stringifiedelement);
         },
         clipboardPaste(state, payload) {
             try {
-
                 const clipboard = electron.clipboard.readText();
                 const parsedClipboard = new MultipleObjectNotation().parse(clipboard);
 
