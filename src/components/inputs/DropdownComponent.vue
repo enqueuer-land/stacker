@@ -1,13 +1,22 @@
 <template>
     <div class="dropdown-component">
         <div :id="id" class="dropdown-menu">
-            <div v-for="(item, index) in value" :key="index" @click="(event) => event.stopPropagation()">
+            <div v-for="(item, index) in value" :key="index"
+                 @click="(event) => event.stopPropagation()"
+                 @mouseenter="mouseOverIndex = index"
+                 @mouseleave="mouseOverIndex = null">
                 <div v-if="item.divider" class="dropdown-divider"></div>
                 <h6 v-else-if="item.header" class="dropdown-header">{{item.name}}</h6>
-                <a v-else :class="['dropdown-item', itemClass(item)]" href="#" style="text-decoration: none"
-                   @click="itemClicked(item)">{{item.name}}</a>
+                <div v-else class="container dropdown-item" style="cursor:pointer;" @click="itemClicked(item)">
+                    <div class="row justify-content-between">
+                        <div class="col">{{item.name}}</div>
+                        <i v-if="item.icon" :id="id + index"
+                           class="col-md-auto pr-0 align-self-center material-icons stacker-icon">{{item.icon}}</i>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 <script>
@@ -26,25 +35,28 @@
         },
         data() {
             return {
-                id: generateId()
+                id: generateId(),
+                mouseOverIndex: null
             }
         },
         methods: {
             itemClicked(item) {
                 const dropdownMenu = $('#' + this.id);
-                if (!item.disabled) {
-                    item.click(...this.args);
-                    dropdownMenu.removeClass('show');
-                }
+                item.click(...this.args);
+                dropdownMenu.removeClass('show');
             }
         },
-        computed: {
-            itemClass() {
-                return (item) => {
-                    return {
-                        disabled: item.disabled
+        watch: {
+            mouseOverIndex(mouseOverIndex) {
+                this.value.forEach((_, index) => {
+                    const iconElement = $(`#${this.id + index}`);
+                    if (mouseOverIndex === index) {
+                        iconElement.addClass('hover');
+                    } else {
+                        iconElement.removeClass('hover');
                     }
-                }
+                });
+
             }
         }
     }

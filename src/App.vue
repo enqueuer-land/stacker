@@ -151,6 +151,7 @@
     .dropdown-menu {
         /*background-color: var(--text-smooth-color);*/
         padding-bottom: 0;
+        width: max-content;
         padding-top: 1px;
     }
 
@@ -279,11 +280,11 @@
     .stacker-icon {
         cursor: pointer;
         color: var(--text-smooth-color);
-        transform: scale(0.85) rotate(10deg);
+        transform: scale(0.85) rotate(5deg);
         transition: 100ms ease transform;
     }
 
-    .stacker-icon:hover {
+    .stacker-icon:hover, .stacker-icon.hover {
         transform: scale(1);
         color: var(--enqueuer-color);
     }

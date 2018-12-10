@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
+import IdReplacer from "./tests/id-replacer";
 
 Vue.use(Vuex);
 
@@ -21,18 +22,34 @@ export default new Vuex.Store({
             sideBarOptions: [
                 {
                     name: "Save",
-                    disabled: false,
+                    icon: "cloud_upload",
                     click: (commit, item) => {
                         commit('saveRequisition', {item: item});
+                    },
+                },
+                {
+                    divider: true,
+                },
+                {
+                    name: "Copy",
+                    icon: "filter_none",
+                    click: (commit, item, router) => {
+                        commit('clipboardCopy', {item: item, router: router});
+                    }
+                },
+                {
+                    name: "Paste",
+                    icon: "file_copy",
+                    click: (commit, item, router) => {
+                        commit('clipboardPaste', {item: item, router: router});
                     }
                 },
                 {
                     divider: true,
-                    name: null,
-                    click: () => null
                 },
                 {
                     name: "Delete",
+                    icon: "delete",
                     click: (commit, item, router) => {
                         commit('deleteComponent', {item: item, router: router});
                     }
@@ -54,7 +71,18 @@ export default new Vuex.Store({
         publisher: {
             sideBarOptions: [
                 {
+                    name: "Copy",
+                    icon: "filter_none",
+                    click: (commit, item, router) => {
+                        commit('clipboardCopy', {item: item, router: router});
+                    }
+                },
+                {
+                    divider: true,
+                },
+                {
                     name: "Delete",
+                    icon: "delete",
                     click: (commit, item, router) => {
                         commit('deleteComponent', {item: item, router: router});
                     }
@@ -91,7 +119,18 @@ export default new Vuex.Store({
         subscription: {
             sideBarOptions: [
                 {
+                    name: "Copy",
+                    icon: "filter_none",
+                    click: (commit, item, router) => {
+                        commit('clipboardCopy', {item: item, router: router});
+                    }
+                },
+                {
+                    divider: true,
+                },
+                {
                     name: "Delete",
+                    icon: "delete",
                     click: (commit, item, router) => {
                         commit('deleteComponent', {item: item, router: router});
                     }
@@ -268,16 +307,37 @@ export default new Vuex.Store({
             // console.log('Report added to history');
             state.results.push(payload.report);
         },
-        clipboardCopy(state) {
-            state.clipboard = state.selectedItem;
+        clipboardCopy(state, payload) {
+            state.clipboard = new IdReplacer().replace(new ParentRemover().remove(payload.item));
             if (state.clipboard) {
-                console.log('electron: ' + window.clipboard.readText('selection'));
                 console.log('Copied: ' + state.clipboard.name);
             }
         },
-        clipboardPaste(state) {
+        clipboardPaste(state, payload) {
             if (state.clipboard) {
                 console.log('Pasted: ' + state.clipboard.name);
+                console.log('in: ' + payload.item.name);
+
+                switch (state.clipboard.component) {
+                    case 'requisition':
+                        const newRequisition = new ComponentManager().createRequisition(state.clipboard, payload.item);
+                        newRequisition.parent.requisitions.push(newRequisition);
+                        state.selectedItem = newRequisition;
+                        payload.router.push({path: '/' + newRequisition.component + '/' + newRequisition.id});
+                        break;
+                    case 'publisher':
+                        const newPublisher = new ComponentManager().createPublisher(state.clipboard, payload.item);
+                        state.selectedItem = newPublisher;
+                        payload.item.publishers.push(newPublisher);
+                        payload.router.push({path: '/' + newPublisher.component + '/' + newPublisher.id});
+                        break;
+                    case 'subscription':
+                        const newSubscription = new ComponentManager().createSubscription(state.clipboard, payload.item);
+                        state.selectedItem = newSubscription;
+                        payload.item.subscriptions.push(newSubscription);
+                        payload.router.push({path: '/' + newSubscription.component + '/' + newSubscription.id});
+                        break;
+                }
             }
         }
     },

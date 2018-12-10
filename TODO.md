@@ -17,10 +17,7 @@
 - [x] Create githubPage
 - [x] Fix ObjectFormatter bug
 - [ ] Pack it up
-- [ ] Clipboard events 
-            - https://codepen.io/PJCHENder/pen/jamJpj?editors=1010 
-            - https://vuejsexamples.com/a-simple-vue2-binding-to-clipboard-js/ 
-            - https://vuejsexamples.com/a-clipboard-library-with-vue-js/
+- [x] Clipboard events 
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
 - [ ] Tests result buttons (expandAll, collapse all, export)

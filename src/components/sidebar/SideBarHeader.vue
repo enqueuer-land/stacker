@@ -46,6 +46,7 @@
                 actions: [
                     {
                         name: "Import requisitions",
+                        icon: "cloud_download",
                         click: () => {
                             window.remote.dialog.showOpenDialog({
                                 properties: ['openFile', 'multiSelections', 'openDirectory']
@@ -60,6 +61,7 @@
                     },
                     {
                         name: "Create Requisition",
+                        icon: "create_new_folder",
                         click: () => {
                             this.$store.commit('addRequisition', {router: this.$router});
                         }
@@ -69,6 +71,7 @@
                     },
                     {
                         name: "Import responses",
+                        icon: "check_circle_outline",
                         click: () => {
                             window.remote.dialog.showOpenDialog({
                                 properties: ['openFile']
