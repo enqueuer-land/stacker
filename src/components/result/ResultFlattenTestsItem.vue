@@ -155,6 +155,7 @@
         color: var(--text-color);
         background-color: var(--stacker-background-alternative-color);
         border-top: 1px solid var(--stacker-background-alternative-color);
+        border-bottom: 1px solid var(--stacker-header-background-color);
         border-left: 20px solid var(--stacker-background-alternative-color);
     }
 

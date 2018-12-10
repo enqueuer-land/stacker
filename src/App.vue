@@ -280,12 +280,12 @@
     .stacker-icon {
         cursor: pointer;
         color: var(--text-smooth-color);
-        transform: scale(0.85) rotate(5deg);
+        transform: scale(0.85);
         transition: 100ms ease transform;
     }
 
     .stacker-icon:hover, .stacker-icon.hover {
-        transform: scale(1);
+        transform: scale(1) rotate(10deg);
         color: var(--enqueuer-color);
     }
 

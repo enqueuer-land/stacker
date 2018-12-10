@@ -9,8 +9,8 @@
            @mouseleave="mouseIsOver = false">
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
-                    <div data-toggle="dropdown" id="more-icon">
-                        <i class="material-icons">more_vert</i>
+                    <div data-toggle="dropdown">
+                        <i class="material-icons stacker-icon">more_vert</i>
                     </div>
                     <dropdown-component :value="actions" :args="[$store.commit, item, $router]"></dropdown-component>
                 </div>

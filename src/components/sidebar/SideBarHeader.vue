@@ -142,7 +142,7 @@
     }
 
     .add-button-class {
-        transform: scale(1.2) rotate(10deg);
+        transform: scale(1.2);
         text-shadow: 0 0 30px var(--stacker-background-alternative-color);
         color: var(--enqueuer-color);
         position: relative;
@@ -152,7 +152,7 @@
     }
 
     .add-button-class:hover, .rotated-add-button-class {
-        transform: scale(1.8);
+        transform: scale(1.8) rotate(10deg);
         top: 0;
     }
 

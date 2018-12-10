@@ -316,26 +316,35 @@ export default new Vuex.Store({
         clipboardPaste(state, payload) {
             if (state.clipboard) {
                 console.log('Pasted: ' + state.clipboard.name);
-                console.log('in: ' + payload.item.name);
+                // console.log('in: ' + payload ? payload.item.name : "state");
 
+                const parent = payload ? payload.item : undefined;
                 switch (state.clipboard.component) {
                     case 'requisition':
-                        const newRequisition = new ComponentManager().createRequisition(state.clipboard, payload.item);
-                        newRequisition.parent.requisitions.push(newRequisition);
+                        const newRequisition = new ComponentManager().createRequisition(state.clipboard, parent);
+                        if (parent === undefined) {
+                            state.requisitions.push(newRequisition);
+                        } else {
+                            newRequisition.parent.requisitions.push(newRequisition);
+                        }
                         state.selectedItem = newRequisition;
                         payload.router.push({path: '/' + newRequisition.component + '/' + newRequisition.id});
                         break;
                     case 'publisher':
-                        const newPublisher = new ComponentManager().createPublisher(state.clipboard, payload.item);
-                        state.selectedItem = newPublisher;
-                        payload.item.publishers.push(newPublisher);
-                        payload.router.push({path: '/' + newPublisher.component + '/' + newPublisher.id});
+                        if (parent) {
+                            const newPublisher = new ComponentManager().createPublisher(state.clipboard, payload.item);
+                            state.selectedItem = newPublisher;
+                            payload.item.publishers.push(newPublisher);
+                            payload.router.push({path: '/' + newPublisher.component + '/' + newPublisher.id});
+                        }
                         break;
                     case 'subscription':
-                        const newSubscription = new ComponentManager().createSubscription(state.clipboard, payload.item);
-                        state.selectedItem = newSubscription;
-                        payload.item.subscriptions.push(newSubscription);
-                        payload.router.push({path: '/' + newSubscription.component + '/' + newSubscription.id});
+                        if (parent) {
+                            const newSubscription = new ComponentManager().createSubscription(state.clipboard, payload.item);
+                            state.selectedItem = newSubscription;
+                            payload.item.subscriptions.push(newSubscription);
+                            payload.router.push({path: '/' + newSubscription.component + '/' + newSubscription.id});
+                        }
                         break;
                 }
             }
