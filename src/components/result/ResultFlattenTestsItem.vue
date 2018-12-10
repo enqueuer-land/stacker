@@ -1,36 +1,33 @@
 <template>
     <div class="mb-0 mt-0" :style="resultFlattenTestsItem">
-        <div class="card" style="border: none">
-            <div data-toggle="collapse" :data-target="'#' + id">
-                <div class="result-flatten-tests-item-header">
-                    <div class="row no-gutters title-class" style="cursor: pointer;">
-                        <div class="col align-self-center ml-1">
-                            <div class="pl-0 pr-0" style="font-size: 0.75em; text-align: left">
-                                <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
-                                    <li class="breadcrumb-item"
-                                        v-for="(breadCrumb, index) in test.hierarchy" :key="index">
-                                        <span :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
-                                           @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</span>
-                                    </li>
-                                </ol>
-                            </div>
-                            <div class="align-self-center pl-1 test-name-class">
-                                {{test.name}}
-                            </div>
+        <div class="container px-0 test-name-class">
+            <div class="row no-gutters">
+                <div class="col" data-toggle="collapse" :data-target="'#' + id">
+                    <div class="ml-1" style="cursor: pointer;">
+                        <div class="px-0 pt-1">
+                            <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
+                                <li class="breadcrumb-item" v-for="(breadCrumb, index) in test.hierarchy" :key="index">
+                                                <span :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
+                                                      @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</span>
+                                </li>
+                            </ol>
+                            <div v-if="test.hierarchy === null || test.hierarchy.length === 0" style="height: 12px"></div>
                         </div>
-                        <div :class="indexClass">
-                            #{{index}}
+                        <div class="pl-1 pt-1">
+                            {{test.name}}
                         </div>
                     </div>
+                    <div :id="id" class="collapse">
+                        <ul class="p-0 list-unstyled">
+                            <li class="description-class pt-1 pl-2">
+                                {{test.description}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div :id="id" class="collapse">
-                <div class="card-body p-0">
-                    <ul class="list-unstyled">
-                        <li class="description-class pt-1 pl-2">
-                            {{test.description}}
-                        </li>
-                    </ul>
+                <div class="col-md-auto align-self-center pr-2"
+                     style="font-size: 0.75em">
+                    #{{index}}
                 </div>
             </div>
         </div>
@@ -86,14 +83,6 @@
                     }
                 }
             },
-            indexClass: function () {
-                return {
-                    'index-class': true,
-                    'align-self-center': true,
-                    'pr-2': true,
-                    'col-md-auto': true
-                }
-            },
             resultFlattenTestsItem: function () {
                 return {
                     'border-left': `4px var(--${this.test.valid ? 'passing' : 'failing'}-test-color) solid`
@@ -125,52 +114,30 @@
         color: var(--text-color);
     }
 
-    .result-flatten-tests-item-header {
-        height: 100%;
-        padding-left: 1px;
-        background-color: var(--stacker-background-color);
-    }
-
-    .result-flatten-tests-item-header > div {
-        font-weight: lighter;
-        font-size: 15px;
-        color: var(--text-smooth-color);
-        height: inherit;
-    }
-
     .breadcrumb-anchor:hover, .breadcrumb-anchor.hover {
         color: var(--text-color) !important;
     }
 
-    .index-class {
-        font-size: 0.75em;
-        text-align: center;
-        color: var(--text-smooth-color);
-    }
-
     .description-class {
-        font-size: 0.85em;
+        font-size: 0.9em;
         font-weight: lighter;
         min-height: 32px;
-        color: var(--text-color);
-        background-color: var(--stacker-background-alternative-color);
-        border-top: 1px solid var(--stacker-background-alternative-color);
         border-bottom: 1px solid var(--stacker-header-background-color);
-        border-left: 20px solid var(--stacker-background-alternative-color);
-    }
-
-    .title-class {
-        text-decoration: none;
-        min-height: 44px;
-        border-top: 1px solid var(--stacker-background-alternative-color);
-        background-color: var(--stacker-background-color);
+        margin-left: 20px;
+        padding-bottom: 10px;
     }
 
     .test-name-class {
+        padding-left: 1px;
+        border-top: 1px solid var(--stacker-background-alternative-color);
+        min-height: 50px;
+        background-color: var(--stacker-background-color);
         color: var(--text-smooth-color);
+        font-weight: lighter;
+        font-size: 14px;
     }
 
-    .title-class:hover, .description-class:hover, .title-class:active, .description-class:active, .test-name-class:hover, .test-name-class:active {
+    .description-class:hover, .description-class:active, .test-name-class:hover, .test-name-class:active {
         background-color: var(--stacker-background-alternative-color);
         color: var(--text-color);
     }
