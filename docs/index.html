@@ -41,24 +41,26 @@
                     <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
                          class="img-fluid logo-class">
                 </span>
-                <a class="col-md-auto align-self-center title-header" href="http://github.com/lopidio/stacker">stacker</a>
+                <a class="col-md-auto align-self-center title-header"
+                   href="http://github.com/lopidio/stacker">stacker</a>
                 <div class="col-md-auto align-self-end">
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
                 </div>
             </div>
             <div class="row pt-5 mb-0 justify-content-between">
-                <a class="col-md-auto" href="http://github.com/lopidio/stacker">
-                    <button type="button" class="btn btn-lg view-github-button">
-                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png" class="img-fluid github-icon-class">
-                        View on github
-                    </button>
-                </a>
+                <div class="col-md-auto">
+                    <button type="button" class="btn btn-lg disabled jumbotron-header-button">Get it now!</button>
+                </div>
                 <p class="col-md-auto jumbotron-summary">
                     Open source, cross-platform, <b>MULTI-PROTOCOL</b> client <strong>testing</strong> tool
                 </p>
-                <div class="col-md-auto">
-                    <button type="button" class="btn btn-lg disabled download-it-button">Get it now!</button>
-                </div>
+                <a class="col-md-auto" href="http://github.com/lopidio/stacker">
+                    <button type="button" class="btn btn-lg jumbotron-header-button">
+                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png"
+                             class="img-fluid github-icon-class">
+                        <span>View on github</span>
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -104,15 +106,15 @@
             </div>
             <hr>
             <!--<div class="row">-->
-            <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/stacker-screenshot.png"
+            <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/stacker-screenshot.png"
                  class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
             <!--</div>-->
             <div
                     style="background-color: var(--stacker-header-background-color); height: 200px;">
                 <!--<div class="row">-->
                 <!--<span class="align-self-center" style="color: var(&#45;&#45;text-color); text-align: left;">VirgStacker 2018</span>-->
-                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/gui.png"
-                         class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
+                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/gui.png"
+                     class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
 
                 <!--</div>-->
             </div>
@@ -213,13 +215,13 @@
         text-align: center;
     }
 
-    .download-it-button, .view-github-button {
+    .jumbotron-header-button {
         background-color: transparent;
         border: 1px solid var(--text-color);
         color: var(--text-color);
     }
 
-    .download-it-button:hover, .view-github-button:hover {
+    .jumbotron-header-button:hover {
         box-shadow: 0 0 20px var(--enqueuer-color);
         /*background-color: var(--text-color);*/
         /*color: var(--stacker-header-background-color);*/
@@ -227,6 +229,13 @@
 
     .gui-class:hover {
         /*box-shadow: 0 0 20px var(--enqueuer-color);*/
+    }
+
+    .github-icon-class {
+        /*transform: scale(0.25);*/
+        height: 30px;
+        padding-right: 10px;
+        filter: invert(100%);
     }
 </style>
 </html>
