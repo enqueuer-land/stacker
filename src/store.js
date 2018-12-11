@@ -311,8 +311,8 @@ export default new Vuex.Store({
             state.results.push(payload.report);
         },
         clipboardCopy(state, payload) {
-            const stringifiedelement = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
-            electron.clipboard.writeText(stringifiedelement);
+            const stringifiedElement = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
+            electron.clipboard.writeText(stringifiedElement);
         },
         clipboardPaste(state, payload) {
             try {

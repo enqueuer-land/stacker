@@ -4,7 +4,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130648239-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-130648239-1');
@@ -42,14 +46,18 @@
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
                 </div>
             </div>
-            <div class="row pt-5 mb-0 justify-content-center">
-                <div class="offset-3"></div>
+            <div class="row pt-5 mb-0 justify-content-between">
+                <a class="col-md-auto" href="http://github.com/lopidio/stacker">
+                    <button type="button" class="btn btn-lg view-github-button">
+                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png" class="img-fluid github-icon-class">
+                        View on github
+                    </button>
+                </a>
                 <p class="col-md-auto jumbotron-summary">
                     Open source, cross-platform, <b>MULTI-PROTOCOL</b> client <strong>testing</strong> tool
                 </p>
-                <div class="offset-2"></div>
                 <div class="col-md-auto">
-                    <button type="button" class="btn btn-lg download-it-button">Get it now!</button>
+                    <button type="button" class="btn btn-lg disabled download-it-button">Get it now!</button>
                 </div>
             </div>
         </div>
@@ -74,7 +82,8 @@
                         <li>AMQP</li>
                         <li>MQTT</li>
                         <li><span
-                                style="color: var(--failing-test-color); font-weight: lighter; padding-right: 2px">(WIP)</span>TCP; SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP
+                                style="color: var(--failing-test-color); font-weight: lighter; padding-right: 2px">(WIP)</span>TCP;
+                            SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP
                         </li>
                     </ul>
                 </div>
@@ -95,18 +104,18 @@
             </div>
             <hr>
             <!--<div class="row">-->
-                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/github-api-screenshot.png"
-                     class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
+            <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/stacker-screenshot.png"
+                 class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
             <!--</div>-->
-                <div
-                        style="background-color: var(--stacker-header-background-color); height: 200px;">
-                    <!--<div class="row">-->
-                        <!--<span class="align-self-center" style="color: var(&#45;&#45;text-color); text-align: left;">VirgStacker 2018</span>-->
+            <div
+                    style="background-color: var(--stacker-header-background-color); height: 200px;">
+                <!--<div class="row">-->
+                <!--<span class="align-self-center" style="color: var(&#45;&#45;text-color); text-align: left;">VirgStacker 2018</span>-->
                         <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/gui.png"
-                             class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
+                         class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
 
-                    <!--</div>-->
-                </div>
+                <!--</div>-->
+            </div>
 
         </div> <!-- /container -->
     </div>
@@ -152,7 +161,7 @@
     .title-header {
         transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
-        font-size: 175;
+        font-size: 175px; /*7.5vw;*/
         color: var(--text-color);
         letter-spacing: -15px;
     }
@@ -171,7 +180,7 @@
     }
 
     .logo-class:hover {
-        transform: scale(1.45);
+        /*transform: scale(1.45);*/
     }
 
     .small-green-ball {
@@ -204,13 +213,13 @@
         text-align: center;
     }
 
-    .download-it-button {
+    .download-it-button, .view-github-button {
         background-color: transparent;
         border: 1px solid var(--text-color);
         color: var(--text-color);
     }
 
-    .download-it-button:hover {
+    .download-it-button:hover, .view-github-button:hover {
         box-shadow: 0 0 20px var(--enqueuer-color);
         /*background-color: var(--text-color);*/
         /*color: var(--stacker-header-background-color);*/
