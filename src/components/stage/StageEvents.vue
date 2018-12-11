@@ -1,5 +1,5 @@
 <template>
-    <div class="stage-events p-0" style="position: relative; top: calc(100% - 136px)"
+    <div class="stage-events p-0" style="position: relative; top: calc(100% - 135px)"
          id="stage-event-group-parent">
         <div class="row justify-content-end mb-0">
             <button v-for="(event, index) in events"
@@ -129,7 +129,8 @@
             },
             cardBodyStyle() {
                 return {
-                    'border-bottom': '2px solid ' + this.color,
+                    // 'border-bottom': '2px solid ' + this.color,
+                    'border-bottom': '2px solid var(--enqueuer-color)',
                 }
             }
         }

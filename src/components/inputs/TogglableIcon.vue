@@ -30,19 +30,21 @@
         },
         methods: {
             updateTooltip() {
-                const toolTipProperties = {
-                    html: true,
-                    placement: this.placement || 'auto',
-                    animation: true,
-                    delay: {
-                        show: 1000,
-                        hide: 100
-                    },
-                    title: this.tooltip,
-                    trigger: 'hover'
-                };
+                if (this.tooltip) {
+                    const toolTipProperties = {
+                        html: true,
+                        placement: this.placement || 'auto',
+                        animation: true,
+                        delay: {
+                            show: 1000,
+                            hide: 100
+                        },
+                        title: this.tooltip,
+                        trigger: 'hover'
+                    };
 
-                $(`#${this.id}`).tooltip(toolTipProperties);
+                    $(`#${this.id}`).tooltip(toolTipProperties);
+                }
             },
         },
         computed: {
@@ -62,7 +64,11 @@
             }
         },
         watch: {
+            value() {
+                this.toggle = this.value;
+            },
             toggle() {
+                console.log(this.style);
                 this.$emit('input', this.toggle);
             }
         },

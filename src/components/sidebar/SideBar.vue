@@ -1,7 +1,7 @@
 <template>
     <div class="side-bar">
         <SideBarHeader></SideBarHeader>
-        <SideBarTree class="scroll-div" style="max-height: calc(100vh - 150px);"></SideBarTree>
+        <SideBarTree class="scroll-div" style="max-height: calc(100vh - 150px); position: relative; top: -4px;"></SideBarTree>
         <remaining-side-bar></remaining-side-bar>
     </div>
 </template>

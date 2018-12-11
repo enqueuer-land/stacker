@@ -12,8 +12,12 @@
                      @click="itemClicked(item)">
                     <div class="row justify-content-between">
                         <div class="col">{{item.name}}</div>
-                        <i v-if="item.icon"
-                           :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
+                        <div v-if="item.icon">
+                            <togglable-icon v-if="item.toggle && args.item" :name="item.icon"
+                                            v-model="args.item[item.toggle.name]" :color="item.toggle.color"></togglable-icon>
+                            <i v-else
+                               :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -22,17 +26,14 @@
 </template>
 <script>
     import {generateId} from "../../tests/id-generator";
+    import TogglableIcon from "./TogglableIcon";
 
     export default {
         name: 'DropdownComponent',
-        components: {},
+        components: {TogglableIcon},
         props: {
             'value': {},
-            'args': {
-                default() {
-                    return [];
-                }
-            },
+            'args': {}
         },
         updated() {
             // this.value.forEach((item, index) => {
@@ -44,22 +45,23 @@
             // });
         },
         data() {
+
             return {
                 id: generateId(),
                 mouseOverIndex: null
             }
         },
         methods: {
-            isItemEnabled(item) {
-                // console.log(JSON.stringify(item) + ' => ' + item.isEnabled(...this.args));
-                return item.isEnabled === undefined || item.isEnabled(...this.args);
-
-            },
+            // isItemEnabled(item) {
+            //     // console.log(JSON.stringify(item) + ' => ' + item.isEnabled(...this.args));
+            //     return item.isEnabled === undefined || item.isEnabled(...this.args);
+            //
+            // },
             itemClicked(item) {
                 const dropdownMenu = $('#' + this.id);
                 // if (this.isItemEnabled(item)) {
-                    item.click(...this.args);
-                    dropdownMenu.removeClass('show');
+                item.click(this.args);
+                dropdownMenu.removeClass('show');
                 // }
             }
         },
@@ -78,10 +80,10 @@
                 this.value.forEach((_, index) => {
                     const iconElement = $(`#${this.id + index} .stacker-icon`);
                     if (mouseOverIndex === index) {
-                        console.log(this.isItemEnabled(this.value[index]));
-                        if (this.isItemEnabled(this.value[index])) {
+                        // console.log(this.isItemEnabled(this.value[index]));
+                        // if (this.isItemEnabled(this.value[index])) {
                             iconElement.addClass('hover');
-                        }
+                        // }
                     } else {
                         iconElement.removeClass('hover');
                     }

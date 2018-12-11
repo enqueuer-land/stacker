@@ -227,5 +227,21 @@ export default class ComponentManager {
         }
     }
 
+    isItemIgnored(item) {
+        if (item.ignore) {
+            return true;
+        }
+
+        let parent = item.parent;
+        while (parent !== undefined) {
+            if (parent.ignore) {
+                return true;
+            }
+            parent = parent.parent;
+        }
+
+        return false;
+    }
+
 
 }

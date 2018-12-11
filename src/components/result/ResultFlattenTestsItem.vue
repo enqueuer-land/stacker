@@ -53,6 +53,7 @@
         watch: {
             test() {
                 // this.openCloseEffect();
+                $('#' + this.id).removeClass('show')
             }
         },
         methods: {

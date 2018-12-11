@@ -4,6 +4,7 @@ import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
+import IgnoreRemover from "./tests/ignore-remover";
 
 Vue.use(Vuex);
 
@@ -23,9 +24,9 @@ export default new Vuex.Store({
                 {
                     name: "Save",
                     icon: "cloud_upload",
-                    click: (commit, item) => {
-                        commit('saveRequisition', {item: item});
-                    },
+                    click: (payload) => {
+                        payload.commit('saveRequisition', payload);
+                    }
                 },
                 {
                     divider: true,
@@ -33,8 +34,8 @@ export default new Vuex.Store({
                 {
                     name: "Copy",
                     icon: "filter_none",
-                    click: (commit, item, router) => {
-                        commit('clipboardCopy', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('clipboardCopy', payload);
                     }
                 },
                 {
@@ -43,18 +44,29 @@ export default new Vuex.Store({
                     isEnabled(item) {
                         return new ComponentManager().isAbleToBePastedIn(item);
                     },
-                    click: (commit, item, router) => {
-                        commit('clipboardPaste', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('clipboardPaste', payload);
                     }
                 },
                 {
                     divider: true,
                 },
                 {
+                    name: "Ignore",
+                    icon: "report_off",//"not_interested",
+                    toggle: {
+                        name: 'ignore',
+                        color: 'var(--failing-test-color)'
+                    },
+                    click: (payload) => {
+                        payload.commit('ignoreComponent', payload);
+                    }
+                },
+                {
                     name: "Delete",
                     icon: "delete",
-                    click: (commit, item, router) => {
-                        commit('deleteComponent', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('deleteComponent', payload);
                     }
                 },
             ],
@@ -76,18 +88,29 @@ export default new Vuex.Store({
                 {
                     name: "Copy",
                     icon: "filter_none",
-                    click: (commit, item, router) => {
-                        commit('clipboardCopy', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('clipboardCopy', payload);
                     }
                 },
                 {
                     divider: true,
                 },
                 {
+                    name: "Ignore",
+                    icon: "report_off",
+                    toggle: {
+                        name: 'ignore',
+                        color: 'var(--failing-test-color)'
+                    },
+                    click: (payload) => {
+                        payload.commit('ignoreComponent', payload);
+                    }
+                },
+                {
                     name: "Delete",
                     icon: "delete",
-                    click: (commit, item, router) => {
-                        commit('deleteComponent', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('deleteComponent', payload);
                     }
                 }
             ],
@@ -124,18 +147,29 @@ export default new Vuex.Store({
                 {
                     name: "Copy",
                     icon: "filter_none",
-                    click: (commit, item, router) => {
-                        commit('clipboardCopy', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('clipboardCopy', payload);
                     }
                 },
                 {
                     divider: true,
                 },
                 {
+                    name: "Ignore",
+                    icon: "report_off", //"report, not_interested",
+                    toggle: {
+                        name: 'ignore',
+                        color: 'var(--failing-test-color)'
+                    },
+                    click: (payload) => {
+                        payload.commit('ignoreComponent', payload);
+                    }
+                },
+                {
                     name: "Delete",
                     icon: "delete",
-                    click: (commit, item, router) => {
-                        commit('deleteComponent', {item: item, router: router});
+                    click: (payload) => {
+                        payload.commit('deleteComponent', payload);
                     }
                 }
             ],
@@ -282,6 +316,9 @@ export default new Vuex.Store({
             }
             payload.router.push({path: '/'});
         },
+        ignoreComponent(state, payload) {
+            payload.item.ignore = !payload.item.ignore;
+        },
         selectItem(state, payload) {
             const currentSelectedId = state.selectedItem ? state.selectedItem.id : null;
             // console.log('Current item: ' + currentSelectedId + '; Selecting item: ' + payload.item.id);
@@ -360,7 +397,7 @@ export default new Vuex.Store({
     },
     actions: {
         runRequisition: function ({commit}, requisition) {
-            const decycle = new ParentRemover().remove(requisition);
+            const decycle = new IgnoreRemover().remove(new ParentRemover().remove(requisition));
             console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
 

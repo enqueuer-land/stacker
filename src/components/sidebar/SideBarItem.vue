@@ -1,18 +1,18 @@
 <template>
     <div :style="sideBarItemStyle">
         <div class="row no-gutters mainSideBarItem'"
-           :id="item.id + 'SideBarItem'"
-           style="height: 100%"
-           @mouseenter="mouseEnterHeader"
-           @click="itemSelected"
-           @mouseover="mouseIsOver = true"
-           @mouseleave="mouseIsOver = false">
+             :id="item.id + 'SideBarItem'"
+             style="height: 100%"
+             @mouseenter="mouseEnterHeader"
+             @click="itemSelected"
+             @mouseover="mouseIsOver = true"
+             @mouseleave="mouseIsOver = false">
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
                     <div data-toggle="dropdown">
                         <i class="material-icons stacker-icon">more_vert</i>
                     </div>
-                    <dropdown-component :value="actions" :args="[$store.commit, item, $router]"></dropdown-component>
+                    <dropdown-component :value="actions" :args="{commit: $store.commit, item: item, router: $router}"></dropdown-component>
                 </div>
             </div>
             <div class="align-self-center col-md-auto tag" :style="typeStyle">
@@ -55,7 +55,7 @@
             index: {},
             item: {},
         },
-        data: function () {
+        data() {
             const tag = this.item.component.substr(0, 3);
             const isRequisition = tag.toUpperCase().startsWith('REQ');
             const actions = this.$store.state[this.item.component].sideBarOptions;
@@ -66,6 +66,11 @@
                 isRequisition: isRequisition,
                 isPublisher: tag.toUpperCase().startsWith('PUB'),
                 isSubscription: tag.toUpperCase().startsWith('SUB'),
+            }
+        },
+        watch: {
+            'item.ignore'() {
+                console.log('changed');
             }
         },
         methods: {
@@ -94,7 +99,6 @@
                 }
             }
         },
-        watch: {},
         computed: {
             sideBarItemStyle() {
                 const selectedItem = this.$store.state.selectedItem;
@@ -108,30 +112,29 @@
                     'color': 'var(--text-smooth-color)'
                 };
                 if (this.mouseIsOver) {
-                    // style['color'] = 'var(--text-color)';
                     style['background-color'] = 'var(--stacker-background-color)';
                     style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
                 }
                 if (this.isRequisition && this.opened) {
-                    // style['border-left'] = '2px var(--requisition-color) solid';
                     style['border-left'] = '2px var(--enqueuer-color) solid';
                     style['background-color'] = 'var(--stacker-background-color)';
-                    // style['border-top'] = '1px var(--requisition-color) solid';
                 }
                 if (this.isSelected()) {
                     style['color'] = 'var(--text-color)';
                     style['background-color'] = 'var(--stacker-background-alternative-color)';
-                    // style['border-left'] = '2px var(--' + selectedItem.component + '-color) solid';
                     style['border-left'] = '2px var(--enqueuer-color) solid';
-                    // style['border-top'] = '1px var(--' + selectedItem.component + '-color) solid';
                 }
+                if (new ComponentManager().isItemIgnored(this.item)) {
+                    style['background-color'] = 'var(--stacker-header-background-color)';
+                    style['text-decoration'] = 'line-through var(--' + this.item.component + '-color) ';
+                }
+
                 if (selectedItem && selectedItem.id !== this.item.id) {
                     // style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
                 }
                 return style;
             },
             nameStyle() {
-                // color: var(--text-color)
                 let style = {
                     'white-space': 'nowrap',
                     'width': '100%',
@@ -170,10 +173,6 @@
         font-size: 0.75em;
         text-transform: uppercase;
         /*font-weight: bolder;*/
-    }
-
-    #more-icon:hover {
-        color: var(--text-color);
     }
 
 </style>

@@ -2,12 +2,12 @@
     <div class="stacker-header" :style="resultHeaderStyle">
         <div v-if="result" style="text-decoration: none;">
             <div class="row no-gutters pt-1"
-                 style="cursor: pointer"
+                 style="cursor: pointer;"
                  @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
                 <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">
                     {{tests.isValid() ? 'PASS' : 'FAIL'}}
                 </button>
-                <span class="col align-self-center pl-3 result-name"
+                <span class="col align-self-center pl-3 result-name scroll-div"
                       :style="resultNameStyle">
                     {{result.name}}
                 </span>
@@ -150,6 +150,7 @@
                 return {
                     'text-align': 'left',
                     'font-size': '30px',
+                    'max-height': '50px',
                     color: this.tests.isValid() ? 'var(--passing-test-color)' : 'var(--failing-test-color)'
                 }
             }

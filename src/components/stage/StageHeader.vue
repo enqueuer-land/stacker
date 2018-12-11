@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="stacker-header container-fluid">
-            <div class="row scroll-div" style="height: 30px">
+            <div class="row scroll-div" style="height: 35px">
                 <ol class="breadcrumb my-0 pb-0 pt-0 pl-1" style="background-color: transparent;">
                     <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
@@ -16,8 +16,7 @@
                     </li>
                 </ol>
             </div>
-
-            <div class="row pt-2">
+            <div class="row pt-1">
                 <div class="pl-2 p1-2" :style="nameStyle">
                     Name
                 </div>
@@ -117,7 +116,7 @@
                 new ComponentManager().propagateValidationToParents(this.item, valid);
             },
             runClick: async function (item) {
-                if (new ComponentManager().isComponentValid(item)) {
+                if (new ComponentManager().isComponentValid(item) && !new ComponentManager().isItemIgnored(item)) {
                     await this.$store.dispatch('runRequisition', item);
                 }
             },
@@ -206,7 +205,7 @@
             runButtonClass() {
                 return {
                     'btn pl-4 pr-4': true,
-                    disabled: !new ComponentManager().isComponentValid(this.item)
+                    disabled: !new ComponentManager().isComponentValid(this.item) || new ComponentManager().isItemIgnored(this.item)
                 }
             },
             protocolsListStyle() {
@@ -245,7 +244,7 @@
                         color: 'var(--enqueuer-color)',
                         cursor: 'pointer',
                     };
-                    if (!new ComponentManager().isComponentValid(item)) {
+                    if (!new ComponentManager().isComponentValid(item) || item.ignore) {
                         style.color = 'var(--text-smooth-color) !important';
                         style.cursor = 'default';
                     }

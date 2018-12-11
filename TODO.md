@@ -17,8 +17,9 @@
 - [x] Create githubPage
 - [x] Fix ObjectFormatter bug
 - [x] Clipboard events 
+- [x] Github button in githubpage
+- [x] Create ignore (requisition, publisher and subscription)
 - [ ] Disable dropdown items based on functions
-- [ ] Github button in githubpage
 - [ ] Clear result tab
 - [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
