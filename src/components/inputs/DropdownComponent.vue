@@ -12,13 +12,17 @@
                      @click="itemClicked(item)">
                     <div class="row justify-content-between">
                         <div class="col">{{item.name}}</div>
-                        <div v-if="item.icon">
-                            <togglable-icon v-if="item.toggle && args.item" :name="item.icon"
-                                            v-model="args.item[item.toggle.name]"
-                                            :color="item.toggle.color"></togglable-icon>
-                            <div v-else>
-                                <i :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
-                            </div>
+                        <div v-if="item.icon" class="col-md-auto pr-0 align-self-center">
+                            <stacker-icon v-if="item.toggle"
+                                          :name="item.icon"
+                                          :color="item.toggle && item.toggle.color ? item.toggle.color : null"
+                                          :toggleable="item.toggle"
+                                          v-model="args.item[item.toggle.name]"
+                                          :disabled-color="item.toggle && item.toggle.disabledColor ? item.toggle.disabledColor : null">
+                            </stacker-icon>
+                            <stacker-icon v-else
+                                          :name="item.icon">
+                            </stacker-icon>
                         </div>
                     </div>
                 </div>
@@ -28,11 +32,11 @@
 </template>
 <script>
     import {generateId} from "../../tests/id-generator";
-    import TogglableIcon from "./TogglableIcon";
+    import StackerIcon from "./StackerIcon";
 
     export default {
         name: 'DropdownComponent',
-        components: {TogglableIcon},
+        components: {StackerIcon},
         props: {
             'value': {},
             'args': {}
@@ -47,7 +51,6 @@
             // });
         },
         data() {
-
             return {
                 id: generateId(),
                 mouseOverIndex: null
@@ -68,21 +71,25 @@
             }
         },
         computed: {
-            nameClass() {
+            model() {
                 return function(item) {
+                    if (item.toggle && this.args.item) {
+                        // let model = this.args.item[item.toggle.name];
+                        if (this.args.item[item.toggle.name] === undefined) {
+                            this.args.item[item.toggle.name] = false;
+                        }
+                        return this.args.item[item.toggle.name];
+                    }
+                    return null;
+                }
+            },
+            nameClass() {
+                return function (item) {
                     return {
                         'dropdown-item-active': item.toggle && this.args.item && this.args.item[item.toggle.name]
                     }
                 }
             },
-            dropdownIconClass() {
-                return function (item) {
-                    // console.log('dropdownIconClass');
-                    return {
-                        // noHover: !this.isItemEnabled(item)
-                    }
-                }
-            }
         },
         watch: {
             mouseOverIndex(mouseOverIndex) {

@@ -16,13 +16,11 @@
     export default {
         name: 'StackerIcon',
         components: {},
-        props: ['value', 'color', 'name', 'tooltip', 'placement', 'disabledColor'],
+        props: ['value', 'color', 'name', 'tooltip', 'placement', 'disabledColor', 'toggleable'],
         data() {
             this.updateTooltip();
-            const togglable = this.value !== undefined;
             return {
                 id: generateId(),
-                togglable: togglable,
                 toggle: !!this.value,
                 mouseOver: false,
             }
@@ -32,7 +30,7 @@
         },
         methods: {
             onClick() {
-                if (this.togglable) {
+                if (this.toggleable) {
                     this.toggle = !this.toggle;
                 }
                 this.$emit('click', this.toggle);
@@ -61,7 +59,7 @@
         computed: {
             style() {
                 const result = {};
-                if (this.togglable) {
+                if (this.toggleable) {
                     if (this.toggle) {
                         result.color = this.color;
                         if (!this.mouseOver) {
@@ -70,8 +68,7 @@
                             result.transform = 'rotate(-5deg) scale(1.4)';
                         }
                     }
-                }
-                if (this.disabledColor) {
+                } else if (this.disabledColor) {
                     result.color = this.disabledColor;
                 }
                 if (this.mouseOver) {
@@ -83,6 +80,9 @@
         watch: {
             value() {
                 this.toggle = this.value;
+            },
+            toggleable(value) {
+                console.log('VIrgs changed ' + value)
             },
             toggle() {
                 this.$emit('input', this.toggle);

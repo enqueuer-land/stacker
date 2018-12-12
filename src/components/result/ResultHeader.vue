@@ -13,10 +13,12 @@
                         {{response.name}}
                     </span>
                 <div class="col-md-auto ml-auto pr-2 align-self-center ">
-                    <stacker-icon @click="$store.commit('clearResult')" name="clear_all" tooltip="Clear result page"></stacker-icon>
+                    <stacker-icon @click="$store.commit('clearResult')" name="clear_all"
+                                  tooltip="Clear result page"></stacker-icon>
+                    <stacker-icon @click="runClick()" name="refresh" tooltip="Replay requisition"></stacker-icon>
                 </div>
             </div>
-            <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 36px">
+            <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 40px">
                 <div class="col-md-auto">
                                 <span class="title">
                                     Tests:
@@ -40,7 +42,7 @@
                                 {{timeAgo}}
                             </span>
             </div>
-            <div class="row no-gutters pt-3">
+            <div class="row no-gutters pt-2">
                 <div class="col-8 row no-gutters">
                     <div class="col pt-0 pl-2 pr-1">
                         <div class="input-group input-group-sm">
@@ -50,21 +52,24 @@
                                    placeholder="Filter">
                         </div>
                     </div>
-                    <i class="pl-0 col-md-auto pr-1 align-self-center material-icons stacker-icon">search</i>
+                    <div class="pl-0 col-md-auto pr-1 align-self-center">
+                        <stacker-icon name="search"></stacker-icon>
+                    </div>
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
                     <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
                         <stacker-icon v-model="filter.showPassingTests"
-                                        color="var(--passing-test-color)"
-                                        name="check_circle_outline"
-                                        tooltip='Show <b style="color: var(--passing-test-color);">passing</b> tests'></stacker-icon>
+                                      color="var(--passing-test-color)"
+                                      name="check_circle_outline"
+                                      :toggleable="true"
+                                      tooltip='Show <b style="color: var(--passing-test-color);">passing</b> tests'></stacker-icon>
                     </div>
                     <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
                         <stacker-icon v-model="filter.showFailingTests"
-                                        color="var(--failing-test-color)"
-                                        name="highlight_off"
-                                        tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></stacker-icon>
-
+                                      color="var(--failing-test-color)"
+                                      name="highlight_off"
+                                      :toggleable="true"
+                                      tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></stacker-icon>
                     </div>
                 </div>
             </div>
@@ -76,6 +81,7 @@
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import TimeHandler from "../../tests/time-handler";
     import StackerIcon from "../inputs/StackerIcon";
+    import ComponentManager from "../../tests/component-manager";
 
     export default {
         name: 'ResultHeader',
@@ -140,18 +146,6 @@
                 }
                 return result;
             },
-            showPassingTestsButtonClass() {
-                return {
-                    'material-icons stacker-icon': true,
-                    'small-button-passing-tests': this.filter.showPassingTests
-                }
-            },
-            showFailingTestsButtonClass() {
-                return {
-                    'material-icons stacker-icon small-button-failing-tests-hover': true,
-                    'small-button-failing-tests': this.filter.showFailingTests
-                }
-            },
             testBadgeStyle() {
                 return {
                     'background-color': this.tests.isValid() ? 'var(--passing-test-color)' : 'var(--failing-test-color)',
@@ -169,6 +163,13 @@
             }
         },
         methods: {
+            runClick: async function () {
+                const componentManager = new ComponentManager();
+                const item = componentManager.findItem(this.response.id);
+                if (item && componentManager.isComponentValid(item) && !componentManager.isItemIgnored(item)) {
+                    await this.$store.dispatch('runRequisition', item);
+                }
+            },
             printTime: function () {
                 if (this.result) {
                     return new TimeHandler().getTotalTime(this.response.time.totalTime);

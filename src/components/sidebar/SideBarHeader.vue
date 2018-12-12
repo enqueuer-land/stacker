@@ -26,7 +26,9 @@
                                placeholder="Filter">
                     </div>
                 </div>
-                <i class="col-1 pr-0 align-self-center pt-1 material-icons stacker-icon">search</i>
+                <div class="col-1 pr-0 align-self-center pt-1">
+                    <stacker-icon name="search"></stacker-icon>
+                </div>
             </div>
         </a>
     </div>
@@ -34,12 +36,13 @@
 
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
+    import StackerIcon from "../inputs/StackerIcon";
 
     const fs = window.remote.require('fs');
 
     export default {
         name: 'SideBarHeader',
-        components: {DropdownComponent},
+        components: {StackerIcon, DropdownComponent},
         data: function () {
             return {
                 addButtonPulseInterval: null,

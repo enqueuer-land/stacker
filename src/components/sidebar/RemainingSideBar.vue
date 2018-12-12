@@ -3,7 +3,7 @@
         <div :style="remainingSideBarStyle">
             <div class="row justify-content-end dropdown pt-1">
                 <div data-toggle="dropdown">
-                    <i class="col-4 material-icons stacker-icon">more_vert</i>
+                    <stacker-icon class="col-4" name="more_vert"></stacker-icon>
                 </div>
                 <dropdown-component :value="actions"></dropdown-component>
             </div>
@@ -14,10 +14,12 @@
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
     import ComponentManager from "../../tests/component-manager";
+    import StackerIcon from "../inputs/StackerIcon";
 
     export default {
         name: 'RemainingSideBar',
         components: {
+            StackerIcon,
             DropdownComponent
         },
         data() {
@@ -47,7 +49,7 @@
                         name: "Collapse all",
                         icon: "unfold_less",
                         click: () => {
-                            this.$store.commit('collapseRequisitions');
+                            this.$store.commit('collapseRequisition');
                         }
                     },
                     {

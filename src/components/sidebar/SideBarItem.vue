@@ -10,7 +10,7 @@
             <div class="col-1 align-self-center">
                 <div v-show="mouseIsOver" class="dropdown">
                     <div data-toggle="dropdown">
-                        <i class="material-icons stacker-icon">more_vert</i>
+                        <stacker-icon name="more_vert"></stacker-icon>
                     </div>
                     <dropdown-component :value="actions"
                                         :args="{commit: $store.commit, item: item, router: $router, store: $store}"></dropdown-component>
@@ -48,10 +48,11 @@
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
     import ComponentManager from "../../tests/component-manager";
+    import StackerIcon from "../inputs/StackerIcon";
 
     export default {
         name: 'SideBarItem',
-        components: {DropdownComponent},
+        components: {StackerIcon, DropdownComponent},
         props: {
             opened: {},
             index: {},
