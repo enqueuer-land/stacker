@@ -34,6 +34,11 @@
             });
         },
         data() {
+            this.$store.state.eventEmitter.on('requisitionReport', (report) => {
+                $('#runningModal').modal('hide');
+                this.running = null;
+                this.result = report;
+            });
             const results = this.$store.state.results;
             return {
                 running: null,
@@ -46,18 +51,6 @@
                 this.running = null;
             }
         },
-        watch: {
-            '$store.state.results'() {
-                // const now = new Date().getTime();
-                // const elapsedTime = now - this.running;
-                // setTimeout(() => {
-                    $('#runningModal').modal('hide');
-                    this.running = null;
-                    const results = this.$store.state.results;
-                    this.result = results[results.length - 1];
-                // }, Math.abs(minAnimationTime - elapsedTime));
-            }
-        }
     }
 </script>
 

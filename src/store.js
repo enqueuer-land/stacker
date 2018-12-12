@@ -367,6 +367,7 @@ export default new Vuex.Store({
         },
         setRequisitionResult(state, payload) {
             // console.log('Report added to history');
+            state.eventEmitter.emit('requisitionReport', payload.report);
             state.results.push(payload.report);
         },
         clipboardCopy(state, payload) {

@@ -62,7 +62,7 @@
                     },
                     {
                         name: "Clear",
-                        icon: "clear",
+                        icon: "clear_all",
                         click: () => {
                             this.$store.commit('clearRequisitions');
                         }

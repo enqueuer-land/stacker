@@ -36,13 +36,13 @@ export default class FlattenTestsSummary {
         }
 
         Object.keys(node).forEach(key => {
-            if (key !== 'messageReceived') {
-                const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
-                const value = node[key];
-                if (key === 'tests') {
-                    this.sumTests(value, clonedHierarchy)
-                }
-                else if (typeof value === 'object') {
+            const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
+            const value = node[key];
+            if (key === 'tests') {
+                this.sumTests(value, clonedHierarchy)
+            }
+            else if (key === 'publishers' || key === 'subscriptions' || key === 'requisitions') {
+                if (typeof value === 'object') {
                     if (Array.isArray(value)) {
                         value.forEach((item => {
                             const updatedHierarchy = clonedHierarchy.concat(item);

@@ -19,9 +19,12 @@
 - [x] Clipboard events 
 - [x] Github button in githubpage
 - [x] Create ignore (requisition, publisher and subscription)
+- [x] Fix ignore strike through and stageHeader button
+- [x] Improve resultParser algorithm
+- [ ] Assertion to be created opened by default
+- [ ] Detach resultHeader from result
 - [ ] Disable dropdown items based on functions
 - [ ] Fix dropdown menu clipped
-- [x] Fix ignore strike through and stageHeader button
 - [ ] Clear result tab
 - [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
