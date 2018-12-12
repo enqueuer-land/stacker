@@ -13,7 +13,7 @@
                         {{response.name}}
                     </span>
                 <div class="col-md-auto ml-auto pr-2 align-self-center ">
-                    <i class="material-icons stacker-icon" @click="$store.commit('clearResult')">clear</i>
+                    <stacker-icon @click="$store.commit('clearResult')" name="clear_all" tooltip="Clear result page"></stacker-icon>
                 </div>
             </div>
             <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 36px">
@@ -54,16 +54,16 @@
                 </div>
                 <div class="col row no-gutters justify-content-end pr-1">
                     <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
-                        <togglable-icon v-model="filter.showPassingTests"
+                        <stacker-icon v-model="filter.showPassingTests"
                                         color="var(--passing-test-color)"
                                         name="check_circle_outline"
-                                        tooltip='Show <b style="color: var(--passing-test-color);">passing</b> tests'></togglable-icon>
+                                        tooltip='Show <b style="color: var(--passing-test-color);">passing</b> tests'></stacker-icon>
                     </div>
                     <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
-                        <togglable-icon v-model="filter.showFailingTests"
+                        <stacker-icon v-model="filter.showFailingTests"
                                         color="var(--failing-test-color)"
                                         name="highlight_off"
-                                        tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></togglable-icon>
+                                        tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></stacker-icon>
 
                     </div>
                 </div>
@@ -75,11 +75,11 @@
 
     import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import TimeHandler from "../../tests/time-handler";
-    import TogglableIcon from "../inputs/TogglableIcon";
+    import StackerIcon from "../inputs/StackerIcon";
 
     export default {
         name: 'ResultHeader',
-        components: {TogglableIcon},
+        components: {StackerIcon},
         props: {
             result: {}
         },

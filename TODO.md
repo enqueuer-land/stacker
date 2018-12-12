@@ -22,6 +22,7 @@
 - [x] Fix ignore strike through and stageHeader button
 - [x] Improve resultParser algorithm
 - [x] Detach resultHeader from result
+- [ ] Turn every stacker-icon classes into stacker-icon-component (including togglableOnes) 
 - [ ] Assertion to be created opened by default
 - [ ] Disable dropdown items based on functions
 - [ ] Fix dropdown menu clipped
