@@ -54,6 +54,23 @@ export default new Vuex.Store({
                     divider: true,
                 },
                 {
+                    name: "Collapse all",
+                    icon: "unfold_less",
+                    click: (payload) => {
+                        payload.commit('collapseRequisition', payload);
+                    }
+                },
+                {
+                    name: "Expand all",
+                    icon: "unfold_more",
+                    click: (payload) => {
+                        payload.commit('expandRequisition', payload);
+                    }
+                },
+                {
+                    divider: true,
+                },
+                {
                     name: "Ignore",
                     icon: "report_off",//"not_interested",
                     toggle: {
@@ -106,6 +123,7 @@ export default new Vuex.Store({
                         color: 'var(--failing-test-color)'
                     },
                     click: (payload) => {
+                        payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);
                         payload.commit('ignoreComponent', payload);
                     }
                 },
@@ -165,6 +183,7 @@ export default new Vuex.Store({
                         color: 'var(--failing-test-color)'
                     },
                     click: (payload) => {
+                        payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);
                         payload.commit('ignoreComponent', payload);
                     }
                 },
@@ -397,11 +416,14 @@ export default new Vuex.Store({
             }
 
         },
-        collapseRequisitions(state) {
-            state.eventEmitter.emit('collapseRequisitions');
+        collapseRequisition(state, payload) {
+            state.eventEmitter.emit('collapseRequisition', payload);
         },
-        expandRequisitions(state) {
-            state.eventEmitter.emit('expandRequisitions');
+        expandRequisition(state, payload) {
+            state.eventEmitter.emit('expandRequisition', payload);
+        },
+        clearRequisitions(state) {
+            state.requisitions = [];
         }
     },
     actions: {

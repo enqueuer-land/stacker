@@ -54,7 +54,17 @@
                         name: "Expand all",
                         icon: "unfold_more",
                         click: () => {
-                            this.$store.commit('expandRequisitions');
+                            this.$store.commit('expandRequisition');
+                        }
+                    },
+                    {
+                        divider: true,
+                    },
+                    {
+                        name: "Clear",
+                        icon: "clear",
+                        click: () => {
+                            this.$store.commit('clearRequisitions');
                         }
                     },
                 ]

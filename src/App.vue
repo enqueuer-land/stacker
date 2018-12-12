@@ -293,7 +293,7 @@
     }
 
     .stacker-icon:hover, .stacker-icon.hover {
-        transform: scale(1) rotate(10deg);
+        transform: scale(1) rotate(7.5deg);
         color: var(--enqueuer-color);
     }
 

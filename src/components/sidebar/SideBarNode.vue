@@ -34,8 +34,26 @@
             index: {},
         },
         mounted() {
-            this.$store.state.eventEmitter.on('collapseRequisitions', () => $('#' + this.node.id).removeClass('show'))
-            this.$store.state.eventEmitter.on('expandRequisitions', () => $('#' + this.node.id).addClass('show'))
+            this.$store.state.eventEmitter.on('collapseRequisition', (payload) => {
+                let collapse = () => {
+                    this.opened = false;
+                    $('#' + this.node.id).removeClass('show');
+                    (this.node.requisitions || []).forEach(requisition => this.$store.state.eventEmitter.emit('collapseRequisition', {item: requisition}));
+                };
+                if (!payload || !payload.item || payload.item.id === this.node.id) {
+                    collapse();
+                }
+            });
+            this.$store.state.eventEmitter.on('expandRequisition', (payload) => {
+                let expand = () => {
+                    $('#' + this.node.id).addClass('show');
+                    this.opened = true;
+                    (this.node.requisitions || []).forEach(requisition => this.$store.state.eventEmitter.emit('expandRequisition', {item: requisition}));
+                };
+                if (!payload || !payload.item || payload.item.id === this.node.id) {
+                    expand();
+                }
+            });
         },
         data: function () {
             return {
@@ -44,8 +62,8 @@
         },
         methods: {
             headerChildClick: function () {
-                if (this.$store.state.selectedItem && this.$store.state.selectedItem.id != this.node.id) {
-                    $('#' + this.node.id).removeClass('show');
+                if (this.$store.state.selectedItem && this.$store.state.selectedItem.id !== this.node.id) {
+                    // $('#' + this.node.id).removeClass('show');
                 }
                 // this.opened = !$('#' + this.node.id).hasClass('show');
             },
