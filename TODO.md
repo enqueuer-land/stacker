@@ -22,11 +22,11 @@
 - [x] Fix ignore strike through and stageHeader button
 - [x] Improve resultParser algorithm
 - [x] Detach resultHeader from result
-- [ ] Turn every stacker-icon classes into stacker-icon-component (including togglableOnes) 
+- [x] Turn every stacker-icon classes into stacker-icon-component (including toggleableOnes) 
 - [ ] Assertion to be created opened by default
 - [ ] Disable dropdown items based on functions
 - [ ] Fix dropdown menu clipped
-- [ ] Clear result tab
+- [x] Clear result tab
 - [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition

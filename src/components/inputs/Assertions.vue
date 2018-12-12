@@ -9,19 +9,17 @@
                 </div>
                 <i class="col-md-auto material-icons showing-icon" :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
             </div>
-            <div v-if="!showValues" class="col" style="border-top: var(--text-smooth-color) 1px solid; position: relative; top: 10px"></div>
+            <div v-if="!showValues" class="col white-bar mt-2"></div>
         </div>
         <div :id="id" class="collapse">
             <div v-for="(_, index) in assertions" :key="ids[index]" class="row px-2 no-gutters">
                 <assertion v-model="assertions[index]" class="col px-2 mb-2 pb-1"/>
                 <div class="col-md-auto px-0 mb-2">
                     <div class="x-button pr-2">
-                        <a href="#"
-                           style="color: var(--text-color); position: relative; top: calc(50% - 12px); left: calc(50% - 12px);"
-                           id="removeIcon">
-                            <i @click="removeAssertion(index)" class="material-icons"
-                               style="">highlight_off</i>
-                        </a>
+                        <div style="position: relative; top: calc(50% - 12px); left: calc(50% - 12px);">
+                            <stacker-icon name="highlight_off" color="var(--failing-test-color)"
+                                          @click="removeAssertion(index)"></stacker-icon>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,7 +30,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="showValues" class="row no-gutters mt-3 mx-4" style="border-bottom: var(--text-smooth-color) 1px solid;"></div>
+        <div v-if="showValues" class="row no-gutters my-3 mx-4 white-bar"></div>
     </div>
 </template>
 
@@ -40,10 +38,11 @@
 
     import Assertion from "./Assertion";
     import {generateId} from "../../tests/id-generator";
+    import StackerIcon from "./StackerIcon";
 
     export default {
         name: 'Assertions',
-        components: {Assertion},
+        components: {StackerIcon, Assertion},
         props: {
             value: {}
         },
@@ -122,10 +121,6 @@
 
     }
 
-    #removeIcon :hover {
-        color: var(--text-smooth-color);
-    }
-
     #addButton:focus, #addButton.focus {
         outline: 0;
         box-shadow: 0 0 15px var(--text-smooth-color);
@@ -146,7 +141,6 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
-
 
     .title-class {
         color: var(--text-smooth-color);
@@ -172,6 +166,14 @@
 
     .showing-icon-active {
         transform: scale(0.7) rotate(90deg);
+    }
+
+    .white-bar {
+        border-top: var(--text-smooth-color) 1px solid;
+    }
+
+    .white-bar:hover {
+        border-top: var(--text-color) 1px solid;
     }
 
 </style>

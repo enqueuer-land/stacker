@@ -160,15 +160,14 @@
     }
 
     .logo-class {
+        cursor: default;
         transform: scale(0.75);
         position: relative;
         top: -10px;
         left: -5px;
-        transition: transform 500ms ease;
     }
 
     .logo-class:hover {
-        transform: scale(.7) rotate(-2deg);
     }
 
 </style>

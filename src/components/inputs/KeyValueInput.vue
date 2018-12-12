@@ -10,7 +10,7 @@
                 </div>
                 <i class="col-md-auto material-icons showing-icon" :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
             </div>
-            <div v-if="!showValues" class="col" style="border-top: var(--text-smooth-color) 1px solid; position: relative; top: 10px"></div>
+            <div v-if="!showValues" class="col white-bar my-2"></div>
         </div>
         <div :id="id" class="collapse">
             <div class="row px-3">
@@ -21,10 +21,9 @@
                     <input @input="update(index, 'value', $event.target.value)" :value="pair.value" type="text"
                            class="form-control input-group-append ml-2 stacker-input"
                            placeholder="value">
-                    <div class="input-group-append pl-1">
-                        <a href="#" style="color: var(--text-color)">
-                            <i @click="removePair(index)" class="material-icons remove-button">highlight_off</i>
-                        </a>
+                    <div class="input-group-append pl-1 pt-1">
+                        <stacker-icon name="highlight_off" color="var(--failing-test-color)"
+                                      @click="removePair(index)"></stacker-icon>
                     </div>
                 </div>
             </div>
@@ -36,15 +35,17 @@
                 </button>
             </div>
         </div>
-        <div v-if="showValues" class="row mt-3 mx-4" style="border-bottom: var(--text-smooth-color) 1px solid;"></div>
+        <div v-if="showValues" class="row mt-3 mx-4 white-bar"></div>
     </div>
 </template>
 
 <script>
     import {generateId} from "../../tests/id-generator";
+    import StackerIcon from "./StackerIcon";
 
     export default {
         name: 'KeyValueInput',
+        components: {StackerIcon},
         props: ['title', 'value'],
         data: function () {
             return {
@@ -174,8 +175,12 @@
         transition: transform 50ms ease;
     }
 
-    .remove-button.hover, .remove-button:hover {
-        transform: scale(0.9) rotate(10deg);
-        color: var(--failing-test-color);
+    .white-bar {
+        border-top: var(--text-smooth-color) 1px solid;
     }
+
+    .white-bar:hover {
+        border-top: var(--text-color) 1px solid;
+    }
+
 </style>

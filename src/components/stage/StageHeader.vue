@@ -3,12 +3,11 @@
         <div class="stacker-header container-fluid">
             <div class="row scroll-div" style="height: 35px">
                 <ol class="breadcrumb my-0 pb-0 pt-0 pl-1" style="background-color: transparent;">
-                    <li :class="['breadcrumb-item', index === getBreadCrumbs.length - 1 ? 'active' : '']"
+                    <li :class="['breadcrumb-item', { 'active' : index === getBreadCrumbs.length - 1}]"
                         v-for="(breadCrumb, index) in getBreadCrumbs" :key="index">
                         <i :style="breadcrumbIconStyle(breadCrumb)"
                            @click="runClick(breadCrumb)"
-                           class="material-icons stacker-icon"
-                        >play_circle_outline</i>
+                           class="material-icons stacker-icon">play_circle_outline</i>
                         <span :style="breadcrumbStyle"
                               @click="breadCrumbSelected(breadCrumb)">
                             {{breadCrumb.name}}
@@ -58,10 +57,11 @@
 <script>
     import StageEvents from "./StageEvents";
     import ComponentManager from "../../tests/component-manager";
+    import StackerIcon from "../inputs/StackerIcon";
 
     export default {
         name: 'StageHeader',
-        components: {StageEvents},
+        components: {StackerIcon, StageEvents},
         props: ['item', 'id'],
         mounted: function () {
             this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {

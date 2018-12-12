@@ -171,6 +171,7 @@
     }
 
     .dropdown-item:focus, .dropdown-item:hover {
+        border-left: 2px solid var(--enqueuer-color);
         color: var(--text-color);
         background-color: var(--stacker-background-color);
     }
