@@ -32,13 +32,17 @@
                 $('body').removeClass("modal-open");
                 this.running = new Date().getTime();
             });
-        },
-        data() {
             this.$store.state.eventEmitter.on('requisitionReport', (report) => {
                 $('#runningModal').modal('hide');
                 this.running = null;
                 this.result = report;
             });
+            this.$store.state.eventEmitter.on('clearResult', () => {
+                this.result = null;
+            });
+        },
+        data() {
+
             const results = this.$store.state.results;
             return {
                 running: null,

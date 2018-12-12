@@ -1,39 +1,44 @@
 <template>
-    <div class="stacker-header" :style="resultHeaderStyle">
-        <div v-if="result" style="text-decoration: none;">
-            <div class="row no-gutters pt-1"
+    <div class="stacker-header container px-0" :style="resultHeaderStyle">
+        <div v-if="response">
+            <div class="row no-gutters pt-1  justify-content-between"
                  style="cursor: pointer;"
                  @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
-                <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge" :style="testBadgeStyle">
+                <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge"
+                        :style="testBadgeStyle">
                     {{tests.isValid() ? 'PASS' : 'FAIL'}}
                 </button>
                 <span class="col align-self-center pl-3 result-name scroll-div"
                       :style="resultNameStyle">
-                    {{result.name}}
-                </span>
+                        {{response.name}}
+                    </span>
+                <div class="col-md-auto ml-auto pr-2 align-self-center ">
+                    <i class="material-icons stacker-icon" @click="$store.commit('clearResult')">clear</i>
+                </div>
             </div>
-            <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between">
+            <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 36px">
                 <div class="col-md-auto">
-                            <span class="title">
-                                Tests:
-                            </span>
+                                <span class="title">
+                                    Tests:
+                                </span>
                     <span class="tag"
                           :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
-                                {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
-                                ({{Math.trunc(tests.getPercentage())}}%)
-                            </span>
+                                    {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
+                                    ({{Math.trunc(tests.getPercentage())}}%)
+                                </span>
                 </div>
                 <div class="col-md-auto">
-                            <span class="title">
-                                Time:
-                            </span>
+                                <span class="title">
+                                    Time:
+                                </span>
                     <span class="time align-self-center">
-                                {{printTime()}}
-                            </span>
+                                    {{printTime()}}
+                                </span>
                 </div>
-                <span class="col-md-auto align-self-end title pr-2" style="text-align: right; font-size: 0.75em">
-                            {{timeAgo}}
-                        </span>
+                <span class="col-md-auto align-self-end title pr-2"
+                      style="text-align: right; font-size: 0.75em">
+                                {{timeAgo}}
+                            </span>
             </div>
             <div class="row no-gutters pt-3">
                 <div class="col-8 row no-gutters">
@@ -78,8 +83,15 @@
         props: {
             result: {}
         },
+        mounted() {
+            this.$store.state.eventEmitter.on('clearResult', () => {
+                this.response = null;
+            });
+        },
         data: function () {
+
             return {
+                response: this.result,
                 filter: {
                     string: '',
                     showPassingTests: true,
@@ -91,10 +103,11 @@
         },
         watch: {
             result() {
+                this.response = this.result;
                 //TODO verify bug here. Sometimes it disappears
                 const timeUpdater = () => {
-                    if (this.result) {
-                        this.timeAgo = new TimeHandler().getTimeAgo(this.result.time.endTime);
+                    if (this.response) {
+                        this.timeAgo = new TimeHandler().getTimeAgo(this.response.time.endTime);
                     }
                 };
                 timeUpdater();
@@ -112,13 +125,13 @@
         },
         computed: {
             tests() {
-                return new FlattenTestsSummary().addTest(this.result);
+                return new FlattenTestsSummary().addTest(this.response);
             },
             resultHeaderStyle: function () {
                 const result = {
                     color: 'var(--text-color)'
                 };
-                if (this.result) {
+                if (this.response) {
                     if (this.tests.isValid()) {
                         result.color = 'var(--passing-test-color);'
                     } else {
@@ -158,7 +171,7 @@
         methods: {
             printTime: function () {
                 if (this.result) {
-                    return new TimeHandler().getTotalTime(this.result.time.totalTime);
+                    return new TimeHandler().getTotalTime(this.response.time.totalTime);
                 }
             }
         }

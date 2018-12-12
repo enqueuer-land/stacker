@@ -370,6 +370,9 @@ export default new Vuex.Store({
             state.eventEmitter.emit('requisitionReport', payload.report);
             state.results.push(payload.report);
         },
+        clearResult(state) {
+            state.eventEmitter.emit('clearResult');
+        },
         clipboardCopy(state, payload) {
             const stringifiedElement = JSON.stringify(new IdReplacer().replace(new ParentRemover().remove(payload.item)), null, 2);
             electron.clipboard.writeText(stringifiedElement);

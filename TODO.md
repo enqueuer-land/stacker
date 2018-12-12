@@ -21,8 +21,8 @@
 - [x] Create ignore (requisition, publisher and subscription)
 - [x] Fix ignore strike through and stageHeader button
 - [x] Improve resultParser algorithm
+- [x] Detach resultHeader from result
 - [ ] Assertion to be created opened by default
-- [ ] Detach resultHeader from result
 - [ ] Disable dropdown items based on functions
 - [ ] Fix dropdown menu clipped
 - [ ] Clear result tab
