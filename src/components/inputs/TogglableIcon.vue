@@ -68,7 +68,6 @@
                 this.toggle = this.value;
             },
             toggle() {
-                console.log(this.style);
                 this.$emit('input', this.toggle);
             }
         },

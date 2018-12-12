@@ -164,7 +164,7 @@
         background-color: var(--stacker-background-alternative-color);
     }
 
-    .dropdown-item.active, .dropdown-item:active {
+    .dropdown-item.active, .dropdown-item:active, .dropdown-item-active {
         text-decoration: none;
         background-color: var(--text-smooth-color);
         color: var(--stacker-background-color);

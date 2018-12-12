@@ -8,7 +8,7 @@
                  @mouseleave="mouseOverIndex = null">
                 <div v-if="item.divider" class="dropdown-divider"></div>
                 <h6 v-else-if="item.header" class="dropdown-header">{{item.name}}</h6>
-                <div v-else class="container dropdown-item" style="cursor:pointer;"
+                <div v-else :class="['container dropdown-item', nameClass(item)]" style="cursor:pointer;"
                      @click="itemClicked(item)">
                     <div class="row justify-content-between">
                         <div class="col">{{item.name}}</div>
@@ -16,8 +16,9 @@
                             <togglable-icon v-if="item.toggle && args.item" :name="item.icon"
                                             v-model="args.item[item.toggle.name]"
                                             :color="item.toggle.color"></togglable-icon>
-                            <i v-else
-                               :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
+                            <div v-else>
+                                <i :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,6 +68,13 @@
             }
         },
         computed: {
+            nameClass() {
+                return function(item) {
+                    return {
+                        'dropdown-item-active': item.toggle && this.args.item && this.args.item[item.toggle.name]
+                    }
+                }
+            },
             dropdownIconClass() {
                 return function (item) {
                     // console.log('dropdownIconClass');
