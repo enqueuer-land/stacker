@@ -61,6 +61,7 @@ export default new Vuex.Store({
                         color: 'var(--failing-test-color)'
                     },
                     click: (payload) => {
+                        payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);
                         payload.commit('ignoreComponent', payload);
                     }
                 },

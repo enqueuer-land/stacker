@@ -21,7 +21,7 @@
 - [x] Create ignore (requisition, publisher and subscription)
 - [ ] Disable dropdown items based on functions
 - [ ] Fix dropdown menu clipped
-- [ ] Fix ignore strike through and stageHeader button
+- [x] Fix ignore strike through and stageHeader button
 - [ ] Clear result tab
 - [ ] Pack it up
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app

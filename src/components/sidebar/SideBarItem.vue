@@ -12,7 +12,8 @@
                     <div data-toggle="dropdown">
                         <i class="material-icons stacker-icon">more_vert</i>
                     </div>
-                    <dropdown-component :value="actions" :args="{commit: $store.commit, item: item, router: $router}"></dropdown-component>
+                    <dropdown-component :value="actions"
+                                        :args="{commit: $store.commit, item: item, router: $router, store: $store}"></dropdown-component>
                 </div>
             </div>
             <div class="align-self-center col-md-auto tag" :style="typeStyle">
@@ -56,11 +57,17 @@
             index: {},
             item: {},
         },
+        mounted() {
+            this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {
+                ++this.forceRecomputeCounter;
+            });
+        },
         data() {
             const tag = this.item.component.substr(0, 3);
             const isRequisition = tag.toUpperCase().startsWith('REQ');
             const actions = this.$store.state[this.item.component].sideBarOptions;
             return {
+                forceRecomputeCounter: 0,
                 mouseIsOver: false,
                 tag: tag,
                 actions: actions,
@@ -97,6 +104,7 @@
         },
         computed: {
             sideBarItemStyle() {
+                this.forceRecomputeCounter;
                 const selectedItem = this.$store.state.selectedItem;
                 let style = {
                     cursor: 'pointer',

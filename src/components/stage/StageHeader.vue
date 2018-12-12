@@ -64,6 +64,9 @@
         components: {StageEvents},
         props: ['item', 'id'],
         mounted: function () {
+            this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {
+                ++this.forceRecomputeCounter;
+            });
             if (this.isRequisition()) {
                 this.$router.push({
                     path: '/' + this.item.component + '/' + this.item.id + '/general',
@@ -102,6 +105,7 @@
                 });
             }
             return {
+                forceRecomputeCounter: 0,
                 events: this.getEvents(),
                 selectedProtocol: firstProtocol
             }
@@ -203,6 +207,7 @@
                 }
             },
             runButtonClass() {
+                this.forceRecomputeCounter;
                 return {
                     'btn pl-4 pr-4': true,
                     disabled: !new ComponentManager().isComponentValid(this.item) || new ComponentManager().isItemIgnored(this.item)
@@ -235,6 +240,7 @@
                 }
             },
             breadcrumbIconStyle() {
+                this.forceRecomputeCounter;
                 return function (item) {
                     const style = {
                         position: 'relative',
