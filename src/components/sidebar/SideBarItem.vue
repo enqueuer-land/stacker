@@ -19,12 +19,13 @@
                 <div v-if="isRequisition" class="dropdown">
                     <i v-if="!opened" style="color: var(--requisition-color)" class="material-icons">folder</i>
                     <i v-if="opened" style="color: var(--requisition-color)" class="material-icons">folder_open</i>
+
                     <span v-if="!opened"
-                          style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color); font-weight: bold">
+                          style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color); font-weight: bold; font-size: 12px">
                         {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
                     </span>
                     <span v-if="opened"
-                          style="position: relative; top: -6px; left: -20px; color: var(--requisition-color);">
+                          style="position: relative; top: -6px; left: -20px; color: var(--requisition-color); font-weight: bold; font-size: 12px">
                         {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
                     </span>
                 </div>
@@ -66,11 +67,6 @@
                 isRequisition: isRequisition,
                 isPublisher: tag.toUpperCase().startsWith('PUB'),
                 isSubscription: tag.toUpperCase().startsWith('SUB'),
-            }
-        },
-        watch: {
-            'item.ignore'() {
-                console.log('changed');
             }
         },
         methods: {
@@ -126,7 +122,7 @@
                 }
                 if (new ComponentManager().isItemIgnored(this.item)) {
                     style['background-color'] = 'var(--stacker-header-background-color)';
-                    style['text-decoration'] = 'line-through var(--' + this.item.component + '-color) ';
+                    style['text-decoration'] = 'line-through var(--' + this.item.component + '-color) double';
                 }
 
                 if (selectedItem && selectedItem.id !== this.item.id) {

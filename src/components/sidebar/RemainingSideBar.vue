@@ -40,6 +40,23 @@
                             this.$store.commit('clipboardPaste', {router: this.$router});
                         }
                     },
+                    {
+                        divider: true,
+                    },
+                    {
+                        name: "Collapse all",
+                        icon: "unfold_less",
+                        click: () => {
+                            this.$store.commit('collapseRequisitions');
+                        }
+                    },
+                    {
+                        name: "Expand all",
+                        icon: "unfold_more",
+                        click: () => {
+                            this.$store.commit('expandRequisitions');
+                        }
+                    },
                 ]
             }
         },

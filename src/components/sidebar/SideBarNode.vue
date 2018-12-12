@@ -33,6 +33,10 @@
             node: {},
             index: {},
         },
+        mounted() {
+            this.$store.state.eventEmitter.on('collapseRequisitions', () => $('#' + this.node.id).removeClass('show'))
+            this.$store.state.eventEmitter.on('expandRequisitions', () => $('#' + this.node.id).addClass('show'))
+        },
         data: function () {
             return {
                 opened: false

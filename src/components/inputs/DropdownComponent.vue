@@ -14,7 +14,8 @@
                         <div class="col">{{item.name}}</div>
                         <div v-if="item.icon">
                             <togglable-icon v-if="item.toggle && args.item" :name="item.icon"
-                                            v-model="args.item[item.toggle.name]" :color="item.toggle.color"></togglable-icon>
+                                            v-model="args.item[item.toggle.name]"
+                                            :color="item.toggle.color"></togglable-icon>
                             <i v-else
                                :class="['col-md-auto pr-0 align-self-center material-icons stacker-icon', dropdownIconClass(item)]">{{item.icon}}</i>
                         </div>
@@ -82,7 +83,7 @@
                     if (mouseOverIndex === index) {
                         // console.log(this.isItemEnabled(this.value[index]));
                         // if (this.isItemEnabled(this.value[index])) {
-                            iconElement.addClass('hover');
+                        iconElement.addClass('hover');
                         // }
                     } else {
                         iconElement.removeClass('hover');

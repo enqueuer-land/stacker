@@ -5,6 +5,7 @@ import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
 import IgnoreRemover from "./tests/ignore-remover";
+const EventEmitter = require('events');
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
             showPassingTests: true,
             showFailingTests: true,
         },
+        eventEmitter: new EventEmitter(),
         selectedItem: null,
         requisitions: [],
         requisition: {
@@ -393,6 +395,12 @@ export default new Vuex.Store({
                 console.log(`Error pasting clipboard: ${e}`);
             }
 
+        },
+        collapseRequisitions(state) {
+            state.eventEmitter.emit('collapseRequisitions');
+        },
+        expandRequisitions(state) {
+            state.eventEmitter.emit('expandRequisitions');
         }
     },
     actions: {
