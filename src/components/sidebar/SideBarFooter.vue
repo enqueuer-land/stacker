@@ -1,39 +1,39 @@
 <template>
-    <div class="remaining-side-bar">
+    <div class="side-bar-footer">
         <div :style="remainingSideBarStyle">
-            <div class="row justify-content-end dropdown pt-1">
-                <div data-toggle="dropdown">
-                    <stacker-icon class="col-4" name="more_vert"></stacker-icon>
-                </div>
-                <dropdown-component :value="actions"></dropdown-component>
+            <div class="row no-gutters justify-content-between pt-1">
+                <stacker-icon v-for="(action, index) in actions" :key="index"
+                              class="px-2 py-1"
+                              :name="action.icon"
+                              :tooltip="action.tooltip"
+                              @click="action.click()"
+                ></stacker-icon>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import DropdownComponent from "../inputs/DropdownComponent";
     import ComponentManager from "../../tests/component-manager";
     import StackerIcon from "../inputs/StackerIcon";
 
     export default {
-        name: 'RemainingSideBar',
+        name: 'SideBarFooter',
         components: {
-            StackerIcon,
-            DropdownComponent
+            StackerIcon
         },
         data() {
             return {
                 actions: [
                     {
-                        name: "Create Requisition",
+                        tooltip: "Create new requisition",
                         icon: "create_new_folder",
                         click: () => {
                             this.$store.commit('addRequisition', {router: this.$router});
                         }
                     },
                     {
-                        name: "Paste",
+                        tooltip: "Paste component",
                         icon: "file_copy",
                         isEnabled() {
                             return new ComponentManager().isAbleToBePastedIn();
@@ -46,14 +46,14 @@
                         divider: true,
                     },
                     {
-                        name: "Collapse all",
+                        tooltip: "Collapse all requisitions",
                         icon: "unfold_less",
                         click: () => {
                             this.$store.commit('collapseRequisition');
                         }
                     },
                     {
-                        name: "Expand all",
+                        tooltip: "Expand all requisitions",
                         icon: "unfold_more",
                         click: () => {
                             this.$store.commit('expandRequisition');
@@ -63,10 +63,10 @@
                         divider: true,
                     },
                     {
-                        name: "Clear",
+                        tooltip: "Clear all requisitions",
                         icon: "clear_all",
                         click: () => {
-                            this.$store.commit('clearRequisitions');
+                            this.$store.commit('clearRequisitions', {router: this.$router});
                         }
                     },
                 ]
@@ -75,6 +75,8 @@
         computed: {
             remainingSideBarStyle() {
                 let style = {
+                    // 'border-top': '1px solid var(--stacker-background-alternative-color)',
+                    'border-top': '1px solid var(--enqueuer-color)',
                     'height': '100%',
                     'background-color': 'var(--stacker-header-background-color)',
                 };
@@ -89,7 +91,7 @@
 </script>
 
 <style scoped>
-    .remaining-side-bar {
+    .side-bar-footer {
 
     }
 </style>

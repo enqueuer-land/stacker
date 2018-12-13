@@ -1,20 +1,25 @@
 <template>
     <div class="side-bar">
-        <SideBarHeader></SideBarHeader>
-        <SideBarTree class="scroll-div" style="max-height: calc(100vh - 150px); position: relative; top: -4px;"></SideBarTree>
-        <remaining-side-bar></remaining-side-bar>
+        <div class="side-bar-body">
+            <SideBarHeader></SideBarHeader>
+            <SideBarTree class="scroll-div"
+                         style="max-height: calc(100vh - 190px); position: relative; top: -4px;"></SideBarTree>
+        </div>
+        <div>
+            <side-bar-footer></side-bar-footer>
+        </div>
     </div>
 </template>
 
 <script>
     import SideBarHeader from "./SideBarHeader";
     import SideBarTree from "./SideBarTree";
-    import RemainingSideBar from "./RemainingSideBar";
+    import SideBarFooter from "./SideBarFooter";
 
     export default {
         name: 'SideBar',
         components: {
-            RemainingSideBar,
+            SideBarFooter,
             SideBarHeader, SideBarTree
         },
         data() {
@@ -25,7 +30,12 @@
 
 <style scoped>
     .side-bar {
-        height: 100%;
+        height: 100vh;
+        background-color: var(--stacker-header-background-color);
+    }
+
+    .side-bar-body {
+        height: calc(100vh - 40px);
         background-color: var(--stacker-header-background-color);
     }
 

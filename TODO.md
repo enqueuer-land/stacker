@@ -28,9 +28,12 @@
 - [ ] Fix dropdown menu clipped
 - [x] Clear result tab
 - [ ] Pack it up
+        https://nklayman.github.io/vue-cli-plugin-electron-builder/
+        https://github.com/webpack/webpack/issues/4603
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
 - [ ] Tests result buttons (expandAll, collapse all, export)
 - [ ] Create Stage Header Header
 - [ ] Create Result Not Flatten Tests
 - [ ] Create Object Builder
+- [ ] Highlight <<stacker>> variables https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea

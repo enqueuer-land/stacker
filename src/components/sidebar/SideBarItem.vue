@@ -2,7 +2,6 @@
     <div :style="sideBarItemStyle">
         <div class="row no-gutters mainSideBarItem'"
              :id="item.id + 'SideBarItem'"
-             style="height: 100%"
              @mouseenter="mouseEnterHeader"
              @click="itemSelected"
              @mouseover="mouseIsOver = true"

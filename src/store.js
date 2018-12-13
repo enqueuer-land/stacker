@@ -426,8 +426,12 @@ export default new Vuex.Store({
         expandRequisition(state, payload) {
             state.eventEmitter.emit('expandRequisition', payload);
         },
-        clearRequisitions(state) {
+        clearRequisitions(state, payload) {
+            state.requisitions.forEach(requisition => new ComponentManager().delete(requisition));
             state.requisitions = [];
+
+            state.selectedItem = null;
+            payload.router.push({path: '/'});
         }
     },
     actions: {
