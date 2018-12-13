@@ -29,7 +29,7 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" :class="['col align-self-center', nameClass]" :style="nameStyle">
+            <div id="name" :class="['col align-self-center pr-2', nameClass]" :style="nameStyle">
                 {{item.name}}
             </div>
             <div class="align-self-center tag pr-2" :style="tagStyle">
