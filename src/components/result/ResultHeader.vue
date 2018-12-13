@@ -12,11 +12,6 @@
                       :style="resultNameStyle">
                         {{response.name}}
                     </span>
-                <div class="col-md-auto ml-auto pr-2 align-self-center ">
-                    <stacker-icon @click="$store.commit('clearResult')" name="clear"
-                                  tooltip="Clear result page"></stacker-icon>
-                    <stacker-icon @click="runClick()" name="refresh" tooltip="Replay requisition"></stacker-icon>
-                </div>
             </div>
             <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 40px">
                 <div class="col-md-auto">
@@ -163,13 +158,6 @@
             }
         },
         methods: {
-            runClick: async function () {
-                const componentManager = new ComponentManager();
-                const item = componentManager.findItem(this.response.id);
-                if (item && componentManager.isComponentValid(item) && !componentManager.isItemIgnored(item)) {
-                    await this.$store.dispatch('runRequisition', item);
-                }
-            },
             printTime: function () {
                 if (this.result) {
                     return new TimeHandler().getTotalTime(this.response.time.totalTime);

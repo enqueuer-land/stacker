@@ -33,10 +33,10 @@
                 if (this.toggleable) {
                     this.toggle = !this.toggle;
                 }
-                this.$emit('click', this.toggle);
                 if (this.tooltip) {
                     $(`#${this.id}`).tooltip('hide');
                 }
+                this.$emit('click', this.toggle);
             },
             updateTooltip() {
                 if (this.tooltip) {
@@ -61,7 +61,7 @@
                 const result = {};
                 if (this.toggleable) {
                     if (this.toggle) {
-                        result.color = this.color;
+                        result.color = this.color || 'var(--enqueuer-color)';
                         if (!this.mouseOver) {
                             result.transform = 'rotate(0deg) scale(1)';
                         } else {
@@ -78,8 +78,8 @@
             }
         },
         watch: {
-            value() {
-                this.toggle = this.value;
+            value(value) {
+                this.toggle = value;
             },
             toggle() {
                 this.$emit('input', this.toggle);

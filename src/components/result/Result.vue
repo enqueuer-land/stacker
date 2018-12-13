@@ -2,7 +2,8 @@
     <div class="result" @click="hideModal">
 
         <result-header :result="result"/>
-        <result-tree :result="result" class="scroll-div" style="max-height: calc(100% - 150px);"/>
+        <result-tree :result="result" class="scroll-div" style="height: calc(100% - 190px);"/>
+        <result-footer style="height: 40px;"></result-footer>
 
         <div id="runningModal" class="modal">
             <div class="progress px-4 progress-bar-container">
@@ -16,12 +17,14 @@
 <script>
     import ResultHeader from "./ResultHeader";
     import ResultTree from "./ResultTree";
+    import ResultFooter from "./ResultFooter";
 
     const minAnimationTime = 250;
 
     export default {
         name: 'Result',
         components: {
+            ResultFooter,
             ResultHeader,
             ResultTree
         },
