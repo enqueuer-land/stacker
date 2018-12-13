@@ -13,7 +13,7 @@
                         {{response.name}}
                     </span>
                 <div class="col-md-auto ml-auto pr-2 align-self-center ">
-                    <stacker-icon @click="$store.commit('clearResult')" name="clear_all"
+                    <stacker-icon @click="$store.commit('clearResult')" name="clear"
                                   tooltip="Clear result page"></stacker-icon>
                     <stacker-icon @click="runClick()" name="refresh" tooltip="Replay requisition"></stacker-icon>
                 </div>
@@ -37,13 +37,13 @@
                                     {{printTime()}}
                                 </span>
                 </div>
-                <span class="col-md-auto align-self-end title pr-2"
+                <span class="col-md-auto align-self-center title pr-2"
                       style="text-align: right; font-size: 0.75em">
                                 {{timeAgo}}
                             </span>
             </div>
             <div class="row no-gutters pt-2">
-                <div class="col-8 row no-gutters">
+                <div class="col-10 row no-gutters">
                     <div class="col pt-0 pl-2 pr-1">
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control stacker-input"

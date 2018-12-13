@@ -1,6 +1,7 @@
 <template>
     <div :style="sideBarItemStyle">
-        <div class="row no-gutters mainSideBarItem'"
+        <div class="row no-gutters"
+             style="height: 100%"
              :id="item.id + 'SideBarItem'"
              @mouseenter="mouseEnterHeader"
              @click="itemSelected"

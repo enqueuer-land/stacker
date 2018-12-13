@@ -65,7 +65,7 @@
                         if (!this.mouseOver) {
                             result.transform = 'rotate(0deg) scale(1)';
                         } else {
-                            result.transform = 'rotate(-5deg) scale(1.4)';
+                            result.transform = 'rotate(10deg) scale(1.4)';
                         }
                     }
                 } else if (this.disabledColor) {
@@ -80,9 +80,6 @@
         watch: {
             value() {
                 this.toggle = this.value;
-            },
-            toggleable(value) {
-                console.log('VIrgs changed ' + value)
             },
             toggle() {
                 this.$emit('input', this.toggle);

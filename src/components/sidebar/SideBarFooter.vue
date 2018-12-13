@@ -1,6 +1,6 @@
 <template>
     <div class="side-bar-footer">
-        <div class="row no-gutters justify-content-between pt-1">
+        <div class="row no-gutters justify-content-begin pt-1">
             <stacker-icon v-for="(action, index) in actions" :key="index"
                           class="px-2 py-1"
                           :name="action.icon"
@@ -58,7 +58,7 @@
                     },
                     {
                         tooltip: "Clear all requisitions",
-                        icon: "clear_all",
+                        icon: "clear",
                         click: () => {
                             this.$store.commit('clearRequisitions', {router: this.$router});
                         }
