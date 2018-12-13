@@ -18,17 +18,12 @@
             </div>
             <div class="align-self-center col-md-auto tag" :style="typeStyle">
                 <div v-if="isRequisition" class="dropdown">
-                    <i v-if="!opened" style="color: var(--requisition-color)" class="material-icons">folder</i>
-                    <i v-if="opened" style="color: var(--requisition-color)" class="material-icons">folder_open</i>
-
-                    <span v-if="!opened"
-                          style="position: relative; top: -6px; left: -22px; color: var(--stacker-background-color); font-weight: bold; font-size: 12px">
-                        {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
-                    </span>
-                    <span v-if="opened"
-                          style="position: relative; top: -6px; left: -20px; color: var(--requisition-color); font-weight: bold; font-size: 12px">
-                        {{this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length}}
-                    </span>
+                    <stacker-icon
+                            class="pl-0 pr-2"
+                            disabled-color="var(--requisition-color)"
+                            color="var(--requisition-color)"
+                            :name="opened? 'folder_open' : 'folder'">
+                    </stacker-icon>
                 </div>
                 <div v-show="!isRequisition" class="pr-3" style="font-weight: bold">
                     {{item.type}}
@@ -104,6 +99,16 @@
             }
         },
         computed: {
+            childrenIcon() {
+                const childrenNum = this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length;
+                if (childrenNum > 9) {
+                    return "filter_9_plus";
+                }
+                if (childrenNum === 0) {
+                    return "filter_none"
+                }
+                return `filter_${childrenNum}`
+            },
             sideBarItemStyle() {
                 this.forceRecomputeCounter;
                 const selectedItem = this.$store.state.selectedItem;

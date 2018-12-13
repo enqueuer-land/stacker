@@ -43,7 +43,7 @@ export default class ComponentManager {
         return nameWithNoExtension;
     }
 
-    saveRequisitionFile(name, requisition) {
+    saveFile(name, requisition) {
         delete requisition.parent;
         const decycle = new ObjectDecycler().decycle(requisition);
         fs.writeFileSync(name, JSON.stringify(decycle, null, 2));

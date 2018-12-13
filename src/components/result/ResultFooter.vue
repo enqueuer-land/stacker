@@ -1,9 +1,9 @@
 <template>
     <div class="result-footer">
         <div class="row no-gutters justify-content-around pt-2">
-            <div class="col row no-gutters justify-content-around pr-2">
+            <div class="col row no-gutters justify-content-begin pr-2">
                 <stacker-icon v-for="(action, index) in actions" :key="index"
-                              class="col-md-auto"
+                              class="col-md-auto px-2"
                               :name="action.icon"
                               :toggleable="action.toggle"
                               v-model="action.value"
@@ -14,7 +14,6 @@
                 <img src="../../../docs/img/gui.png" class="img-fluid rounded gui-class">
             </div>
         </div>
-
     </div>
 </template>
 
@@ -22,6 +21,8 @@
 
     import StackerIcon from "../inputs/StackerIcon";
     import ComponentManager from "../../tests/component-manager";
+
+    const fs = window.remote.require('fs');
 
     export default {
         name: "ResultFooter",
@@ -74,6 +75,34 @@
                     //     },
                     //     tooltip: "Flatten tests",
                     // },
+                    {
+                        tooltip: "Import response",
+                        icon: "cloud_download",
+                        click: () => {
+                            window.remote.dialog.showOpenDialog({
+                                properties: ['openFile']
+                            }, (files) => {
+                                if (files !== undefined) {
+                                    (files || []).forEach(file => {
+                                        const response = JSON.parse(fs.readFileSync(file).toString());
+                                        this.$store.commit('setRequisitionResult', {
+                                            router: this.$router,
+                                            report: response
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    {
+                        click: () => {
+                            const results = this.$store.state.results;
+                            const currentResult = results[results.length - 1];
+                            this.$store.commit('exportResponse', currentResult);
+                        },
+                        icon: "backup",
+                        tooltip: "Save response",
+                    },
                     {
                         click: () => {
                         },

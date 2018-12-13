@@ -4,6 +4,11 @@
             <common-subscription :timeout.sync="http.timeout"
                                  :avoid.sync="http.avoid"/>
         </div>
+        <div class="row pt-2">
+            <div class="col px-2">
+                <key-value-input v-model="http.response.headers" title="Headers"/>
+            </div>
+        </div>
         <div class="row">
             <div class="col-3 pl-2 pr-1">
                 <div class="row">
@@ -38,11 +43,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row pt-2">
-            <div class="col px-2">
-                <key-value-input v-model="http.response.headers" title="Headers"/>
             </div>
         </div>
         <div class="row">

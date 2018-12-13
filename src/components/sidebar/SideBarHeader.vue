@@ -38,8 +38,6 @@
     import DropdownComponent from "../inputs/DropdownComponent";
     import StackerIcon from "../inputs/StackerIcon";
 
-    const fs = window.remote.require('fs');
-
     export default {
         name: 'SideBarHeader',
         components: {StackerIcon, DropdownComponent},
@@ -67,28 +65,6 @@
                         icon: "create_new_folder",
                         click: () => {
                             this.$store.commit('addRequisition', {router: this.$router});
-                        }
-                    },
-                    {
-                        divider: true,
-                    },
-                    {
-                        name: "Import responses",
-                        icon: "check_circle_outline",
-                        click: () => {
-                            window.remote.dialog.showOpenDialog({
-                                properties: ['openFile']
-                            }, (files) => {
-                                if (files !== undefined) {
-                                    (files || []).forEach(file => {
-                                        const response = JSON.parse(fs.readFileSync(file).toString());
-                                        this.$store.commit('setRequisitionResult', {
-                                            router: this.$router,
-                                            report: response
-                                        });
-                                    });
-                                }
-                            });
                         }
                     },
                 ]

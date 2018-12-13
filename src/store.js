@@ -54,14 +54,14 @@ export default new Vuex.Store({
                     divider: true,
                 },
                 {
-                    name: "Collapse all",
+                    name: "Collapse",
                     icon: "unfold_less",
                     click: (payload) => {
                         payload.commit('collapseRequisition', payload);
                     }
                 },
                 {
-                    name: "Expand all",
+                    name: "Expand",
                     icon: "unfold_more",
                     click: (payload) => {
                         payload.commit('expandRequisition', payload);
@@ -282,7 +282,17 @@ export default new Vuex.Store({
                 showsTagField: false,
             }, (filename) => {
                 if (filename) {
-                    new ComponentManager().saveRequisitionFile(filename, payload.item);
+                    new ComponentManager().saveFile(filename, payload.item);
+                }
+            })
+        },
+        exportResponse(state, response) {
+            window.remote.dialog.showSaveDialog({
+                defaultPath: response.name + '.res.stk',
+                showsTagField: false,
+            }, (filename) => {
+                if (filename) {
+                    new ComponentManager().saveFile(filename, response);
                 }
             })
         },
@@ -329,6 +339,7 @@ export default new Vuex.Store({
         },
         deleteComponent(state, payload) {
             const item = payload.item;
+            const parent = item.parent;
             new ComponentManager().delete(item);
             if (state.selectedItem && state.selectedItem.id === item.id) {
                 state.selectedItem = null;
@@ -336,7 +347,12 @@ export default new Vuex.Store({
             if (item.parent === undefined) {
                 state.requisitions = state.requisitions.filter(requisition => requisition.id !== item.id);
             }
-            payload.router.push({path: '/'});
+            if (parent) {
+                state.selectedItem = parent;
+                payload.router.push({path: '/' + parent.component + '/' + parent.id});
+            } else {
+                payload.router.push({path: '/'});
+            }
         },
         ignoreComponent(state, payload) {
             payload.item.ignore = !payload.item.ignore;

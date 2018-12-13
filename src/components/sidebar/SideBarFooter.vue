@@ -1,7 +1,8 @@
 <template>
     <div class="side-bar-footer">
-        <div class="row no-gutters justify-content-around pt-2">
+        <div class="row no-gutters justify-content-begin pt-2">
             <stacker-icon v-for="(action, index) in actions" :key="index"
+                          class="col-md-auto px-2"
                           :name="action.icon"
                           :tooltip="action.tooltip"
                           @click="action.click()"></stacker-icon>
@@ -35,9 +36,6 @@
                             this.$store.commit('clipboardPaste', {router: this.$router});
                         }
                     },
-                    // {
-                    //     divider: true,
-                    // },
                     {
                         tooltip: "Collapse all requisitions",
                         icon: "unfold_less",
@@ -53,7 +51,11 @@
                         }
                     },
                     // {
-                    //     divider: true,
+                    //     tooltip: "Delete selected item",
+                    //     icon: "delete",
+                    //     click: () => {
+                    //         this.$store.commit('deleteComponent', {router: this.$router, item: this.$store.state.selectedItem});
+                    //     }
                     // },
                     {
                         tooltip: "Clear all requisitions",

@@ -13,6 +13,11 @@
                 </div>
             </div>
         </div>
+        <div class="row pt-2">
+            <div class="col px-2">
+                <key-value-input v-model="http.headers" title="Headers"/>
+            </div>
+        </div>
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 URL
@@ -33,11 +38,6 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-2">
-            <div class="col px-2">
-                <key-value-input v-model="http.headers" title="Headers"/>
-            </div>
-        </div>
         <div class="row">
             <div class="pl-2 pt-2 stacker-label">
                 Body
@@ -46,7 +46,7 @@
         <div v-if="http.method !== 'GET'" class="row">
             <object-formatter class="mb-1 ml-2 mr-2" :text.sync="http.payload" :format.sync="http.format"/>
         </div>
-        <div v-else class="row" style="border-top: var(--text-color) 1px solid"></div>
+        <div v-else class="row mt-1 mx-2" style="border-top: var(--text-color) 1px solid"></div>
     </div>
 </template>
 <script>
