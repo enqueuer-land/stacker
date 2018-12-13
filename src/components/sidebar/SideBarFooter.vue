@@ -1,27 +1,21 @@
 <template>
     <div class="side-bar-footer">
-        <div :style="remainingSideBarStyle">
-            <div class="row no-gutters justify-content-between pt-1">
-                <stacker-icon v-for="(action, index) in actions" :key="index"
-                              class="px-2 py-1"
-                              :name="action.icon"
-                              :tooltip="action.tooltip"
-                              @click="action.click()"
-                ></stacker-icon>
-            </div>
+        <div class="row no-gutters justify-content-between pt-1">
+            <stacker-icon v-for="(action, index) in actions" :key="index"
+                          class="px-2 py-1"
+                          :name="action.icon"
+                          :tooltip="action.tooltip"
+                          @click="action.click()"></stacker-icon>
         </div>
     </div>
 </template>
 
 <script>
-    import ComponentManager from "../../tests/component-manager";
-    import StackerIcon from "../inputs/StackerIcon";
 
+    import StackerIcon from "../inputs/StackerIcon";
     export default {
-        name: 'SideBarFooter',
-        components: {
-            StackerIcon
-        },
+        name: "SideBarFooter",
+        components: {StackerIcon},
         data() {
             return {
                 actions: [
@@ -71,27 +65,13 @@
                     },
                 ]
             }
-        },
-        computed: {
-            remainingSideBarStyle() {
-                let style = {
-                    // 'border-top': '1px solid var(--stacker-background-alternative-color)',
-                    'border-top': '1px solid var(--enqueuer-color)',
-                    'height': '100%',
-                    'background-color': 'var(--stacker-header-background-color)',
-                };
-                const selectedItem = this.$store.state.selectedItem;
-                if (selectedItem) {
-                    // style['border-right'] = '2px var(--' + selectedItem.component + '-color) solid';
-                }
-                return style;
-            },
         }
     }
 </script>
 
 <style scoped>
     .side-bar-footer {
-
+        border-top: 1px solid var(--stacker-background-alternative-color);
+        background-color: var(--stacker-header-background-color);
     }
 </style>

@@ -435,12 +435,14 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        runRequisition: function ({commit}, requisition) {
+        runRequisition: function ({state, commit}, requisition) {
+            state.eventEmitter.emit('statusInformation', `Running requisition '${requisition.name}'`);
             const decycle = new IgnoreRemover().remove(new ParentRemover().remove(requisition));
             console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
 
             window.ipcRenderer.once('runRequisitionReply', (event, report) => {
+                state.eventEmitter.emit('statusInformation', `Report of requisition '${requisition.name}'`);
                 console.log('Renderer got report!');
                 commit('setRequisitionResult', {report: report});
             });

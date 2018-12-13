@@ -24,7 +24,7 @@
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
                     <input v-model="item.name" type="text" class="form-control stacker-input"
                            placeholder="Name">
-                    <div v-if="!isRequisition()" class="input-group-append stage-header-main-dropdown">
+                    <div v-if="!isRequisition()" class="input-group-append">
                         <button class="btn dropdown-toggle select-protocol-button" type="button" data-toggle="dropdown"
                                 :style="protocolsListStyle">
                             {{selectedProtocol}}
@@ -37,7 +37,7 @@
                             >{{protocol}}</a>
                         </div>
                     </div>
-                    <div v-else class="input-group-append stage-header-main-dropdown">
+                    <div v-else class="input-group-append">
                         <button :class="[runButtonClass, 'run-button']"
                                 style="border: 1px var(--requisition-color) solid; background-color: var(--requisition-color); color: var(--stacker-header-background-color)"
                                 @click="runClick(item)"
