@@ -15,11 +15,11 @@
         <div :id="id" class="collapse">
             <div class="row px-3">
                 <div class="input-group input-group-sm mb-1" v-for="(pair, index) in pairs" :key="index">
-                    <stacker-input @input="(value) => update(index, 'key', value)"
+                    <stacker-input @input="(value) => update(index, 'key', value || '')"
                                    :value="pair.key"
                                    class="form-control"
                                    placeholder="Key"></stacker-input>
-                    <stacker-input @input="(value) => update(index, 'value', value)"
+                    <stacker-input @input="(value) => update(index, 'value', value || '')"
                                    :value="pair.value"
                                    class="form-control ml-2"
                                    placeholder="Value"></stacker-input>

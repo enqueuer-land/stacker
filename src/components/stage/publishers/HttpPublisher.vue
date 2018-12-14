@@ -7,7 +7,9 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="http.timeout" placeholder="3000" type="text" class="form-control stacker-input">
+                <stacker-input v-model="http.timeout"
+                               class="form-control"
+                               placeholder="3000"></stacker-input>
                 <div class="input-group-append">
                     <span class="input-group-text">ms</span>
                 </div>
@@ -24,16 +26,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="http.url" placeholder="http://github.com/lopidio/stacker" id="httpPublisherUrlId"
-                       type="text" class="form-control stacker-input">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2" id="httpPublisherUrlId">
+                <stacker-input v-model="http.url"
+                               class="form-control"
+                               placeholder="http://github.com/lopidio/stacker"></stacker-input>
                 <div class="input-group-append" style="font-size: 0.8em">
                     <button class="btn dropdown-toggle method-button" type="button"
                             data-toggle="dropdown">{{http.method}}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" v-for="item in methods" :key="item"
-                           @click="http.method = item">{{item}}</a>
+                        <div class="dropdown-item" style="cursor: pointer" v-for="item in methods" :key="item"
+                           @click="http.method = item">{{item}}</div>
                     </div>
                 </div>
             </div>
@@ -53,12 +56,13 @@
 
     import KeyValueInput from "../../inputs/KeyValueInput";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+    import StackerInput from "../../inputs/StackerInput";
 
     const methodsList = ["POST", "GET", "PATCH", "OPTION", "DELETE", "PUT"];
 
     export default {
         name: 'HttpPublisher',
-        components: {ObjectFormatter, KeyValueInput},
+        components: {StackerInput, ObjectFormatter, KeyValueInput},
         props: {
             item: {},
         },

@@ -20,10 +20,10 @@
             <div class="row no-gutters">
                 <div class="col-11 pl-0">
                     <div class="input-group input-group-sm pl-2 pr-1">
-                        <input type="text" class="form-control stacker-input"
-                               v-model="filter"
-                               style="border-radius: 10px"
-                               placeholder="Filter">
+                        <stacker-input v-model="filter"
+                                       style="border-radius: 10px"
+                                       class="form-control"
+                                       placeholder="Filter"></stacker-input>
                     </div>
                 </div>
                 <div class="col-1 pr-0 align-self-center pt-1">
@@ -37,10 +37,11 @@
 <script>
     import DropdownComponent from "../inputs/DropdownComponent";
     import StackerIcon from "../inputs/StackerIcon";
+    import StackerInput from "../inputs/StackerInput";
 
     export default {
         name: 'SideBarHeader',
-        components: {StackerIcon, DropdownComponent},
+        components: {StackerInput, StackerIcon, DropdownComponent},
         data: function () {
             return {
                 addButtonPulseInterval: null,

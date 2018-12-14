@@ -16,9 +16,10 @@
                         Port
                     </div>
                 </div>
-                <div class="input-group input-group-sm mb-1">
-                    <input v-model="http.port" placeholder="8080" type="text" class="form-control stacker-input"
-                           id="httpSubscriptionPort">
+                <div class="input-group input-group-sm mb-1" id="httpSubscriptionPort">
+                    <stacker-input v-model="http.port"
+                                   class="form-control"
+                                   placeholder="8080"></stacker-input>
                 </div>
             </div>
             <div class="col pr-4">
@@ -28,17 +29,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-group input-group-sm mb-1 pl-2">
-                        <input v-model="http.endpoint" placeholder="/stacker" type="text"
-                               class="form-control input-group-append stacker-input"
-                               id="httpSubscriptionEndpoint">
+                    <div class="input-group input-group-sm mb-1 pl-2" id="httpSubscriptionEndpoint">
+                        <stacker-input v-model="http.endpoint"
+                                       class="form-control input-group-append"
+                                       placeholder="/stacker"></stacker-input>
                         <div class="input-group-append" style="font-size: 0.8em">
                             <button class="btn dropdown-toggle method-button"
                                     type="button" data-toggle="dropdown">{{http.method}}
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" v-for="item in methods" :key="item"
-                                   @click="http.method = item">{{item}}</a>
+                                <div class="dropdown-item" style="cursor: pointer" v-for="item in methods" :key="item"
+                                   @click="http.method = item">{{item}}</div>
                             </div>
                         </div>
                     </div>
@@ -51,10 +52,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 pr-2">
-                <input v-model="http.response.status" type="text" class="form-control stacker-input"
-                       id="httpSubscriptionStatusCode"
-                       placeholder="200">
+            <div class="input-group input-group-sm mb-1 ml-2 pr-2" id="httpSubscriptionStatusCode">
+                <stacker-input v-model="http.response.status"
+                               class="form-control"
+                               placeholder="200"></stacker-input>
             </div>
         </div>
         <div class="row">
@@ -74,12 +75,13 @@
     import RoundedSwitch from "../../inputs/RoundedSwitch";
     import CommonSubscription from "../../inputs/CommonSubscription";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+    import StackerInput from "../../inputs/StackerInput";
 
     const methodsList = ["POST", "GET", "PATCH", "OPTION", "DELETE", "PUT"];
 
     export default {
         name: 'HttpSubscription',
-        components: {ObjectFormatter, CommonSubscription, RoundedSwitch, KeyValueInput},
+        components: {StackerInput, ObjectFormatter, CommonSubscription, RoundedSwitch, KeyValueInput},
         props: {
             item: {},
         },
@@ -171,6 +173,7 @@
         color: var(--text-color);
         border: 1px solid var(--text-color);
     }
+
     .method-button:hover {
         box-shadow: 0 0 5px var(--enqueuer-color);
     }

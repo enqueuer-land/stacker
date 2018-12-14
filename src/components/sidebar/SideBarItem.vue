@@ -29,8 +29,9 @@
                     {{item.type}}
                 </div>
             </div>
-            <div id="name" :class="['col align-self-center pr-2', nameClass]" :style="nameStyle">
-                {{item.name}}
+            <div id="name" :class="nameClass" :style="nameStyle">
+                <stacker-input v-model="item.name" class="no-hover" readonly="true"></stacker-input>
+                <!--{{item.name}}-->
             </div>
             <div class="align-self-center tag pr-2" :style="tagStyle">
                 {{tag}} #{{index}}
@@ -44,10 +45,11 @@
     import DropdownComponent from "../inputs/DropdownComponent";
     import ComponentManager from "../../tests/component-manager";
     import StackerIcon from "../inputs/StackerIcon";
+    import StackerInput from "../inputs/StackerInput";
 
     export default {
         name: 'SideBarItem',
-        components: {StackerIcon, DropdownComponent},
+        components: {StackerInput, StackerIcon, DropdownComponent},
         props: {
             opened: {},
             index: {},
@@ -146,10 +148,9 @@
             },
             nameStyle() {
                 let style = {
-                    'white-space': 'nowrap',
+                    'padding-top': '2px',
                     'width': '100%',
                     'overflow': 'hidden',
-
                     'text-overflow': 'ellipsis',
                 };
                 if (this.isSelected()) {
@@ -159,6 +160,7 @@
             },
             nameClass() {
                 return {
+                    'col': true,
                     'invalid-name': !new ComponentManager().isComponentValid(this.item)
                 };
             },
@@ -183,6 +185,10 @@
         font-size: 0.75em;
         text-transform: uppercase;
         /*font-weight: bolder;*/
+    }
+
+    .no-hover {
+        pointer-events: none;
     }
 
 </style>

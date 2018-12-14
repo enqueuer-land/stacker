@@ -15,7 +15,7 @@
         </div>
         <div :id="id" class="collapse">
             <div class="row pb-2 mx-0">
-                <input v-model="name" type="text" class="form-control input-class stacker-input" style="height: 32px">
+                <stacker-input v-model="name" class="form-control" placeholder="Name"></stacker-input>
             </div>
             <div class="input-group input-group-sm mb-1 ml-0 mr-0">
                 <div class="input-group-append" style="font-size: 0.8em">

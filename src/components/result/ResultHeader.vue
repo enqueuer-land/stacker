@@ -41,10 +41,10 @@
                 <div class="col-10 row no-gutters">
                     <div class="col pt-0 pl-2 pr-1">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control stacker-input"
-                                   v-model="filter.string"
-                                   style="border-radius: 10px"
-                                   placeholder="Filter">
+                            <stacker-input v-model="filter.string"
+                                           style="border-radius: 10px"
+                                           class="form-control"
+                                           placeholder="Filter"></stacker-input>
                         </div>
                     </div>
                     <div class="pl-0 col-md-auto pr-1 align-self-center">
@@ -77,10 +77,11 @@
     import TimeHandler from "../../tests/time-handler";
     import StackerIcon from "../inputs/StackerIcon";
     import ComponentManager from "../../tests/component-manager";
+    import StackerInput from "../inputs/StackerInput";
 
     export default {
         name: 'ResultHeader',
-        components: {StackerIcon},
+        components: {StackerInput, StackerIcon},
         props: {
             result: {}
         },
