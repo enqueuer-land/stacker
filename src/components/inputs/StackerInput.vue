@@ -2,6 +2,8 @@
     <div class="stacker-input"
          @keydown="checkHighlight"
          @keyup="checkHighlight"
+         @blur="blur"
+         @focus="focus"
          :id="id" contenteditable="true">
     </div>
 </template>
@@ -22,6 +24,22 @@
             }
         },
         methods: {
+            isEmpty() {
+                return !this.text || this.text.length <= 0 || this.text === "\n";
+            },
+            blur() {
+                if (this.isEmpty()) {
+                    const safeText = (this.placeholder || "").replace(/</g, () => "&lt;").replace(/>/g, () => "&gt;");
+                    const element = $(`#${this.id}`);
+                    element.html(`<span style='color: var(--text-smooth-color); opacity: 0.5'>${safeText}</span>`);
+                }
+            },
+            focus() {
+                if (this.isEmpty()) {
+                    const element = $(`#${this.id}`);
+                    element.html('');
+                }
+            },
             updateHtml(newHtml) {
                 //TODO fix cursor position
                 const currentPosition = window.getSelection().getRangeAt(0).startOffset;
