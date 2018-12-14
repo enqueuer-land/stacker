@@ -15,34 +15,38 @@
         name: 'StackerInput',
         props: ['value', 'placeholder'],
         mounted() {
-            this.text = this.getContent(this.value);
+            if (!this.isEmpty(this.value)) {
+                this.text = this.getContent(this.value);
+            } else {
+                this.blur();
+            }
         },
         data() {
             return {
                 id: generateId(),
-                text: ""
+                text: null
             }
         },
         methods: {
-            isEmpty() {
-                return !this.text || this.text.length <= 0 || this.text === "\n";
+            isEmpty(text) {
+                return !text || text.length <= 0 || text === "\n";
             },
             blur() {
-                if (this.isEmpty()) {
+                if (this.isEmpty(this.text)) {
                     const safeText = (this.placeholder || "").replace(/</g, () => "&lt;").replace(/>/g, () => "&gt;");
                     const element = $(`#${this.id}`);
                     element.html(`<span style='color: var(--text-smooth-color); opacity: 0.5'>${safeText}</span>`);
                 }
             },
             focus() {
-                if (this.isEmpty()) {
+                if (this.isEmpty(this.text)) {
                     const element = $(`#${this.id}`);
                     element.html('');
                 }
             },
-            updateHtml(newHtml) {
+            updateCursor(newHtml) {
                 //TODO fix cursor position
-                const currentPosition = window.getSelection().getRangeAt(0).startOffset;
+                // const currentPosition = window.getSelection().getRangeAt(0).startOffset;
                 const element = $(`#${this.id}`);
                 element.html(newHtml);
 
@@ -50,7 +54,8 @@
                 const child = element.children();
                 const range = document.createRange();
                 const sel = window.getSelection();
-                range.setStartAfter(child[child.length - 1]);
+                const lastChild = child[child.length - 1];
+                range.setStartAfter(lastChild);
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
@@ -72,7 +77,11 @@
                     "</span>";
 
                 if (previousText !== value) {
-                    this.updateHtml(newHtml);
+                    const element = $(`#${this.id}`);
+                    element.html(newHtml);
+                    if (this.text !== null) {
+                        this.updateCursor(newHtml);
+                    }
                 }
                 return value;
             },

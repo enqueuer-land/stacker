@@ -9,8 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="timeout" type="text" class="form-control stacker-input"
-                               placeholder="5000">
+                        <stacker-input v-model="timeout" class="form-control" placeholder="5000"></stacker-input>
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
                         </div>
@@ -25,8 +24,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="delay" type="text" class="form-control stacker-input"
-                               placeholder="0">
+                        <stacker-input v-model="delay" class="form-control" placeholder="0"></stacker-input>
                         <div class="input-group-append">
                             <span class="input-group-text">ms</span>
                         </div>
@@ -41,8 +39,7 @@
                 </div>
                 <div class="row">
                     <div class="input-group input-group-sm mb-1 pl-3 pr-3">
-                        <input v-model="iterations" type="text" class="form-control stacker-input"
-                               placeholder="1">
+                        <stacker-input v-model="iterations" class="form-control" placeholder="1"></stacker-input>
                     </div>
                 </div>
             </div>
@@ -71,8 +68,11 @@
 
 <script>
 
+    import StackerInput from "../../inputs/StackerInput";
+
     export default {
         name: 'GeneralRequisition',
+        components: {StackerInput},
         props: {
             item: {},
         },
