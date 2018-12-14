@@ -10,9 +10,9 @@
                               :tooltip="action.tooltip"
                               @click="action.click(action, index)"></stacker-icon>
             </div>
-            <a class="col-1 ml-2" href="http://github.com/lopidio">
+            <div class="col-1 ml-2">
                 <img src="../../../docs/img/gui.png" class="img-fluid rounded gui-class">
-            </a>
+            </div>
         </div>
     </div>
 </template>
@@ -140,11 +140,16 @@
         width: 62%;
         height: auto;
         opacity: .01;
-        transition: all ease 2000ms;
+        transition: all ease 2500ms;
     }
 
     .gui-class:hover {
         opacity: 1;
         /*filter: blur(1px);*/
+    }
+
+    .gui-class:focus {
+        opacity: 1;
+        filter: blur(1px);
     }
 </style>

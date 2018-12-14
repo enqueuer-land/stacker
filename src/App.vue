@@ -131,9 +131,10 @@
 
 <style>
     :root {
-        --requisition-color: #e8bf57;
-        --publisher-color: #c88022;
-        --subscription-color: #589df6;
+        /*https://coolors.co/9fb630-ffe8af-c4bcf2-d4f2db-cef7a0*/
+        --requisition-color: #FFE6A7;
+        --publisher-color: #D4F2DB; /*#5e64c3; /*#6A8D73*/;
+        --subscription-color: #C4BCF2; /*c86ba6;*/
         /*--passing-test-color: #42ba84;*/
         --passing-test-color: #9FB630;
         --failing-test-color: #a9524a;
