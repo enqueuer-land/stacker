@@ -8,7 +8,8 @@
                 <div class="stacker-label title-class col-md-auto">
                     {{showValues ? 'Name' : name}}
                 </div>
-                <i class="col-md-auto pl-0 material-icons showing-icon" :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
+                <i class="col-md-auto pl-0 material-icons showing-icon"
+                   :id="id + 'ShowingIcon'">keyboard_arrow_right</i>
             </div>
             <div v-if="!showValues" class="col white-bar"></div>
         </div>
@@ -29,8 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <input v-model="assertionValue" type="text" class="form-control stacker-input"
-                       placeholder="expectation">
+                <stacker-input v-model="assertionValue" class="form-control" placeholder="Expectation"></stacker-input>
                 <div v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
                      class="input-group-append ml-2"
                      style="font-size: 0.8em">
@@ -46,24 +46,22 @@
                         </div>
                     </div>
                 </div>
-                <input v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
-                       type="text"
-                       placeholder="condition"
-                       class="form-control stacker-input"
-                       v-model="criteriumValue">
+                <stacker-input
+                        v-if="possibleAssertions[currentAssertionIndex].criteria && possibleAssertions[currentAssertionIndex].criteria.length > 0"
+                        v-model="criteriumValue" class="form-control" placeholder="Condition"></stacker-input>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
 
     import {generateId} from "../../tests/id-generator";
+    import StackerInput from "./StackerInput";
 
     export default {
         name: 'Assertion',
-        components: {},
+        components: {StackerInput},
         props: {
             value: {}
         },
