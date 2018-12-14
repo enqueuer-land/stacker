@@ -6,9 +6,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="mqtt.brokerAddress" type="text" class="form-control stacker-input" id="mqttPublisherBroker"
-                       placeholder="mqtt://iot.eclipse.org">
+            <div class="input-group input-group-sm mb-0 ml-2 mr-2" id="mqttPublisherBroker">
+                <stacker-input v-model="mqtt.brokerAddress" class="form-control"
+                               placeholder="mqtt://iot.eclipse.org"></stacker-input>
             </div>
         </div>
         <div class="row pt-2">
@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm ml-2 mr-2">
-                <input v-model="mqtt.topic" type="text" class="form-control stacker-input" id="mqttPublisherTopic">
+            <div class="input-group input-group-sm ml-2 mr-2" id="mqttPublisherTopic">
+                <stacker-input v-model="mqtt.topic" class="form-control"></stacker-input>
             </div>
         </div>
         <div class="row">
@@ -40,9 +40,10 @@
 
     import KeyValueInput from "../../inputs/KeyValueInput";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+    import StackerInput from "../../inputs/StackerInput";
 
     export default {
-        components: {ObjectFormatter, KeyValueInput},
+        components: {StackerInput, ObjectFormatter, KeyValueInput},
         props: {
             item: {},
         },

@@ -22,12 +22,10 @@
             } else {
                 const element = this.getInputHtmlElement();
                 const newHtml = this.createHtml(this.value);
-                console.log('mounted' + this.value);
                 element.html(newHtml);
             }
         },
         data() {
-            console.log(this.value);
             return {
                 id: generateId(),
                 text: this.value
@@ -42,7 +40,6 @@
             },
             change(event) {
                 this.text = event.target.innerText.replace(/\n/g, () => '');
-                console.log('change ' + this.text);
             },
             blur() {
                 const element = this.getInputHtmlElement();
@@ -51,7 +48,6 @@
                     element.html(`<span style='color: var(--text-smooth-color); opacity: 0.5'>${safeText}</span>`);
                 } else {
                     element.html(this.createHtml(this.value));
-                    console.log('blur ' + element.html());
                 }
             },
             focus() {
@@ -97,7 +93,6 @@
             value() {
                 if (this.text !== this.value) {
                     if (!this.isEmpty(this.value)) {
-                        console.log('value' + this.value);
                         this.text = this.value || "";
                         const element = this.getInputHtmlElement();
                         element.html(this.createHtml(this.value));
