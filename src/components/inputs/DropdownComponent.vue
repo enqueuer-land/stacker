@@ -41,7 +41,7 @@
             'value': {},
             'args': {}
         },
-        updated() {
+        mounted() {
             // this.value.forEach((item, index) => {
             //     console.log('before mount: ' + this.isItemEnabled(this.value[index]));
             //     const dropdownItem = $(`#${this.id + index} .dropdown-item`);

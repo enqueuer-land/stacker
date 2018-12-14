@@ -33,7 +33,7 @@
         https://github.com/webpack/webpack/issues/4603
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
-- [ ] Tests result buttons (expandAll, collapse all, export)
+- [ ] Tests result buttons (expandAll, collapse all)
 - [ ] Create Stage Header Header
 - [ ] Create Result Not Flatten Tests
 - [ ] Create Object Builder

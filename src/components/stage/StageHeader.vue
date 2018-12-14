@@ -22,8 +22,9 @@
             </div>
             <div class="row pt-1">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <input v-model="item.name" type="text" class="form-control stacker-input"
-                           placeholder="Name">
+                    <!--<input v-model="item.name" type="text" class="form-control stacker-input"-->
+                           <!--placeholder="Name">-->
+                    <stacker-input v-model="item.name" class="form-control" placeholder="Name"></stacker-input>
                     <div v-if="!isRequisition()" class="input-group-append">
                         <button class="btn dropdown-toggle select-protocol-button" type="button" data-toggle="dropdown"
                                 :style="protocolsListStyle">
@@ -58,10 +59,11 @@
     import StageEvents from "./StageEvents";
     import ComponentManager from "../../tests/component-manager";
     import StackerIcon from "../inputs/StackerIcon";
+    import StackerInput from "../inputs/StackerInput";
 
     export default {
         name: 'StageHeader',
-        components: {StackerIcon, StageEvents},
+        components: {StackerInput, StackerIcon, StageEvents},
         props: ['item', 'id'],
         mounted: function () {
             this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {
