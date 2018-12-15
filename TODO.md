@@ -23,11 +23,11 @@
 - [x] Improve resultParser algorithm
 - [x] Detach resultHeader from result
 - [x] Turn every stacker-icon classes into stacker-icon-component (including toggleableOnes) 
+- [x] Clear result tab
 - [ ] Assertion to be created opened by default
 - [ ] Disable dropdown items based on functions
 - [ ] Disable stacker icons based on functions
 - [ ] Fix dropdown menu clipped
-- [x] Clear result tab
 - [ ] Pack it up
         https://nklayman.github.io/vue-cli-plugin-electron-builder/
         https://github.com/webpack/webpack/issues/4603

@@ -41,17 +41,22 @@
                     <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
                          class="img-fluid logo-class">
                 </span>
-                <span class="col-md-auto align-self-center title-header">stacker</span>
-                <div class="col-md-auto align-self-end">
+                <span class="col-md-auto align-self-center">
+                    <div class="title-header" style="display: inline-block">
+                        stacker
+                    </div>
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
-                </div>
+                </span>
+                <!--<div class="col-md-auto align-self-end">-->
+                <!--</div>-->
             </div>
             <div class="row pt-5 mb-0 justify-content-between">
                 <div class="col-md-auto">
                     <button type="button" class="btn btn-lg disabled jumbotron-header-button">Get it now!</button>
                 </div>
                 <p class="col-md-auto jumbotron-summary">
-                    Open source, cross-platform, <b>MULTI-PROTOCOL</b> client <strong>testing</strong> tool
+                    Open source, cross-platform, really good looking, <b>MULTI-PROTOCOL</b> client
+                    <strong>testing</strong> tool
                 </p>
                 <a class="col-md-auto" href="http://github.com/lopidio/stacker">
                     <button type="button" class="btn btn-lg jumbotron-header-button">
@@ -70,13 +75,17 @@
                 <div class="col-md-4">
                     <h2>Publish and mock</h2>
                     <p>
-                        Publish a message using any protocol and verify how the ecosystem under test reacts
-                        to it by dynamically mocking and watching every dependency.
+                        Publish a any protocol message and verify how the ecosystem under test reacts
+                        to it by dynamically mocking and watching every dependency. All of this powered by the magic of
+                        the
+                        <a style="color: var(--enqueuer-color); font-weight: bold"
+                           href="http://github.com/lopidio/enqueuer">almighty enqueuer.</a>
                     </p>
                 </div>
                 <div class="col-md-4">
                     <h2>Range of protocols</h2>
-                    <p>Have you seen how many protocols it supports? Incredible, huh?. Out of the box, just one click away
+                    <p>Have you seen how many protocols it supports? Incredible, huh?. Out of the box, just one click
+                        away
                         from each other:</p>
                     <ul>
                         <li>HTTP</li>
@@ -108,12 +117,12 @@
             <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/stacker-screenshot.png"
                  class="img-fluid" alt="Screenshot" style="max-width: 100%; height: auto">
             <!--</div>-->
-            <div
-                    style="background-color: var(--stacker-header-background-color); height: 200px;">
+            <div class="row align-items-between"
+                 style="background-color: var(--stacker-header-background-color); height: 25vh;">
                 <!--<div class="row">-->
-                <!--<span class="align-self-center" style="color: var(&#45;&#45;text-color); text-align: left;">VirgStacker 2018</span>-->
+                <!--<span class="col align-self-center powered-by">This is a product powered by Virgs</span>-->
                 <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/gui.png"
-                     class="img-fluid float-right gui-class" alt="Gui" style="max-width: 10%; height: auto">
+                     class="offset-10 col-2 img-fluid float-right gui-class" alt="Gui">
 
                 <!--</div>-->
             </div>
@@ -189,8 +198,8 @@
         color: var(--enqueuer-color);
         transform: scale(1.7);
         position: relative;
-        /*top: -30px;*/
-        left: -0.5vw;
+        top: -10px;
+        left: 2vw;
         transition: 400ms ease all;
     }
 
@@ -226,8 +235,22 @@
         /*color: var(--stacker-header-background-color);*/
     }
 
+    .gui-class {
+        /*position: relative;*/
+        /*top: -8px;*/
+        /*left: 5px;*/
+        width: 62%;
+        /*height: auto;*/
+        /*max-width: 10%;*/
+        height: auto;
+        opacity: .01;
+        filter: blur(3px);
+        transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 2000ms;
+    }
+
     .gui-class:hover {
-        /*box-shadow: 0 0 20px var(--enqueuer-color);*/
+        opacity: .9;
+        filter: blur(0);
     }
 
     .github-icon-class {
@@ -235,6 +258,13 @@
         height: 30px;
         padding-right: 10px;
         filter: invert(100%);
+    }
+
+    .powered-by {
+        color: var(--text-color);
+        text-align: center;
+        font-size: 20px;
+        /*font-weight: lighter;*/
     }
 </style>
 </html>

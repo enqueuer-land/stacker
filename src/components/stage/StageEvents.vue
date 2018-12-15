@@ -21,7 +21,9 @@
                 <i class="material-icons button-icon">keyboard_arrow_up</i>
             </button>
         </div>
-        <div v-for="event in events" :key="event.name" class="collapse event-body row" :id="event.name + 'Body'"
+        <div v-for="event in events" :key="event.name"
+             :id="event.name + 'Body'"
+             class="collapse event-body row"
              :style="cardBodyStyle"
              data-parent="#stage-event-group-parent">
             <div class="card card-body px-2 pt-2" :style="eventStyle">
@@ -30,7 +32,8 @@
             </div>
         </div>
         <div v-show="selectedIndex !== null" class="row"
-             style="height: 100vh; opacity: .5; background-color: black"></div>
+             @click="modalClick"
+             style="height: 100vh; opacity: .75; background-color: var(--stacker-header-background-color)"></div>
     </div>
 </template>
 
@@ -71,7 +74,14 @@
                 } else {
                     this.selectedIndex = null;
                 }
-            }
+            },
+            modalClick() {
+                $(`#${this.events[this.selectedIndex].name}Body.collapse`).collapse('hide');
+                (this.events || [])
+                    .forEach(event => $('#' + event.name + 'Button i').removeClass('active'));
+
+                this.selectedIndex = null;
+            },
         },
         watch: {
             mouseOverIndex(value) {
