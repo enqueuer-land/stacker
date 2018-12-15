@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.exchange" type="text" class="form-control stacker-input">
+                <stacker-input v-model="amqp.exchange" class="form-control"></stacker-input>
             </div>
         </div>
         <div class="row pt-2">
@@ -25,9 +25,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="amqp.routingKey" id="amqpPublisherRoutingKey"
-                       type="text" class="form-control stacker-input">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2" id="amqpPublisherRoutingKey">
+                <stacker-input v-model="amqp.routingKey" class="form-control"></stacker-input>
             </div>
         </div>
         <div class="row pt-2">
@@ -48,10 +47,11 @@
 
     import KeyValueInput from "../../inputs/KeyValueInput";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
+    import StackerInput from "../../inputs/StackerInput";
 
     export default {
         name: 'AmqpPublisher',
-        components: {ObjectFormatter, KeyValueInput},
+        components: {StackerInput, ObjectFormatter, KeyValueInput},
         props: {
             item: {},
         },

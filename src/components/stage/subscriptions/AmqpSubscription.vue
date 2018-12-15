@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.queueName" type="text" class="form-control stacker-input" id="amqpSubscriptionQueue" placeholder="Queue Name">
+            <div class="input-group input-group-sm mb-0 ml-2 mr-2" id="amqpSubscriptionQueue">
+                <stacker-input v-model="amqp.queueName" class="form-control" placeholder="Queue Name"></stacker-input>
             </div>
         </div>
         <div class="row">
@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-0 ml-2 mr-2">
-                <input v-model="amqp.exchange" type="text" class="form-control stacker-input"  id="amqpSubscriptionExchange" placeholder="Exchange Name">
+            <div class="input-group input-group-sm mb-0 ml-2 mr-2" id="amqpSubscriptionExchange">
+                <stacker-input v-model="amqp.exchange" class="form-control" placeholder="Exchange Name"></stacker-input>
             </div>
         </div>
         <div class="row">
@@ -32,9 +32,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                <input v-model="amqp.routingKey" id="amqpSubscriptionRoutingKey"
-                       type="text" class="form-control stacker-input">
+            <div class="input-group input-group-sm mb-1 ml-2 mr-2" id="amqpSubscriptionRoutingKey">
+                <stacker-input v-model="amqp.routingKey" class="form-control"></stacker-input>
             </div>
         </div>
     </div>
@@ -44,10 +43,11 @@
     import KeyValueInput from "../../inputs/KeyValueInput";
     import ObjectFormatter from "../../inputs/ObjectFormatter";
     import CommonSubscription from "../../inputs/CommonSubscription";
+    import StackerInput from "../../inputs/StackerInput";
 
     export default {
         name: 'AmqpSubscription',
-        components: {CommonSubscription, ObjectFormatter, KeyValueInput},
+        components: {StackerInput, CommonSubscription, ObjectFormatter, KeyValueInput},
         props: {
             item: {},
         },

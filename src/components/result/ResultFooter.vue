@@ -103,12 +103,12 @@
                         icon: "backup",
                         tooltip: "Save response",
                     },
-                    {
-                        click: () => {
-                        },
-                        icon: "history",
-                        tooltip: "History",
-                    },
+                    // {
+                    //     click: () => {
+                    //     },
+                    //     icon: "history",
+                    //     tooltip: "History",
+                    // },
                 ]
             }
         },
@@ -140,16 +140,13 @@
         width: 62%;
         height: auto;
         opacity: .01;
-        transition: all ease 2500ms;
+        filter: blur(3px);
+        transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 2000ms;
     }
 
     .gui-class:hover {
-        opacity: 1;
-        /*filter: blur(1px);*/
+        opacity: .9;
+        filter: blur(0);
     }
 
-    .gui-class:focus {
-        opacity: 1;
-        filter: blur(1px);
-    }
 </style>

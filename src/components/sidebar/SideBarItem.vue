@@ -119,13 +119,13 @@
                     height: '30px',
                     'font-size': '14px',
                     'font-weight': 'lighter',
-                    'border-bottom': '1px solid var(--stacker-background-alternative-color)',
+                    // 'border-bottom': '1px solid var(--stacker-background-alternative-color)',
                     'background-color': 'var(--stacker-header-background-color)',
                     'color': 'var(--text-smooth-color)'
                 };
                 if (this.mouseIsOver) {
                     style['background-color'] = 'var(--stacker-background-color)';
-                    style['border-left'] = '4px var(--' + this.item.component + '-color) solid';
+                    // style['border-left'] = '2px var(--' + this.item.component + '-color) solid';
                 }
                 if (this.isRequisition && this.opened) {
                     style['border-left'] = '2px var(--enqueuer-color) solid';

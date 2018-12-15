@@ -85,7 +85,8 @@
                 return "<span style='color: var(--text-color)'>" +
                     safeText
                         .replace(/{{[^}}]+}}/g, replacer)
-                        .replace(/&lt;&lt;[^&gt;&gt;]+&gt;&gt;/g, replacer) +
+                        .replace(/&lt;&lt;.*&gt;&gt;/g, replacer) +
+                        // .replace(/(?<=&lt;&lt;)(.*?)(?=&gt;&gt;)/g, replacer) +
                     "</span><span style='color: var(--text-color)'></span>";
             },
         },
