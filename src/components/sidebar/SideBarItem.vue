@@ -59,6 +59,18 @@
             this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {
                 ++this.forceRecomputeCounter;
             });
+
+            const id = $('#' + this.item.id + 'SideBarItem .dropdown');
+            id.on('show.bs.dropdown', () => {
+                console.log('Its working');
+                $('body').append($('#' + this.item.id + 'SideBarItem .dropdown-component').css(
+                    {
+                        left: id.offset().left,
+                        top: id.offset().top - 125 + 'px',
+                        position: 'absolute',
+                    }).detach());
+            });
+
         },
         data() {
             const tag = this.item.component.substr(0, 3);

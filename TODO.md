@@ -24,10 +24,11 @@
 - [x] Detach resultHeader from result
 - [x] Turn every stacker-icon classes into stacker-icon-component (including toggleableOnes) 
 - [x] Clear result tab
-- [ ] Assertion to be created opened by default
+- [ ] Assertion to be created opened by default (?)
 - [ ] Disable dropdown items based on functions
 - [ ] Disable stacker icons based on functions
-- [ ] Fix dropdown menu clipped
+- [x] Fix dropdown menu clipped
+        https://stackoverflow.com/questions/31829312/bootstrap-dropdown-clipped-by-overflowhidden-container-how-to-change-the-conta
 - [ ] Pack it up
         https://nklayman.github.io/vue-cli-plugin-electron-builder/
         https://github.com/webpack/webpack/issues/4603
@@ -39,4 +40,5 @@
 - [ ] Create Stage Header Header
 - [ ] Create Result Not Flatten Tests
 - [ ] Create Object Builder
-- [ ] Highlight <<stacker>> variables https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea
+- [ ] Improve performance issues
+- [x] Highlight <<stacker>> variables https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea
