@@ -167,12 +167,12 @@
 
     .dropdown-item.active, .dropdown-item:active, .dropdown-item-active {
         text-decoration: none;
-        background-color: var(--text-smooth-color);
-        color: var(--stacker-background-color);
+        background-color: var(--stacker-header-background-color);
+        color: var(--text-smooth-color);
     }
 
     .dropdown-item:focus, .dropdown-item:hover {
-        border-left: 2px solid var(--enqueuer-color);
+        /*border-bottom: 2px solid var(--enqueuer-color);*/
         color: var(--text-color);
         background-color: var(--stacker-background-color);
     }

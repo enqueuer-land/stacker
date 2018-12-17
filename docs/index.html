@@ -34,38 +34,36 @@
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron jumbotron-header">
-        <div class="container-fluid">
-            <div class="row justify-content-center" style="height: 20vh; margin-bottom: 0px">
-                <span class="ml-3 col-1">
-                    <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
-                         class="img-fluid logo-class">
-                </span>
-                <span class="col-md-auto align-self-center">
-                    <div class="title-header" style="display: inline-block">
+    <div class="container-fluid jumbotron-header">
+        <div class="row no-gutters pt-4 justify-content-center">
+            <span class="offset-md-4 col-4 col-md-1 text-center">
+                <img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/icon.png"
+                     class="img-fluid logo-class">
+            </span>
+            <span class="col col-md-7 align-self-end">
+                    <h1 class="display-1 title-header" style="display: inline-block">
                         stacker
-                    </div>
+                    </h1>
                     <i class="material-icons small-green-ball">fiber_manual_record</i>
                 </span>
-                <!--<div class="col-md-auto align-self-end">-->
-                <!--</div>-->
+        </div>
+        <div class="row py-4 justify-content-between">
+            <div class="col-auto m-auto">
+                <button type="button" class="btn btn-lg disabled jumbotron-header-button">Get it now!</button>
             </div>
-            <div class="row pt-5 mb-0 justify-content-between">
-                <div class="col-md-auto">
-                    <button type="button" class="btn btn-lg disabled jumbotron-header-button">Get it now!</button>
-                </div>
-                <p class="col-md-auto jumbotron-summary">
-                    Open source, cross-platform, really good looking, <b>MULTI-PROTOCOL</b> client
-                    <strong>testing</strong> tool
-                </p>
-                <a class="col-md-auto" href="http://github.com/lopidio/stacker">
-                    <button type="button" class="btn btn-lg jumbotron-header-button">
-                        <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png"
-                             class="img-fluid github-icon-class">
-                        <span>View on github</span>
-                    </button>
-                </a>
-            </div>
+            <p class="col-xs-12 col-sm-8 m-auto py-4 jumbotron-summary">
+                Open source, cross-platform,
+                <span>really good looking,</span>
+                <span>multi-protocol client</span>
+                <span style="">testing tool</span>
+            </p>
+            <a class="col-auto m-auto" href="http://github.com/lopidio/stacker">
+                <button type="button" class="btn btn-lg jumbotron-header-button">
+                    <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png"
+                         class="img-fluid github-icon-class">
+                    <span>View on github</span>
+                </button>
+            </a>
         </div>
     </div>
     <div style="background-color: var(--text-color); color: var(--stacker-header-background-color)" class="pt-3">
@@ -73,13 +71,18 @@
             <!-- Example row of columns -->
             <div class="row">
                 <div class="col-md-4">
-                    <h2>Publish and mock</h2>
+                    <h2>Arrange, act and assert</h2>
                     <p>
-                        Publish a any protocol message and verify how the ecosystem under test reacts
-                        to it by dynamically mocking and watching every dependency. All of this powered by the magic of
-                        the
-                        <a style="color: var(--enqueuer-color); font-weight: bold"
-                           href="http://github.com/lopidio/enqueuer">almighty enqueuer.</a>
+                        Tests are first class citizens.
+                        Publish a any protocol message and verify how the ecosystem under test reacts to it by
+                        dynamically mocking and watching every dependency.
+                        Check whether each flowing by message matches what is expected:
+                    </p>
+                    <ul>
+                        <li>Sent to where it was suppose to be sent</li>
+                        <li>Contains what it should contain</li>
+                        <li>Sent faster than the acceptable</li>
+                    </ul>
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -98,18 +101,12 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h2>Designed for tests</h2>
-                    <p>Tests are first class citizens.
-                        Get it added to the CI pipeline and improve your system reliability through easily created
-                        integration tests.
-                        Check whether each flowing by message matches what is expected:
-                    </p>
-                    <ul>
-                        <li>Sent to where it was suppose to be sent</li>
-                        <li>Contains what it should contain</li>
-                        <li>Sent faster than the acceptable</li>
-                    </ul>
-
+                    <h2>Enqueuer friendly requisitions</h2>
+                    <p>
+                        Improve your system reliability through easily created integration tests.
+                        Get it added to the CI pipeline powered by the magic of the almighty
+                        <a style="color: var(--enqueuer-color); font-weight: bold"
+                           href="http://github.com/lopidio/enqueuer">enqueuer.</a>
                 </div>
             </div>
             <hr>
@@ -122,7 +119,7 @@
                 <!--<div class="row">-->
                 <!--<span class="col align-self-center powered-by">This is a product powered by Virgs</span>-->
                 <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/gui.png"
-                     class="offset-10 col-2 img-fluid float-right gui-class" alt="Gui">
+                     class="ml-auto col-4 col-sm-1 img-fluid float-right gui-class" alt="Gui">
 
                 <!--</div>-->
             </div>
@@ -168,10 +165,19 @@
         --stacker-background-alternative-color: #424242;
     }
 
+    .jumbotron-header {
+        /*background-image: radial-gradient(var(--stacker-header-background-color), var(--stacker-background-color));*/
+        background-color: var(--stacker-header-background-color);
+        /*padding-top: 40px;*/
+        /*padding-bottom: 40px;*/
+        margin-bottom: 0;
+        /*height: 40vh;*/
+    }
+
     .title-header {
         transform: scale(1, .7);
         font-family: 'Nova Mono', monospace;
-        font-size: 175px; /*7.5vw;*/
+        font-size: 6.5rem;
         color: var(--text-color);
         letter-spacing: -15px;
     }
@@ -183,10 +189,11 @@
     }
 
     .logo-class {
-        transform: scale(1.5);
-        transition: transform 500ms ease;
-        position: relative;
-        top: calc(10vh - 50px);
+        /*transform: scale(1.5);*/
+        /*transition: transform 500ms ease;*/
+        /*max-width: 50%;*/
+        /*position: relative;*/
+        /*top: calc(10vh - 50px);*/
     }
 
     .logo-class:hover {
@@ -196,8 +203,8 @@
     .small-green-ball {
         cursor: pointer;
         color: var(--enqueuer-color);
-        transform: scale(1.7);
         position: relative;
+        font-size: 20px;
         top: -10px;
         left: 2vw;
         transition: 400ms ease all;
@@ -208,18 +215,10 @@
         transform: scale(2) translateX(8vw);
     }
 
-    .jumbotron-header {
-        /*background-image: radial-gradient(var(--stacker-header-background-color), var(--stacker-background-color));*/
-        background-color: var(--stacker-header-background-color);
-        padding-top: 40px;
-        padding-bottom: 40px;
-        margin-bottom: 0;
-    }
-
     .jumbotron-summary {
         color: var(--text-color);
         font-size: 25px;
-        font-weight: lighter;
+        /*font-weight: lighter;*/
         text-align: center;
     }
 
@@ -239,11 +238,11 @@
         /*position: relative;*/
         /*top: -8px;*/
         /*left: 5px;*/
-        width: 62%;
+        /*width: 62%;*/
         /*height: auto;*/
         /*max-width: 10%;*/
-        height: auto;
-        opacity: .01;
+        /*height: auto;*/
+        opacity: .025;
         filter: blur(3px);
         transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 2000ms;
     }
