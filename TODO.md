@@ -24,17 +24,19 @@
 - [x] Detach resultHeader from result
 - [x] Turn every stacker-icon classes into stacker-icon-component (including toggleableOnes) 
 - [x] Clear result tab
+- [x] Fix dropdown menu clipped
+        https://stackoverflow.com/questions/31829312/bootstrap-dropdown-clipped-by-overflowhidden-container-how-to-change-the-conta
+- [x] Replace every stacker-class with Stacker component
+- [ ] Deep tests
 - [ ] Assertion to be created opened by default (?)
 - [ ] Disable dropdown items based on functions
 - [ ] Disable stacker icons based on functions
-- [x] Fix dropdown menu clipped
-        https://stackoverflow.com/questions/31829312/bootstrap-dropdown-clipped-by-overflowhidden-container-how-to-change-the-conta
 - [ ] Pack it up
         https://nklayman.github.io/vue-cli-plugin-electron-builder/
         https://github.com/webpack/webpack/issues/4603
 - [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
-- [ ] Replace every stacker-class with Stacker component
+- [ ] No replay requisition in ResultFooter when there's no response being displayed
 - [ ] StageHeaders name cannot be empty
 - [ ] Tests result buttons (expandAll, collapse all)
 - [ ] Create Stage Header Header

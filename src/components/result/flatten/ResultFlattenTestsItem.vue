@@ -35,8 +35,8 @@
 </template>
 
 <script>
-    import {generateId} from '../../tests/id-generator';
-    import ComponentManager from "../../tests/component-manager";
+    import {generateId} from '../../../tests/id-generator';
+    import ComponentManager from "../../../tests/component-manager";
 
     export default {
         name: 'ResultFlattenTestsItem',

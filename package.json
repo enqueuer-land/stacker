@@ -11,10 +11,8 @@
   "scripts": {
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js",
-    "dist": "electron-builder",
     "electron:build": "node_modules/.bin/vue-cli-service electron:build",
-    "electron:serve": "node_modules/.bin/vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps"
+    "electron:serve": "node_modules/.bin/vue-cli-service electron:serve"
   },
   "dependencies": {
     "amqp": "^0.2.7",
@@ -65,7 +63,7 @@
   ],
   "bin": {},
   "license": "MIT",
-  "main": "../electron.js",
+  "main": "src/electron.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lopidio/stacker"

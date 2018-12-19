@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'DEV') {
     console.log('Running in dev mode');
     url = 'http://localhost:8090/'
 } else {
-    url = `file://${process.cwd()}/../dist/index.html`;
+    url = `file://${process.cwd()}/public/index.html`;
     console.log('url: ' + url);
 }
 

@@ -2,7 +2,7 @@
     <div class="result" @click="hideModal">
 
         <result-header :result="result"/>
-        <result-tree :result="result" class="scroll-div" style="height: calc(100% - 190px);"/>
+        <result-body :result="result" class="scroll-div" style="height: calc(100% - 190px);"/>
         <result-footer style="height: 40px;"></result-footer>
 
         <div id="runningModal" class="modal">
@@ -16,7 +16,7 @@
 
 <script>
     import ResultHeader from "./ResultHeader";
-    import ResultTree from "./ResultTree";
+    import ResultBody from "./ResultBody";
     import ResultFooter from "./ResultFooter";
 
     const minAnimationTime = 250;
@@ -26,7 +26,7 @@
         components: {
             ResultFooter,
             ResultHeader,
-            ResultTree
+            ResultBody
         },
         mounted() {
             window.ipcRenderer.on('runningRequisition', () => {

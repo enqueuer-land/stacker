@@ -1,5 +1,5 @@
 <template>
-    <div class="result-tree">
+    <div class="result-body">
         <ul class="list-unstyled">
             <result-flatten-tests :node="result"/>
         </ul>
@@ -7,10 +7,10 @@
 </template>
 
 <script>
-    import ResultFlattenTests from "./ResultFlattenTests";
+    import ResultFlattenTests from "./flatten/ResultFlattenTests";
 
     export default {
-        name: 'ResultTree',
+        name: 'ResultBody',
         props: {
             result: {}
         },
@@ -26,7 +26,7 @@
 </script>
 
 <style scoped>
-    .result-tree {
+    .result-body {
 
     }
 

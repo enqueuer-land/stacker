@@ -62,7 +62,6 @@
 
             const id = $('#' + this.item.id + 'SideBarItem .dropdown');
             id.on('show.bs.dropdown', () => {
-                console.log('Its working');
                 $('body').append($('#' + this.item.id + 'SideBarItem .dropdown-component').css(
                     {
                         left: id.offset().left,

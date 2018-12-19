@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import FlattenTestsSummary from "../../tests/flatten-tests-summary";
+    import FlattenTestsSummary from "../../../tests/flatten-tests-summary";
     import ResultFlattenTestsItem from "./ResultFlattenTestsItem";
 
     export default {
