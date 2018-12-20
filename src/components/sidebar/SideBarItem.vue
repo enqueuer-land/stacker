@@ -26,7 +26,7 @@
                     </stacker-icon>
                 </div>
                 <div v-show="!isRequisition" class="pr-3" style="font-weight: bold">
-                    {{item.type}}
+                    {{item.protocolName}}
                 </div>
             </div>
             <div id="name" :class="nameClass" :style="nameStyle">

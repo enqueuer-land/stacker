@@ -5,6 +5,7 @@ const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
+// const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 require('enqueuer/js/injectable-files-list');
 // require('electron-debug')();
@@ -44,6 +45,7 @@ app.on('ready', () => {
 
     ipcMain.on('runRequisition', (event, requisition) => {
         Store.refreshData();
+        // Logger.setLoggerLevel('debug');
         event.sender.send('runningRequisition');
         new RequisitionRunner(requisition, null).run()
             .then(report => {

@@ -32,10 +32,10 @@
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#"
-                               v-for="protocol in Object.keys($store.state[item.component].protocols)"
-                               :key="protocol" style="text-transform: uppercase"
+                               v-for="(protocol, index) in $store.state[item.component].protocols"
+                               :key="index" style="text-transform: uppercase"
                                @click="selectProtocol(protocol)"
-                            >{{protocol}}</a>
+                            >{{protocol.protocolName}}</a>
                         </div>
                     </div>
                     <div v-else class="input-group-append">
@@ -78,9 +78,9 @@
                 });
             }
             else {
-                const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+                const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.name,
                     props: {
                         item: this.item
                     }
@@ -98,9 +98,9 @@
                 });
             }
             else {
-                const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
+                const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.name,
                     props: {
                         item: this.item
                     }
@@ -132,16 +132,15 @@
                 let storeComponent = this.$store.state[this.item.component];
                 let protocol = undefined;
                 if (storeComponent.protocols) {
-                    protocol = storeComponent.protocols[this.item.type.toLowerCase()];
+                    protocol = storeComponent.protocols.find(protocol => protocol.name === this.item.type.toLowerCase());
                     if (!protocol) {
-                        protocol = Object.keys(storeComponent.protocols)[0];
+                        protocol = storeComponent.protocols[0];
                     }
                 }
                 return storeComponent.getEvents(protocol).concat([]);
             },
             selectProtocol: function (protocol) {
-                this.selectedProtocol = protocol;
-                this.item.type = protocol;
+                this.selectedProtocol = protocol.name;
                 if (this.isRequisition()) {
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/general',
@@ -180,10 +179,9 @@
                     });
                 }
                 else {
-                    this.selectedProtocol = this.item.type;
+                    this.selectedProtocol = this.item.protocolName || this.item.type;
                     if (!this.selectedProtocol) {
-                        const firstProtocol = Object.keys(this.$store.state[this.item.component].protocols).filter((key, index) => index === 0)[0];
-                        this.selectedProtocol = firstProtocol;
+                        this.selectedProtocol = this.$store.state[this.item.component].protocols[0];
                     }
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,

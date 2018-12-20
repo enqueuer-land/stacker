@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "amqp": "^0.2.7",
-    "enqueuer": "^3.5.24",
+    "enqueuer": "^4.0.0",
     "mqtt": "^2.18.8",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",

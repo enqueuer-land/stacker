@@ -58,7 +58,7 @@
         methods: {
             getContent() {
                 return {
-                    type: "mqtt",
+                    ...this.$store.state.publisher.protocols.find(protocol => protocol.protocolName === 'mqtt'),
                     brokerAddress: this.item.brokerAddress,
                     topic: this.item.topic,
                     payload: this.item.payload,

@@ -4,7 +4,6 @@ import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
-import IgnoreRemover from "./tests/ignore-remover";
 const EventEmitter = require('events');
 
 Vue.use(Vuex);
@@ -135,13 +134,23 @@ export default new Vuex.Store({
                     }
                 }
             ],
-            protocols: {
-                http: {
-                    sync: true,
+            protocols: [
+                {
+                    protocolName: 'http',
+                    type: 'http',
+                    sync: true
                 },
-                amqp: {},
-                mqtt: {},
-            },
+                {
+                    protocolName: 'amqp',
+                    type: 'custom',
+                    module: '../../../../src/protocols/publishers/amqp',
+                },
+                {
+                    protocolName: 'mqtt',
+                    type: 'custom',
+                    module: '../../../../src/protocols/publishers/mqtt',
+                },
+            ],
             getEvents(protocol) {
                 let syncEvent = {
                     label: 'On Message Received',
@@ -195,11 +204,22 @@ export default new Vuex.Store({
                     }
                 }
             ],
-            protocols: {
-                http: {},
-                amqp: {},
-                mqtt: {},
-            },
+            protocols: [
+                {
+                    protocolName: 'http',
+                    type: 'http',
+                },
+                {
+                    protocolName: 'amqp',
+                    type: 'custom',
+                    module: '../../../../src/protocols/subscriptions/amqp',
+                },
+                {
+                    protocolName: 'mqtt',
+                    type: 'custom',
+                    module: '../../../../src/protocols/subscriptions/mqtt',
+                },
+            ],
             getEvents() {
                 return [
                     {
@@ -453,7 +473,7 @@ export default new Vuex.Store({
     actions: {
         runRequisition: function ({state, commit}, requisition) {
             state.eventEmitter.emit('statusInformation', `Running requisition '${requisition.name}'`);
-            const decycle = new IgnoreRemover().remove(new ParentRemover().remove(requisition));
+            const decycle = new ParentRemover().remove(requisition);
             console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
 

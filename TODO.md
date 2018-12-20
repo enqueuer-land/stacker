@@ -27,7 +27,9 @@
 - [x] Fix dropdown menu clipped
         https://stackoverflow.com/questions/31829312/bootstrap-dropdown-clipped-by-overflowhidden-container-how-to-change-the-conta
 - [x] Replace every stacker-class with Stacker component
+- [ ] Limit Stage/SideBar/Result min-width
 - [ ] Deep tests
+- [ ] ToggleableIcon groups
 - [ ] Assertion to be created opened by default (?)
 - [ ] Disable dropdown items based on functions
 - [ ] Disable stacker icons based on functions
