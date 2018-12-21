@@ -47,17 +47,17 @@
                         id: 'ghost-bar',
                         css: {
                             height: stage.outerHeight(),
-                            top: stage.offset().top,
+                            top: stage.offset().top - 135 + 'px',
                             left: stage.offset().left
                         }
                     }).appendTo('body');
 
                 $(document).mousemove(function (event) {
-                    ghostBar.css("left", event.pageX + 2);
+                    ghostBar.css("left", Math.min(Math.max(event.pageX + 2, 350), 500));
                 });
                 $(document).mouseup((event) => {
                     if (this.dragging) {
-                        const eventX = event.pageX;
+                        const eventX = Math.min(Math.max(event.pageX + 2, 350), 500);
                         const resultWidth = parseInt($('#result').css('width'));
 
                         const sideBarPercentage = ((eventX - 2) / window.innerWidth) * 100;
@@ -97,11 +97,11 @@
                     }).appendTo('body');
 
                 $(document).mousemove(function (event) {
-                    ghostBar.css("left", event.pageX + 2);
+                    ghostBar.css("left", Math.max(Math.min(event.pageX + 2, window.innerWidth - 350), window.innerWidth - 600));
                 });
                 $(document).mouseup((event) => {
                     if (this.dragging) {
-                        const eventX = event.pageX;
+                        const eventX = Math.max(Math.min(event.pageX + 2, window.innerWidth - 350), window.innerWidth - 600);
 
                         const sideBarWidth = parseInt($('#side-bar').css('width'));
                         const sideBarPercentage = ((sideBarWidth + 2) / window.innerWidth) * 100;

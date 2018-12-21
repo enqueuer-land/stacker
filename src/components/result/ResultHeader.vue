@@ -38,7 +38,7 @@
                             </span>
             </div>
             <div class="row no-gutters pt-2">
-                <div class="col-10 row no-gutters">
+                <div class="col pr-4 row no-gutters">
                     <div class="col pt-0 pl-2 pr-1">
                         <div class="input-group input-group-sm">
                             <stacker-input v-model="filter.string"
@@ -51,7 +51,7 @@
                         <stacker-icon name="search"></stacker-icon>
                     </div>
                 </div>
-                <div class="col row no-gutters justify-content-end pr-1">
+                <div class="col-md-auto row no-gutters justify-content-end pr-1">
                     <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
                         <stacker-icon v-model="filter.showPassingTests"
                                       color="var(--passing-test-color)"

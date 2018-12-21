@@ -26,7 +26,7 @@
                     </stacker-icon>
                 </div>
                 <div v-show="!isRequisition" class="pr-3" style="font-weight: bold">
-                    {{item.protocolName}}
+                    {{item.protocolName || item.type}}
                 </div>
             </div>
             <div id="name" :class="nameClass" :style="nameStyle">
@@ -111,6 +111,11 @@
                 }
             }
         },
+        watch: {
+          '$store.state.selectedItem'() {
+              ++this.forceRecomputeCounter;
+          },
+        },
         computed: {
             childrenIcon() {
                 const childrenNum = this.item.requisitions.length + this.item.subscriptions.length + this.item.publishers.length;
@@ -148,7 +153,7 @@
                     style['border-left'] = '2px var(--enqueuer-color) solid';
                 }
                 if (new ComponentManager().isItemIgnored(this.item)) {
-                    style['background-color'] = 'var(--stacker-header-background-color)';
+                    // style['background-color'] = 'var(--stacker-header-background-color)';
                     style['text-decoration'] = 'line-through var(--' + this.item.component + '-color) double';
                 }
 
