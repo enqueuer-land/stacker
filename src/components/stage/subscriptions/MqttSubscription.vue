@@ -1,5 +1,5 @@
 <template>
-    <div class="mqtt-subscription container-fluid px-4">
+    <div class="mqtt-subscription container-fluid px-4 pb-2">
         <div class="row">
             <common-subscription :timeout.sync="mqtt.timeout" :avoid.sync="mqtt.avoid"></common-subscription>
         </div>

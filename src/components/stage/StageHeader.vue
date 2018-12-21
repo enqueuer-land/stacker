@@ -22,20 +22,21 @@
             </div>
             <div class="row pt-1">
                 <div class="input-group input-group-sm mb-1 ml-2 mr-2">
-                    <!--<input v-model="item.name" type="text" class="form-control stacker-input"-->
-                           <!--placeholder="Name">-->
                     <stacker-input v-model="item.name" class="form-control" placeholder="Name"></stacker-input>
-                    <div v-if="!isRequisition()" class="input-group-append">
-                        <button class="btn dropdown-toggle select-protocol-button" type="button" data-toggle="dropdown"
-                                :style="protocolsListStyle">
-                            {{selectedProtocol}}
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#"
-                               v-for="(protocol, index) in $store.state[item.component].protocols"
-                               :key="index" style="text-transform: uppercase"
-                               @click="selectProtocol(protocol)"
-                            >{{protocol.protocolName}}</a>
+                    <div v-if="!isRequisition()">
+                        <div class=" dropdown">
+                            <button class="btn btn-sm dropdown-toggle select-protocol-button" type="button"
+                                    data-toggle="dropdown"
+                                    :style="protocolsListStyle">
+                                {{selectedProtocol}}
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#"
+                                   v-for="(protocol, index) in protocolsList"
+                                   :key="index" style="text-transform: uppercase"
+                                   @click="selectProtocol(protocol)"
+                                >{{protocol.protocolName}}</a>
+                            </div>
                         </div>
                     </div>
                     <div v-else class="input-group-append">
@@ -80,7 +81,7 @@
             else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.name,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.protocolName,
                     props: {
                         item: this.item
                     }
@@ -100,7 +101,7 @@
             else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.name,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.protocolName,
                     props: {
                         item: this.item
                     }
@@ -132,7 +133,7 @@
                 let storeComponent = this.$store.state[this.item.component];
                 let protocol = undefined;
                 if (storeComponent.protocols) {
-                    protocol = storeComponent.protocols.find(protocol => protocol.name === this.item.type.toLowerCase());
+                    protocol = storeComponent.protocols.find(protocol => protocol.protocolName === this.item.type.toLowerCase());
                     if (!protocol) {
                         protocol = storeComponent.protocols[0];
                     }
@@ -140,7 +141,7 @@
                 return storeComponent.getEvents(protocol).concat([]);
             },
             selectProtocol: function (protocol) {
-                this.selectedProtocol = protocol.name;
+                this.selectedProtocol = protocol.protocolName;
                 if (this.isRequisition()) {
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/general',
@@ -150,6 +151,7 @@
                     });
                 }
                 else {
+                    console.log('/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol);
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,
                         props: {
@@ -200,6 +202,9 @@
             }
         },
         computed: {
+            protocolsList() {
+                return this.$store.state[this.item.component].protocols;
+            },
             nameStyle() {
                 return {
                     'font-size': '0.8em',

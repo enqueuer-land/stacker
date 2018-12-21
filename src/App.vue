@@ -199,7 +199,6 @@
 
     .tooltip-inner {
         max-width: none;
-        padding: 5px;
         color: var(--text-color);
         /*opacity: 0.9;*/
         text-align: left;
