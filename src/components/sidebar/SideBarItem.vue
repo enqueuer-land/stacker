@@ -3,7 +3,7 @@
         <div class="row no-gutters"
              style="height: 100%"
              :id="item.id + 'SideBarItem'"
-             @mouseenter="mouseEnterHeader"
+             @mouseenter="updateTooltip"
              @click="itemSelected"
              @mouseover="mouseIsOver = true"
              @mouseleave="mouseIsOver = false">
@@ -94,18 +94,27 @@
                 const selectedItem = this.$store.state.selectedItem;
                 return selectedItem && selectedItem.id === this.item.id;
             },
-            mouseEnterHeader(event) {
+            updateTooltip(event) {
                 const errors = (this.item.invalidChildren || [])
                     .map(invalid => `<li><span style="color: var(--${invalid.component}-color);">${invalid.name + ': '}</span>${invalid.errors.join('; ')}</li>`)
                     .concat((this.item.errors || []).map(error => `<li>${error}</li>`))
                     .join('');
 
-                const target = $('#' + event.target.id);
+                const target = $('#' + event.target.id + '');
                 if (errors.length > 0) {
-                    target
-                        .attr('data-html', true)
-                        .attr('data-original-title', `<ul>${errors}</ul>`)
-                        .tooltip('show');
+                    const toolTipProperties = {
+                        html: true,
+                        placement: 'top',
+                        animation: true,
+                        delay: {
+                            show: 1000,
+                            hide: 100
+                        },
+                        title: `<ul>${errors}</ul>`,
+                        trigger: 'hover',
+                        boundary: 'window'
+                    };
+                    target.tooltip(toolTipProperties);
                 } else {
                     target.tooltip('hide');
                 }
