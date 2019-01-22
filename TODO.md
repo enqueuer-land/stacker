@@ -24,8 +24,13 @@
 - [x] Detach resultHeader from result
 - [x] Turn every stacker-icon classes into stacker-icon-component (including toggleableOnes) 
 - [x] Clear result tab
-- [x] Fix dropdown menu clipped
+- [ ] Fix dropdown menu clipped
         https://stackoverflow.com/questions/31829312/bootstrap-dropdown-clipped-by-overflowhidden-container-how-to-change-the-conta
+        https://stackoverflow.com/questions/14473769/bootstrap-drop-down-cutting-off?noredirect=1&lq=1
+        https://stackoverflow.com/questions/49323672/bootstrap-4-dropdown-disable-auto-placement-caused-by-popper-js
+        https://www.codeply.com/go/zZJwAuwC5s
+        https://mdbootstrap.com/docs/jquery/components/dropdowns/
+        https://css-tricks.com/long-dropdowns-solution/
 - [x] Replace every stacker-class with Stacker component
 - [x] Limit Stage/SideBar/Result width
 - [ ] Deep tests
