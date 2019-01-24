@@ -10,9 +10,7 @@
   },
   "scripts": {
     "lint": "node_modules/.bin/vue-cli-service lint",
-    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js",
-    "electron:build": "node_modules/.bin/vue-cli-service electron:build",
-    "electron:serve": "node_modules/.bin/vue-cli-service electron:serve"
+    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js"
   },
   "dependencies": {
     "amqp": "^0.2.7",
@@ -34,7 +32,6 @@
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0-beta.4",
-    "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -67,18 +64,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lopidio/stacker"
-  },
-  "build": {
-    "appId": "com.virgs.stacker",
-    "productName": "stacker",
-    "files": [
-      "build/**/*",
-      "public/**/*",
-      "preload.js",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    }
   }
 }
