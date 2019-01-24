@@ -10,7 +10,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../src/protocols/publishers/amqp",
+              "module": "../../../../plugins/protocols/publishers/amqp",
               "payload": "notPassive",
               "options": {
                 "host": "localhost",
@@ -46,7 +46,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../src/protocols/publishers/amqp",
+              "module": "../../../../plugins/protocols/publishers/amqp",
               "payload": "{\n    \"how\": {\n        \"about\": \"a new object?\"\n    }\n}",
               "options": {
                 "host": "localhost",
@@ -86,7 +86,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../src/protocols/subscriptions/amqp",
+              "module": "../../../../plugins/protocols/subscriptions/amqp",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -148,7 +148,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../src/protocols/publishers/amqp",
+              "module": "../../../../plugins/protocols/publishers/amqp",
               "payload": "default exchange",
               "options": {
                 "host": "localhost",
@@ -175,7 +175,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../src/protocols/subscriptions/amqp",
+              "module": "../../../../plugins/protocols/subscriptions/amqp",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -385,7 +385,7 @@
         {
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../src/protocols/publishers/mqtt",
+          "module": "../../../../plugins/protocols/publishers/mqtt",
           "name": "local broker",
           "brokerAddress": "mqtt://localhost",
           "payload": "enqueuer",
@@ -408,7 +408,7 @@
           "name": "eclipse broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../src/protocols/publishers/mqtt",
+          "module": "../../../../plugins/protocols/publishers/mqtt",
           "errors": [],
           "component": "publisher",
           "method": "POST",
@@ -432,7 +432,7 @@
           "name": "local broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../src/protocols/subscriptions/mqtt",
+          "module": "../../../../plugins/protocols/subscriptions/mqtt",
           "brokerAddress": "mqtt://localhost",
           "topic": "#",
           "timeout": "1500",
@@ -472,7 +472,7 @@
           "name": "eclipse broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../src/protocols/subscriptions/mqtt",
+          "module": "../../../../plugins/protocols/subscriptions/mqtt",
           "errors": [],
           "component": "subscription",
           "onInit": {

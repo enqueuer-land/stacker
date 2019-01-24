@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'DEV') {
 
 app.on('ready', () => {
     //https://github.com/electron/electron/blob/master/docs/api/browser-window.md
-    let window = new BrowserWindow({
+    const window = new BrowserWindow({
         width: 1600,
         height: 1200,
         title: 'stacker',
@@ -83,7 +83,7 @@ let createMenu = function (window) {
                 }
             }
         ]
-        }, {
+    }, {
         label: "Edit",
         submenu: [
             {label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
