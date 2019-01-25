@@ -11,7 +11,7 @@
                               @click="action.click(action, index)"></stacker-icon>
             </div>
             <div class="col-1 ml-2">
-                <img src="../../../docs/img/gui.png" class="img-fluid rounded gui-class">
+                <img src="../../../build/gui.png" class="img-fluid rounded gui-class">
             </div>
         </div>
     </div>
