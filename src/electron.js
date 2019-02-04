@@ -1,9 +1,9 @@
-const {default: installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
+// const {default: installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
 const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
-const Menu = electron.Menu;
+// const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
 // const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
@@ -57,11 +57,11 @@ app.on('ready', () => {
 
     });
 
-    installExtension(VUEJS_DEVTOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
-
-    window.webContents.openDevTools({mode: 'bottom'});
+    // installExtension(VUEJS_DEVTOOLS)
+    //     .then((name) => console.log(`Added Extension:  ${name}`))
+    //     .catch((err) => console.log('An error occurred: ', err));
+    //
+    // window.webContents.openDevTools({mode: 'bottom'});
     // window.webContents.on("devtools-opened", () => {
     //     window.webContents.closeDevTools();
     // });
