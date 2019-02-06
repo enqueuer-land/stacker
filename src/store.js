@@ -138,17 +138,20 @@ export default new Vuex.Store({
                 {
                     protocolName: 'http',
                     type: 'http',
+                    module: undefined,
                     sync: true
                 },
                 {
                     protocolName: 'amqp',
                     type: 'custom',
                     module: '../../../../plugins/protocols/publishers/amqp',
+                    sync: false
                 },
                 {
                     protocolName: 'mqtt',
                     type: 'custom',
                     module: '../../../../plugins/protocols/publishers/mqtt',
+                    sync: false
                 },
             ],
             getEvents(protocol) {
@@ -208,6 +211,7 @@ export default new Vuex.Store({
                 {
                     protocolName: 'http',
                     type: 'http',
+                    module: undefined
                 },
                 {
                     protocolName: 'amqp',

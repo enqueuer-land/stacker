@@ -68,7 +68,7 @@
                     exchange: this.item.exchange,
                     routingKey: this.item.routingKey,
                     queueName: this.item.queueName,
-                    options: this.item.options || {host: '', port: ''},
+                    options: this.item.options || {host: 'localhost', port: '5672'},
                 }
             },
             emit() {

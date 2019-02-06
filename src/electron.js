@@ -5,7 +5,7 @@ const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 // const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
-// const Logger = require("enqueuer/js/loggers/logger").Logger;
+const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 require('enqueuer/js/injectable-files-list');
 // require('electron-debug')();
@@ -15,8 +15,11 @@ if (process.env.NODE_ENV === 'DEV') {
     console.log('Running in dev mode');
     url = 'http://localhost:8090/'
 } else {
-    url = `file://${process.cwd()}/public/index.html`;
-    console.log('url: ' + url);
+    // url = `file://${process.cwd()}/public/index.html`;
+    url = `file:///Users/gmoraes/Dev/stacker/dist/index.html`;
+    console.log('process.cwd(): ' + process.cwd());
+    console.log('process.env.BASE_URL: ' + process.env.BASE_URL);
+    console.log('__dirname: ' + __dirname);
 }
 
 app.on('ready', () => {
@@ -45,7 +48,7 @@ app.on('ready', () => {
 
     ipcMain.on('runRequisition', (event, requisition) => {
         Store.refreshData();
-        // Logger.setLoggerLevel('debug');
+        Logger.setLoggerLevel('debug');
         event.sender.send('runningRequisition');
         new RequisitionRunner(requisition, null).run()
             .then(report => {
@@ -61,7 +64,7 @@ app.on('ready', () => {
     //     .then((name) => console.log(`Added Extension:  ${name}`))
     //     .catch((err) => console.log('An error occurred: ', err));
     //
-    // window.webContents.openDevTools({mode: 'bottom'});
+    window.webContents.openDevTools({mode: 'bottom'});
     // window.webContents.on("devtools-opened", () => {
     //     window.webContents.closeDevTools();
     // });

@@ -71,7 +71,7 @@
                     routingKey: this.item.routingKey,
                     exchangeOptions: this.item.exchangeOptions || {},
                     messageOptions: this.item.messageOptions || {headers: {}},
-                    options: this.item.options || {host: '', port: ''},
+                    options: this.item.options || {host: 'localhost', port: '5672'},
                     payload: this.item.payload,
                     format: this.item.format,
                 }

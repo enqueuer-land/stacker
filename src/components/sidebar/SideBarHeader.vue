@@ -113,10 +113,6 @@
         left: -15px
     }
 
-    .side-bar-header:hover {
-        text-shadow: 0 0 8px var(--enqueuer-color);
-    }
-
     .dropdown-toggle::after {
         display: none !important;
     }

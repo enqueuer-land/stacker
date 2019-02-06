@@ -95,7 +95,7 @@
         methods: {
             getContent() {
                 return {
-                    type: "http",
+                    ...this.$store.state.subscription.protocols.find(protocol => protocol.protocolName === 'http'),
                     port: this.item.port,
                     endpoint: this.item.endpoint,
                     timeout: this.item.timeout,
