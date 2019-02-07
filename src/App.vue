@@ -24,12 +24,16 @@
     import Result from "./components/result/Result";
     import Stage from "./components/stage/Stage";
 
+    const fs = require('fs');
+
     export default {
         components: {Stage, Result, SideBar},
         created() {
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
-            this.$store.commit('openRequisitionFile', {router: this.$router, file: 'examples/examples.stk'});
+            // console.log(fs.readdirSync(".").map(file => __dirname + './' + file));
+            // console.log(fs.readdirSync(__dirname + "/../dist").map(file => __dirname + '/../dist/' + file));
+            this.$store.commit('openRequisitionFile', {router: this.$router, file: __dirname + '/../dist/examples.stk'});
         },
         data() {
             return {

@@ -15,11 +15,7 @@ if (process.env.NODE_ENV === 'DEV') {
     console.log('Running in dev mode');
     url = 'http://localhost:8090/'
 } else {
-    // url = `file://${process.cwd()}/public/index.html`;
-    url = `file:///Users/gmoraes/Dev/stacker/dist/index.html`;
-    console.log('process.cwd(): ' + process.cwd());
-    console.log('process.env.BASE_URL: ' + process.env.BASE_URL);
-    console.log('__dirname: ' + __dirname);
+    url ='file://'+ __dirname + `/../dist/index.html`;
 }
 
 app.on('ready', () => {

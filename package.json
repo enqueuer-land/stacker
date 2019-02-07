@@ -12,8 +12,8 @@
     "clear": "rm -rf node_modules/ dist/ package-lock.json && npm install",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js",
-    "build": "node_modules/.bin/vue-cli-service build",
-    "pack": "node_modules/.bin/electron-builder"
+    "compile": "node_modules/.bin/vue-cli-service build",
+    "build": "node_modules/.bin/electron-builder"
   },
   "dependencies": {
     "amqp": "^0.2.7",
@@ -63,12 +63,25 @@
   ],
   "bin": {},
   "license": "MIT",
-  "main": "src/electron.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lopidio/stacker"
   },
   "vue": {
-    "publicPath": ""
+    "publicPath": "./"
+  },
+  "main": "./src/electron.js",
+  "build": {
+    "appId": "com.electron.virgs.stacker",
+    "productName": "stacker",
+    "files": [
+      "./build/**/*",
+      "./dist/**/*",
+      "./dist/index.html",
+      "./src/electron.js",
+      "./src/preload.js",
+      "./package.json",
+      "./node_modules/**/*"
+    ]
   }
 }
