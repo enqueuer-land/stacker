@@ -48,16 +48,40 @@
                 </span>
         </div>
         <div class="row py-4 justify-content-between">
-            <div class="col-auto m-auto">
-                <button type="button" class="btn btn-lg disabled jumbotron-header-button">Get it now!</button>
+            <div class="col-12 col-sm-2 m-auto" style="text-align: center">
+                <span style="font-size: 1.5rem; line-height: 1.5; color: var(--text-color);">Get it now!</span>
+                <div class="mt-2 container-fluid">
+                    <a class=""
+                       rel="noopener noreferrer" target="_blank"
+                       href="#">
+                        <img class="img-thumbnail img-binaries"
+                             src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/macos-logo.png"
+                             alt="mac version">
+                    </a>
+                    <a class=""
+                       rel="noopener noreferrer" target="_blank"
+                       href="#">
+                        <img class="img-thumbnail img-binaries"
+                             src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/windows.png"
+                             alt="win version">
+                    </a>
+                    <a class=""
+                       rel="noopener noreferrer" target="_blank"
+                       href="#">
+                        <img class="img-thumbnail img-binaries"
+                             alt="linux version"
+                             src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/linux.png">
+                    </a>
+                </div>
+
             </div>
-            <p class="col-xs-12 col-sm-8 m-auto py-4 jumbotron-summary">
+            <p class="col-12 col-sm-8 m-auto py-4 jumbotron-summary">
                 Open source, cross-platform,
                 <span>really good looking,</span>
                 <span>multi-protocol client</span>
                 <span style="">testing tool</span>
             </p>
-            <a class="col-auto m-auto" href="http://github.com/lopidio/stacker">
+            <a class="col-12 col-sm-2 m-auto" href="http://github.com/lopidio/stacker" style="text-align: center">
                 <button type="button" class="btn btn-lg jumbotron-header-button">
                     <img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/github-mark.png"
                          class="img-fluid github-icon-class">
@@ -232,7 +256,15 @@
         color: var(--text-color);
     }
 
-    .jumbotron-header-button:hover {
+    .img-binaries {
+        width: calc(60% / 3);
+        height: auto;
+        background-color: var(--text-color);
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+
+    .jumbotron-header-button:hover, .img-binaries:hover {
         box-shadow: 0 0 20px var(--enqueuer-color);
         /*background-color: var(--text-color);*/
         /*color: var(--stacker-header-background-color);*/
@@ -269,5 +301,6 @@
         font-size: 20px;
         /*font-weight: lighter;*/
     }
+
 </style>
 </html>
