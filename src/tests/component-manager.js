@@ -2,9 +2,10 @@ import {generateId} from "./id-generator";
 import store from '../store'
 import ObjectDecycler from "./object-decycler";
 import MultipleObjectNotation from "./multiple-object-notation";
+import path from 'path';
+import * as yaml from "yamljs";
 
 const fs = window.remote.require('fs');
-import path from 'path';
 
 
 //TODO split it in several several classes
@@ -21,6 +22,9 @@ export default class ComponentManager {
         if (fs.lstatSync(filename).isDirectory()) {
             return this.openRequisitionsDirectory(filename);
         } else {
+            console.log("dirname: " + __dirname);
+            console.log("Current directory: " + fs.readdirSync('.').join('\n'));
+            console.log("Opening: " + filename);
             const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
             let nameWithNoExtension = this.removeFilenameExtension(filename);
             if (Array.isArray(fileRequisition)) {
@@ -46,7 +50,7 @@ export default class ComponentManager {
     saveFile(name, requisition) {
         delete requisition.parent;
         const decycle = new ObjectDecycler().decycle(requisition);
-        fs.writeFileSync(name, JSON.stringify(decycle, null, 2));
+        fs.writeFileSync(name, yaml.stringify(decycle, 100, 4));
     }
 
     createRequisition(base, parent) {

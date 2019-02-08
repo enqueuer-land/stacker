@@ -3,7 +3,6 @@ const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 // const Menu = electron.Menu;
-require('enqueuer/js/injectable-files-list');
 const Store = require("enqueuer/js/configurations/store").Store;
 // const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;

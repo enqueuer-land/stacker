@@ -10,7 +10,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../plugins/protocols/publishers/amqp",
+              "module": ".stacker/plugins/protocols/publishers/amqp.js",
               "payload": "notPassive",
               "options": {
                 "host": "localhost",
@@ -46,7 +46,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../plugins/protocols/publishers/amqp",
+              "module": ".stacker/plugins/protocols/publishers/amqp.js",
               "payload": "{\n    \"how\": {\n        \"about\": \"a new object?\"\n    }\n}",
               "options": {
                 "host": "localhost",
@@ -86,7 +86,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../plugins/protocols/subscriptions/amqp",
+              "module": ".stacker/plugins/protocols/subscriptions/amqp.js",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -148,7 +148,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../plugins/protocols/publishers/amqp",
+              "module": ".stacker/plugins/protocols/publishers/amqp.js",
               "payload": "default exchange",
               "options": {
                 "host": "localhost",
@@ -175,7 +175,7 @@
             {
               "type": "custom",
               "protocolName": "amqp",
-              "module": "../../../../plugins/protocols/subscriptions/amqp",
+              "module": ".stacker/plugins/protocols/subscriptions/amqp.js",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -385,7 +385,7 @@
         {
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../plugins/protocols/publishers/mqtt",
+          "module": ".stacker/plugins/protocols/publishers/mqtt.js",
           "name": "local broker",
           "brokerAddress": "mqtt://localhost",
           "payload": "enqueuer",
@@ -408,7 +408,7 @@
           "name": "eclipse broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../plugins/protocols/publishers/mqtt",
+          "module": ".stacker/plugins/protocols/publishers/mqtt.js",
           "errors": [],
           "component": "publisher",
           "method": "POST",
@@ -432,7 +432,7 @@
           "name": "local broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../plugins/protocols/subscriptions/mqtt",
+          "module": ".stacker/plugins/protocols/subscriptions/mqtt.js",
           "brokerAddress": "mqtt://localhost",
           "topic": "#",
           "timeout": "1500",
@@ -472,7 +472,7 @@
           "name": "eclipse broker",
           "type": "custom",
           "protocolName": "mqtt",
-          "module": "../../../../plugins/protocols/subscriptions/mqtt",
+          "module": ".stacker/plugins/protocols/subscriptions/mqtt.js",
           "errors": [],
           "component": "subscription",
           "onInit": {

@@ -29,7 +29,7 @@
         created() {
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
-            this.$store.commit('openRequisitionFile', {router: this.$router, file: '/dist/examples.stk'});
+            this.$store.commit('openRequisitionFile', {router: this.$router, file: '.stacker/examples.stk'});
         },
         data() {
             return {

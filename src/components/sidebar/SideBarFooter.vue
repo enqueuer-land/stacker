@@ -19,13 +19,13 @@
         data() {
             return {
                 actions: [
-                    {
-                        tooltip: "Create new requisition",
-                        icon: "create_new_folder",
-                        click: () => {
-                            this.$store.commit('addRequisition', {router: this.$router});
-                        }
-                    },
+                    // {
+                    //     tooltip: "Create new requisition",
+                    //     icon: "create_new_folder",
+                    //     click: () => {
+                    //         this.$store.commit('addRequisition', {router: this.$router});
+                    //     }
+                    // },
                     {
                         tooltip: "Paste component",
                         icon: "file_copy",
@@ -50,13 +50,13 @@
                             this.$store.commit('expandRequisition');
                         }
                     },
-                    // {
-                    //     tooltip: "Delete selected item",
-                    //     icon: "delete",
-                    //     click: () => {
-                    //         this.$store.commit('deleteComponent', {router: this.$router, item: this.$store.state.selectedItem});
-                    //     }
-                    // },
+                    {
+                        tooltip: "Delete selected item",
+                        icon: "delete",
+                        click: () => {
+                            this.$store.commit('deleteComponent', {router: this.$router, item: this.$store.state.selectedItem});
+                        }
+                    },
                     {
                         tooltip: "Clear all requisitions",
                         icon: "clear",
