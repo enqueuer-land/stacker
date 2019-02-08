@@ -91,12 +91,12 @@
         <div class="container" style="height: 600px">
             <!-- Example row of columns -->
             <div class="row">
-                <div class="col-md-4">
-                    <h2>Arrange, act and assert</h2>
+                <div class="col-md-4" style="text-align: justify">
+                    <h2>Test driven client</h2>
                     <p>
-                        Tests are first class citizens.
-                        Publish any protocol message and verify how the ecosystem under test reacts to it by
-                        dynamically mocking and watching every dependency.
+                        Assertions are the main reason to use this.
+                        <!--Publish any protocol message and verify how the ecosystem under test reacts to it by-->
+                        <!--dynamically mocking and watching every dependency.-->
                         Check whether each flowing by message matches what is expected:
                     </p>
                     <ul>
@@ -106,8 +106,8 @@
                     </ul>
                     </p>
                 </div>
-                <div class="col-md-4">
-                    <h2>Range of protocols</h2>
+                <div class="col-md-4" style="text-align: justify">
+                    <h2>Multi-protocol client</h2>
                     <p>Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click
                         away from each other, including your own custom ones:</p>
                     <ul>
@@ -123,10 +123,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <h2>Enqueuer friendly requisitions</h2>
+                <div class="col-md-4" style="text-align: justify">
+                    <h2>CI pipeline job</h2>
                     <p>
-                        Improve your system reliability through easily created integration tests.
                         Get it added to the CI pipeline powered by the magic of the almighty
                         <a style="color: var(--enqueuer-color); font-weight: bold"
                            href="http://github.com/lopidio/enqueuer">enqueuer</a>.
@@ -248,9 +247,8 @@
     }
 
     .jumbotron-header-button {
-        background-color: transparent;
-        border: 1px solid var(--text-color);
-        color: var(--text-color);
+        background-color: var(--text-color);
+        color: var(--stacker-header-background-color);
     }
 
     .img-binaries {
@@ -289,7 +287,7 @@
         /*transform: scale(0.25);*/
         height: 30px;
         padding-right: 10px;
-        filter: invert(100%);
+        /*filter: invert(100%);*/
     }
 
     .powered-by {
