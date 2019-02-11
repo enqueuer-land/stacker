@@ -20,6 +20,8 @@
 </template>
 
 <script>
+
+    const fs = window.remote.require('fs');
     import SideBar from "./components/sidebar/SideBar";
     import Result from "./components/result/Result";
     import Stage from "./components/stage/Stage";
@@ -27,9 +29,21 @@
     export default {
         components: {Stage, Result, SideBar},
         created() {
+            window.ipcRenderer.on('dirnames', (event, asarDirectory, homeDirectory) => {
+                process.chdir(homeDirectory);
+                asarDirectory = !!asarDirectory ? asarDirectory + '/../': './';
+                homeDirectory = homeDirectory + '/';
+                this.$store.commit('createDotStackerDirectory', {
+                    asarDirectory, homeDirectory
+                });
+                this.$store.commit('openRequisitionFile', {
+                    router: this.$router,
+                    file: homeDirectory + '.stacker/openRequisitions/examples.stk'
+                });
+            });
+
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
-            this.$store.commit('openRequisitionFile', {router: this.$router, file: '.stacker/examples.stk'});
         },
         data() {
             return {

@@ -4,8 +4,10 @@ const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 // const Menu = electron.Menu;
 const Store = require("enqueuer/js/configurations/store").Store;
-// const Logger = require("enqueuer/js/loggers/logger").Logger;
+const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
+const os = require("os");
+
 
 let url;
 if (process.env.NODE_ENV === 'DEV') {
@@ -32,16 +34,23 @@ app.on('ready', () => {
         // frame: false,
         show: false
     });
+
     window.loadURL(url);
 
     //Showing window gracefully
     window.once('ready-to-show', () => {
-        window.show()
+        window.webContents.send('dirnames', __dirname, os.homedir(), process.cwd());
+        if (process.env.NODE_ENV === 'DEV') {
+            window.webContents.openDevTools({mode: 'bottom'});
+        } else {
+            process.chdir(os.homedir());
+        }
+        window.show();
     });
 
     ipcMain.on('runRequisition', (event, requisition) => {
         Store.refreshData();
-        // Logger.setLoggerLevel('debug');
+        Logger.setLoggerLevel('debug');
         event.sender.send('runningRequisition');
         new RequisitionRunner(requisition, null).run()
             .then(report => {
@@ -53,7 +62,6 @@ app.on('ready', () => {
 
     });
 
-    window.webContents.openDevTools({mode: 'bottom'});
     createMenu(window);
 });
 

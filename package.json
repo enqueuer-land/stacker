@@ -16,9 +16,7 @@
     "build": "node_modules/.bin/electron-builder"
   },
   "dependencies": {
-    "amqp": "^0.2.7",
     "enqueuer": "^4.1.2",
-    "mqtt": "^2.18.8",
     "request": "^2.88.0",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
@@ -30,6 +28,7 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
+    "amqp": "^0.2.7",
     "asar": "^0.14.6",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.9",
@@ -37,6 +36,7 @@
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0-beta.4",
+    "mqtt": "^2.18.8",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -83,7 +83,8 @@
       "./src/electron.js",
       "./src/preload.js",
       "./package.json",
-      "./node_modules/**/*"
+      ".stacker/**/*",
+      "node_modules/**/*"
     ]
   }
 }

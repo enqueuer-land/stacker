@@ -1,4 +1,4 @@
-const amqp = require('amqp');
+const amqp = require("amqp");
 
 class Publisher {
     constructor(publisher) {

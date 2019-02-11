@@ -4,6 +4,8 @@ import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
+import DotStackerDirectoryCreator from "./tests/dot-stacker-directory-creator";
+
 const EventEmitter = require('events');
 
 Vue.use(Vuex);
@@ -149,7 +151,7 @@ export default new Vuex.Store({
                 },
                 {
                     protocolName: 'mqtt',
-                    type: 'custom',
+                    type: 'mqtt',
                     module: '.stacker/plugins/protocols/publishers/mqtt.js',
                     sync: false
                 },
@@ -220,8 +222,8 @@ export default new Vuex.Store({
                 },
                 {
                     protocolName: 'mqtt',
-                    type: 'custom',
-                    module: '.stacker/src/plugins/subscriptions/mqtt.js',
+                    type: 'mqtt',
+                    module: '.stacker/plugins/protocols/subscriptions/mqtt.js',
                 },
             ],
             getEvents() {
@@ -319,6 +321,12 @@ export default new Vuex.Store({
                     new ComponentManager().saveFile(filename, response);
                 }
             })
+        },
+        createDotStackerDirectory(state, payload) {
+            console.log('Virgs - asarDirectory: ' + payload.asarDirectory);
+            console.log('Virgs - homeDirectory: ' + payload.homeDirectory);
+
+            new DotStackerDirectoryCreator(payload.asarDirectory, payload.homeDirectory).create();
         },
         changeResultFilter(state, value) {
             state.resultFilter = value;
