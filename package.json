@@ -11,7 +11,7 @@
   "scripts": {
     "clear": "rm -rf node_modules/ dist/ package-lock.json && npm install",
     "lint": "node_modules/.bin/vue-cli-service lint",
-    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV electron src/electron.js",
+    "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV node_modules/.bin/electron src/electron.js",
     "compile": "node_modules/.bin/vue-cli-service build",
     "build": "node_modules/.bin/electron-builder"
   },
@@ -29,7 +29,6 @@
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
     "amqp": "^0.2.7",
-    "asar": "^0.14.6",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.9",
     "electron-builder": "^20.38.5",
