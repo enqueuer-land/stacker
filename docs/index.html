@@ -57,15 +57,15 @@
                              src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/macos-logo.png"
                              alt="mac version">
                     </a>
-                    <a class=""
+                    <a class="img-binaries-anchor-disabled"
                        href="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/windows-logo.png" download>
-                        <img class="img-thumbnail img-binaries"
+                        <img class="img-thumbnail img-binaries disabled"
                              src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/windows-logo.png"
                              alt="win version">
                     </a>
-                    <a class=""
+                    <a class="img-binaries-anchor-disabled"
                        href="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/linux-logo.png" download>
-                        <img class="img-thumbnail img-binaries"
+                        <img class="img-thumbnail img-binaries disabled"
                              alt="linux version"
                              src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/linux-logo.png">
                     </a>
@@ -257,6 +257,14 @@
         background-color: var(--text-color);
         margin-right: 2px;
         margin-left: 2px;
+    }
+
+    .img-binaries.disabled {
+        background-color: var(--stacker-background-alternative-color);
+    }
+
+    .img-binaries-anchor-disabled {
+        pointer-events: none;
     }
 
     .jumbotron-header-button:hover, .img-binaries:hover {

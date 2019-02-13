@@ -27,7 +27,8 @@ script:
 
 deploy:
     provider: releases
-    api_key: 9fe73b6d02afe74e423b52192422fe2edf06fcaa
+    api_key:
+        secure: 9fe73b6d02afe74e423b52192422fe2edf06fcaa
     file: dist/stacker-0.1.0-mac.zip
     skip_cleanup: true
     on:
