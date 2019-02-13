@@ -13,7 +13,7 @@
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV node_modules/.bin/electron src/electron.js",
     "compile": "node_modules/.bin/vue-cli-service build",
-    "build": "node_modules/.bin/electron-builder"
+    "build": "GH_TOKEN=9fe73b6d02afe74e423b52192422fe2edf06fcaa node_modules/.bin/electron-builder"
   },
   "dependencies": {
     "enqueuer": "^4.1.2",
@@ -75,6 +75,34 @@
   "build": {
     "appId": "com.electron.virgs.stacker",
     "productName": "stacker",
+    "compression": "maximum",
+    "mac": {
+      "category": "public.app-category.devtool"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.png"
+    },
     "files": [
       "./build/**/*",
       "./dist/**/*",
