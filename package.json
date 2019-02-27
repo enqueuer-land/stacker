@@ -9,14 +9,19 @@
     "url": "http://github.com/lopidio"
   },
   "scripts": {
-    "clear": "rm -rf node_modules/ dist/ package-lock.json && npm install",
+    "clear": "rm -rf dist/",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV node_modules/.bin/electron src/electron.js",
     "compile": "node_modules/.bin/vue-cli-service build",
-    "build": "GH_TOKEN=9fe73b6d02afe74e423b52192422fe2edf06fcaa node_modules/.bin/electron-builder"
+    "build:mac": "node_modules/.bin/electron-builder --mac",
+    "build:win": "node_modules/.bin/electron-builder --win",
+    "build:linux": "node_modules/.bin/electron-builder --linux",
+    "build:all": "node_modules/.bin/electron-builder --mac --win --linux"
   },
   "dependencies": {
-    "enqueuer": "^4.1.2",
+    "enqueuer": "^4.2.4",
+    "enqueuer-plugin-amqp": "0.0.7",
+    "enqueuer-plugin-mqtt": "0.0.1",
     "request": "^2.88.0",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
@@ -28,14 +33,12 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
-    "amqp": "^0.2.7",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.9",
     "electron-builder": "^20.38.5",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0-beta.4",
-    "mqtt": "^2.18.8",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -94,10 +97,8 @@
       ]
     },
     "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
+      "category": "Development",
+      "target": "deb"
     },
     "win": {
       "target": "NSIS",

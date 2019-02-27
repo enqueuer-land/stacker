@@ -21,7 +21,6 @@
 
 <script>
 
-    const fs = window.remote.require('fs');
     import SideBar from "./components/sidebar/SideBar";
     import Result from "./components/result/Result";
     import Stage from "./components/stage/Stage";

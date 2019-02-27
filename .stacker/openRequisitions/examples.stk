@@ -8,9 +8,9 @@
           "name": "creating exchange",
           "publishers": [
             {
-              "type": "custom",
-              "protocolName": "amqp",
-              "module": ".stacker/plugins/protocols/publishers/amqp.js",
+
+
+              "type": "amqp",
               "payload": "notPassive",
               "options": {
                 "host": "localhost",
@@ -44,9 +44,9 @@
           "name": "using just created exchange",
           "publishers": [
             {
-              "type": "custom",
-              "protocolName": "amqp",
-              "module": ".stacker/plugins/protocols/publishers/amqp.js",
+
+
+              "type": "amqp",
               "payload": "{\n    \"how\": {\n        \"about\": \"a new object?\"\n    }\n}",
               "options": {
                 "host": "localhost",
@@ -84,9 +84,9 @@
           ],
           "subscriptions": [
             {
-              "type": "custom",
-              "protocolName": "amqp",
-              "module": ".stacker/plugins/protocols/subscriptions/amqp.js",
+
+
+              "type": "amqp",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -146,9 +146,9 @@
           "name": "default exhange",
           "publishers": [
             {
-              "type": "custom",
-              "protocolName": "amqp",
-              "module": ".stacker/plugins/protocols/publishers/amqp.js",
+
+
+              "type": "amqp",
               "payload": "default exchange",
               "options": {
                 "host": "localhost",
@@ -173,9 +173,9 @@
           ],
           "subscriptions": [
             {
-              "type": "custom",
-              "protocolName": "amqp",
-              "module": ".stacker/plugins/protocols/subscriptions/amqp.js",
+
+
+              "type": "amqp",
               "timeout": 3000,
               "options": {
                 "host": "localhost",
@@ -383,9 +383,9 @@
     {
       "publishers": [
         {
-          "type": "custom",
-          "protocolName": "mqtt",
-          "module": ".stacker/plugins/protocols/publishers/mqtt.js",
+
+
+          "type": "mqtt",
           "name": "local broker",
           "brokerAddress": "mqtt://localhost",
           "payload": "enqueuer",
@@ -406,9 +406,9 @@
         {
           "id": "id1544064469526KkqE3nwr05",
           "name": "eclipse broker",
-          "type": "custom",
-          "protocolName": "mqtt",
-          "module": ".stacker/plugins/protocols/publishers/mqtt.js",
+
+
+          "type": "mqtt",
           "errors": [],
           "component": "publisher",
           "method": "POST",
@@ -430,9 +430,9 @@
       "subscriptions": [
         {
           "name": "local broker",
-          "type": "custom",
-          "protocolName": "mqtt",
-          "module": ".stacker/plugins/protocols/subscriptions/mqtt.js",
+
+
+          "type": "mqtt",
           "brokerAddress": "mqtt://localhost",
           "topic": "#",
           "timeout": "1500",
@@ -470,9 +470,9 @@
         {
           "id": "id1544064492856rk2vrcVSfm",
           "name": "eclipse broker",
-          "type": "custom",
-          "protocolName": "mqtt",
-          "module": ".stacker/plugins/protocols/subscriptions/mqtt.js",
+
+
+          "type": "mqtt",
           "errors": [],
           "component": "subscription",
           "onInit": {

@@ -35,7 +35,7 @@
                                    v-for="(protocol, index) in protocolsList"
                                    :key="index" style="text-transform: uppercase"
                                    @click="selectProtocol(protocol)"
-                                >{{protocol.protocolName}}</a>
+                                >{{protocol.type}}</a>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
             else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.protocolName,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.type,
                     props: {
                         item: this.item
                     }
@@ -101,7 +101,7 @@
             else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
-                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.protocolName,
+                    path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.type,
                     props: {
                         item: this.item
                     }
@@ -133,7 +133,7 @@
                 let storeComponent = this.$store.state[this.item.component];
                 let protocol = undefined;
                 if (storeComponent.protocols) {
-                    protocol = storeComponent.protocols.find(protocol => protocol.protocolName === this.item.type.toLowerCase());
+                    protocol = storeComponent.protocols.find(protocol => protocol.type === this.item.type.toLowerCase());
                     if (!protocol) {
                         protocol = storeComponent.protocols[0];
                     }
@@ -141,7 +141,7 @@
                 return storeComponent.getEvents(protocol).concat([]);
             },
             selectProtocol: function (protocol) {
-                this.selectedProtocol = protocol.protocolName;
+                this.selectedProtocol = protocol.type;
                 if (this.isRequisition()) {
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/general',
@@ -181,7 +181,7 @@
                     });
                 }
                 else {
-                    this.selectedProtocol = this.item.protocolName || this.item.type;
+                    this.selectedProtocol = this.item.type;
                     if (!this.selectedProtocol) {
                         this.selectedProtocol = this.$store.state[this.item.component].protocols[0];
                     }

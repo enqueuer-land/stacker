@@ -62,7 +62,7 @@
         methods: {
             getContent() {
                 return {
-                    ...this.$store.state.subscription.protocols.find(protocol => protocol.protocolName === 'amqp'),
+                    ...this.$store.state.subscription.protocols.find(protocol => protocol.type === 'amqp'),
                     timeout: this.item.timeout,
                     avoid: this.item.avoid,
                     exchange: this.item.exchange,

@@ -79,7 +79,7 @@
         methods: {
             getContent() {
                 return {
-                    ...this.$store.state.publisher.protocols.find(protocol => protocol.protocolName === 'http'),
+                    ...this.$store.state.publisher.protocols.find(protocol => protocol.type === 'http'),
                     timeout: this.item.timeout,
                     url: this.item.url,
                     method: this.item.method || methodsList[0],

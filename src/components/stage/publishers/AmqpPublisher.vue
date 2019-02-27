@@ -66,7 +66,7 @@
         methods: {
             getContent() {
                 return {
-                    ...this.$store.state.publisher.protocols.find(protocol => protocol.protocolName === 'amqp'),
+                    ...this.$store.state.publisher.protocols.find(protocol => protocol.type === 'amqp'),
                     exchange: this.item.exchange,
                     routingKey: this.item.routingKey,
                     exchangeOptions: this.item.exchangeOptions || {},

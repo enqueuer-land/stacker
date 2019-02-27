@@ -1,8 +1,11 @@
+
 const electron = require('electron');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 // const Menu = electron.Menu;
+const Configuration = require("enqueuer/js/configurations/configuration").Configuration;
+const PluginManager = require("enqueuer/js/plugins/plugin-manager").PluginManager;
 const Store = require("enqueuer/js/configurations/store").Store;
 const Logger = require("enqueuer/js/loggers/logger").Logger;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
@@ -39,6 +42,9 @@ app.on('ready', () => {
 
     //Showing window gracefully
     window.once('ready-to-show', () => {
+        Configuration.addPlugin('enqueuer-plugin-amqp');
+        Configuration.addPlugin('enqueuer-plugin-mqtt');
+        // PluginManager.getProtocolManager().describeProtocols();
         window.webContents.send('dirnames', __dirname, os.homedir(), process.cwd());
         if (process.env.NODE_ENV === 'DEV') {
             window.webContents.openDevTools({mode: 'bottom'});
