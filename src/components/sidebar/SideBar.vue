@@ -2,8 +2,7 @@
     <div class="side-bar">
         <div class="side-bar-body">
             <SideBarHeader></SideBarHeader>
-            <SideBarTree class="scroll-div"
-                         style="max-height: calc(100vh - 190px); position: relative; top: -4px;"></SideBarTree>
+            <SideBarTree class="scroll-div" style="height: calc(100vh - 190px);"></SideBarTree>
         </div>
         <div>
             <side-bar-footer></side-bar-footer>
@@ -38,5 +37,4 @@
         height: calc(100vh - 40px);
         background-color: var(--stacker-header-background-color);
     }
-
 </style>
