@@ -1,7 +1,8 @@
 <template>
     <div class="side-bar-tree">
         <ul class="list-unstyled mb-0">
-            <SideBarNode v-for="(requisition, index) in filteredRequisitions" :key="requisition.id" :index="index" :node="requisition"/>
+            <SideBarNode v-for="(requisition, index) in filteredRequisitions" :key="requisition.id" :index="index"
+                         :node="requisition"/>
         </ul>
     </div>
 </template>
@@ -24,10 +25,9 @@
 
 
 <style scoped>
-.side-bar-tree{
-    position: relative; 
-    margin: 4px 0 0 0;
-    overflow: unset;
-}
+    .side-bar-tree {
+        position: relative;
+        overflow: unset;
+    }
 
 </style>

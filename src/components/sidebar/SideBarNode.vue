@@ -1,6 +1,6 @@
 <template>
     <div class="side-bar-node mb-0 mt-0">
-        <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id" class="pt-1">
+        <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id" style="padding-bottom: 1px">
             <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened" @clicked="headerChildClick"/>
         </div>
         <div :id="node.id" class="collapse">
