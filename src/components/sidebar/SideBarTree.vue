@@ -22,6 +22,12 @@
     }
 </script>
 
+
 <style scoped>
+.side-bar-tree{
+    position: relative; 
+    margin: 4px 0 0 0;
+    overflow: unset;
+}
 
 </style>
