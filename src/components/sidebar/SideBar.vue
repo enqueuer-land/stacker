@@ -2,7 +2,7 @@
     <div class="side-bar">
         <div class="side-bar-body">
             <SideBarHeader></SideBarHeader>
-            <SideBarTree class="scroll-div"></SideBarTree>
+            <SideBarTree class="scroll-div" style="height: calc(100vh - 190px);"></SideBarTree>
         </div>
         <div>
             <side-bar-footer></side-bar-footer>

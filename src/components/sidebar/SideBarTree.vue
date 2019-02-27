@@ -27,7 +27,7 @@
 <style scoped>
     .side-bar-tree {
         position: relative;
-        overflow: unset;
+        /*overflow: unset;*/
     }
 
 </style>
