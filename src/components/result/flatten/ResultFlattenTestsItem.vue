@@ -14,10 +14,10 @@
                             <div v-if="test.hierarchy === null || test.hierarchy.length === 0" style="height: 12px"></div>
                         </div>
                         <div class="pl-1 pt-1">
-                            {{test.name}}
+                            {{test.name || "Skipped"}}
                         </div>
                     </div>
-                    <div :id="id" class="collapse">
+                    <div :id="id" class="collapse" v-if="test.description">
                         <ul class="p-0 list-unstyled">
                             <li class="description-class pt-1 pl-2">
                                 {{test.description}}
@@ -85,8 +85,15 @@
                 }
             },
             resultFlattenTestsItem: function () {
+                let color = 'failing';
+                if (this.test.valid) {
+                    color = 'passing'
+                }
+                if (this.test.ignored) {
+                    color = 'ignored'
+                }
                 return {
-                    'border-left': `4px var(--${this.test.valid ? 'passing' : 'failing'}-test-color) solid`
+                    'border-left': `4px var(--${color}-test-color) solid`
                 }
             }
         }

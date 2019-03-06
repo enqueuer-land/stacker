@@ -149,6 +149,7 @@
         --publisher-color: #D4F2DB; /*#5e64c3; /*#6A8D73*/;
         --subscription-color: #C4BCF2; /*c86ba6;*/
         /*--passing-test-color: #42ba84;*/
+        --ignored-test-color: #c2a84a;
         --passing-test-color: #9FB630;
         --failing-test-color: #a9524a;
         --invalid-color: #a9524a;

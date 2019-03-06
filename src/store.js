@@ -73,10 +73,10 @@ export default new Vuex.Store({
                 },
                 {
                     name: "Ignore",
-                    icon: "report_off",//"not_interested",
+                    icon: "error_outline", //"report_off",//"not_interested",
                     toggle: {
                         name: 'ignore',
-                        color: 'var(--failing-test-color)'
+                        color: 'var(--ignored-test-color)'
                     },
                     click: (payload) => {
                         payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);
@@ -118,10 +118,10 @@ export default new Vuex.Store({
                 },
                 {
                     name: "Ignore",
-                    icon: "report_off",
+                    icon: "error_outline",
                     toggle: {
                         name: 'ignore',
-                        color: 'var(--failing-test-color)'
+                        color: 'var(--ignore-test-color)'
                     },
                     click: (payload) => {
                         payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);
@@ -186,10 +186,10 @@ export default new Vuex.Store({
                 },
                 {
                     name: "Ignore",
-                    icon: "report_off", //"report, not_interested",
+                    icon: "error_outline", //"report, not_interested",
                     toggle: {
                         name: 'ignore',
-                        color: 'var(--failing-test-color)'
+                        color: 'var(--ignored-test-color)'
                     },
                     click: (payload) => {
                         payload.store.state.eventEmitter.emit('ignoreComponent', payload.item);

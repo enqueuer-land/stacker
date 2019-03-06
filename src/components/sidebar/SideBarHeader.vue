@@ -47,6 +47,13 @@
                 addButtonPulseInterval: null,
                 actions: [
                     {
+                        name: "Create Requisition",
+                        icon: "create_new_folder",
+                        click: () => {
+                            this.$store.commit('addRequisition', {router: this.$router});
+                        }
+                    },
+                    {
                         name: "Import requisitions",
                         icon: "cloud_download",
                         click: () => {
@@ -59,13 +66,6 @@
                                     })
                                 }
                             });
-                        }
-                    },
-                    {
-                        name: "Create Requisition",
-                        icon: "create_new_folder",
-                        click: () => {
-                            this.$store.commit('addRequisition', {router: this.$router});
                         }
                     },
                 ]

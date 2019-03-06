@@ -14,8 +14,16 @@ export default class FlattenTestsSummary {
         return this.testSummary.getTests();
     }
 
+    getNotIgnoredTests() {
+        return this.testSummary.getNotIgnoredTests();
+    }
+
     getPassingTests() {
         return this.testSummary.getPassingTests();
+    }
+
+    getIgnoredList() {
+        return this.testSummary.getIgnoredList();
     }
 
     getFailingTests() {
@@ -31,30 +39,35 @@ export default class FlattenTestsSummary {
     }
 
     findTests(node, hierarchy) {
+        const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
         if (node === undefined || node === null) {
             return;
         }
 
-        Object.keys(node).forEach(key => {
-            const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
-            const value = node[key];
-            if (key === 'tests') {
-                this.sumTests(value, clonedHierarchy)
-            }
-            else if (key === 'publishers' || key === 'subscriptions' || key === 'requisitions') {
-                if (typeof value === 'object') {
-                    if (Array.isArray(value)) {
-                        value.forEach((item => {
-                            const updatedHierarchy = clonedHierarchy.concat(item);
-                            this.findTests(item, updatedHierarchy);
-                        }));
-                    } else {
-                        const updatedHierarchy = clonedHierarchy.concat(value);
-                        this.findTests(value, updatedHierarchy);
+        if (node.ignored === true) {
+            this.testSummary.addTest({hierarchy: clonedHierarchy, ignored: true, name: 'Skipped'});
+        } else {
+            Object.keys(node).forEach(key => {
+                const value = node[key];
+                if (key === 'tests') {
+                    this.sumTests(value, clonedHierarchy)
+                } else if (key === 'publishers' || key === 'subscriptions' || key === 'requisitions') {
+                    if (typeof value === 'object') {
+                        if (Array.isArray(value)) {
+                            value.forEach((item => {
+                                const updatedHierarchy = clonedHierarchy.concat(item);
+                                this.findTests(item, updatedHierarchy);
+                            }));
+                        } else {
+                            const updatedHierarchy = clonedHierarchy.concat(value);
+                            this.findTests(value, updatedHierarchy);
+                        }
                     }
                 }
-            }
-        });
+            });
+
+        }
+
     }
 
     sumTests(tests, hierarchy) {

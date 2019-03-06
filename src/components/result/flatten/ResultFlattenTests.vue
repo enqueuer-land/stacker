@@ -17,15 +17,9 @@
         },
         watch: {
             node: function () {
-                let now = new Date();
-                console.log('Start parsing');
-                console.log('Now: ' + now.toISOString());
                 let testsSummary = new FlattenTestsSummary();
                 testsSummary.addTest(this.node);
                 this.testsSummary = testsSummary.getTests();
-                now = new Date();
-                console.log('Now: ' + now.toISOString());
-                console.log('Parsing is over');
             }
         },
         data: function () {
@@ -40,10 +34,11 @@
                 const resultFilter = this.$store.state.resultFilter;
                 const filterString = resultFilter.string.toLowerCase();
                 return this.testsSummary
-                    .filter(test => (resultFilter.showPassingTests && test.valid) ||
-                                    (resultFilter.showFailingTests && !test.valid))
+                    .filter(test => (resultFilter.showPassingTests && test.valid === true) ||
+                                    (resultFilter.showFailingTests && test.valid === false) ||
+                                    (resultFilter.showIgnored && test.ignored === true))
                     .filter(test => test.name.toLowerCase().indexOf(filterString) !== -1 ||
-                                    test.description.toLowerCase().indexOf(filterString) !== -1 ||
+                                    (test.description.toLowerCase() || '').indexOf(filterString) !== -1 ||
                                     test.hierarchy.some(hierarchy => hierarchy.name.toLowerCase().indexOf(filterString) !== -1));
             }
         }

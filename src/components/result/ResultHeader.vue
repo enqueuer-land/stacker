@@ -20,8 +20,12 @@
                                 </span>
                     <span class="tag"
                           :style="{'margin-left': '3px', color: tests.isValid()? 'var(--passing-test-color)': 'var(--failing-test-color)'}">
-                                    {{tests.getPassingTests().length}}/{{tests.getTests().length}} -
-                                    ({{Math.trunc(tests.getPercentage())}}%)
+                                    {{tests.getPassingTests().length}}/{{tests.getNotIgnoredTests().length}}
+                                    - ({{Math.trunc(tests.getPercentage())}}%)
+                                </span>
+                    <span v-if="tests.getIgnoredList().length > 0" class="tag"
+                          style="margin-left: 1px; color: var(--ignored-test-color)">
+                                    - {{tests.getIgnoredList().length}} ignored
                                 </span>
                 </div>
                 <div class="col-md-auto">
@@ -66,6 +70,13 @@
                                       :toggleable="true"
                                       tooltip='Show <b style="color: var(--failing-test-color);">failing</b> tests'></stacker-icon>
                     </div>
+                    <div class="pl-0 col-md-auto pr-1 align-self-center pt-1">
+                        <stacker-icon v-model="filter.showIgnored"
+                                      color="var(--ignored-test-color)"
+                                      name="error_outline"
+                                      :toggleable="true"
+                                      tooltip='Show <b style="color: var(--ignored-test-color);">ignored</b> testa'></stacker-icon>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,6 +109,7 @@
                     string: '',
                     showPassingTests: true,
                     showFailingTests: true,
+                    showIgnored: true,
                 },
                 timeAgo: '',
                 timerInterval: null,
