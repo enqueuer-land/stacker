@@ -77,8 +77,7 @@
                         item: this.item
                     }
                 });
-            }
-            else {
+            } else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
                     path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.type,
@@ -97,8 +96,7 @@
                         item: this.item
                     }
                 });
-            }
-            else {
+            } else {
                 const firstProtocol = this.$store.state[this.item.component].protocols[0];
                 this.$router.push({
                     path: '/' + this.item.component + '/' + this.item.id + '/' + firstProtocol.type,
@@ -130,10 +128,11 @@
                 }
             },
             getEvents() {
-                let storeComponent = this.$store.state[this.item.component];
+                const storeComponent = this.$store.state[this.item.component];
                 let protocol = undefined;
                 if (storeComponent.protocols) {
-                    protocol = storeComponent.protocols.find(protocol => protocol.type === this.item.type.toLowerCase());
+                    protocol = storeComponent.protocols
+                        .find(protocol => this.selectedProtocol && protocol.type.toLowerCase() === this.selectedProtocol.toLowerCase());
                     if (!protocol) {
                         protocol = storeComponent.protocols[0];
                     }
@@ -149,8 +148,7 @@
                             item: this.item
                         }
                     });
-                }
-                else {
+                } else {
                     console.log('/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol);
                     this.$router.push({
                         path: '/' + this.item.component + '/' + this.item.id + '/' + this.selectedProtocol,
@@ -179,8 +177,7 @@
                             item: this.item
                         }
                     });
-                }
-                else {
+                } else {
                     this.selectedProtocol = this.item.type;
                     if (!this.selectedProtocol) {
                         this.selectedProtocol = this.$store.state[this.item.component].protocols[0];

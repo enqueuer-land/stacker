@@ -140,17 +140,8 @@ export default new Vuex.Store({
             protocols: [
                 {
                     type: 'http',
-                    module: undefined,
                     sync: true
-                },
-                {
-                    type: 'amqp',
-                    sync: false
-                },
-                {
-                    type: 'mqtt',
-                    sync: false
-                },
+                }
             ],
             getEvents(protocol) {
                 let syncEvent = {
@@ -208,14 +199,7 @@ export default new Vuex.Store({
             protocols: [
                 {
                     type: 'http',
-                    module: undefined
-                },
-                {
-                    type: 'amqp',
-                },
-                {
-                    type: 'mqtt',
-                },
+                }
             ],
             getEvents() {
                 return [
@@ -293,6 +277,12 @@ export default new Vuex.Store({
         ],
     },
     mutations: {
+        addPublisherProtocol(state, payload) {
+            state.publisher.protocols.push(payload);
+        },
+        addSubscriptionProtocol(state, payload) {
+            state.subscription.protocols.push(payload);
+        },
         saveRequisition(state, payload) {
             window.remote.dialog.showSaveDialog({
                 defaultPath: payload.item.name + '.stk',
