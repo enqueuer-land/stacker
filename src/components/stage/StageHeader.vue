@@ -125,7 +125,7 @@
                 new ComponentManager().propagateValidationToParents(this.item, valid);
             },
             runClick: async function (item) {
-                if (new ComponentManager().isComponentValid(item) && !new ComponentManager().isItemIgnored(item)) {
+                if (new ComponentManager().isComponentValid(item) && !new ComponentManager().isItemInIgnoredTree(item)) {
                     await this.$store.dispatch('runRequisition', item);
                 }
             },
@@ -217,7 +217,7 @@
                 this.forceRecomputeCounter;
                 return {
                     'btn pl-4 pr-4': true,
-                    disabled: !new ComponentManager().isComponentValid(this.item) || new ComponentManager().isItemIgnored(this.item)
+                    disabled: !new ComponentManager().isComponentValid(this.item) || new ComponentManager().isItemInIgnoredTree(this.item)
                 }
             },
             protocolsListStyle() {

@@ -159,6 +159,7 @@
         --text-color: #eeeeee;
         --text-smooth-color: #a4a4a4;
         --stacker-header-background-color: #2b2a2e;
+        --stacker-header-background-darker-color: #201f21;
         --stacker-background-color: #353535;
         --stacker-background-alternative-color: #424242;
     }

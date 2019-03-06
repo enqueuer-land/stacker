@@ -35,7 +35,7 @@
                             const componentManager = new ComponentManager();
                             const results = this.$store.state.results;
                             const item = componentManager.findItem(results[results.length - 1].id);
-                            if (item && componentManager.isComponentValid(item) && !componentManager.isItemIgnored(item)) {
+                            if (item && componentManager.isComponentValid(item) && !componentManager.isItemInIgnoredTree(item)) {
                                 this.$store.dispatch('runRequisition', item);
                             }
                         },

@@ -231,7 +231,7 @@ export default class ComponentManager {
         }
     }
 
-    isItemIgnored(item) {
+    isItemInIgnoredTree(item) {
         if (item.ignore) {
             return true;
         }

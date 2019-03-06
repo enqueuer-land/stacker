@@ -151,8 +151,8 @@
                     style['background-color'] = 'var(--stacker-background-alternative-color)';
                     style['border-left'] = '2px var(--enqueuer-color) solid';
                 }
-                if (new ComponentManager().isItemIgnored(this.item)) {
-                    // style['background-color'] = 'var(--stacker-header-background-color)';
+                if (new ComponentManager().isItemInIgnoredTree(this.item)) {
+                    style['background-color'] = 'var(--stacker-header-background-darker-color)';
                     style['text-decoration'] = 'line-through var(--' + this.item.component + '-color) double';
                 }
 

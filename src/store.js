@@ -18,6 +18,7 @@ export default new Vuex.Store({
             string: '',
             showPassingTests: true,
             showFailingTests: true,
+            showIgnored: false
         },
         eventEmitter: new EventEmitter(),
         selectedItem: null,

@@ -109,7 +109,7 @@
                     string: '',
                     showPassingTests: true,
                     showFailingTests: true,
-                    showIgnored: true,
+                    showIgnored: false,
                 },
                 timeAgo: '',
                 timerInterval: null,

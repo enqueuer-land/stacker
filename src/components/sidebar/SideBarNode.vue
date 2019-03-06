@@ -1,11 +1,11 @@
 <template>
-    <div class="side-bar-node mb-0 mt-0">
+    <div class="side-bar-node mb-0 mt-0" :style="nodeStyle">
         <div @click="onClick" data-toggle="collapse" :data-target="'#' + node.id" style="padding-bottom: 1px">
             <SideBarItem :item="node" :index="index" :key="node.id" :opened="opened" @clicked="headerChildClick"/>
         </div>
         <div :id="node.id" class="collapse">
             <div class="pr-0 pt-0 pl-3"
-                 style="background-color: var(--stacker-header-background-color); border-left: 2px solid var(--enqueuer-color);">
+                 :style="childStyle">
                 <ul class="list-unstyled">
                     <SideBarNode v-for="(requisition, index) in filteredRequisitions" :index="index"
                                  :key="requisition.id" :node="requisition"/>
@@ -31,6 +31,11 @@
             index: {},
         },
         mounted() {
+            this.$store.state.eventEmitter.on('ignoreComponent', (payload) => {
+                console.log('ignored component');
+                ++this.forceRecomputeCounter;
+            });
+
             this.$store.state.eventEmitter.on('collapseRequisition', (payload) => {
                 let collapse = () => {
                     this.opened = false;
@@ -54,6 +59,7 @@
         },
         data: function () {
             return {
+                forceRecomputeCounter: 0,
                 opened: false
             }
         },
@@ -69,6 +75,27 @@
             },
         },
         computed: {
+            nodeStyle() {
+                this.forceRecomputeCounter;
+
+                const style = {
+                };
+                if (new ComponentManager().isItemInIgnoredTree(this.node)) {
+                    style['background-color'] = 'var(--stacker-header-background-darker-color)';
+                }
+                return style
+            },
+            childStyle() {
+                this.forceRecomputeCounter;
+
+                const style = {
+                    'border-left': '2px solid var(--enqueuer-color)'
+                };
+                if (!new ComponentManager().isItemInIgnoredTree(this.node)) {
+                    style['background-color'] = 'var(--stacker-header-background-color)';
+                }
+                return style
+            },
             filteredRequisitions() {
                 return (this.node.requisitions || []).filter(requisition => new ComponentManager().itemFilter(requisition));
             },
