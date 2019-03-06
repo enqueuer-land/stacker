@@ -6,6 +6,15 @@ import store from './store'
 Vue.config.productionTip = false;
 
 store.commit('addPublisherProtocol', {
+        type: 'http',
+        sync: true
+    }
+);
+store.commit('addSubscriptionProtocol', {
+        type: 'http',
+    },
+);
+store.commit('addPublisherProtocol', {
         type: 'amqp',
         sync: false
     }

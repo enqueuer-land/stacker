@@ -137,12 +137,7 @@ export default new Vuex.Store({
                     }
                 }
             ],
-            protocols: [
-                {
-                    type: 'http',
-                    sync: true
-                }
-            ],
+            protocols: [],
             getEvents(protocol) {
                 let syncEvent = {
                     label: 'On Message Received',
@@ -196,11 +191,7 @@ export default new Vuex.Store({
                     }
                 }
             ],
-            protocols: [
-                {
-                    type: 'http',
-                }
-            ],
+            protocols: [],
             getEvents() {
                 return [
                     {
