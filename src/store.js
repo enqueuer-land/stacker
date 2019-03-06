@@ -425,6 +425,7 @@ export default new Vuex.Store({
                     console.log('Pasted: ' + parsedClipboard.name);
 
                     const parent = payload ? payload.item : undefined;
+                    delete parsedClipboard.id;
                     switch (parsedClipboard.component) {
                         case 'requisition':
                             const newRequisition = new ComponentManager().createRequisition(parsedClipboard, parent);
