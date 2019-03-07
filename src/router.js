@@ -3,27 +3,9 @@ import Router from 'vue-router'
 import StageHeader from './components/stage/StageHeader'
 import GeneralRequisition from './components/stage/requisitions/GeneralRequisition'
 import store from './store'
+import {stageBodyPropsBuilder, stageHeaderPropsBuilder} from "./router-props-builder";
 
 Vue.use(Router);
-
-let stageBodyPropsBuilder = function (route, state) {
-    const splitPath = route.path.split("/");
-    const name = splitPath[splitPath.length - 1];
-    return {
-        eventName: name,
-        item: state.selectedItem
-    };
-};
-
-
-let stageHeaderPropsBuilder = function (route, state) {
-    const splitPath = route.path.split("/");
-    const id = splitPath[2];
-    return {
-        id: id,
-        item: state.selectedItem
-    };
-};
 
 export default new Router({
     routes: [
