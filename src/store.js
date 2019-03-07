@@ -5,10 +5,31 @@ import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
 import DotStackerDirectoryCreator from "./tests/dot-stacker-directory-creator";
+import router from './router'
+import StageHeader from "./components/stage/StageHeader";
 
 const EventEmitter = require('events');
 
 Vue.use(Vuex);
+
+let stageBodyPropsBuilder = function (route, state) {
+    const splitPath = route.path.split("/");
+    const name = splitPath[splitPath.length - 1];
+    return {
+        eventName: name,
+        item: state.selectedItem
+    };
+};
+
+let stageHeaderPropsBuilder = function (route, state) {
+    const splitPath = route.path.split("/");
+    const id = splitPath[2];
+    return {
+        id: id,
+        item: state.selectedItem
+    };
+};
+
 
 export default new Vuex.Store({
     state: {
@@ -270,9 +291,32 @@ export default new Vuex.Store({
     mutations: {
         addPublisherProtocol(state, payload) {
             state.publisher.protocols.push(payload);
+            router.addRoutes([{
+                path: "/publisher/:id",
+                component: StageHeader,
+                props: (route) => stageHeaderPropsBuilder(route, state),
+                children: [{
+                    component: payload.module,
+                    path: payload.type.toLowerCase(),
+                    props: (route) => stageBodyPropsBuilder(route, state),
+
+                }]
+            }]);
+
         },
         addSubscriptionProtocol(state, payload) {
             state.subscription.protocols.push(payload);
+            router.addRoutes([{
+                path: "/subscription/:id",
+                component: StageHeader,
+                props: (route) => stageHeaderPropsBuilder(route, state),
+                children: [{
+                    component: payload.module,
+                    path: payload.type.toLowerCase(),
+                    props: (route) => stageBodyPropsBuilder(route, state),
+
+                }]
+            }]);
         },
         saveRequisition(state, payload) {
             window.remote.dialog.showSaveDialog({
@@ -470,4 +514,4 @@ export default new Vuex.Store({
 
         }
     }
-})
+});
