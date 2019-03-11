@@ -1,3 +1,5 @@
+const DynamicModulesManager = require("enqueuer/js/plugins/dynamic-modules-manager").DynamicModulesManager;
+const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 
 const electron = require('electron');
 const app = electron.app;
@@ -5,10 +7,8 @@ const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 // const Menu = electron.Menu;
 const Configuration = require("enqueuer/js/configurations/configuration").Configuration;
-const PluginManager = require("enqueuer/js/plugins/plugin-manager").PluginManager;
 const Store = require("enqueuer/js/configurations/store").Store;
 const Logger = require("enqueuer/js/loggers/logger").Logger;
-const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 const os = require("os");
 
 
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'DEV') {
     console.log('Running in dev mode');
     url = 'http://localhost:8090/'
 } else {
-    url ='file://'+ __dirname + `/../dist/index.html`;
+    url = 'file://' + __dirname + `/../dist/index.html`;
 }
 
 app.on('ready', () => {
@@ -42,9 +42,19 @@ app.on('ready', () => {
 
     //Showing window gracefully
     window.once('ready-to-show', () => {
-        Configuration.addPlugin('enqueuer-plugin-amqp');
-        Configuration.addPlugin('enqueuer-plugin-mqtt');
-        // PluginManager.getProtocolManager().describeProtocols();
+        Configuration.getInstance().addPlugin('enqueuer-plugin-amqp');
+        Configuration.getInstance().addPlugin('enqueuer-plugin-mqtt');
+        // DynamicModulesManager.getInstance().getProtocolManager().describeProtocols();
+
+
+        // const mqttSubscription = './components/stage/subscriptions/MqttSubscription.vue';
+        // window.webContents.send('loadSubscriptionPlugin', {
+        //         type: 'mqtt',
+        //         module: () => import(mqttSubscription)
+        //     },
+        // );
+
+
         window.webContents.send('dirnames', __dirname, os.homedir(), process.cwd());
         if (process.env.NODE_ENV === 'DEV') {
             window.webContents.openDevTools({mode: 'bottom'});
@@ -55,10 +65,10 @@ app.on('ready', () => {
     });
 
     ipcMain.on('runRequisition', (event, requisition) => {
-        Store.refreshData();
-        Logger.setLoggerLevel('debug');
+        // Store.refreshData();
+        // Logger.setLoggerLevel('debug');
         event.sender.send('runningRequisition');
-        new RequisitionRunner(requisition, null).run()
+        new RequisitionRunner(requisition).run()
             .then(report => {
                 event.sender.send('runRequisitionReply', report)
             })

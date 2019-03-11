@@ -39,6 +39,14 @@ store.commit('addSubscriptionProtocol', {
     },
 );
 
+
+// window.ipcRenderer.on('loadSubscriptionPlugin', (plugin) => {
+//     console.log('got the message: ' + plugin.type);
+//     store.commit('addSubscriptionProtocol', plugin);
+//
+// });
+
+
 new Vue({
     router,
     store,

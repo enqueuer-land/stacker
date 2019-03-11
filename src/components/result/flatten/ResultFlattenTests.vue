@@ -35,11 +35,11 @@
                 const filterString = resultFilter.string.toLowerCase();
                 return this.testsSummary
                     .filter(test => (resultFilter.showPassingTests && test.valid === true) ||
-                                    (resultFilter.showFailingTests && test.valid === false) ||
-                                    (resultFilter.showIgnored && test.ignored === true))
+                        (resultFilter.showFailingTests && test.valid === false) ||
+                        (resultFilter.showIgnored && test.ignored === true))
                     .filter(test => test.name.toLowerCase().indexOf(filterString) !== -1 ||
-                                    (test.description.toLowerCase() || '').indexOf(filterString) !== -1 ||
-                                    test.hierarchy.some(hierarchy => hierarchy.name.toLowerCase().indexOf(filterString) !== -1));
+                        (test.description.toLowerCase() || '').indexOf(filterString) !== -1 ||
+                        test.hierarchy.some(hierarchy => hierarchy.name.toLowerCase().indexOf(filterString) !== -1));
             }
         }
     }
