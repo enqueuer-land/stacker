@@ -55,5 +55,5 @@ They will all be gone soon :)
 
 ##### Feedback
 We'd love to hear your feedback!
-If you have any comments, suggestions, etc. you can reach us [here](github.com/lopidio/stacker)
+If you have any comments, suggestions, etc. you can reach us [here](github.com/lopidio/stacker).
 
