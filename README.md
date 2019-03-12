@@ -1,6 +1,6 @@
 ## Stacker
 
-![logo](https://raw.githubusercontent.com/lopidio/stacker/master/build/logo-small.png)
+<img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/logo-small.png" width="50" height="auto">
 
 Stacker is a GUI client for [enqueuer](https://enqueuer-land.github.io/enqueuer/) to handle multi protocol tests.
 Written in [Vue.js](https://vuejs.org) and [Electron](https://electronjs.org).
