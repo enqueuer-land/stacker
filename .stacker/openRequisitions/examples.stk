@@ -30,6 +30,7 @@ requisitions:
                     assertions: []
                 onFinish:
                     assertions: []
+                parallel: false
             -
                 name: 'using just created exchange'
                 publishers:
@@ -104,6 +105,7 @@ requisitions:
                     assertions: []
                 onFinish:
                     assertions: []
+                parallel: false
             -
                 name: 'default exhange'
                 publishers:
@@ -158,6 +160,7 @@ requisitions:
                     assertions: []
                 onFinish:
                     assertions: []
+                parallel: false
         id: id1544238244378aTfo0X4zET
         publishers: []
         subscriptions: []
@@ -168,6 +171,7 @@ requisitions:
             assertions: []
         onFinish:
             assertions: []
+        parallel: false
     -
         id: id1543000638523m9VUBwwaZQ
         name: 'github api'
@@ -230,6 +234,7 @@ requisitions:
             assertions: []
         onFinish:
             assertions: []
+        parallel: false
     -
         timeout: 3000
         name: 'http self-test'
@@ -284,6 +289,7 @@ requisitions:
             assertions: []
         onFinish:
             assertions: []
+        parallel: false
     -
         publishers:
             -
@@ -341,6 +347,7 @@ requisitions:
             assertions: []
         onFinish:
             assertions: []
+        parallel: false
     -
         name: recursion
         onInit:
@@ -372,6 +379,7 @@ requisitions:
                                     store: {}
                                 onFinish:
                                     assertions: []
+                                parallel: false
                         id: id15442382443880R1s7epOgM
                         publishers: []
                         subscriptions: []
@@ -382,6 +390,7 @@ requisitions:
                             assertions: []
                         onFinish:
                             assertions: []
+                        parallel: false
                 id: id1544238244388xgo44eulxq
                 publishers: []
                 subscriptions: []
@@ -392,6 +401,7 @@ requisitions:
                     assertions: []
                 onFinish:
                     assertions: []
+                parallel: false
         onFinish:
             assertions:
                 -
@@ -404,6 +414,7 @@ requisitions:
         errors: []
         invalidChildren: []
         component: requisition
+        parallel: false
 id: id1544238244389kGoTyq3kVF
 publishers: []
 subscriptions: []
@@ -414,3 +425,4 @@ onInit:
     assertions: []
 onFinish:
     assertions: []
+parallel: true

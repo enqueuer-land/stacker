@@ -49,7 +49,7 @@ If you want to aid the project in other ways, consider sending us a star.
 
 ##### Still in Beta
 Stacker is still a beta version, so please excuse any small glitches that may occur here and there.
-They will all be gone soon :)
+They will all be gone soon. :)
 
 ##### Feedback
 We'd love to hear your feedback!

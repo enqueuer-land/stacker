@@ -1,7 +1,7 @@
 <template>
     <div class="general-requisition container-fluid">
         <div class="row">
-            <div class="col pr-2">
+            <div class="col px-2">
                 <div class="row">
                     <div class="pl-3 pt-2 stacker-label">
                         Time out
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col pl-0 pr-2">
+            <div class="col px-2">
                 <div class="row">
                     <div class="pl-3 pt-2 stacker-label">
                         Delay
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col pl-0">
+            <div class="col px-2">
                 <div class="row">
                     <div class="pl-3 pt-2 stacker-label">
                         Iterations
@@ -43,6 +43,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row pt-2">
+            <rounded-switch class="col" v-model="parallel" label="Parallel"/>
         </div>
 
         <div class="row py-5">
@@ -69,10 +72,11 @@
 <script>
 
     import StackerInput from "../../inputs/StackerInput";
+    import RoundedSwitch from "../../inputs/RoundedSwitch";
 
     export default {
         name: 'GeneralRequisition',
-        components: {StackerInput},
+        components: {StackerInput, RoundedSwitch},
         props: {
             item: {},
         },
@@ -82,6 +86,7 @@
                 timeout: defaultItem.timeout,
                 iterations: defaultItem.iterations,
                 delay: defaultItem.delay,
+                parallel: defaultItem.parallel,
             }
         },
         methods: {
@@ -90,6 +95,7 @@
                     timeout: this.timeout,
                     iterations: this.iterations,
                     delay: this.delay,
+                    parallel: this.parallel,
                 };
                 this.$emit('input', payload);
             },
@@ -113,11 +119,14 @@
             delay() {
                 this.emit();
             },
+            parallel() {
+                this.emit();
+            },
             item() {
                 this.timeout = this.item.timeout;
                 this.iterations = this.item.iterations;
                 this.delay = this.item.delay;
-
+                this.parallel = this.item.parallel;
             }
         }
     }
