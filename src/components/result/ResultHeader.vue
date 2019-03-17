@@ -119,7 +119,6 @@
         watch: {
             result() {
                 this.response = this.result;
-                console.log(JSON.stringify(this.response, null, 4))
                 //TODO verify bug here. Sometimes it disappears
                 const timeUpdater = () => {
                     if (this.response && this.response.length > 0) {

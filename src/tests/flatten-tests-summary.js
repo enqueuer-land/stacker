@@ -6,7 +6,7 @@ export default class FlattenTestsSummary {
     }
 
     addTest(node) {
-        this.findTests(node, []);
+        this.findTests(node, [node]);
         return this;
     }
 
