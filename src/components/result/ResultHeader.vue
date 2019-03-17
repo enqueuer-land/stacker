@@ -10,7 +10,7 @@
                 </button>
                 <span class="col align-self-center pl-3 result-name scroll-div"
                       :style="resultNameStyle">
-                        {{response.name}}
+                        {{requisition.name}}
                     </span>
             </div>
             <div class="row no-gutters pb-1 pl-2 pt-2 justify-content-between" style="height: 40px">
@@ -94,7 +94,8 @@
         name: 'ResultHeader',
         components: {StackerInput, StackerIcon},
         props: {
-            result: {}
+            result: {},
+            requisition: {}
         },
         mounted() {
             this.$store.state.eventEmitter.on('clearResult', () => {
@@ -118,10 +119,12 @@
         watch: {
             result() {
                 this.response = this.result;
+                console.log(JSON.stringify(this.response, null, 4))
                 //TODO verify bug here. Sometimes it disappears
                 const timeUpdater = () => {
-                    if (this.response) {
-                        this.timeAgo = new TimeHandler().getTimeAgo(this.response.time.endTime);
+                    if (this.response && this.response.length > 0) {
+                        // console.log(this.response[0].time)
+                        this.timeAgo = new TimeHandler().getTimeAgo(this.response[this.response.length - 1].time.endTime);
                     }
                 };
                 timeUpdater();
@@ -139,7 +142,9 @@
         },
         computed: {
             tests() {
-                return new FlattenTestsSummary().addTest(this.response);
+                const flattenTestsSummary = new FlattenTestsSummary();
+                this.response.forEach((result) => flattenTestsSummary.addTest(result));
+                return flattenTestsSummary;
             },
             resultHeaderStyle: function () {
                 const result = {
@@ -172,8 +177,11 @@
         },
         methods: {
             printTime: function () {
-                if (this.result) {
-                    return new TimeHandler().getTotalTime(this.response.time.totalTime);
+                if (this.result && this.response.length > 0) {
+                    const totalTime = new Date(this.response[this.response.length - 1].time.endTime).getTime()
+                        - new Date(this.response[0].time.startTime).getTime();
+
+                    return new TimeHandler().getTotalTime(totalTime);
                 }
             }
         }

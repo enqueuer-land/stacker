@@ -1,7 +1,7 @@
 <template>
     <div class="result" @click="hideModal">
 
-        <result-header :result="result"/>
+        <result-header :result="result" :requisition="requisition"/>
         <result-body :result="result" class="scroll-div" style="height: calc(100% - 190px);"/>
         <result-footer style="height: 40px;"></result-footer>
 
@@ -35,21 +35,23 @@
                 $('body').removeClass("modal-open");
                 this.running = new Date().getTime();
             });
-            this.$store.state.eventEmitter.on('requisitionReport', (report) => {
+            this.$store.state.eventEmitter.on('requisitionReport', (report, requisition) => {
                 $('#runningModal').modal('hide');
                 this.running = null;
                 this.result = report;
+                this.requisition = requisition;
             });
             this.$store.state.eventEmitter.on('clearResult', () => {
                 this.result = null;
+                this.requisition = null;
             });
         },
         data() {
 
-            const results = this.$store.state.results;
             return {
                 running: null,
-                result: results[results.length - 1]
+                result: null,
+                requisition: null
             }
         },
         methods: {

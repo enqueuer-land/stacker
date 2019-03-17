@@ -33,18 +33,17 @@
         https://css-tricks.com/long-dropdowns-solution/
 - [x] Replace every stacker-class with Stacker component
 - [x] Limit Stage/SideBar/Result width
-- [ ] Deep tests
-- [ ] ToggleableIcon groups
+- [x] ToggleableIcon groups
 - [ ] Assertion to be created opened by default (?)
 - [ ] Disable dropdown items based on functions
 - [ ] Disable stacker icons based on functions
 - [ ] Pack it up
         https://nklayman.github.io/vue-cli-plugin-electron-builder/
         https://github.com/webpack/webpack/issues/4603
-- [ ] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
+- [x] Distribute https://github.com/electron/apps/blob/master/contributing.md#adding-your-app
 - [ ] Import requisition inside requisition
 - [ ] No replay requisition in ResultFooter when there's no response being displayed
-- [ ] StageHeaders name cannot be empty
+- [x] StageHeaders name cannot be empty
 - [ ] Tests result buttons (expandAll, collapse all)
 - [ ] Create Stage Header Header
 - [ ] Create Result Not Flatten Tests

@@ -24,23 +24,21 @@ It's ~~not yet another~~ a GUI client tool. It is magnificent one that provides 
 
 ![screenshot-failing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/failing-tests.png) 
 
-------
-
-#### Test driven client
+### Test driven client
 Assertions are the main reason to use this. Check whether each flowing by message matches what is expected:
 
 - Sent to where it was suppose to be sent
 - Contains what it should contain
 - Sent faster than the threshold
 
-#### Multi-protocol client
+### Polyglot client
 Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click away from each other.
 
 - HTTP
 - AMQP
 - MQTT
 
-------
+----
 
 ##### Licensing
 MIT

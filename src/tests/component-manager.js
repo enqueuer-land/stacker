@@ -16,7 +16,7 @@ export default class ComponentManager {
             .filter(file => fs.lstatSync(file).isFile())
             .map(file => this.openRequisitionFile(file));
         return this.createRequisition({name: this.removeFilenameExtension(filename), requisitions: requisitionFiles});
-    };
+    }
 
     openRequisitionFile(filename) {
         if (fs.lstatSync(filename).isDirectory()) {
@@ -36,7 +36,7 @@ export default class ComponentManager {
                 return this.createRequisition(fileRequisition);
             }
         }
-    };
+    }
 
     removeFilenameExtension(filename) {
         let nameWithNoExtension = path.basename(filename);
@@ -78,7 +78,7 @@ export default class ComponentManager {
         newRequisition.subscriptions = (base.subscriptions || []).map(subscription => this.createSubscription(subscription, newRequisition));
         newRequisition.requisitions = (base.requisitions || []).map(requisition => this.createRequisition(requisition, newRequisition));
         return newRequisition;
-    };
+    }
 
     createPublisher = (base, parent) => {
         return {
@@ -90,7 +90,8 @@ export default class ComponentManager {
             errors: [],
             component: "publisher"
         };
-    };
+    }
+
     createSubscription = (base, parent) => {
         return {
             ...base,
@@ -101,7 +102,8 @@ export default class ComponentManager {
             errors: [],
             component: "subscription"
         };
-    };
+    }
+
     delete = (item) => {
         new ComponentManager().propagateValidationToParents(item, true);
 
@@ -120,7 +122,7 @@ export default class ComponentManager {
             item.requisitions = item.requisitions.filter(requisition => requisition.id !== item.id);
         }
 
-    };
+    }
 
     isRequisitionValid(requisition) {
         return this.isComponentValid(requisition) &&
