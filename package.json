@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "enqueuer": "^4.3.0",
-    "enqueuer-plugin-amqp": "0.0.7",
+    "enqueuer-plugin-amqp": "0.0.8",
     "enqueuer-plugin-mqtt": "0.0.1",
     "request": "^2.88.0",
     "vue": "^2.5.17",
