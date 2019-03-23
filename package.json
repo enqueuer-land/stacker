@@ -12,6 +12,7 @@
     "clear": "rm -rf dist/",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "dev": "NODE_ENV=DEV node_modules/.bin/vue-cli-service serve --port 8090 & sleep 5 && NODE_ENV=DEV node_modules/.bin/electron src/electron.js",
+    "updateHtml": "node misc/generateHtml",
     "compile": "node_modules/.bin/vue-cli-service build",
     "build:mac": "node_modules/.bin/electron-builder --mac",
     "build:win": "node_modules/.bin/electron-builder --win",
@@ -30,6 +31,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "pagedown": "^1.1.0",
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
