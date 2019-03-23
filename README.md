@@ -23,14 +23,14 @@ It's a GUI client tool (yet another). It is a magnificent one that provides the 
 - Built in CLI is easy to add to your team's existing CI pipelines powered by [enqueuer](https://enqueuer-land.github.io/enqueuer/)
 - (WIP) Easily extensible behavior through third party plugins, including your own custom ones
 
-### Test driven client
+### Test driven
 Assertions are the main reason to use this. Check whether each flowing by message matches what is expected:
 
 - Sent to where it was suppose to be sent
 - Contains what it should contain
 - Sent faster than the threshold
 
-### Polyglot client
+### Polyglot
 Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click away from each other.
 
 - HTTP
