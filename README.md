@@ -34,11 +34,14 @@ Through assertions check whether each flowing by message matches what is expecte
 - Sent faster than the threshold  
 
 ### Polyglot
-Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click away from each other.
+Have you seen how many protocols it supports? Out of the box, just one click away from each other.
+There's a work in progress task force to enable an amazing plugin architecture so you'll be free to write your one or download the ones that pleased you most.
+In this meanwhile, you can have fun using one of the following:
 
-- HTTP  
-- AMQP  
-- MQTT  
+- HTTP
+- AMQP
+- MQTT
+
 
 ![screenshot-failing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/ignored-tests.png "Screenshot showing different protocols and tests results")
  
