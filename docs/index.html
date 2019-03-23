@@ -64,7 +64,7 @@
             <p class="col-12 m-auto py-4 jumbotron-summary">
                 Open source, cross-platform,
                 <span>really good looking,</span>
-                <span>multi-protocol client</span>
+                <span>multi protocol client</span>
                 <span style="">testing tool</span>
             </p>
             <div class="col-2 m-auto py-4 px-0 container-fluid binaries-container"
@@ -118,17 +118,15 @@
                     <h2 style="
     text-align: center;
 ">Multi protocol</h2>
-                    <p>Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click
+                    <p>Have you seen how many protocols it supports? Out of the box, just one click
                         away from each other, including your own custom ones:</p>
                     <ul>
                         <li>HTTP</li>
                         <li>AMQP</li>
                         <li>MQTT</li>
-                        <li><span style="color: var(--failing-test-color); font-weight: lighter; padding-right: 5px">(WIP)</span>TCP;
-                            SQS, AMQP1.0; KAFKA; ZEROMQ; STOMP; FILE etc.
-                        </li>
                         <li>
-                            <span style="color: var(--enqueuer-color); font-weight: lighter; padding-right: 5px">Your own custom protocol</span>
+                            <span style="color: var(--failing-test-color); font-weight: lighter; padding-right: 5px">(WIP)</span>
+                            Your own custom one
                         </li>
                     </ul>
                 </div>
@@ -155,7 +153,7 @@ Have you ever wondered how awesome it would be to have a GUI tool to save you fr
 
 <h3>Description</h3>
 
-<p>Stacker is a GUI client for <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a> to handle multi protocol tests.
+<p>Stacker is a <span style="text-decoration: line-through">yet another</span> GUI client for <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a> to handle multi protocol tests.
 Written in <a href="https://vuejs.org">Vue.js</a> and <a href="https://electronjs.org">Electron</a>.
 It aims to provide a clean, fun, and good looking interface for interacting with polyglot flows.</p>
 
@@ -163,22 +161,27 @@ It aims to provide a clean, fun, and good looking interface for interacting with
 
 <h3>Features</h3>
 
-<p>It's a GUI client tool (yet another). It is a magnificent one that provides the following capabilities:
-- Support for many protocols out of the box
-- Easily mock numerous services to alleviate the headaches of functional and integration tests
-- Friendly for developers and non developers
-- Built in assertion library to verify response data coming from/going to your services
-- Built in CLI is easy to add to your team's existing CI pipelines powered by <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a>
-- (WIP) Easily extensible behavior through third party plugins, including your own custom ones</p>
+<p>This mankind magnificence provides the following capabilities:</p>
+
+<ul>
+<li>Support for many protocols out of the box  </li>
+<li>Chainable message flows  </li>
+<li>Easily mock numerous services to alleviate the headaches of functional and integration tests  </li>
+<li>Friendly for developers and non developers  </li>
+<li>Built in assertion library to verify response data coming from/going to your services  </li>
+<li>Built in CLI is easy to add to your team's existing CI pipelines powered by <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a>  </li>
+<li>(WIP) Easily extensible behavior through third party plugins, including your own custom ones  </li>
+</ul>
 
 <h3>Test driven</h3>
 
-<p>Assertions are the main reason to use this. Check whether each flowing by message matches what is expected:</p>
+<p>Test are first class citizens, they are placed front and center here.
+Through assertions check whether each flowing by message matches what is expected:</p>
 
 <ul>
-<li>Sent to where it was suppose to be sent</li>
-<li>Contains what it should contain</li>
-<li>Sent faster than the threshold</li>
+<li>Sent to where it was suppose to be sent  </li>
+<li>Contains what it should contain  </li>
+<li>Sent faster than the threshold  </li>
 </ul>
 
 <h3>Polyglot</h3>
@@ -186,18 +189,14 @@ It aims to provide a clean, fun, and good looking interface for interacting with
 <p>Have you seen how many protocols it supports? Incredible, huh? Out of the box, just one click away from each other.</p>
 
 <ul>
-<li>HTTP</li>
-<li>AMQP</li>
-<li>MQTT</li>
+<li>HTTP  </li>
+<li>AMQP  </li>
+<li>MQTT  </li>
 </ul>
 
 <p><img src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/ignored-tests.png" alt="screenshot-failing" title="Screenshot showing different protocols and tests results" /></p>
 
 <hr />
-
-<h5>Licensing</h5>
-
-<p>MIT</p>
 
 <h5>Contribute</h5>
 

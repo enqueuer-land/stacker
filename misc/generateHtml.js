@@ -7,6 +7,13 @@ const template = fs.readFileSync("./docs/index-template.html").toString();
 const md = fs.readFileSync("README.md").toString();
 
 
+// Configure section and toc generation
+converter.hooks.set("postConversion", (text) => {
+    return text
+        .replace(/~~(.*)~~/g, (match, p1) => '<span style="text-decoration: line-through">' + p1 + '</span>')
+});
+
+
 const readMeHtmlized = converter.makeHtml(md);
 
 const htmlResult = template

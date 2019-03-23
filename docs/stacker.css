@@ -86,19 +86,22 @@
     height: auto;
 }
 
+h2, h3, h4, h5 {
+    color: var(--enqueuer-color);
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+
 h2 {
     font-size: 2.1rem;
-    color: var(--enqueuer-color);
 }
 
 .readme-container h3 {
-    font-size: 2rem;
-    color: var(--enqueuer-color);
+    font-size: 1.8rem;
 }
 
 .readme-container h5 {
     font-size: 1.2rem;
-    color: var(--enqueuer-color);
 }
 
 .github-corner:hover .octo-arm {
