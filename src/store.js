@@ -4,10 +4,10 @@ import ComponentManager from "./tests/component-manager";
 import ParentRemover from "./tests/parent-remover";
 import IdReplacer from "./tests/id-replacer";
 import MultipleObjectNotation from "./tests/multiple-object-notation";
-import DotStackerDirectoryCreator from "./tests/dot-stacker-directory-creator";
 import router from './router'
 import StageHeader from "./components/stage/StageHeader";
 import {stageBodyPropsBuilder, stageHeaderPropsBuilder} from "./router-props-builder";
+import DotStackerDirectory from "./tests/dot-stacker-directory";
 
 const EventEmitter = require('events');
 
@@ -321,10 +321,13 @@ export default new Vuex.Store({
             })
         },
         createDotStackerDirectory(state, payload) {
-            console.log('Virgs - asarDirectory: ' + payload.asarDirectory);
-            console.log('Virgs - homeDirectory: ' + payload.homeDirectory);
+            console.log('createDotStackerDirectory');
 
-            new DotStackerDirectoryCreator(payload.asarDirectory, payload.homeDirectory).create();
+            new DotStackerDirectory(payload.homeDirectory).copyExamplesFile(payload.asarDirectory);
+        },
+        quit(state, payload) {
+            console.log('quit');
+            new DotStackerDirectory(payload.homeDirectory).saveRequisitions(state.requisitions);
         },
         changeResultFilter(state, value) {
             state.resultFilter = value;

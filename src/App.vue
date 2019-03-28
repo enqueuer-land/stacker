@@ -28,10 +28,11 @@
     export default {
         components: {Stage, Result, SideBar},
         created() {
-            window.ipcRenderer.on('dirnames', (event, asarDirectory, homeDirectory) => {
-                process.chdir(homeDirectory);
+            let homeDirectory;
+            window.ipcRenderer.on('dirnames', (event, asarDirectory, home) => {
+                process.chdir(home);
                 asarDirectory = !!asarDirectory ? asarDirectory + '/../': './';
-                homeDirectory = homeDirectory + '/';
+                homeDirectory = home + '/';
                 this.$store.commit('createDotStackerDirectory', {
                     asarDirectory, homeDirectory
                 });
@@ -43,6 +44,7 @@
 
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
+            window.ipcRenderer.on('quit', () => this.$store.commit('quit', {homeDirectory: homeDirectory}));
         },
         data() {
             return {

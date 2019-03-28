@@ -80,9 +80,12 @@ app.on('ready', () => {
 
     });
 
+    app.on('before-quit', () => {
+        window.webContents.send('quit');
+    });
+
     createMenu(window);
 });
-
 
 let createMenu = function (window) {
 // Create the Application's main menu
@@ -106,9 +109,7 @@ let createMenu = function (window) {
             {type: "separator"},
             {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
             {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
-            {
-                label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"
-            },
+            {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
             {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
         ]
     }];
