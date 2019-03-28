@@ -1,3 +1,5 @@
+const Menu = require("electron").Menu;
+
 const DynamicModulesManager = require("enqueuer/js/plugins/dynamic-modules-manager").DynamicModulesManager;
 const RequisitionRunner = require("enqueuer/js/requisition-runners/requisition-runner").RequisitionRunner;
 
@@ -103,12 +105,13 @@ let createMenu = function (window) {
             {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"},
             {type: "separator"},
             {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
-            // {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:", click() {window.webContents.send('clipboardCopy')}},
-            // {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:", click() {window.webContents.send('clipboardPaste')}},
+            {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
+            {
+                label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"
+            },
             {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
         ]
-    }
-    ];
+    }];
 
-    // Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 };
