@@ -2,6 +2,7 @@
     <div class="stacker-input"
          :contenteditable="!readonly"
          style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+         @input="change"
          @blur="blur"
          @focus="focus"
          :id="id">
@@ -38,20 +39,19 @@
                 return !text || text.length <= 0 || text === "\n";
             },
             change(event) {
+                this.text = event.target.innerText.replace(/\n/g, () => '');
             },
-            blur(event) {
-                const text = event.target.innerText.replace(/\n/g, () => '');
+            blur() {
                 const element = this.getInputHtmlElement();
-                if (this.isEmpty(text)) {
+                if (this.isEmpty(this.text)) {
                     const safeText = (this.placeholder || "").replace(/</g, () => "&lt;").replace(/>/g, () => "&gt;");
                     element.html(`<span style='color: var(--text-smooth-color); opacity: 0.5'>${safeText}</span>`);
                 } else {
-                    element.html(this.createHtml(text));
+                    element.html(this.createHtml(this.value));
                 }
             },
             focus() {
-                const text = event.target.innerText.replace(/\n/g, () => '');
-                if (this.isEmpty(text)) {
+                if (this.isEmpty(this.text)) {
                     const element = this.getInputHtmlElement();
                     element.html('');
                 }
@@ -86,7 +86,7 @@
                     safeText
                         .replace(/{{[^}}]+}}/g, replacer)
                         .replace(/&lt;&lt;.*&gt;&gt;/g, replacer) +
-                        // .replace(/(?<=&lt;&lt;)(.*?)(?=&gt;&gt;)/g, replacer) +
+                    // .replace(/(?<=&lt;&lt;)(.*?)(?=&gt;&gt;)/g, replacer) +
                     "</span><span style='color: var(--text-color)'></span>";
             },
         },
