@@ -12,11 +12,11 @@
                 </prism-editor>
             </div>
         </div>
-        <div class="row pb-1">
-            <assertions v-model="assertions"/>
-        </div>
         <div class="row">
             <key-value-input class="col px-2" v-model="store" title="Store"/>
+        </div>
+        <div class="row pb-1">
+            <assertions v-model="assertions"/>
         </div>
     </div>
 </template>

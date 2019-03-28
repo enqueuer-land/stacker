@@ -44,8 +44,8 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-2">
-            <rounded-switch class="col" v-model="parallel" label="Parallel"/>
+        <div class="row pt-2 justify-content-start">
+            <rounded-switch class="col-4 align-self-start ml-0 pl-2" v-model="parallel" label="Parallel"/>
         </div>
 
         <div class="row py-5">

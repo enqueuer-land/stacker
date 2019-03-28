@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 pr-2 pt-4 pl-2">
+            <div class="col-6 pr-2 pt-4 mt-1 pl-2">
                 <rounded-switch v-model="input.avoid" label="Avoidable"/>
             </div>
         </div>

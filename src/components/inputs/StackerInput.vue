@@ -2,7 +2,6 @@
     <div class="stacker-input"
          :contenteditable="!readonly"
          style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-         @input="change"
          @blur="blur"
          @focus="focus"
          :id="id">
@@ -39,19 +38,20 @@
                 return !text || text.length <= 0 || text === "\n";
             },
             change(event) {
-                this.text = event.target.innerText.replace(/\n/g, () => '');
             },
-            blur() {
+            blur(event) {
+                const text = event.target.innerText.replace(/\n/g, () => '');
                 const element = this.getInputHtmlElement();
-                if (this.isEmpty(this.text)) {
+                if (this.isEmpty(text)) {
                     const safeText = (this.placeholder || "").replace(/</g, () => "&lt;").replace(/>/g, () => "&gt;");
                     element.html(`<span style='color: var(--text-smooth-color); opacity: 0.5'>${safeText}</span>`);
                 } else {
-                    element.html(this.createHtml(this.value));
+                    element.html(this.createHtml(text));
                 }
             },
             focus() {
-                if (this.isEmpty(this.text)) {
+                const text = event.target.innerText.replace(/\n/g, () => '');
+                if (this.isEmpty(text)) {
                     const element = this.getInputHtmlElement();
                     element.html('');
                 }
