@@ -89,30 +89,54 @@ app.on('ready', () => {
 
 let createMenu = function (window) {
 // Create the Application's main menu
-    const template = [{
-        label: "Application",
-        submenu: [
-            {label: "Virgs", selector: "orderFrontStandardAboutPanel:"},
-            {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
-            {type: "separator"},
-            {
-                label: "Quit", accelerator: "Command+Q", click: function () {
-                    app.quit();
+    const template = [
+        {
+            label: "File",
+            submenu: [
+                {
+                    label: "New",
+                    accelerator: "CmdOrCtrl+N",
+                    click: () => window.webContents.send('propagate', 'addRequisition')
+                },
+                {
+                    label: "Open Requisition",
+                    accelerator: "CmdOrCtrl+O",
+                    click: () => window.webContents.send('propagate', 'openRequisitionFile')
+                },
+                {
+                    label: "Save Requisition",
+                    accelerator: "CmdOrCtrl+S",
+                    click: () => window.webContents.send('propagate', 'saveRequisition')
+                },
+                {type: "separator"},
+                {
+                    label: "Quit", accelerator: "Command+Q", click: function () {
+                        app.quit();
+                    }
                 }
-            }
-        ]
-    }, {
-        label: "Edit",
-        submenu: [
-            {label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
-            {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"},
-            {type: "separator"},
-            {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
-            {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
-            {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
-            {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
-        ]
-    }];
+            ]
+        },
+        {
+            label: "Edit",
+            submenu: [
+                {label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
+                {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"},
+                {type: "separator"},
+                {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
+                {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
+                {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
+                {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
+            ]
+        },
+        {
+            label: "Application",
+            submenu: [
+                // {label: "Contribute", click: () => },
+                {label: "Virgs", selector: "orderFrontStandardAboutPanel:"},
+                {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
+            ]
+        },
+    ];
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 };

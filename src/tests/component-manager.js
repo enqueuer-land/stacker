@@ -22,9 +22,6 @@ export default class ComponentManager {
         if (fs.lstatSync(filename).isDirectory()) {
             return this.openRequisitionsDirectory(filename);
         } else {
-            // console.log("dirname: " + __dirname);
-            // console.log("Current directory: " + fs.readdirSync('.').join('\n'));
-            // console.log("Opening: " + filename);
             const fileRequisition = new MultipleObjectNotation().loadFromFileSync(filename);
             let nameWithNoExtension = this.removeFilenameExtension(filename);
             if (Array.isArray(fileRequisition)) {

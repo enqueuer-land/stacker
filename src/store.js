@@ -321,8 +321,6 @@ export default new Vuex.Store({
             })
         },
         createDotStackerDirectory(state, payload) {
-            console.log('createDotStackerDirectory');
-
             new DotStackerDirectory(payload.homeDirectory).copyExamplesFile(payload.asarDirectory);
         },
         quit(state, payload) {
@@ -346,6 +344,15 @@ export default new Vuex.Store({
                 state.requisitions.push(newComponent);
                 state.selectedItem = newComponent;
                 payload.router.push({path: '/' + newComponent.component + '/' + newComponent.id});
+            }
+        },
+        openLastOpenedRequisitions(state, payload) {
+            const requisitions = new DotStackerDirectory(payload.homeDirectory).openRequisitions();
+            if (requisitions.length > 0) {
+                state.requisitions = state.requisitions.concat(requisitions);
+                const last = requisitions[requisitions.length - 1];
+                state.selectedItem = last;
+                payload.router.push({path: '/' + last.component + '/' + last.id});
             }
         },
         addRequisition(state, payload) {

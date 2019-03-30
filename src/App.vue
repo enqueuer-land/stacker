@@ -31,17 +31,16 @@
             let homeDirectory;
             window.ipcRenderer.on('dirnames', (event, asarDirectory, home) => {
                 process.chdir(home);
-                asarDirectory = !!asarDirectory ? asarDirectory + '/../': './';
+                asarDirectory = !!asarDirectory ? asarDirectory + '/../' : './';
                 homeDirectory = home + '/';
-                this.$store.commit('createDotStackerDirectory', {
-                    asarDirectory, homeDirectory
-                });
-                this.$store.commit('openRequisitionFile', {
-                    router: this.$router,
-                    file: homeDirectory + '.stacker/openRequisitions/examples.stk'
-                });
+                this.$store.commit('createDotStackerDirectory', {asarDirectory, homeDirectory});
+                this.$store.commit('openLastOpenedRequisitions', {router: this.$router, homeDirectory});
             });
 
+            window.ipcRenderer.on('propagate', (electronEvent, stackerEvent, ...args) => {
+                console.log(`Propagating ${stackerEvent} with ${args}`);
+                this.$store.commit(stackerEvent, {router: this.$router, window: this.window, args})
+            });
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));
             window.ipcRenderer.on('quit', () => this.$store.commit('quit', {homeDirectory: homeDirectory}));
