@@ -22,7 +22,7 @@
   "dependencies": {
     "enqueuer": "^4.5.2",
     "enqueuer-plugin-amqp": "0.0.8",
-    "enqueuer-plugin-mqtt": "0.0.1",
+    "enqueuer-plugin-mqtt": "1.0.0",
     "request": "^2.88.0",
     "vue": "^2.5.17",
     "vue-prism-editor": "^0.1.2",
