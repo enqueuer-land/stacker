@@ -131,7 +131,7 @@ h2 {
     }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1100px) {
     .binaries-container {
         display: none;
     }
