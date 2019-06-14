@@ -10,7 +10,7 @@ Have you ever wondered how awesome it would be to have a GUI tool to save you fr
 ### Description
 Stacker is a ~~yet another~~ GUI client for [enqueuer](https://enqueuer-land.github.io/enqueuer/) to handle multi protocol tests.
 Written in [Vue.js](https://vuejs.org) and [Electron](https://electronjs.org).
-It aims to provide a clean, fun, and good looking interface for interacting with polyglot flows.
+It aims to provide a clean, fun, and good looking interface for interacting with polyglot flows.  
 
 ![screenshot-passing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png)
 
@@ -57,5 +57,7 @@ They will all be gone soon. :)
 
 ##### Feedback
 We'd love to hear your feedback!
-If you have any comments, suggestions, etc. you can reach us [here](github.com/lopidio/stacker).
+If you have any comments, suggestions, etc. you can reach us [here](mailto:guilherme.moraes@outlook.com).
 
+###### Reviews
+- [Softpedia](https://www.softpedia.com/get/Programming/Other-Programming-Files/Stacker-lopidio.shtml)

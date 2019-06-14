@@ -18,6 +18,7 @@ const readMeHtmlized = converter.makeHtml(md);
 
 const htmlResult = template
     .replace('<!-- ##INJECTION PLACEHOLDER##-->', readMeHtmlized)
+    .replace('mailto%3a', 'mailto:')
     .replace('<img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/logo-small.png" width="50" height="auto">', '');
 
 fs.writeFileSync('docs/index.html', htmlResult);
