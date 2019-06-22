@@ -50,3 +50,6 @@
 - [ ] Create Object Builder
 - [ ] Improve performance issues
 - [x] Highlight <<stacker>> variables https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea
+
+- [ ] Stage Events tab header when active
+- [ ] Requisition Result iteration index

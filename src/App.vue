@@ -39,7 +39,15 @@
 
             window.ipcRenderer.on('propagate', (electronEvent, stackerEvent, ...args) => {
                 console.log(`Propagating ${stackerEvent} with ${args}`);
-                this.$store.commit(stackerEvent, {router: this.$router, window: this.window, args})
+                const payload = {
+                    args,
+                    router: this.$router,
+                    window: this.window,
+                };
+                if (this.$store.state.selectedItem) {
+                    payload.item = this.$store.state.selectedItem;
+                }
+                this.$store.commit(stackerEvent, payload)
             });
             window.ipcRenderer.on('clipboardCopy', () => this.$store.commit('clipboardCopy'));
             window.ipcRenderer.on('clipboardPaste', () => this.$store.commit('clipboardPaste'));

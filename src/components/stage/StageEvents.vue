@@ -32,7 +32,7 @@
             </div>
         </div>
         <div v-show="selectedIndex !== null" class="row"
-             @click="modalClick"
+             @click="closeEvent"
              style="height: 100vh; opacity: .75; background-color: var(--stacker-header-background-color)"></div>
     </div>
 </template>
@@ -46,6 +46,10 @@
         components: {Event},
         props: ['item', 'events', 'color'],
         data: function () {
+            window.electron.globalShortcut.register('Escape', () => {
+                console.log('Closing event');
+                this.closeEvent();
+            })
             (this.events || []).forEach(event => this.item[event.name] = this.item[event.name] || {});
             return {
                 selectedIndex: null,
@@ -75,7 +79,7 @@
                     this.selectedIndex = null;
                 }
             },
-            modalClick() {
+            closeEvent() {
                 $(`#${this.events[this.selectedIndex].name}Body.collapse`).collapse('hide');
                 (this.events || [])
                     .forEach(event => $('#' + event.name + 'Button i').removeClass('active'));

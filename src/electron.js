@@ -110,9 +110,7 @@ let createMenu = function (window) {
                 },
                 {type: "separator"},
                 {
-                    label: "Quit", accelerator: "Command+Q", click: function () {
-                        app.quit();
-                    }
+                    label: "Quit", accelerator: "Command+Q", click: () => app.quit()
                 }
             ]
         },
@@ -125,15 +123,21 @@ let createMenu = function (window) {
                 {label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
                 {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
                 {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
-                {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"}
+                {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"},
+                {type: "separator"},
+                {label: "Delete Current", accelerator: "Delete", click: () => window.webContents.send('propagate', 'deleteComponent')}
             ]
         },
         {
-            label: "Application",
+            label: "Run",
             submenu: [
-                // {label: "Contribute", click: () => },
-                {label: "Virgs", selector: "orderFrontStandardAboutPanel:"},
-                {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
+                {label: "Rerun Requisition", accelerator: "Return", click: () => window.webContents.send('propagate', 'runRequisition')},
+            ]
+        },
+        {
+            label: "Help",
+            submenu: [
+                {label: "About", selector: "orderFrontStandardAboutPanel:"},
             ]
         },
     ];
