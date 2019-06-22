@@ -423,8 +423,8 @@ export default new Vuex.Store({
         },
         setRequisitionResult(state, payload) {
             // console.log('Report added to history');
-            state.eventEmitter.emit('requisitionReport', payload.report, payload.requisition);
-            state.results.push(payload.report);
+            state.eventEmitter.emit('requisitionReport', payload.reports, payload.requisition);
+            state.results.push(payload.reports);
         },
         clearResult(state) {
             state.eventEmitter.emit('clearResult');
@@ -498,10 +498,10 @@ export default new Vuex.Store({
             console.log('Requisition to be ran: ' + JSON.stringify(decycle, null, 2));
             window.ipcRenderer.send('runRequisition', decycle);
 
-            window.ipcRenderer.once('runRequisitionReply', (event, report) => {
+            window.ipcRenderer.once('runRequisitionReply', (event, reports) => {
                 state.eventEmitter.emit('statusInformation', `Report of requisition '${requisition.name}'`);
                 console.log('Renderer got report!');
-                commit('setRequisitionResult', {report, requisition});
+                commit('setRequisitionResult', {reports, requisition});
             });
 
         }

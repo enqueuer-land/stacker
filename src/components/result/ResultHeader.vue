@@ -1,9 +1,9 @@
 <template>
     <div class="stacker-header container px-0" :style="resultHeaderStyle">
-        <div v-if="response">
+        <div v-if="responses">
             <div class="row no-gutters pt-1  justify-content-between"
                  style="cursor: pointer;"
-                 @click="$store.commit('selectItemById', {router: $router, route: $route, id: result.id})">
+                 @click="$store.commit('selectItemById', {router: $router, route: $route, id: requisition.id})">
                 <button type="button" class="btn col-md-auto my-2 px-2 ml-2 test-badge"
                         :style="testBadgeStyle">
                     {{tests.isValid() ? 'PASS' : 'FAIL'}}
@@ -84,28 +84,27 @@
 </template>
 <script>
 
-    import FlattenTestsSummary from "../../tests/flatten-tests-summary";
     import TimeHandler from "../../tests/time-handler";
     import StackerIcon from "../inputs/StackerIcon";
-    import ComponentManager from "../../tests/component-manager";
     import StackerInput from "../inputs/StackerInput";
+    import TestsAnalyzer from "../../tests/tests-analyzer";
 
     export default {
         name: 'ResultHeader',
         components: {StackerInput, StackerIcon},
         props: {
-            result: {},
+            results: {},
             requisition: {}
         },
         mounted() {
             this.$store.state.eventEmitter.on('clearResult', () => {
-                this.response = null;
+                this.responses = null;
             });
         },
         data: function () {
 
             return {
-                response: this.result,
+                responses: this.results,
                 filter: {
                     string: '',
                     showPassingTests: true,
@@ -117,13 +116,13 @@
             }
         },
         watch: {
-            result() {
-                this.response = this.result;
+            results() {
+                this.responses = this.results;
                 //TODO verify bug here. Sometimes it disappears
                 const timeUpdater = () => {
-                    if (this.response && this.response.length > 0) {
+                    if (this.responses && this.responses.length > 0) {
                         // console.log(this.response[0].time)
-                        this.timeAgo = new TimeHandler().getTimeAgo(this.response[this.response.length - 1].time.endTime);
+                        this.timeAgo = new TimeHandler().getTimeAgo(this.responses[this.responses.length - 1].time.endTime);
                     }
                 };
                 timeUpdater();
@@ -141,15 +140,15 @@
         },
         computed: {
             tests() {
-                const flattenTestsSummary = new FlattenTestsSummary();
-                this.response.forEach((result) => flattenTestsSummary.addTest(result));
-                return flattenTestsSummary;
+                const flatten = new TestsAnalyzer();
+                this.responses.forEach((result) => flatten.addTest(result));
+                return flatten;
             },
             resultHeaderStyle: function () {
                 const result = {
                     color: 'var(--text-color)'
                 };
-                if (this.response) {
+                if (this.responses) {
                     if (this.tests.isValid()) {
                         result.color = 'var(--passing-test-color);'
                     } else {
@@ -176,9 +175,9 @@
         },
         methods: {
             printTime: function () {
-                if (this.result && this.response.length > 0) {
-                    const totalTime = new Date(this.response[this.response.length - 1].time.endTime).getTime()
-                        - new Date(this.response[0].time.startTime).getTime();
+                if (this.results && this.responses.length > 0) {
+                    const totalTime = new Date(this.responses[this.responses.length - 1].time.endTime).getTime()
+                        - new Date(this.responses[0].time.startTime).getTime();
 
                     return new TimeHandler().getTotalTime(totalTime);
                 }

@@ -87,7 +87,7 @@
                                         const response = JSON.parse(fs.readFileSync(file).toString());
                                         this.$store.commit('setRequisitionResult', {
                                             router: this.$router,
-                                            report: response
+                                            reports: [response]
                                         });
                                     });
                                 }

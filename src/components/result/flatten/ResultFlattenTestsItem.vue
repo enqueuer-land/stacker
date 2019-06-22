@@ -8,10 +8,12 @@
                             <ol class="breadcrumb mb-0 p-0" style="background-color: transparent">
                                 <li class="breadcrumb-item" v-for="(breadCrumb, index) in test.hierarchy" :key="index">
                                                 <span :style="breadCrumbStyle(breadCrumb)" class="breadcrumb-anchor"
-                                                      @click="$store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">{{breadCrumb.name}}</span>
+                                                      @click="breadCrumb.id && $store.commit('selectItemById', {router: $router, route: $route, id: breadCrumb.id})">
+                                                    {{breadCrumb.name}}</span>
                                 </li>
                             </ol>
-                            <div v-if="test.hierarchy === null || test.hierarchy.length === 0" style="height: 12px"></div>
+                            <div v-if="test.hierarchy === null || test.hierarchy.length === 0"
+                                 style="height: 12px"></div>
                         </div>
                         <div class="pl-1 pt-1">
                             {{test.name || "Skipped"}}

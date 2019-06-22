@@ -1,83 +1,40 @@
-import TestsSummary from "./tests-summary";
-
 export default class FlattenTestsSummary {
     constructor() {
-        this.testSummary = new TestsSummary();
     }
 
-    addTest(node) {
-        this.findTests(node, [node]);
-        return this;
+    flatten(node) {
+        const iterationIndex = (node.totalIterations > 1) ? ` [${node.iteration}]` : '';
+        return this.goDeep(node, [{
+            name: node.name + iterationIndex,
+            id: node.id
+        }]);
     }
 
-    getTests() {
-        return this.testSummary.getTests();
-    }
+    goDeep(node, hierarchy) {
+        const tests = Object.keys(node.hooks || {})
+            .reduce((acc, hookName) => {
+                return acc.concat(node.hooks[hookName].tests
+                    .map(test => {
+                        return {
+                            ...test,
+                            hierarchy: hierarchy.concat({
+                                name: hookName
+                            })
+                        };
+                    }));
+            }, []);
 
-    getNotIgnoredTests() {
-        return this.testSummary.getNotIgnoredTests();
-    }
 
-    getPassingTests() {
-        return this.testSummary.getPassingTests();
-    }
-
-    getIgnoredList() {
-        return this.testSummary.getIgnoredList();
-    }
-
-    getFailingTests() {
-        return this.testSummary.getFailingTests();
-    }
-
-    getPercentage() {
-        return this.testSummary.getPercentage();
-    }
-
-    isValid() {
-        return this.testSummary.isValid();
-    }
-
-    findTests(node, hierarchy) {
-        const clonedHierarchy = JSON.parse(JSON.stringify(hierarchy));
-        if (node === undefined || node === null) {
-            return;
-        }
-
-        if (node.ignored === true) {
-            this.testSummary.addTest({hierarchy: clonedHierarchy, ignored: true, name: 'Skipped'});
-        } else {
-            Object.keys(node).forEach(key => {
-                const value = node[key];
-                if (key === 'tests') {
-                    this.sumTests(value, clonedHierarchy)
-                } else if (key === 'publishers' || key === 'subscriptions' || key === 'requisitions') {
-                    if (typeof value === 'object') {
-                        if (Array.isArray(value)) {
-                            value.forEach((item => {
-                                const updatedHierarchy = clonedHierarchy.concat(item);
-                                this.findTests(item, updatedHierarchy);
-                            }));
-                        } else {
-                            const updatedHierarchy = clonedHierarchy.concat(value);
-                            this.findTests(value, updatedHierarchy);
-                        }
-                    }
-                }
-            });
-
-        }
-
-    }
-
-    sumTests(tests, hierarchy) {
-        tests.forEach(test => {
-            if (test.valid !== undefined &&
-                test.description !== undefined &&
-                test.name !== undefined) {
-                const clone = Object.assign({}, test, {hierarchy: hierarchy});
-                this.testSummary.addTest(clone)
-            }
-        });
+        const nested = (node.subscriptions || [])
+            .concat(node.publishers || [])
+            .concat(node.requisitions || [])
+            .reduce((acc, component) => {
+                const iterationCounter = (component.totalIterations > 1) ? ` [${component.iteration}]` : '';
+                return acc.concat(this.goDeep(component, hierarchy.concat({
+                    name: component.name + iterationCounter,
+                    id: component.id
+                })));
+            }, []);
+        return tests.concat(nested);
     }
 }

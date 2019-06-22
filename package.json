@@ -20,7 +20,7 @@
     "build:all": "node_modules/.bin/electron-builder --mac --win --linux"
   },
   "dependencies": {
-    "enqueuer": "^4.5.2",
+    "enqueuer": "file:../enqueuer-land/enqueuer",
     "enqueuer-plugin-amqp": "0.0.8",
     "enqueuer-plugin-mqtt": "0.0.1",
     "request": "^2.88.0",

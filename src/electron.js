@@ -71,8 +71,8 @@ app.on('ready', () => {
         // Logger.setLoggerLevel('debug');
         event.sender.send('runningRequisition');
         new RequisitionRunner(requisition).run()
-            .then(report => {
-                event.sender.send('runRequisitionReply', report)
+            .then(reports => {
+                event.sender.send('runRequisitionReply', reports)
             })
             .catch(err => {
                 console.log(`Error running requisition: ${err}`);

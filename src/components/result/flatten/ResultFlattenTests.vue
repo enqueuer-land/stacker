@@ -6,27 +6,27 @@
 </template>
 
 <script>
-    import FlattenTestsSummary from "../../../tests/flatten-tests-summary";
     import ResultFlattenTestsItem from "./ResultFlattenTestsItem";
+    import FlattenTestsSummary from "../../../tests/flatten-tests-summary";
 
     export default {
         name: 'ResultFlattenTests',
         components: {ResultFlattenTestsItem},
         props: {
-            node: {}
+            nodes: {}
         },
         watch: {
-            node: function () {
-                let testsSummary = new FlattenTestsSummary();
-                (this.node || []).forEach(node => testsSummary.addTest(node));
-                this.testsSummary = testsSummary.getTests();
+            nodes: function () {
+                this.testsSummary = [];
+                const flattenTestsSummary = new FlattenTestsSummary();
+                (this.nodes || []).forEach(node => {
+                    this.testsSummary = this.testsSummary.concat(flattenTestsSummary.flatten(node));
+                });
             }
         },
         data: function () {
-            let testsSummary = new FlattenTestsSummary();
-            (this.node || []).forEach(node => testsSummary.addTest(node));
             return {
-                testsSummary: testsSummary.getTests()
+                testsSummary: []
             }
         },
         computed: {

@@ -1,7 +1,7 @@
 <template>
     <div class="result-body">
         <ul class="list-unstyled">
-            <result-flatten-tests :node="result"/>
+            <result-flatten-tests :nodes="results"/>
         </ul>
     </div>
 </template>
@@ -12,13 +12,13 @@
     export default {
         name: 'ResultBody',
         props: {
-            result: {}
+            results: {}
         },
         components: {
             ResultFlattenTests
         },
         watch: {
-            result() {
+            results() {
                 console.log('Result tree got it');
             }
         }
