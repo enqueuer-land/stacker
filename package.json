@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "pagedown": "^1.1.0",
-    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-babel": "^4.2.0",
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
     "babel-eslint": "^10.0.1",
