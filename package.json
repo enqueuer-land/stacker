@@ -34,7 +34,7 @@
     "pagedown": "^1.1.0",
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.1.5",
-    "@vue/cli-service": "^3.1.4",
+    "@vue/cli-service": "^4.2.0",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.9",
     "electron-builder": "^20.38.5",
