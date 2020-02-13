@@ -1,32 +1,55 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <b-container fluid class="p-0">
+            <b-row style="height: 100%" no-gutters>
+                <b-col cols="3">
+                    <div style="background-color: red; height: var(--carabina-header-size)">
+                        Side bar
+                    </div>
+                </b-col>
+                <b-col cols="6">
+                    Stage
+                    <router-view/>
+                </b-col>
+                <b-col cols="3">
+                    Result
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
-    <router-view/>
-  </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    :root {
+        --carabina-header-size: 150px;
+        --carabina-scrollbar-color: #324D36;
 
-#nav {
-  padding: 30px;
-}
+        /*https://coolors.co/9fb630-ffe8af-c4bcf2-d4f2db-cef7a0*/
+        --carabina-requisition-color: #FFC914;
+        --carabina-publisher-color: #E4572E;
+        --carabina-subscription-color: #17BEBB;
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+        --carabina-ignored-test-color: #d5ba50;
+        --carabina-passing-test-color: #9FB630;
+        --carabina-failing-test-color: #a9524a;
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+        --carabina-body-background-lighter-color: #424242;
+        --carabina-body-background-color: #353535;
+        --carabina-header-background-lighter-color: #3f3d43;
+        --carabina-header-background-color: #2b2a2e;
+        --carabina-header-background-darker-color: #201f21;
+        --carabina-text-color: #F4FAFF;
+        --carabina-text-darker-color: #9CA0A3;
+
+        --carabina-theme-color: #9FB630;
+    }
+
+    #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+    }
+
 </style>

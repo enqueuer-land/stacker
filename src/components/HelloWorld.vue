@@ -13,14 +13,12 @@
 
         <button @click="add">Add Another</button>
         <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>
-        <About />
     </div>
 </template>
 
 <script lang="ts">
     import {Vue} from 'vue-property-decorator';
     import {ipcRenderer, remote} from 'electron'
-    import About from "@/views/About.vue";
 
     // let loaded: any = undefined;
     ipcRenderer.on('ping', async () => {
@@ -54,9 +52,7 @@
 
     export default Vue.extend({
         name: 'HelloWorld',
-        components: {
-            About
-        },
+        components: {},
         props: ['msg'],
         data() {
             return {

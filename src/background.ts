@@ -21,8 +21,8 @@ import * as path from "path";
 import * as shell from "child_process";
 
 try {
-    // const ls = shell.spawn("ls", {
-        const ls = shell.spawn("node_modules/.bin/enqueuer-daemon", {
+    const ls = shell.spawn("ls", {
+        // const ls = shell.spawn("node_modules/.bin/enqueuer-daemon", {
         stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     });
 
@@ -72,7 +72,7 @@ function createWindow() {
             // enableRemoteModule: false, // turn off remote
             // preload: 'preload' // use a preload script
             // preload: __dirname + "/enqueuer.js" // use a preload script
-            preload: "./node_modules/.bin/enqueuer-daemon" // use a preload script
+            // preload: "./node_modules/.bin/enqueuer-daemon" // use a preload script
             // preload: "enqueuer-daemon" // use a preload script
         }
     });
