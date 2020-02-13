@@ -19,6 +19,7 @@
     "daemon-service": "file:../enqueuer-land/daemon-service",
     "font-awesome": "^4.7.0",
     "require-from-string": "^2.0.2",
+    "split.js": "^1.5.11",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.2",
     "vue-property-decorator": "^8.3.0",
