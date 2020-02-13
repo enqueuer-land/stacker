@@ -5,6 +5,7 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "declaration": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,
@@ -36,5 +37,8 @@
   ],
   "exclude": [
     "node_modules"
+  ],
+  "files": [
+    "src/vue-shims.d.ts"
   ]
 }

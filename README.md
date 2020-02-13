@@ -1,4 +1,4 @@
-# carabin
+# carabina
 
 ## Project setup
 ```

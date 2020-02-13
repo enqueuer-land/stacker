@@ -1,61 +1,149 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript" target="_blank" rel="noopener">typescript</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-jest" target="_blank" rel="noopener">unit-jest</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="hello">
+        <h1>{{ message }}</h1>
+        <i class="fas fa-check-circle"></i>
+        <div v-for="(child, index) in children" :key="index">
+            <component :is="child" v-bind="{value: inner}"></component>
+        </div>
+        <b-button>Serve</b-button>
+        <p>{{inner}}</p>
+        <keep-alive>
+            <component :is="magician && { template: magician }"/>
+        </keep-alive>
+
+        <button @click="add">Add Another</button>
+        <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>
+        <About />
+    </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+    import {Vue} from 'vue-property-decorator';
+    import {ipcRenderer, remote} from 'electron'
+    import About from "@/views/About.vue";
 
-@Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-}
+    // let loaded: any = undefined;
+    ipcRenderer.on('ping', async () => {
+
+        // const listItem = ((await import('/Users/guilherme.moraes/Dev/carabin/list-item.js')) as any);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        // const listItem = (await import('/Users/guilherme.moraes/Dev/carabin/welcome.js') as any).welcome as any;
+        // const welcome = remote.getGlobal('welcome');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // console.log(listItem);
+        // loaded = Vue.component('list-item', listItem);
+
+        // const parser = new DOMParser();
+        // const document = parser.parseFromString(welcome, 'text/html');
+        // console.log('parser: ' + document);
+
+        // loaded = Vue.component('async-component', document);
+
+        // console.log(loaded);
+
+        // console.log(loaded);
+        // loaded = remote.getGlobal('loadedPlugins');
+        // console.log('ping:' + loaded)
+        // // console.log(`hello world: ${JSON.stringify(loaded)}`)
+        // console.log(`hello world: ${loaded.template}`)
+        // console.log(`hello methods: ${loaded.methods}`)
+        // console.log(`hello data: ${typeof loaded.data}`)
+        // console.log(`hello world: ${typeof loaded.methods.toggleMsg}`)
+    });
+
+    export default Vue.extend({
+        name: 'HelloWorld',
+        components: {
+            About
+        },
+        props: ['msg'],
+        data() {
+            return {
+                inner: 'inner',
+                message: this.msg,
+                children: [] as any,
+                magician: `<div>
+                                <select>
+                                   <option v-for="num in 20">{{ num }}</option>
+                                </select>
+                          </div>`
+            }
+        },
+        methods: {
+            runNqr: function () {
+
+                const requisitionModel: any = {
+                    delay: 0,
+                    level: 0,
+                    name: '',
+                    publishers: [],
+                    requisitions: [{
+                        onInit: {
+                            assertions: [
+                                {
+                                    name: 'virgs',
+                                    expectToBeTruthy: false
+                                }]
+                        }
+                    }],
+                    subscriptions: [],
+                    timeout: 0,
+                    onInit: {
+                        assertions: [
+                            {
+                                name: 'virgs',
+                                expectToBeTruthy: false
+                            }]
+                    }
+                };
+                // this.$store.dispatch('runRequisition', requisitionModel);
+                this.$store.dispatch('runRequisitionViaGlobal', requisitionModel);
+            }, add: function () {
+                // const externalFile = remote.getGlobal('fs').readFileSync('/Users/guilherme.moraes/Dev/carabina/external.js').toString();
+                // console.log(externalFile);
+                const external = remote.getGlobal('external');
+                this.magician = external.html;
+                this.message = external.sum(2, 6);
+                const template = external.template;
+                const data = () => {
+                    return {
+                        msg: "home"
+                    };
+                };
+
+                // this.children.push(Vue.component('async-component', {template, data}));
+                this.children.push(Vue.component('async-component', external.component));
+            }, huehue: function (i: any) {
+                console.log(i);
+            }
+
+        }
+
+    });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+    .welcome {
+        background-color: rebeccapurple;
+    }
+
+    h3 {
+        margin: 40px 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    a {
+        color: #42b983;
+    }
 </style>
