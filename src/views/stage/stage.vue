@@ -21,7 +21,7 @@
     import {ipcRenderer, remote} from 'electron'
 
     // let loaded: any = undefined;
-    ipcRenderer.on('ping', async () => {
+    // ipcRenderer.on('ping', async () => {
 
         // const listItem = ((await import('/Users/guilherme.moraes/Dev/carabin/list-item.js')) as any);
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -48,10 +48,10 @@
         // console.log(`hello methods: ${loaded.methods}`)
         // console.log(`hello data: ${typeof loaded.data}`)
         // console.log(`hello world: ${typeof loaded.methods.toggleMsg}`)
-    });
+    // });
 
     export default Vue.extend({
-        name: 'HelloWorld',
+        name: 'Stage',
         components: {},
         props: ['msg'],
         data() {

@@ -21,17 +21,18 @@ import * as path from "path";
 import * as shell from "child_process";
 
 try {
-    const ls = shell.spawn("ls", {
+    // const ls = shell.spawn("ls", {
         // const ls = shell.spawn("node_modules/.bin/enqueuer-daemon", {
+        const ls = shell.spawn("node_modules/.bin/enqueuer", {
         stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     });
 
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-//     ls.stdout.on("data", data => {
-//         console.log(`stdout: ${data}`);
-//     });
+    ls.stdout.on("data", data => {
+        console.log(`stdout: ${data}`);
+    });
 
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

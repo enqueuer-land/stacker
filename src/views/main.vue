@@ -2,38 +2,38 @@
     <div style="height: 100vh">
         <div class="wrapper" style="display: flex">
             <div class="panel" id="splitter-side-bar">
-                <div style="background-color: red; height: var(--carabina-header-size)">
-                    Side bar
-                </div>
+                <SideBar></SideBar>
             </div>
             <div class="panel" id="splitter-stage">
-                Stage
-                <HelloWorld msg="Welcome to Your Vue.js App"/>
+                <Stage/>
             </div>
             <div class="panel" id="splitter-result">
-                <h1>Result</h1>
-                <img alt="Vue logo" src="../assets/logo.png">
+                <Result></Result>
             </div>
         </div>
     </div>
 </template>
 <script>
-    import split from 'split.js'
-    import HelloWorld from './HelloWorld'
     import '@/styles/color-palette.css'
     import '@/styles/dimensions.css'
+    import split from 'split.js'
+    import Stage from './stage/stage'
+    import SideBar from "@/views/side-bar/side-bar";
+    import Result from "@/views/result/result";
 
     export default {
         name: 'Main',
         components: {
-            HelloWorld
+            Result,
+            SideBar,
+            Stage
         },
         mounted() {
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
                 sizes: [25, 50, 25],
                 minSize: [200, 600, 200],
                 gutterStyle: () => ({
-                    width: '2px',
+                    width: '1px',
                     cursor: 'col-resize',
                     'background-color': 'var(--carabina-body-background-lighter-color)'
                 })

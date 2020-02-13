@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "nqr": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -17,13 +16,11 @@
   "dependencies": {
     "bootstrap-vue": "^2.4.0",
     "daemon-service": "file:../enqueuer-land/daemon-service",
-    "font-awesome": "^4.7.0",
     "require-from-string": "^2.0.2",
     "split.js": "^1.5.11",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.2",
     "vue-property-decorator": "^8.3.0",
-    "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -31,7 +28,6 @@
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "@vue/cli-plugin-eslint": "^4.2.0",
-    "@vue/cli-plugin-router": "^4.2.0",
     "@vue/cli-plugin-typescript": "^4.2.0",
     "@vue/cli-plugin-unit-jest": "^4.2.0",
     "@vue/cli-plugin-vuex": "^4.2.0",
@@ -78,7 +74,12 @@
     "last 2 versions"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest/presets/typescript"
+    "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    }
   },
   "build": {
     "appId": "com.nqr.virgs",
