@@ -27,6 +27,8 @@
 </template>
 <script>
     import split from 'split.js'
+    import './styles/color-palette.css'
+    import './styles/dimensions.css'
 
     export default {
         mounted() {
@@ -42,30 +44,6 @@
 </script>
 
 <style>
-    :root {
-        --carabina-header-size: 150px;
-        --carabina-scrollbar-color: #324D36;
-
-        /*https://coolors.co/9fb630-ffe8af-c4bcf2-d4f2db-cef7a0*/
-        --carabina-requisition-color: #FFC914;
-        --carabina-publisher-color: #E4572E;
-        --carabina-subscription-color: #17BEBB;
-
-        --carabina-ignored-test-color: #d5ba50;
-        --carabina-passing-test-color: #9FB630;
-        --carabina-failing-test-color: #a9524a;
-
-        --carabina-body-background-lighter-color: #424242;
-        --carabina-body-background-color: #353535;
-        --carabina-header-background-lighter-color: #3f3d43;
-        --carabina-header-background-color: #2b2a2e;
-        --carabina-header-background-darker-color: #201f21;
-        --carabina-text-color: #F4FAFF;
-        --carabina-text-darker-color: #9CA0A3;
-
-        --carabina-theme-color: #9FB630;
-    }
-
     #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -83,7 +61,7 @@
     }
 
     #left {
-        background: red;
+        background: var(--carabina-failing-test-color);
     }
 
     #right {
