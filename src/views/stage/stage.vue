@@ -15,8 +15,10 @@
                 <component :is="magician && { template: magician }"/>
             </keep-alive>
 
-            <button @click="add">Add Another</button>
-            <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>
+            <!--            <button @click="add">Add Another</button>-->
+            <!--            <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>-->
+            <!--            <h3 @click="runRequisitionViaGlobal" style="cursor: pointer">runNqr</h3>-->
+            <h3 @click="runRequisitionViaGlobal(requisition)" style="cursor: pointer">runNqr</h3>
         </div>
         <div style="background-color: var(--carabina-header-background-darker-color); height: var(--carabina-footer-size)">
         </div>
@@ -25,8 +27,10 @@
 </template>
 
 <script lang="ts">
+    import {mapActions} from 'vuex'
+
     import {Vue} from 'vue-property-decorator';
-    import {ipcRenderer, remote} from 'electron'
+    import {remote} from 'electron'
 
     // let loaded: any = undefined;
     // ipcRenderer.on('ping', async () => {
@@ -64,6 +68,23 @@
         props: ['msg'],
         data() {
             return {
+                requisition: {
+                    id: Math.trunc(Math.random() * 999999),
+                    iterations: 2,
+                    publishers: [{
+                        type: 'http',
+                        url: 'https://google.com',
+                        method: 'POST',
+                        onMessageReceived: {
+                            assertions: [
+                                {
+                                    expect: "statusCode",
+                                    toBeEqualTo: 200
+                                }
+                            ]
+                        }
+                    }]
+                },
                 inner: 'inner',
                 message: this.msg,
                 children: [] as any,
@@ -74,8 +95,12 @@
                           </div>`
             }
         },
+        computed: {},
         methods: {
-            runNqr: function () {
+            ...mapActions('stage', ['runRequisitionViaGlobal', 'runRequisition'])
+        }
+        /*methods: {
+            runNqr: async function () {
 
                 const requisitionModel: any = {
                     id: Math.trunc(Math.random() * 999999),
@@ -94,8 +119,16 @@
                     }]
                 };
                 // this.$store.dispatch('runRequisition', requisitionModel);
-                this.$store.dispatch('runRequisitionViaGlobal', requisitionModel);
-            }, add: function () {
+                // this.$store.dispatch('runRequisitionViaGlobal', requisitionModel);
+
+                const ruEnqueuerFunction = remote.getGlobal('runEnqueuer');
+                console.log('ruEnqueuer: ' + ruEnqueuerFunction);
+                const message = await ruEnqueuerFunction(requisitionModel);
+                console.log('message');
+                console.log(message);
+
+            },
+            add: function () {
                 // const externalFile = remote.getGlobal('fs').readFileSync('/Users/guilherme.moraes/Dev/carabina/external.js').toString();
                 // console.log(externalFile);
                 const external = remote.getGlobal('external');
@@ -115,7 +148,7 @@
             }
 
         }
-
+*/
     });
 </script>
 

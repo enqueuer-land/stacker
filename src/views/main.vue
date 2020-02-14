@@ -30,15 +30,17 @@
         },
         mounted() {
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
-                sizes: [20, 45, 35],
+                gutterSize: 3,
+                sizes: [30, 45, 25],
                 minSize: [300, 600, 300],
                 gutterStyle: () => ({
                     position: 'relative',
-                    top: 'calc(var(--carabina-header-size) - var(--carabina-footer-size))',
+                    top: 'var(--carabina-header-size)',
                     height: 'var(--carabina-body-size)',
-                    width: '2px',
+                    width: '3px',
                     cursor: 'col-resize',
-                    'background-color': 'var(--carabina-body-background-lighter-color)'
+                    'box-shadow': '1px 0 1px var(--carabina-body-background-lighter-color)',
+                    'background-color': 'var(--carabina-body-background-darker-color)'
                 })
             });
         }

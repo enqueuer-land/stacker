@@ -55,15 +55,18 @@ try {
     console.log(e)
 }
 
-async function runNqr(requisitionInput: InputRequisitionModel) {
+async function runNqr(requisitionInput: InputRequisitionModel): Promise<OutputRequisitionModel[]> {
     return new Promise(resolve => {
         nqr.send({event: 'runRequisition', value: requisitionInput});
+        const responses: OutputRequisitionModel[] = [];
         nqr.on('message', (message: any) => {
             if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
                 const requisitionOutput: OutputRequisitionModel = message.value.requisition;
                 if (requisitionOutput.id.toString() === requisitionInput.id.toString()) {
-                    console.log('this is it');
-                    resolve(requisitionOutput);
+                    responses.push(requisitionOutput);
+                    if (responses.length == requisitionOutput.totalIterations) {
+                        resolve(responses);
+                    }
                 }
             }
         });
@@ -107,15 +110,22 @@ app.on('window-all-closed', () => {
 
 
 async function declareGlobals() {
+    console.log('declareGlobals')
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    global.runEnqueuer = async (requisition: any) => await runNqr(requisition);
+    global.runEnqueuer = (requisition: any) => runNqr(requisition);
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     global.external = (await import('/Users/guilherme.moraes/Dev/carabina/external.js') as any) as any;
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     global.fs = fs;
+
+
+    ipcMain.on('runRequisition', async (event, args) => {
+        event.reply('runRequisitionReply', await runNqr(args));
+    });
+
 }
 
 declareGlobals();
