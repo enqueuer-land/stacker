@@ -57,7 +57,8 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "no-explicit-any": 0
+      "no-explicit-any": 0,
+      "ban-ts-ignore": 0
     },
     "overrides": [
       {

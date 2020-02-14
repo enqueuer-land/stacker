@@ -1,14 +1,9 @@
 'use strict';
 
-import {app, protocol, BrowserWindow, ipcMain} from 'electron'
-import {
-    createProtocol,
-    /* installVueDevtools */
-} from 'vue-cli-plugin-electron-builder/lib'
-import {OutputRequisitionModel} from "enqueuer";
-import {InputRequisitionModel} from "enqueuer";
-import * as fs from 'fs';
-import * as shell from "child_process";
+import {app, protocol, BrowserWindow} from 'electron'
+import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
+import EnqueuerRunner from "@/enqueuer-runner";
+import * as fs from "fs";
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -18,60 +13,6 @@ let win: BrowserWindow | null;
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true, standard: true}}]);
-
-
-let nqr: any = undefined;
-try {
-    // const ls = shell.spawn("node_modules/.bin/enqueuer", {
-    nqr = shell.spawn("enqueuer", {
-        stdio: ['pipe', 'pipe', 'pipe', 'ipc']
-    });
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-    nqr.stdout.on("data", data => {
-        console.log(`stdout: ${data}`);
-    });
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-    nqr.stderr.on("data", data => {
-        console.log(`stderr: ${data}`);
-    });
-
-    nqr.on('disconnect', (error: any) => {
-        console.log(`disconnect: ${error}`);
-    });
-
-    nqr.on('error', (error: any) => {
-        console.log(`error: ${error.message}`);
-    });
-
-    nqr.on("close", (code: number) => {
-        console.log(`child process exited with code ${code}`);
-    });
-
-} catch (e) {
-    console.log(e)
-}
-
-async function runNqr(requisitionInput: InputRequisitionModel): Promise<OutputRequisitionModel[]> {
-    return new Promise(resolve => {
-        nqr.send({event: 'runRequisition', value: requisitionInput});
-        const responses: OutputRequisitionModel[] = [];
-        nqr.on('message', (message: any) => {
-            if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
-                const requisitionOutput: OutputRequisitionModel = message.value.requisition;
-                if (requisitionOutput.id.toString() === requisitionInput.id.toString()) {
-                    responses.push(requisitionOutput);
-                    if (responses.length == requisitionOutput.totalIterations) {
-                        resolve(responses);
-                    }
-                }
-            }
-        });
-    });
-}
 
 function createWindow() {
     // Create the browser window.
@@ -108,28 +49,6 @@ app.on('window-all-closed', () => {
     }
 });
 
-
-async function declareGlobals() {
-    console.log('declareGlobals')
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    global.runEnqueuer = (requisition: any) => runNqr(requisition);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    global.external = (await import('/Users/guilherme.moraes/Dev/carabina/external.js') as any) as any;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    global.fs = fs;
-
-
-    ipcMain.on('runRequisition', async (event, args) => {
-        event.reply('runRequisitionReply', await runNqr(args));
-    });
-
-}
-
-declareGlobals();
-
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -141,20 +60,13 @@ app.on('activate', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
         if (isDevelopment && !process.env.IS_TEST) {
-            // Install Vue Devtools
-            // Devtools extensions are broken in Electron 6.0.0 and greater
-            // See https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/378 for more info
-            // Electron will not launch with Devtools extensions installed on Windows 10 with dark mode
-            // If you are not using Windows 10 dark mode, you may uncomment these lines
-            // In addition, if the linked issue is closed, you can upgrade electron and uncomment these lines
-            // try {
-            //   await installVueDevtools()
-            // } catch (e) {
-            //   console.error('Vue Devtools failed to install:', e.toString())
-            // }
-
+            try {
+                await installVueDevtools();
+            } catch (e) {
+                console.error('Vue Devtools failed to install:', e.toString());
+            }
         }
         createWindow();
 
@@ -173,4 +85,10 @@ app.on('ready', () => {
             }
         }
     }
-)
+);
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+global.fs = fs;
+
+new EnqueuerRunner().run();
