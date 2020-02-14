@@ -1,5 +1,6 @@
 /*https://coolors.co/9fb630-ffe8af-c4bcf2-d4f2db-cef7a0*/
 :root {
     --carabina-header-size: 150px;
-    --carabina-footer-size: 15px;
+    --carabina-footer-size: 20px;
+    --carabina-body-size: calc(100% - var(--carabina-footer-size) - var(--carabina-header-size));
 }

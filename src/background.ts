@@ -5,7 +5,10 @@ import {
     createProtocol,
     /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib'
-// import {InputRequisitionModel, OutputRequisitionModel} from "enqueuer";
+import {OutputRequisitionModel} from "enqueuer";
+import {InputRequisitionModel} from "enqueuer";
+import * as fs from 'fs';
+import * as shell from "child_process";
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -17,64 +20,63 @@ let win: BrowserWindow | null;
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true, standard: true}}]);
 
 
-import * as path from "path";
-import * as shell from "child_process";
-
+let nqr: any = undefined;
 try {
-    // const ls = shell.spawn("ls", {
-        // const ls = shell.spawn("node_modules/.bin/enqueuer-daemon", {
-        const ls = shell.spawn("node_modules/.bin/enqueuer", {
+    // const ls = shell.spawn("node_modules/.bin/enqueuer", {
+    nqr = shell.spawn("enqueuer", {
         stdio: ['pipe', 'pipe', 'pipe', 'ipc']
     });
 
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-    ls.stdout.on("data", data => {
+    nqr.stdout.on("data", data => {
         console.log(`stdout: ${data}`);
     });
 
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-    ls.stderr.on("data", data => {
+    nqr.stderr.on("data", data => {
         console.log(`stderr: ${data}`);
     });
 
-    ls.on('error', (error) => {
+    nqr.on('disconnect', (error: any) => {
+        console.log(`disconnect: ${error}`);
+    });
+
+    nqr.on('error', (error: any) => {
         console.log(`error: ${error.message}`);
     });
 
-    ls.on("close", code => {
+    nqr.on("close", (code: number) => {
         console.log(`child process exited with code ${code}`);
     });
 
-
-    ls.on('message', message => {
-        console.log('message from child:', message);
-        ls.send('Hi');
-    });
-
-    ls.send({foo: 5});
-    ls.send({exit: 'true'});
-
 } catch (e) {
-    // console.log(e)
+    console.log(e)
+}
+
+async function runNqr(requisitionInput: InputRequisitionModel) {
+    return new Promise(resolve => {
+        nqr.send({event: 'runRequisition', value: requisitionInput});
+        nqr.on('message', (message: any) => {
+            if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
+                const requisitionOutput: OutputRequisitionModel = message.value.requisition;
+                if (requisitionOutput.id.toString() === requisitionInput.id.toString()) {
+                    console.log('this is it');
+                    resolve(requisitionOutput);
+                }
+            }
+        });
+    });
 }
 
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
-        width: 1200,
-        height: 900,
+        width: 1440,
+        height: 1000,
         webPreferences: {
-            nodeIntegration: true,
-            // contextIsolation: true, // protect against prototype pollution
-            // enableRemoteModule: false, // turn off remote
-            // preload: 'preload' // use a preload script
-            // preload: __dirname + "/enqueuer.js" // use a preload script
-            // preload: "./node_modules/.bin/enqueuer-daemon" // use a preload script
-            // preload: "enqueuer-daemon" // use a preload script
+            nodeIntegration: true
         }
     });
 
@@ -90,7 +92,8 @@ function createWindow() {
 
     win.on('closed', () => {
         win = null
-    })
+    });
+
 }
 
 // Quit when all windows are closed.
@@ -102,49 +105,22 @@ app.on('window-all-closed', () => {
     }
 });
 
-import * as http from 'http';
-import {OutputRequisitionModel} from "enqueuer";
 
-async function httpRequest(url: string, options: any, stringifiedPayload: string) {
-    return new Promise((resolve, reject) => {
-        const request = http
-            .request(url, options, (resp) => {
-                let data = '';
-                resp
-                    .on('data', (chunk) => {
-                        data += chunk;
-                    })
-                    .on('end', () => {
-                        resolve({data, statusCode: resp.statusCode});
-                    });
-            }).on("error", (err) => {
-                reject(err);
-            });
-        request.write(stringifiedPayload);
-        request.end();
-    });
+async function declareGlobals() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    global.runEnqueuer = async (requisition: any) => await runNqr(requisition);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    global.external = (await import('/Users/guilherme.moraes/Dev/carabina/external.js') as any) as any;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    global.fs = fs;
 }
 
-async function runNqr(args: any) {
-    const req = JSON.stringify(args);
-    const response: any = await httpRequest('http://localhost:3000/requisitions', {
-        method: 'POST',
-    }, req);
-    const requisitionResponse: OutputRequisitionModel[] = JSON.parse(response.data);
-    console.log(requisitionResponse[0].valid);
-    return requisitionResponse;
-}
+declareGlobals();
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-global.runEnqueuer = async (requisition: any) => await runNqr(requisition);
-
-ipcMain.on('runRequisition', async (event, args) => {
-    const response = await runNqr(args);
-    event.reply('runRequisitionReply', response);
-});
-
-app.on('activate', async () => {
+app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
@@ -152,64 +128,39 @@ app.on('activate', async () => {
     }
 });
 
-import * as fs from 'fs';
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-    if (isDevelopment && !process.env.IS_TEST) {
-        // Install Vue Devtools
-        // Devtools extensions are broken in Electron 6.0.0 and greater
-        // See https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/378 for more info
-        // Electron will not launch with Devtools extensions installed on Windows 10 with dark mode
-        // If you are not using Windows 10 dark mode, you may uncomment these lines
-        // In addition, if the linked issue is closed, you can upgrade electron and uncomment these lines
-        // try {
-        //   await installVueDevtools()
-        // } catch (e) {
-        //   console.error('Vue Devtools failed to install:', e.toString())
-        // }
+        if (isDevelopment && !process.env.IS_TEST) {
+            // Install Vue Devtools
+            // Devtools extensions are broken in Electron 6.0.0 and greater
+            // See https://github.com/nklayman/vue-cli-plugin-electron-builder/issues/378 for more info
+            // Electron will not launch with Devtools extensions installed on Windows 10 with dark mode
+            // If you are not using Windows 10 dark mode, you may uncomment these lines
+            // In addition, if the linked issue is closed, you can upgrade electron and uncomment these lines
+            // try {
+            //   await installVueDevtools()
+            // } catch (e) {
+            //   console.error('Vue Devtools failed to install:', e.toString())
+            // }
 
-    }
-    createWindow();
+        }
+        createWindow();
 
-    // setTimeout(async () => await runNqr(), 1000);
-    setTimeout(async () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        // global.welcome = fs.readFileSync(`/Users/guilherme.moraes/Dev/carabin/welcome.js`).toString();
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        global.external = (await import('/Users/guilherme.moraes/Dev/carabina/external.js') as any) as any;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        global.fs = fs;
-
-        // in main process
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        // global.loadedPlugins = requireFromString(welcome).welcome;
-        // global.loadedPlugins = (await import('/Users/guilherme.moraes/Dev/carabin/welcome.js') as any).welcome as any;
-        // global.loadedPlugins = ((await import('/Users/guilherme.moraes/Dev/carabin/list-item.js')) as any).welcome;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-
-        win!.webContents.send('ping')
-    }, 1000);
-});
-
-// Exit cleanly on request from parent process in development mode.
-if (isDevelopment) {
-    if (process.platform === 'win32') {
-        process.on('message', data => {
-            if (data === 'graceful-exit') {
-                app.quit()
+        // Exit cleanly on request from parent process in development mode.
+        if (isDevelopment) {
+            if (process.platform === 'win32') {
+                process.on('message', data => {
+                    if (data === 'graceful-exit') {
+                        app.quit()
+                    }
+                })
+            } else {
+                process.on('SIGTERM', () => {
+                    app.quit()
+                })
             }
-        })
-    } else {
-        process.on('SIGTERM', () => {
-            app.quit()
-        })
+        }
     }
-}
+)

@@ -1,18 +1,26 @@
 <template>
-    <div class="hello">
-        <h1>{{ message }}</h1>
-        <i class="fas fa-check-circle"></i>
-        <div v-for="(child, index) in children" :key="index">
-            <component :is="child" v-bind="{value: inner}"></component>
+    <div id="stage" style="height: 100%">
+        <div style="background-color: var(--carabina-header-background-color); height: var(--carabina-header-size)">
+            Stage Header
         </div>
-        <b-button>Serve</b-button>
-        <p>{{inner}}</p>
-        <keep-alive>
-            <component :is="magician && { template: magician }"/>
-        </keep-alive>
+        <div style="background-color: var(--carabina-body-background-color); height: var(--carabina-body-size)">{
+            <h1>{{ message }}</h1>
+            <i class="fas fa-check-circle"></i>
+            <div v-for="(child, index) in children" :key="index">
+                <component :is="child" v-bind="{value: inner}"></component>
+            </div>
+            <b-button>Serve</b-button>
+            <p>{{inner}}</p>
+            <keep-alive>
+                <component :is="magician && { template: magician }"/>
+            </keep-alive>
 
-        <button @click="add">Add Another</button>
-        <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>
+            <button @click="add">Add Another</button>
+            <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>
+        </div>
+        <div style="background-color: var(--carabina-header-background-darker-color); height: var(--carabina-footer-size)">
+        </div>
+
     </div>
 </template>
 
@@ -23,31 +31,31 @@
     // let loaded: any = undefined;
     // ipcRenderer.on('ping', async () => {
 
-        // const listItem = ((await import('/Users/guilherme.moraes/Dev/carabin/list-item.js')) as any);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        // const listItem = (await import('/Users/guilherme.moraes/Dev/carabin/welcome.js') as any).welcome as any;
-        // const welcome = remote.getGlobal('welcome');
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        // console.log(listItem);
-        // loaded = Vue.component('list-item', listItem);
+    // const listItem = ((await import('/Users/guilherme.moraes/Dev/carabin/list-item.js')) as any);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // const listItem = (await import('/Users/guilherme.moraes/Dev/carabin/welcome.js') as any).welcome as any;
+    // const welcome = remote.getGlobal('welcome');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // console.log(listItem);
+    // loaded = Vue.component('list-item', listItem);
 
-        // const parser = new DOMParser();
-        // const document = parser.parseFromString(welcome, 'text/html');
-        // console.log('parser: ' + document);
+    // const parser = new DOMParser();
+    // const document = parser.parseFromString(welcome, 'text/html');
+    // console.log('parser: ' + document);
 
-        // loaded = Vue.component('async-component', document);
+    // loaded = Vue.component('async-component', document);
 
-        // console.log(loaded);
+    // console.log(loaded);
 
-        // console.log(loaded);
-        // loaded = remote.getGlobal('loadedPlugins');
-        // console.log('ping:' + loaded)
-        // // console.log(`hello world: ${JSON.stringify(loaded)}`)
-        // console.log(`hello world: ${loaded.template}`)
-        // console.log(`hello methods: ${loaded.methods}`)
-        // console.log(`hello data: ${typeof loaded.data}`)
-        // console.log(`hello world: ${typeof loaded.methods.toggleMsg}`)
+    // console.log(loaded);
+    // loaded = remote.getGlobal('loadedPlugins');
+    // console.log('ping:' + loaded)
+    // // console.log(`hello world: ${JSON.stringify(loaded)}`)
+    // console.log(`hello world: ${loaded.template}`)
+    // console.log(`hello methods: ${loaded.methods}`)
+    // console.log(`hello data: ${typeof loaded.data}`)
+    // console.log(`hello world: ${typeof loaded.methods.toggleMsg}`)
     // });
 
     export default Vue.extend({
@@ -70,28 +78,20 @@
             runNqr: function () {
 
                 const requisitionModel: any = {
-                    delay: 0,
-                    level: 0,
-                    name: '',
-                    publishers: [],
-                    requisitions: [{
-                        onInit: {
+                    id: Math.trunc(Math.random() * 999999),
+                    publishers: [{
+                        type: 'http',
+                        url: 'https://google.com',
+                        method: 'POST',
+                        onMessageReceived: {
                             assertions: [
                                 {
-                                    name: 'virgs',
-                                    expectToBeTruthy: false
-                                }]
+                                    expect: "statusCode",
+                                    toBeEqualTo: 200
+                                }
+                            ]
                         }
-                    }],
-                    subscriptions: [],
-                    timeout: 0,
-                    onInit: {
-                        assertions: [
-                            {
-                                name: 'virgs',
-                                expectToBeTruthy: false
-                            }]
-                    }
+                    }]
                 };
                 // this.$store.dispatch('runRequisition', requisitionModel);
                 this.$store.dispatch('runRequisitionViaGlobal', requisitionModel);
