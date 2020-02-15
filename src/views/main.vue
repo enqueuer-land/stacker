@@ -17,7 +17,7 @@
     import '@/styles/color-palette.css'
     import '@/styles/dimensions.css'
     import split from 'split.js'
-    import Stage from './stage/stage'
+    import Stage from '@/views/stage/stage'
     import SideBar from "@/views/side-bar/side-bar";
     import Result from "@/views/result/result";
 

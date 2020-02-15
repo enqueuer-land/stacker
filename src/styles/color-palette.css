@@ -14,10 +14,12 @@
     --carabina-body-background-color: #353535;
     --carabina-body-background-darker-color: #1f1f1f;
     --carabina-header-background-lighter-color: #3f3d43;
-    --carabina-header-background-color: #2b2a2e;
-    --carabina-header-background-darker-color: #201f21;
+    --carabina-header-background-color: #252423;
+    --carabina-header-background-darker-color: #201f20;
     --carabina-text-color: #F4FAFF;
     --carabina-text-darker-color: #9CA0A3;
 
+    --carabina-theme-fade-color: #4e5917;
     --carabina-theme-color: #9FB630;
+    --carabina-theme-bright-color: #9FB630;
 }

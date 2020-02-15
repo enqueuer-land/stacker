@@ -29,7 +29,7 @@
 <script lang="ts">
     import {mapActions} from 'vuex'
 
-    import {Vue} from 'vue-property-decorator';
+    import Vue from 'vue';
     import {remote} from 'electron'
 
     // let loaded: any = undefined;
