@@ -1,0 +1,14 @@
+.tree-node {
+    background-color: var(--carabina-header-background-darker-color);
+}
+
+.tree-item {
+    height: 50px !important;
+    cursor: pointer;
+    color: var(--carabina-text-darker-color);
+}
+
+.item-name-tag {
+    font-weight: lighter;
+    font-size: 13px;
+}

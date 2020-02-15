@@ -1,17 +1,17 @@
 <template>
     <div id="side-bar-body">
         <SideBarNeck></SideBarNeck>
-        <SideBarTreeNode></SideBarTreeNode>
+        <SideBarTree></SideBarTree>
     </div>
 </template>
 <script>
     import Vue from 'vue';
     import SideBarNeck from "@/views/side-bar/side-bar-neck";
-    import SideBarTreeNode from "@/views/side-bar/side-bar-tree-node";
+    import SideBarTree from "@/views/side-bar/side-bar-tree";
 
     export default Vue.extend({
         name: 'SideBarBody',
-        components: {SideBarNeck, SideBarTreeNode}
+        components: {SideBarNeck, SideBarTree}
     });
 </script>
 <style type="text/css" scoped>

@@ -1,27 +1,23 @@
 <template>
     <div id="side-bar-tree-item">
-        <b-container fluid class="px-1 carabina-text" style="height: 100%">
+        <b-container fluid class="px-1 carabina-text" style="height: 100%" @click="componentSelected(component)">
             <b-row style="width: 100%; height: 100%" no-gutters class="m-0 pl-1 tree-item">
-                <b-col cols="1" class="align-self-center mx-1">
-                    <span v-if="componentStylish.shouldPrintType()" class="component-name-tag px-1" :style="componentNameTagStyle">{{componentStylish.getType()}}</span>
-                    <div v-else class="px-1 requisition-type">
-<!--                        <i class="fas fa-check-circle"></i>-->
-                        <i class="fas fa-folder"></i>
-<!--                        {{component.requisitions && component.requisitions.length || 0}}-->
-                    </div>
+                <b-col cols="auto" class="align-self-center mx-1" style="width: 80px">
+                    <span v-if="componentStylish.shouldPrintType()" class="item-name-tag px-1" :style="componentNameTagStyle">{{componentStylish.getType()}}</span>
+                    <span v-else class="item-name-tag px-1" :style="componentNameTagStyle">{{componentNameTag}}</span>
                 </b-col>
-                <b-col cols class="align-self-center pl-3">
+                <b-col cols class="align-self-center">
                     {{component.name}}
                 </b-col>
                 <b-col cols="auto" class="align-self-center">
-                    <span class="component-name-tag px-2" :style="componentNameTagStyle">{{componentNameTag}}</span>
+                    <span class="item-name-tag px-2" :style="componentNameTagStyle">{{componentNameTag}}</span>
                 </b-col>
             </b-row>
         </b-container>
     </div>
 </template>
 <script>
-    import '@/styles/tree.css';
+    import '@/styles/component-tree.css';
     import Vue from 'vue';
     import {mapMutations, mapGetters} from 'vuex';
     import {ComponentStylish} from "@/components/component-stylish";
@@ -46,7 +42,7 @@
             }
         },
         methods: {
-            ...mapMutations('side-bar', [])
+            ...mapMutations('side-bar', ['componentSelected'])
         }
 
     });
@@ -54,10 +50,5 @@
 <style type="text/css" scoped>
     #side-bar-tree-item {
         height: 100%;
-    }
-
-    .requisition-type {
-        text-align: center;
-        color: var(--carabina-requisition-color);
     }
 </style>

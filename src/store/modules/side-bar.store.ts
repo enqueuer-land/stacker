@@ -1,36 +1,91 @@
 import {InputRequisitionModel} from "enqueuer";
 import {Components} from "@/components/components";
 
+function getId() {
+    return 'ID' + Math.trunc(Math.random() * 999999) + Math.trunc(Math.random() * 999999);
+}
+
 export default {
     state: {
         textFilter: '',
         requisitions: [
             {
-                id: Math.trunc(Math.random() * 999999),
-                iterations: 2,
-                name: 'first',
+                id: getId(),
+                name: 'second',
+                requisitions: [
+                    {
+                        id: getId(),
+                        name: 'second',
+                        requisitions: [],
+                        publishers: [],
+                        subscriptions: [{
+                            type: 'HTTP',
+                            id: getId(),
+                            name: Math.trunc(Math.random() * 999999),
+                            carabinaMeta: {
+                                componentName: Components.REQUISITION
+                            }
+                        }, {
+                            type: 'AMQP',
+                            id: getId(),
+                            name: Math.trunc(Math.random() * 999999),
+                            carabinaMeta: {
+                                componentName: Components.REQUISITION
+                            }
+                        }],
+                        carabinaMeta: {
+                            componentName: Components.REQUISITION
+                        }
+                    }
+                ],
+                publishers: [],
+                subscriptions: [{
+                    type: 'HTTP',
+                    id: getId(),
+                    name: Math.trunc(Math.random() * 999999),
+                    carabinaMeta: {
+                        componentName: Components.SUBSCRIPTION
+                    }
+                }, {
+                    type: 'AMQP',
+                    id: getId(),
+                    name: Math.trunc(Math.random() * 999999),
+                    carabinaMeta: {
+                        componentName: Components.SUBSCRIPTION
+                    }
+                }],
                 carabinaMeta: {
                     componentName: Components.REQUISITION
-                }
-            },
-            {
-                id: Math.trunc(Math.random() * 999999),
-                name: 'second',
-                type: 'HTTP',
-                carabinaMeta: {
-                    componentName: Components.PUBLISHER
                 }
             }
         ],
     },
     mutations: {
+        componentSelected: (stage: any, component: {}) => console.log(component),
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
         createNewRequisition: (stage: any) => stage.requisitions.push({
-            id: Math.trunc(Math.random() * 999999),
+            id: getId(),
             name: (stage.requisitions.length + 1).toString(),
             type: 'AMQP',
+            requisitions: [],
+            publishers: [{
+                type: 'HTTP',
+                id: getId(),
+                name: Math.trunc(Math.random() * 999999),
+                carabinaMeta: {
+                    componentName: Components.PUBLISHER
+                }
+            }, {
+                type: 'AMQPASDASD',
+                id: getId(),
+                name: Math.trunc(Math.random() * 999999),
+                carabinaMeta: {
+                    componentName: Components.PUBLISHER
+                }
+            }],
+            subscriptions: [],
             carabinaMeta: {
-                componentName: Components.SUBSCRIPTION
+                componentName: Components.REQUISITION
             }
         })
     },

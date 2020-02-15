@@ -1,11 +1,10 @@
-import {InputRequisitionModel, InputPublisherModel, InputSubscriptionModel} from 'enqueuer';
 import {Components} from "@/components/components";
 
 //TODO test it
 export class ComponentStylish {
-    private readonly component: InputRequisitionModel | InputPublisherModel | InputSubscriptionModel;
+    private readonly component: any;
 
-    constructor(component: InputRequisitionModel | InputPublisherModel | InputSubscriptionModel) {
+    constructor(component: any) {
         this.component = component;
     }
 
@@ -17,7 +16,13 @@ export class ComponentStylish {
         if (this.component.carabinaMeta.componentName === Components.REQUISITION) {
             return '';
         }
-        return this.component.type;
+        return this.component.type.substr(0, 7);
+    };
+
+    public getChildrenLength = (): number => {
+        return this.component.requisitions.length +
+            this.component.publishers.length +
+            this.component.subscriptions.length;
     };
 
     public getComponentTag = (): string => {
