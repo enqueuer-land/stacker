@@ -4,7 +4,7 @@
 
 const modules: any = {};
 const requireModule = require.context('.', false, /\.store\.ts$/);
-
+const moduleNames: string[] = [];
 requireModule.keys()
     .forEach(filename => {
 
@@ -14,8 +14,8 @@ requireModule.keys()
             .replace(/(\.\/|\.store\.ts)/g, '');
 
         modules[moduleName] = requireModule(filename).default || requireModule(filename);
-
-        console.log('Store modules: ' + moduleName);
+        moduleNames.push(moduleName);
     });
 
+console.log('Store modules: ' + moduleNames.join('; '));
 export default modules;

@@ -1,9 +1,7 @@
-import {ipcRenderer, remote} from 'electron'
-import {InputRequisitionModel} from 'enqueuer';
+import {InputRequisitionModel} from "enqueuer";
+import {ipcRenderer, remote} from "electron";
 
 export default {
-    state: {},
-    mutations: {},
     actions: {
         runRequisitionViaGlobal: async ({state, commit}: any, requisition: InputRequisitionModel) => {
             const ruEnqueuerFunction = remote.getGlobal('runEnqueuer');
@@ -23,6 +21,5 @@ export default {
             });
 
         }
-    },
-    namespaced: true
+    }, namespaced: true
 }
