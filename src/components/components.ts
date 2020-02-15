@@ -1,0 +1,5 @@
+export enum Components {
+    REQUISITION = 'REQUISITION',
+    PUBLISHER = 'PUBLISHER',
+    SUBSCRIPTION = 'SUBSCRIPTION',
+}

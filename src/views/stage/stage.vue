@@ -26,7 +26,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
     import {mapActions} from 'vuex'
 
     import Vue from 'vue';
@@ -87,7 +87,7 @@
                 },
                 inner: 'inner',
                 message: this.msg,
-                children: [] as any,
+                children: [],
                 magician: `<div>
                                 <select>
                                    <option v-for="num in 20">{{ num }}</option>

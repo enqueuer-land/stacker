@@ -5,7 +5,7 @@
         <SideBarFooter style="height: var(--carabina-footer-size)"></SideBarFooter>
     </div>
 </template>
-<script lang="ts">
+<script>
     import Vue from 'vue';
     import SideBarHeader from "@/views/side-bar/side-bar-header";
     import SideBarBody from "@/views/side-bar/side-bar-body";

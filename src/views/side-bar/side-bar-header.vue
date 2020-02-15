@@ -3,7 +3,7 @@
         <img src="../../assets/logo.png" class="img img-fluid mr-auto d-block">
     </b-container>
 </template>
-<script lang="ts">
+<script>
     import Vue from 'vue';
 
     export default Vue.extend({
@@ -16,7 +16,7 @@
     }
 
     .img {
-        width: 50%;
+        width: 200px;
         padding-top: 18px;
     }
 </style>

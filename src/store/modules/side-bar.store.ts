@@ -1,4 +1,5 @@
 import {InputRequisitionModel} from "enqueuer";
+import {Components} from "@/components/components";
 
 export default {
     state: {
@@ -7,11 +8,18 @@ export default {
             {
                 id: Math.trunc(Math.random() * 999999),
                 iterations: 2,
-                name: 'first'
+                name: 'first',
+                carabinaMeta: {
+                    componentName: Components.REQUISITION
+                }
             },
             {
                 id: Math.trunc(Math.random() * 999999),
-                name: 'second'
+                name: 'second',
+                type: 'HTTP',
+                carabinaMeta: {
+                    componentName: Components.PUBLISHER
+                }
             }
         ],
     },
@@ -20,6 +28,10 @@ export default {
         createNewRequisition: (stage: any) => stage.requisitions.push({
             id: Math.trunc(Math.random() * 999999),
             name: (stage.requisitions.length + 1).toString(),
+            type: 'AMQP',
+            carabinaMeta: {
+                componentName: Components.SUBSCRIPTION
+            }
         })
     },
     getters: {

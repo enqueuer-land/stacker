@@ -6,7 +6,7 @@
                     <div class="p-2">
                         <b-form-input placeholder="Filter" type="text"
                                       @input="filterTextChanged"
-                                      :value="textFilter" class="filter-input">
+                                      :value="textFilter" class="filter-input carabina-text">
                         </b-form-input>
                     </div>
                 </b-col>
@@ -19,7 +19,8 @@
 </template>
 <script lang="ts">
     import '@/styles/icons.css';
-    import {mapMutations, mapGetters} from 'vuex'
+    import '@/styles/texts.css';
+    import {mapMutations, mapGetters} from 'vuex';
 
     export default {
         name: 'SideBarNeck',
