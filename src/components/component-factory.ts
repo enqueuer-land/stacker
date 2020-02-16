@@ -4,7 +4,7 @@ function getId() {
     return 'ID' + Math.trunc(Math.random() * 999999) + Math.trunc(Math.random() * 999999);
 }
 
-
+//TODO test it
 export class ComponentFactory {
 
     public createRequisition = (): any => {

@@ -1,5 +1,5 @@
 <template>
-    <div id="side-bar-tree-item">
+    <div id="side-bar-tree-item" :style="componentStyle">
         <b-container fluid class="px-1 carabina-text" style="height: 100%" @click="componentSelected(component)">
             <b-row style="width: 100%; height: 100%" no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
@@ -15,12 +15,16 @@
                 <b-col cols="auto" class="align-self-center">
                     <span class="item-name-tag px-2" :style="componentNameTagStyle">{{componentNameTag}}</span>
                 </b-col>
+                <b-col cols="auto" class="align-self-center">
+                    <i class="fas fa-ellipsis-v px-2 pt-1 carabina-icon option-icon" style="font-size: 14px"></i>
+                </b-col>
             </b-row>
         </b-container>
     </div>
 </template>
 <script>
     import '@/styles/component-tree.css';
+    import '@/styles/icons.css';
     import Vue from 'vue';
     import {mapMutations, mapGetters} from 'vuex';
     import {ComponentStylish} from "@/components/component-stylish";
@@ -33,8 +37,16 @@
         },
         data: function () {
             return {
+                selected: false,
                 componentStylish: new ComponentStylish(this.component)
             }
+        },
+        mounted() {
+            this.$store.subscribe((mutation) => {
+                if (mutation.type === 'side-bar/componentSelected') {
+                    this.selected = mutation.payload.id === this.component.id;
+                }
+            });
         },
         computed: {
             ...mapGetters('side-bar', []),
@@ -43,10 +55,13 @@
             },
             componentNameTagStyle: function () {
                 return this.componentStylish.componentNameTagStyle();
+            },
+            componentStyle: function () {
+                return this.componentStylish.componentStyle(this.selected);
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['componentSelected'])
+            ...mapMutations('side-bar', ['componentSelected']),
         }
 
     });
@@ -54,6 +69,7 @@
 <style type="text/css" scoped>
     #side-bar-tree-item {
         height: 100%;
+        transition: ease 200ms all;
     }
 
     .requisition-type {
@@ -63,11 +79,25 @@
         transition: all ease 250ms;
     }
 
-    .requisition-type:hover {
-        transform: rotate(-40deg);
-    }
-
     .collapsed {
         transform: rotate(-90deg);
     }
+
+    #side-bar-tree-item:hover .requisition-type {
+        transform: rotate(-40deg);
+    }
+
+    #side-bar-tree-item:hover .option-icon {
+        color: var(--carabina-text-darker-color);
+    }
+
+    #side-bar-tree-item:hover .option-icon {
+        color: var(--carabina-text-darker-color);
+    }
+
+    .option-icon {
+        color: transparent;
+        transition: all 200ms ease;
+    }
+
 </style>

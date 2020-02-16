@@ -44,4 +44,12 @@ export class ComponentStylish {
         }
         return style;
     };
+
+    public componentStyle = (selected: boolean): any => {
+        const style: any = {};
+        if (selected) {
+            style['background-color'] = 'var(--carabina-body-background-color)';
+        }
+        return style;
+    };
 }
