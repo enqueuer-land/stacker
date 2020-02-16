@@ -1,12 +1,11 @@
 <template>
     <div id="side-bar-tree-node" class="tree-node">
         <b-card no-body class="accordion-container">
-            <div class="p-0 m-0">
-                <b-button block v-b-toggle="component.id" class="accordion-button">
-                    <SideBarTreeItem :component="component"/>
-                </b-button>
-            </div>
-            <b-collapse :id="component.id" class="pl-4 py-0 px-0">
+            <b-button block v-b-toggle="component.id" class="accordion-button">
+                <SideBarTreeItem :component="component" :collapsed="collapsed"/>
+            </b-button>
+            <b-collapse :id="component.id" class="pl-4 py-0 px-0"
+                        v-if="componentStylish.getChildrenLength() > 0">
                 <div>
                     <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
                                      :component="requisition"></SideBarTreeNode>
@@ -25,6 +24,7 @@
     import Vue from 'vue';
     import SideBarTreeItem from '@/views/side-bar/side-bar-tree-item';
     import {mapGetters} from 'vuex';
+    import {ComponentStylish} from "@/components/component-stylish";
 
     export default Vue.extend({
         name: 'SideBarTreeNode',
@@ -33,10 +33,20 @@
             component: Object
         },
         data: function () {
-            return {}
+            return {
+                componentStylish: new ComponentStylish(this.component),
+                collapsed: true,
+            }
+        },
+        mounted() {
+            this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
+                if (this.component.id === collapseId) {
+                    this.collapsed = !isJustShown;
+                }
+            })
         },
         computed: {
-            ...mapGetters('side-bar', [])
+            ...mapGetters('side-bar', []),
         }
     });
 </script>
@@ -63,4 +73,5 @@
         box-shadow: none !important;
         background-color: transparent !important;
     }
+
 </style>
