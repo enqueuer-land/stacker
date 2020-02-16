@@ -35,11 +35,10 @@
                 minSize: [300, 600, 300],
                 gutterStyle: () => ({
                     position: 'relative',
-                    top: 'var(--carabina-header-size)',
-                    height: 'var(--carabina-body-size)',
+                    // top: 'var(--carabina-header-size)',
+                    // height: 'var(--carabina-body-size)',
                     width: '3px',
                     cursor: 'col-resize',
-                    'box-shadow': '1px 0 1px var(--carabina-body-background-lighter-color)',
                     'background-color': 'var(--carabina-body-background-darker-color)'
                 })
             });

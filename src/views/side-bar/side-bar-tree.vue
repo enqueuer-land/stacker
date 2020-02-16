@@ -1,9 +1,9 @@
 <template>
-    <div id="side-bar-tree">
+    <b-container fluid id="side-bar-tree" class="p-0 m-0" style="overflow-y: scroll; width: 100%; height: 100%">
         <div v-for="requisition in filteredRequisitions" :key="requisition.id">
             <SideBarTreeNode :component="requisition"></SideBarTreeNode>
         </div>
-    </div>
+    </b-container>
 </template>
 <script>
     import Vue from 'vue';

@@ -1,8 +1,6 @@
 <template>
     <div id="stage" style="height: 100%">
-        <div style="background-color: var(--carabina-header-background-color); height: var(--carabina-header-size)">
-            Stage Header
-        </div>
+        <StageHeader style="height: var(--carabina-header-size)"></StageHeader>
         <div style="background-color: var(--carabina-body-background-color); height: var(--carabina-body-size)">{
             <h1>{{ message }}</h1>
             <i class="fas fa-check-circle"></i>
@@ -28,7 +26,7 @@
 
 <script>
     import {mapActions} from 'vuex'
-
+    import StageHeader from '@/views/stage/stage-header'
     import Vue from 'vue';
     import {remote} from 'electron'
 
@@ -64,7 +62,7 @@
 
     export default Vue.extend({
         name: 'Stage',
-        components: {},
+        components: {StageHeader},
         props: ['msg'],
         data() {
             return {

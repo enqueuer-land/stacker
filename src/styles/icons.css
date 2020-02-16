@@ -1,16 +1,16 @@
 .carabina-icon {
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
     color: var(--carabina-theme-color);
     transition: all ease 200ms;
 }
 
 .carabina-icon:hover {
     transform: scale(1.1);
-    color: var(--carabina-theme-bright-color);
+    filter: brightness(110%);
 }
 
 .carabina-icon:active {
     transform: scale(1.2);
-    color: var(--carabina-theme-bright-color);
+    filter: brightness(120%);
 }

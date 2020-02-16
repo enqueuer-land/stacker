@@ -10,28 +10,9 @@ export class ComponentFactory {
     public createRequisition = (): any => {
         return {
             id: getId(),
-            name: 'second',
-            requisitions: [{
-                id: getId(),
-                name: 'second',
-                requisitions: [],
-                publishers: [],
-                subscriptions: [],
-                carabinaMeta: {
-                    componentName: Components.REQUISITION
-                }
-            }],
-            publishers: [{
-                type: 'HTTP',
-                id: getId(),
-                name: 'second',
-                requisitions: [],
-                publishers: [],
-                subscriptions: [],
-                carabinaMeta: {
-                    componentName: Components.PUBLISHER
-                }
-            }],
+            name: 'New Requisition',
+            requisitions: [],
+            publishers: [],
             subscriptions: [],
             carabinaMeta: {
                 componentName: Components.REQUISITION
@@ -39,4 +20,28 @@ export class ComponentFactory {
         }
     };
 
+    createPublisher(parentRequisition: any) {
+        return {
+            type: 'HTTP',
+            id: getId(),
+            name: 'New Publisher',
+            carabinaMeta: {
+                parentRequisition,
+                componentName: Components.PUBLISHER
+            }
+        }
+    }
+
+    createSubscription(parentRequisition: any) {
+        return {
+            type: 'HTTP',
+            id: getId(),
+            name: 'New Subscription',
+            carabinaMeta: {
+                parentRequisition,
+                componentName: Components.SUBSCRIPTION
+            }
+        }
+
+    }
 }
