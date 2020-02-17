@@ -1,7 +1,7 @@
 <template>
     <div id="stage" style="height: 100%">
         <StageHeader style="height: var(--carabina-header-size)"></StageHeader>
-        <div style="background-color: var(--carabina-body-background-color); height: var(--carabina-body-size)">{
+        <div style="background-color: var(--carabina-body-background-darker-color); height: var(--carabina-body-size)">{
             <h1>{{ message }}</h1>
             <i class="fas fa-check-circle"></i>
             <div v-for="(child, index) in children" :key="index">

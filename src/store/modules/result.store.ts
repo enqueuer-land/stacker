@@ -19,7 +19,8 @@ export default {
                 icon: 'fa fa-exclamation',
                 color: 'var(--carabina-ignored-test-color)',
                 propertyFilterName: 'showIgnoredTests'
-            },]
+            }
+            ]
     },
     mutations: {
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,

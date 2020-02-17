@@ -33,7 +33,8 @@ export class ComponentStylish {
     };
 
     public componentNameTagStyle = (): any => {
-        const style: any = {};
+        const style: any = {
+        };
         const componentName = this.component.carabinaMeta.componentName;
         if (componentName === Components.REQUISITION) {
             style['color'] = 'var(--carabina-requisition-color)'

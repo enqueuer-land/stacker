@@ -1,6 +1,6 @@
 <template>
     <b-container fluid id="side-bar-header" class="p-1">
-        <b-row class="m-0" style="width: 100%; height: 40%" no-gutters>
+        <b-row class="m-0 pt-1" style="width: 100%; height: 40%" no-gutters>
             <b-col cols class="align-self-center p-1">
                 <img src="../../assets/logo.png" class="pl-1 img img-fluid mr-auto d-block">
             </b-col>

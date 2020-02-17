@@ -1,10 +1,10 @@
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
-        <div class="p-2 m-0" style="width: 100%; height: 40%">
+        <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">
             <b-breadcrumb class="m-0 p-0 pt-1 pl-1 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
-        <b-row class="px-1" style="width: 100%; height: 50%" no-gutters>
+        <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
                     <template v-slot:prepend>
@@ -60,7 +60,7 @@
 </script>
 <style type="text/css" scoped>
     #stage-header {
-        background-color: var(--carabina-header-background-color);
+        background-color: var(--carabina-body-background-darker-color);
     }
 
     .name-input {

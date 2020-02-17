@@ -1,6 +1,6 @@
 <template>
     <div id="side-bar-tree-node" class="tree-node">
-        <b-card no-body class="accordion-container">
+        <b-card no-body class="accordion-container" style="border: none">
             <b-button block v-b-toggle="component.id" class="accordion-button">
                 <SideBarTreeItem :component="component" :collapsed="collapsed"/>
             </b-button>
@@ -55,9 +55,9 @@
     }
 
     .bottom-line {
-        position: relative;
-        left: 10%;
-        width: 80%;
+        /*position: relative;*/
+        /*left: 10%;*/
+        /*width: 80%;*/
         border-bottom: 1px solid var(--carabina-header-background-lighter-color);
     }
 

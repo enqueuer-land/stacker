@@ -30,16 +30,16 @@
         },
         mounted() {
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
-                gutterSize: 3,
+                gutterSize: 2,
                 sizes: [30, 45, 25],
-                minSize: [300, 400, 300],
+                minSize: [300, 400, 350],
                 gutterStyle: () => ({
                     position: 'relative',
                     // top: 'var(--carabina-header-size)',
                     // height: 'var(--carabina-body-size)',
                     width: '3px',
                     cursor: 'col-resize',
-                    'background-color': 'var(--carabina-body-background-darker-color)'
+                    'background-color': 'var(--carabina-body-background-color)'
                 })
             });
         }

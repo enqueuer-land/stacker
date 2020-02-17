@@ -1,7 +1,7 @@
 <template>
     <b-container id="result-header" class="p-0"
-                 style="height: 100%; background-color: var(--carabina-header-background-color);">
-        <b-row style="width: 100%" no-gutters class="m-0 p-0">
+                 style="height: 100%; background-color: var(--carabina-body-background-darker-color);">
+        <b-row style="width: 100%" no-gutters class="m-0 p-0 pt-1">
             <b-col cols="auto" class="align-self-center">
                 <button type="button" class="btn m-2 carabina-text test-badge" :style="testBadgeStyle">
                     {{valid ? 'PASS' : 'FAIL'}}
