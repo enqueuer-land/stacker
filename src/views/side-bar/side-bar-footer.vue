@@ -11,6 +11,7 @@
 </script>
 <style type="text/css" scoped>
     #side-bar-footer {
-        background-color: var(--carabina-header-background-darker-color);
+        background-color: var(--carabina-body-background-darker-color);
+        border-top: 1px solid var(--carabina-header-background-lighter-color);
     }
 </style>

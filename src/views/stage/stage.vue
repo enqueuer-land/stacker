@@ -18,7 +18,7 @@
             <!--            <h3 @click="runRequisitionViaGlobal" style="cursor: pointer">runNqr</h3>-->
             <h3 @click="runRequisitionViaGlobal(requisition)" style="cursor: pointer">runNqr</h3>
         </div>
-        <div style="background-color: var(--carabina-header-background-darker-color); height: var(--carabina-footer-size)">
+        <div style="background-color: var(--carabina-header-background-darker-color); height: var(--carabina-footer-size); border-top: 1px solid var(--carabina-header-background-lighter-color);">
         </div>
 
     </div>

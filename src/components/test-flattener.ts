@@ -4,9 +4,9 @@ import {IdCreator} from '@/components/id-creator';
 
 //TODO test it
 export type Hierarchy = {
-    name: string,
-    id: string,
-    [propname: string]: any
+    name: string;
+    id: string;
+    [propname: string]: any;
 };
 
 export class TestFlattener {

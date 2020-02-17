@@ -9,7 +9,7 @@
                         <i :class="['fas fa-caret-down requisition-type', collapsed && 'collapsed']"></i>
                     </div>
                 </b-col>
-                <b-col cols class="align-self-center item-name">
+                <b-col cols class="align-self-center item-name" :style="componentNameStyle">
                     {{component.name}}
                 </b-col>
                 <b-col cols="auto" class="align-self-center">
@@ -20,6 +20,7 @@
                     <i class="fas fa-ellipsis-v px-2 pt-1 carabina-icon option-icon" style="font-size: 14px"></i>
                 </b-col>
             </b-row>
+            <div class="bottom-line"></div>
         </b-container>
     </div>
 </template>
@@ -59,6 +60,9 @@
             },
             componentStyle: function () {
                 return this.componentStylish.componentStyle(this.selected);
+            },
+            componentNameStyle: function () {
+                return this.componentStylish.componentNameStyle(this.selected);
             }
         },
         methods: {
@@ -70,7 +74,7 @@
 <style type="text/css" scoped>
     #side-bar-tree-item {
         height: 100%;
-        transition: ease 200ms all;
+        transition: all ease 200ms;
     }
 
     .requisition-type {
@@ -92,8 +96,8 @@
         color: var(--carabina-text-darker-color);
     }
 
-    #side-bar-tree-item:hover .option-icon {
-        color: var(--carabina-text-darker-color);
+    #side-bar-tree-item:hover .item-name {
+        color: var(--carabina-text-color);
     }
 
     .option-icon {
@@ -106,4 +110,12 @@
         overflow-x: auto;
         white-space: nowrap;
     }
+
+    .bottom-line {
+        /*position: relative;*/
+        /*left: 10%;*/
+        /*width: 80%;*/
+        border-bottom: 1px solid var(--carabina-header-background-color);
+    }
+
 </style>

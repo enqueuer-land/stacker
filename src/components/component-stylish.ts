@@ -53,4 +53,12 @@ export class ComponentStylish {
         }
         return style;
     };
+
+    public componentNameStyle = (selected: boolean): any => {
+        const style: any = {};
+        if (selected) {
+            style['color'] = 'var(--carabina-text-color)';
+        }
+        return style;
+    };
 }

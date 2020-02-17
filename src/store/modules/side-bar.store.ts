@@ -30,10 +30,6 @@ export default {
         }
     },
     getters: {
-        selectedComponentId: (state: any) => {
-            console.log(state.selectedComponent.id)
-            return state.selectedComponent.id
-        },
         textFilter: (state: any) => state.textFilter,
         filteredRequisitions: (state: any) => state.requisitions
             .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter))

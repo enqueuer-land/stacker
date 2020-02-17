@@ -4,9 +4,9 @@ import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 
 type ResponseMap = {
     [id: string]: {
-        promisesResolver: Function,
-        responses: OutputRequisitionModel[]
-    }
+        promisesResolver: Function;
+        responses: OutputRequisitionModel[];
+    };
 };
 
 export default class EnqueuerRunner {
@@ -67,4 +67,4 @@ export default class EnqueuerRunner {
             }
         }
     }
-};
+}

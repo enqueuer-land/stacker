@@ -49,7 +49,7 @@
 </script>
 <style type="text/css" scoped>
     #side-bar-header {
-        background-color: var(--carabina-header-background-darker-color);
+        background-color: var(--carabina-body-background-darker-color);
     }
 
     .img {
