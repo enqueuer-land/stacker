@@ -1,8 +1,6 @@
 <template>
     <div id="result" style="height: 100%">
-        <div style="background-color: var(--carabina-header-background-color); height: var(--carabina-header-size)">
-            Result Header
-        </div>
+        <ResultHeader style="height: var(--carabina-header-size)" :valid="true" name="repor tNameR eallyLongJust to tesas sadsad"></ResultHeader>
         <div style="background-color: var(--carabina-body-background-color); height: var(--carabina-body-size)">
         </div>
         <div style="background-color: var(--carabina-header-background-darker-color); height: var(--carabina-footer-size)">
@@ -11,9 +9,10 @@
 </template>
 <script>
     import Vue from 'vue';
+    import ResultHeader from '@/views/result/result-header'
 
     export default Vue.extend({
-
-        name: 'Result'
+        name: 'Result',
+        components: {ResultHeader}
     });
 </script>

@@ -9,7 +9,7 @@
                         <i :class="['fas fa-caret-down requisition-type', collapsed && 'collapsed']"></i>
                     </div>
                 </b-col>
-                <b-col cols class="align-self-center">
+                <b-col cols class="align-self-center item-name">
                     {{component.name}}
                 </b-col>
                 <b-col cols="auto" class="align-self-center">
@@ -100,4 +100,9 @@
         transition: all 200ms ease;
     }
 
+    .item-name {
+        overflow-y: scroll;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 </style>

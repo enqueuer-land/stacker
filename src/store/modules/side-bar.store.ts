@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import {InputRequisitionModel} from "enqueuer";
+import {InputRequisitionModel} from 'enqueuer';
 import {ComponentFactory} from "@/components/component-factory";
 
 export default {

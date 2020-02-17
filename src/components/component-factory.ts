@@ -1,15 +1,12 @@
 import {Components} from "@/components/components";
-
-function getId() {
-    return 'ID' + Math.trunc(Math.random() * 999999) + Math.trunc(Math.random() * 999999);
-}
+import {IdCreator} from "@/components/id-creator";
 
 //TODO test it
 export class ComponentFactory {
 
     public createRequisition = (): any => {
         return {
-            id: getId(),
+            id: new IdCreator().create(),
             name: 'New Requisition',
             requisitions: [],
             publishers: [],
@@ -23,7 +20,7 @@ export class ComponentFactory {
     createPublisher(parentRequisition: any) {
         return {
             type: 'HTTP',
-            id: getId(),
+            id: new IdCreator().create(),
             name: 'New Publisher',
             carabinaMeta: {
                 parentRequisition,
@@ -35,7 +32,7 @@ export class ComponentFactory {
     createSubscription(parentRequisition: any) {
         return {
             type: 'HTTP',
-            id: getId(),
+            id: new IdCreator().create(),
             name: 'New Subscription',
             carabinaMeta: {
                 parentRequisition,

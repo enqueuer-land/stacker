@@ -23,6 +23,8 @@ export default class EnqueuerRunner {
                         .reply('runRequisitionReply', await this.sendRequisition(requisition)));
             }
 
+            this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
+            this.enqueuerProcess.send({event: 'GET_ASSERTERS'});
             // @ts-ignore
             global.runEnqueuer = (requisition: InputRequisitionModel) => this.sendRequisition(requisition);
         } catch (e) {
@@ -41,7 +43,7 @@ export default class EnqueuerRunner {
     }
 
     private sendRequisition(requisitionInput: InputRequisitionModel): Promise<OutputRequisitionModel[]> {
-        this.enqueuerProcess.send({event: 'runRequisition', value: requisitionInput});
+        this.enqueuerProcess.send({event: 'RUN_REQUISITION', value: requisitionInput});
         return new Promise(resolve => {
             this.responsesMap[requisitionInput.id.toString()] = {
                 promisesResolver: resolve,
@@ -51,6 +53,7 @@ export default class EnqueuerRunner {
     }
 
     private onMessageReceived(message: any): void {
+        console.log(message.event);
         if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
             const requisitionOutput: OutputRequisitionModel = message.value.requisition;
             const responsesMap = this.responsesMap[requisitionOutput.id.toString()];

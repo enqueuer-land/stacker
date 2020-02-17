@@ -1,6 +1,6 @@
 .carabina-icon {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     color: var(--carabina-theme-color);
     transition: all ease 200ms;
 }

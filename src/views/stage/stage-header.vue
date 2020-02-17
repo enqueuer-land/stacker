@@ -1,6 +1,6 @@
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
-        <div class="p-2 m-0" style="width: 100%; height: 46%">
+        <div class="p-2 m-0" style="width: 100%; height: 40%">
             <b-breadcrumb class="m-0 p-0 pt-1 pl-1 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
@@ -8,7 +8,7 @@
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
                     <template v-slot:prepend>
-                        <b-form-select plain v-model="selectedProtocol" class="carabina-text protocol-selector" :options="protocolsList"></b-form-select>
+                        <b-form-select plain v-model="selectedProtocol" class="carabina-text protocol-selector carabina-select" :options="protocolsList"></b-form-select>
                     </template>
                     <b-form-input id="component-name" placeholder="Enter component name" type="text"
                                   class="name-input carabina-text">
@@ -24,6 +24,7 @@
 </template>
 <script>
     import '@/styles/texts.css';
+    import '@/styles/select.css';
     import Vue from 'vue';
 
     export default Vue.extend({
@@ -47,6 +48,9 @@
                 ],
                 protocolsList: [
                     {value: 'AMQP', html: `<span style="background-color: transparent; color: red !important;">AMQP</span>`, selected: true},
+                    {value: 'HTTP', html: 'HTTP'},
+                    {value: 'HTTP', html: 'HTTP'},
+                    {value: 'HTTP', html: 'HTTP'},
                     {value: 'HTTP', html: 'HTTP'},
                     {value: 'LARGE PROTOCOL NAME', html: 'LARGE PROTOCOL NAME'}
                 ]
@@ -109,7 +113,7 @@
     .protocol-selector {
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 100px;
+        width: 120px;
         border: none;
         color: var(--carabina-publisher-color);
         background-color: transparent;
@@ -122,10 +126,4 @@
         outline: none;
     }
 
-    select option {
-        margin: 40px;
-        background: rgba(0, 0, 0, 0.3);
-        color: #fff;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-    }
 </style>
