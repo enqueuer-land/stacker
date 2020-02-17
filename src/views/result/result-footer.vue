@@ -1,6 +1,6 @@
 <template>
     <b-container id="result-footer" class="px-1 carabina-text">
-        <b-row style="width: 100%; height: 100%; font-size: 14px" no-gutters class="m-0 p-0" align-h="between">
+        <b-row style="width: 100%; height: 100%; font-size: 15px" no-gutters class="m-0 p-0" align-h="between">
             <b-col cols="auto" class="align-self-center pl-1">
                 <span class="label-text">
                     Tests:
@@ -8,7 +8,7 @@
                 <span :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
                     {{summary}}
                 </span>
-                <span v-if="ignoredTests > 0" style="margin-left: 3px; color: var(--carabina-ignored-test-color);">
+                <span v-if="ignoredTests > 0" style="margin-left: 5px; color: var(--carabina-ignored-test-color);">
                     {{ignoredTests}} ignored
                 </span>
             </b-col>
@@ -69,7 +69,7 @@
     }
 
     .label-text {
-        font-size: 13px;
+        font-size: 14px;
         text-align: right;
         font-weight: lighter;
         color: var(--carabina-text-darker-color);

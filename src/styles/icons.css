@@ -6,11 +6,11 @@
 }
 
 .carabina-icon:hover {
-    transform: scale(1.1);
-    filter: brightness(110%);
+    transform: scale(1.25);
+    filter: brightness(1.25);
 }
 
 .carabina-icon:active {
-    transform: scale(1.2);
-    filter: brightness(120%);
+    transform: scale(1.5);
+    filter: brightness(1.5);
 }

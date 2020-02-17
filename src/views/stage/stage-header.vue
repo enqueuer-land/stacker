@@ -8,7 +8,15 @@
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
                     <template v-slot:prepend>
-                        <b-form-select plain v-model="selectedProtocol" class="carabina-text protocol-selector carabina-select" :options="protocolsList"></b-form-select>
+                        <!--                        <b-form-select plain v-model="selectedProtocol" class="carabina-text protocol-selector carabina-select" :options="protocolsList"></b-form-select>-->
+                        <b-dropdown no-caret lazy variant="carabina" class="carabina-text protocol-selector">
+                            <template v-slot:button-content>
+                                <span style="color: var(--carabina-publisher-color)">{{selectedProtocol}}<i class="mt-1 float-right fas fa-caret-down"></i></span>
+                            </template>
+                            <b-dropdown-item v-for="protocol in protocolsList" :key="protocol.value"
+                                             @click="selectedProtocol = protocol.value">{{protocol.value}}
+                            </b-dropdown-item>
+                        </b-dropdown>
                     </template>
                     <b-form-input id="component-name" placeholder="Enter component name" type="text"
                                   class="name-input carabina-text">
@@ -24,7 +32,7 @@
 </template>
 <script>
     import '@/styles/texts.css';
-    import '@/styles/select.css';
+    import '@/styles/dropdown.css';
     import Vue from 'vue';
 
     export default Vue.extend({
@@ -47,7 +55,11 @@
                     }
                 ],
                 protocolsList: [
-                    {value: 'AMQP', html: `<span style="background-color: transparent; color: red !important;">AMQP</span>`, selected: true},
+                    {
+                        value: 'AMQP',
+                        html: `<span style="background-color: transparent; color: red !important;">AMQP</span>`,
+                        selected: true
+                    },
                     {value: 'HTTP', html: 'HTTP'},
                     {value: 'HTTP', html: 'HTTP'},
                     {value: 'HTTP', html: 'HTTP'},
@@ -97,33 +109,38 @@
         box-shadow: none;
         color: var(--carabina-publisher-color);
         background-color: transparent;
+        transition: all ease 100ms;
     }
 
     .run-button:hover {
-        filter: brightness(110%);
+        filter: brightness(125%);
     }
 
     .run-button:active {
+        transform: scale(1.1);
         box-shadow: none !important;
         color: var(--carabina-publisher-color) !important;
-        filter: brightness(120%);
+        filter: brightness(150%);
         background-color: transparent !important;
     }
 
-    .protocol-selector {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 120px;
-        border: none;
-        color: var(--carabina-publisher-color);
-        background-color: transparent;
-        text-decoration-style: solid;
-        border-bottom: 1px solid var(--carabina-publisher-color);
+    .protocol-selector, .dropdown-toggle-no-caret, .btn-carabina {
+        width: 120px !important;
+        border: none !important;;
+        color: var(--carabina-publisher-color) !important;
+        background-color: transparent !important;;
+        border-bottom: 1px solid var(--carabina-publisher-color) !important;;
     }
 
-    .protocol-selector:active, .protocol-selector:focus {
-        box-shadow: none;
-        outline: none;
+    .protocol-selector:hover {
+        filter: brightness(1.25);
+        /*border-radius: 5px;*/
+        /*background-color: var(--carabina-body-background-color) !important;;*/
+    }
+
+    .protocol-selector:active, .protocol-selector:focus, .dropdown-toggle:active, .dropdown-toggle:focus, .btn-carabina:focus, .btn-carabina:active {
+        box-shadow: none !important;
+        outline: none !important;;
     }
 
 </style>
