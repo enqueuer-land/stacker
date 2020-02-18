@@ -23,6 +23,7 @@ export class TestFlattener {
                     .map(test => {
                         return {
                             ...test,
+                            arguments: report.hooks![hookName].arguments,
                             id: new IdCreator().create(),
                             hierarchy: hierarchy.concat({
                                 name: hookName,
