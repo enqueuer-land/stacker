@@ -95,7 +95,7 @@ export default {
                                             {
                                                 "valid": true,
                                                 "name": "Message received",
-                                                "description": "Subscription has received its message"
+                                                "description": "Subscription has received its messageSubscription has received its messageSubscription has received its messageSubscription has received its messageSubscription has received its messageSubscription has received its message"
                                             }
                                         ],
                                         "arguments": {

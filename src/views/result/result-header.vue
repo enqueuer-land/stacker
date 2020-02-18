@@ -2,7 +2,7 @@
     <b-container id="result-header" class="p-0"
                  style="height: 100%; background-color: var(--carabina-body-background-darker-color);">
         <b-row style="width: 100%" no-gutters class="m-0 p-0 pt-1">
-            <b-col cols="auto" class="align-self-center">
+            <b-col cols="auto" class="pl-1 align-self-center">
                 <button type="button" class="btn m-2 carabina-text test-badge" :style="testBadgeStyle">
                     {{valid ? 'PASS' : 'FAIL'}}
                 </button>
@@ -13,7 +13,7 @@
                 </div>
             </b-col>
         </b-row>
-        <b-row class="m-0 pt-1 px-2" style="width: 100%" no-gutters>
+        <b-row class="m-0 px-2" style="width: 100%" no-gutters>
             <b-col cols class="align-self-center">
                 <b-form-input placeholder="Enter filter" type="text"
                               @input="filterTextChanged"
