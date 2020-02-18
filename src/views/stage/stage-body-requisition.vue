@@ -7,6 +7,8 @@
                         label="Delay (ms)"
                         label-for="delay">
                     <b-form-input id="delay" placeholder="Enter delay"
+                                  :value="component.delay"
+                                  @input="(value) => $parent.updateAttribute('delay', value)"
                                   class="text-input carabina-text" lazy>
                     </b-form-input>
                 </b-form-group>
@@ -17,6 +19,8 @@
                         label="Timeout (ms)"
                         label-for="timeout">
                     <b-form-input id="timeout" placeholder="Enter timeout"
+                                  :value="component.timeout"
+                                  @input="(value) => $parent.updateAttribute('timeout', value)"
                                   class="text-input carabina-text" lazy>
                     </b-form-input>
                 </b-form-group>
@@ -29,6 +33,8 @@
                         label="Iterations"
                         label-for="iterations">
                     <b-form-input id="iterations" placeholder="Enter iterations"
+                                  :value="component.iterations"
+                                  @input="(value) => $parent.updateAttribute('iterations', value)"
                                   class="text-input carabina-text" lazy>
                     </b-form-input>
                 </b-form-group>
@@ -38,15 +44,18 @@
                         class="mb-0 text-label"
                         label="Parallel"
                         label-for="parallel">
-                    <b-button block id="parallel" :pressed.sync="parallel" variant="carabina">
-                        {{parallel? 'Turn off' : 'Turn on'}}
+                    <b-button block id="parallel"
+                              :value="component.parallel" :class="[component.parallel ? 'active': '']"
+                              @click="() => {$parent.updateAttribute('parallel', !component.parallel); }"
+                              variant="carabina">
+                        {{component.parallel ? 'Turn off' : 'Turn on'}}
                     </b-button>
                 </b-form-group>
             </b-col>
         </b-row>
 
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2 new-component-button" style="width: fit-content;"
-               @click="createNewComponent('REQUISITION')" no-gutters>
+               @click="createNewComponent('REQUISITION', component)" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
@@ -55,7 +64,7 @@
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
-               @click="createNewComponent('PUBLISHER')" no-gutters>
+               @click="createNewComponent('PUBLISHER', component)" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
@@ -64,7 +73,7 @@
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
-               @click="createNewComponent('SUBSCRIPTION')" no-gutters>
+               @click="createNewComponent('SUBSCRIPTION', component)" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
@@ -81,10 +90,8 @@
 
     export default Vue.extend({
         name: 'StageBodyRequisition',
-        data: function () {
-            return {
-                parallel: false,
-            }
+        props: {
+            component: Object
         },
         methods: {
             ...mapMutations('side-bar', ['createNewComponent'])

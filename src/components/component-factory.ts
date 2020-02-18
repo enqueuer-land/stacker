@@ -19,6 +19,10 @@ export class ComponentFactory {
         const requisition = {
             id: new IdCreator().create(),
             name: 'New Requisition',
+            iterations: 0,
+            delay: 0,
+            timeout: 0,
+            parallel: false,
             requisitions: [],
             publishers: [],
             subscriptions: [],

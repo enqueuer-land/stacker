@@ -23,6 +23,7 @@ export default {
             }
 
             if (componentType === ComponentTypes.REQUISITION) {
+                console.log('Here: ' + parent );
                 const component = new ComponentFactory().createRequisition();
                 stage.selectedComponent = component;
                 stage.requisitions.push(component);

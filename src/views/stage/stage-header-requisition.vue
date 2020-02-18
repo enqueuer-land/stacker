@@ -42,7 +42,6 @@
                     parent = parent.carabinaMeta.parent;
                     result.push({text: parent.name, href: '#', id: parent.id});
                 }
-                console.log(result);
                 return result;
             }
         }

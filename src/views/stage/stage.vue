@@ -1,12 +1,12 @@
 <template>
     <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
-        <div v-if="selectedComponent !== null">
+        <template v-if="selectedComponent !== null">
             <StageHeaderRequisition v-if="selectedComponent.carabinaMeta.componentName==='REQUISITION'"
                                     :component="selectedComponent"
                                     style="height: var(--carabina-header-size)"></StageHeaderRequisition>
-            <StageBodyRequisition style="height: var(--carabina-body-size)"></StageBodyRequisition>
+            <StageBodyRequisition :component="selectedComponent" style="height: var(--carabina-body-size)"></StageBodyRequisition>
             <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
-        </div>
+        </template>
     </div>
 </template>
 
