@@ -8,8 +8,8 @@ export class ComponentStylish {
         this.component = component;
     }
 
-    public shouldPrintType = (): boolean => {
-        return this.component.carabinaMeta.componentName !== ComponentTypes.REQUISITION;
+    public isRequisition = (): boolean => {
+        return this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION;
     };
 
     public getType = (): string => {
@@ -20,7 +20,7 @@ export class ComponentStylish {
     };
 
     public getChildrenLength = (): number => {
-        return this.component.requisitions.length +
+        return this.isRequisition() && this.component.requisitions.length +
             this.component.publishers.length +
             this.component.subscriptions.length;
     };
