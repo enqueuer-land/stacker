@@ -1,6 +1,6 @@
 <template>
     <div style="height: 100vh">
-        <div class="wrapper" style="display: flex; height: 100%; background-color: var(--carabina-header-background-color)">
+        <div class="wrapper" style="display: flex; height: 100%;">
             <div class="panel" id="splitter-side-bar">
                 <SideBar></SideBar>
             </div>

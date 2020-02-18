@@ -19,7 +19,7 @@
                 <div class="p-1 px-2">
                     <b-form-input placeholder="Enter filter" type="text"
                                   @input="filterTextChanged"
-                                  :value="textFilter" class="filter-input carabina-text">
+                                  :value="textFilter" class="text-input carabina-text">
                     </b-form-input>
                 </div>
             </b-col>
@@ -29,6 +29,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/icons.css'
+    import '@/styles/texts.css'
     import {mapGetters, mapMutations} from 'vuex';
 
     export default Vue.extend({
@@ -47,21 +48,13 @@
 
     });
 </script>
-<style type="text/css" scoped>
+<style scoped>
     #side-bar-header {
         background-color: var(--carabina-body-background-darker-color);
     }
 
     .img {
         width: 170px;
-    }
-
-    .filter-input {
-        color: var(--carabina-text-darker-color);
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid var(--carabina-body-background-lighter-color);
-        box-shadow: none !important;
     }
 
     #new-requisition-button {
@@ -78,14 +71,5 @@
         font-size: 16px;
         color: var(--carabina-subscription-color);
     }
-
-    #new-requisition-button:hover, #new-publisher-button:hover, #new-subscription-button:hover {
-        filter: brightness(110%);
-    }
-
-    #new-requisition-button:active, #new-publisher-button:active, #new-subscription-button:active {
-        filter: brightness(120%);
-    }
-
 
 </style>

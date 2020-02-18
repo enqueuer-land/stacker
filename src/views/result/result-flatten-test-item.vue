@@ -1,7 +1,7 @@
 <template>
     <b-container id="result-flatten-tests-item" v-b-toggle="test.id">
         <b-row no-gutters class="pb-1">
-            <b-col cols="auto" class="align-self-center pl-3">
+            <b-col cols="auto" class="align-self-center pl-3 pr-1">
                 <i v-if="test.ignored" class="fas fa-times carabina-icon"
                    style="color: var(--carabina-ignored-test-color)"></i>
                 <i v-else-if="test.valid" class="fas fa-check carabina-icon"

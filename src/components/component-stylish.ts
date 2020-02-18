@@ -55,7 +55,9 @@ export class ComponentStylish {
     };
 
     public componentNameStyle = (selected: boolean): any => {
-        const style: any = {};
+        const style: any = {
+            'user-select': 'none'
+        };
         if (selected) {
             style['color'] = 'var(--carabina-text-color)';
         }

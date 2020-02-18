@@ -17,7 +17,7 @@
             <b-col cols class="align-self-center">
                 <b-form-input placeholder="Enter filter" type="text"
                               @input="filterTextChanged"
-                              :value="textFilter" class="filter-input carabina-text">
+                              :value="textFilter" class="text-input carabina-text">
                 </b-form-input>
             </b-col>
             <b-col v-for="iconFilter in iconFilters" cols="auto" :key="iconFilter.icon"
@@ -75,14 +75,6 @@
     });
 </script>
 <style scoped>
-
-    .filter-input {
-        color: var(--carabina-text-darker-color);
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid var(--carabina-body-background-lighter-color);
-        box-shadow: none !important;
-    }
 
     .test-badge:active, .test-badge:focus {
         outline: none;

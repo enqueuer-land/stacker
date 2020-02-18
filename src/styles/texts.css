@@ -3,5 +3,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
-    color: #2c3e50;
+    color: var(--carabina-text-darker-color);
+}
+
+.text-input {
+    color: var(--carabina-text-darker-color) !important;
+    background-color: transparent !important;;
+    border: none !important;;
+    border-bottom: 1px solid var(--carabina-body-background-lighter-color) !important;;
+    box-shadow: none !important;
+}
+
+.text-label {
+    font-size: 14px;
+    color: var(--carabina-text-darker-color) !important;
+    background-color: transparent !important;;
 }
