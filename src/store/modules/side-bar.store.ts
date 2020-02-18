@@ -34,9 +34,16 @@ export default {
                 stage.requisitions.push(parentRequisition);
             }
         },
+        currentSelectedComponentChanged: (stage: any, event: any) => {
+            if (stage.selectedComponent) {
+                stage.selectedComponent[event.attributeName] = event.value;
+            }
+        },
     },
     getters: {
+        selectedComponent: (state: any) => state.selectedComponent,
         textFilter: (state: any) => state.textFilter,
+        requisitions: (state: any) => state.requisitions,
         filteredRequisitions: (state: any) => state.requisitions
             .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter))
     },

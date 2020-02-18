@@ -1,64 +1,37 @@
 <template>
-    <div id="stage" style="height: 100%">
-        <StageHeaderRequisition v-if="component.carabinaMeta.componentName==='REQUISITION'"
-                                :component="component"
-                                style="height: var(--carabina-header-size)"></StageHeaderRequisition>
-        <StageBodyRequisition style="height: var(--carabina-body-size)"></StageBodyRequisition>
-        <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
+    <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
+        <div v-if="selectedComponent !== null">
+            <StageHeaderRequisition v-if="selectedComponent.carabinaMeta.componentName==='REQUISITION'"
+                                    :component="selectedComponent"
+                                    style="height: var(--carabina-header-size)"></StageHeaderRequisition>
+            <StageBodyRequisition style="height: var(--carabina-body-size)"></StageBodyRequisition>
+            <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
+        </div>
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
+    import {mapGetters, mapMutations} from 'vuex';
     import StageFooter from '@/views/stage/stage-footer'
-    import {ComponentTypes} from "@//components/component-types";
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
     import StageHeaderRequisition from '@/views/stage/stage-header-requisition'
 
     export default Vue.extend({
         name: 'Stage',
         components: {StageHeaderRequisition, StageBodyRequisition, StageFooter},
-        data: function () {
-            return {
-                component: {
-                    id: 'ID31231234234',
-                    name: 'New Requisition',
-                    requisitions: [],
-                    publishers: [],
-                    subscriptions: [],
-                    carabinaMeta: {
-                        parent: {
-                            name: 'New parent Requisition 1',
-                            carabinaMeta: {
-                                parent: {
-                                    name: 'New grandpa Requisition 2',
-                                    carabinaMeta: {
-                                        parent: {
-                                            name: 'New grandpa Requisition 3',
-                                            carabinaMeta: {
-                                                parent: {
-                                                    name: 'New grandpa Requisition 4',
-                                                },
-                                            }
-
-                                        },
-                                    }
-
-                                },
-                            }
-                        },
-                        selected: true,
-                        collapsed: false,
-                        componentName: ComponentTypes.REQUISITION
-                    }
-                }
-            }
+        mounted: function() {
+            console.log(this.selectedComponent);
         },
         methods: {
+            ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
             updateAttribute(attributeName, value) {
-                console.log(attributeName, value);
+                this.currentSelectedComponentChanged({attributeName, value});
             }
-        }
+        },
+        computed: {
+            ...mapGetters('side-bar', ['selectedComponent'])
+        },
     });
 </script>
 

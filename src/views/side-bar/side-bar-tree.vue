@@ -7,8 +7,8 @@
 </template>
 <script>
     import Vue from 'vue';
-    import {mapGetters} from 'vuex';
     import '@/styles/component-tree.css';
+    import {mapGetters, mapMutations} from 'vuex';
     import SideBarTreeNode from '@/views/side-bar/side-bar-tree-node';
 
     export default Vue.extend({
@@ -17,8 +17,16 @@
         data: function () {
             return {}
         },
+        mounted() {
+            if (this.requisitions.length === 0) {
+                this.createNewComponent('PUBLISHER');
+            }
+        },
+        methods: {
+            ...mapMutations('side-bar', ['createNewComponent'])
+        },
         computed: {
-            ...mapGetters('side-bar', ['filteredRequisitions'])
+            ...mapGetters('side-bar', ['filteredRequisitions', 'requisitions'])
         }
     });
 </script>
