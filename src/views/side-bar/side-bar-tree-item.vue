@@ -12,10 +12,6 @@
                 <b-col cols class="align-self-center item-name" :style="componentNameStyle">
                     {{component.name}}
                 </b-col>
-<!--                <b-col cols="auto" class="align-self-center">-->
-<!--                    <span class="item-name-tag px-2" :style="componentNameTagStyle">{{componentNameTag}}</span>-->
-<!--                    <span class="item-name-tag px-2" style="visibility: hidden">{{componentNameTag}}</span>-->
-<!--                </b-col>-->
                 <b-col cols="auto" class="align-self-center">
                     <i class="fas fa-ellipsis-v px-2 pt-1 carabina-icon option-icon" style="font-size: 14px"></i>
                 </b-col>

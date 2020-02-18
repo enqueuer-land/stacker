@@ -13,18 +13,17 @@
                                      :component="publisher"></SideBarTreeItem>
                     <SideBarTreeItem v-for="subscription in component.subscriptions" :key="subscription.id"
                                      :component="subscription"></SideBarTreeItem>
-
                 </div>
             </b-collapse>
         </b-card>
     </div>
 </template>
 <script>
-    import '@/styles/component-tree.css';
     import Vue from 'vue';
-    import SideBarTreeItem from '@/views/side-bar/side-bar-tree-item';
     import {mapGetters} from 'vuex';
-    import {ComponentStylish} from "@/components/component-stylish";
+    import '@/styles/component-tree.css';
+    import {ComponentStylish} from '@/components/component-stylish';
+    import SideBarTreeItem from '@/views/side-bar/side-bar-tree-item';
 
     export default Vue.extend({
         name: 'SideBarTreeNode',
@@ -41,7 +40,6 @@
         mounted() {
             this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
                 if (this.component.id === collapseId) {
-                    // console.log('bv::collapse::state')
                     this.collapsed = !isJustShown;
                 }
             })

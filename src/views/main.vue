@@ -32,7 +32,7 @@
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
                 gutterSize: 2,
                 sizes: [30, 45, 25],
-                minSize: [300, 400, 360],
+                minSize: [350, 450, 350],
                 gutterStyle: () => ({
                     position: 'relative',
                     // top: 'var(--carabina-header-size)',

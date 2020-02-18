@@ -69,7 +69,8 @@
         width: 100%;
     }
 
-    .breadcrumb-item:not(.active) a {
+    .breadcrumb-item a, .breadcrumb-item span {
+        cursor: pointer;
         color: var(--carabina-requisition-color);
         text-decoration: none;
     }

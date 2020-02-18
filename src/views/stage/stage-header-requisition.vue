@@ -1,7 +1,7 @@
 <template>
     <b-container fluid id="stage-header-requisition" style="padding: 0 !important;">
         <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">
-            <b-breadcrumb class="m-0 p-0 pt-1 pl-1 breadcrumb carabina-text" style="font-size: 14px"
+            <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
         <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
@@ -22,27 +22,27 @@
 
 </template>
 <script>
-    import '@/styles/texts.css';
     import Vue from 'vue';
+    import '@/styles/texts.css';
 
     export default Vue.extend({
         name: 'StageHeaderRequisition',
-        data() {
-            return {
-                breadcrumbItems: [
-                    {
-                        text: 'Admin',
-                        href: '#'
-                    },
-                    {
-                        text: 'Manage',
-                        href: '#'
-                    },
-                    {
-                        text: 'Library',
-                        active: true
-                    }
-                ],
+        props: {
+            component: Object
+        },
+        computed: {
+            breadcrumbItems: function () {
+                if (!this.component) {
+                    return [];
+                }
+                const result = [];
+                let parent = this.component;
+                while (parent.carabinaMeta && parent.carabinaMeta.parent) {
+                    parent = parent.carabinaMeta.parent;
+                    result.push({text: parent.name, href: '#', id: parent.id});
+                }
+                console.log(result);
+                return result;
             }
         }
     });
@@ -59,7 +59,8 @@
         width: 100%;
     }
 
-    .breadcrumb-item:not(.active) a {
+    .breadcrumb-item a, .breadcrumb-item span {
+        cursor: pointer;
         color: var(--carabina-requisition-color);
         text-decoration: none;
     }
