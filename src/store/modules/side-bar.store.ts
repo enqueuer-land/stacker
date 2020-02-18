@@ -17,22 +17,27 @@ export default {
             stage.selectedComponent.carabinaMeta.selected = true;
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
-        createNewComponent: (stage: any, componentType: ComponentTypes, parent: any) => {
+        createNewComponent: (stage: any, payload: any) => {
             if (stage.selectedComponent) {
                 stage.selectedComponent.carabinaMeta.selected = false;
             }
 
-            if (componentType === ComponentTypes.REQUISITION) {
-                console.log('Here: ' + parent );
-                const component = new ComponentFactory().createRequisition();
+            if (payload.componentType === ComponentTypes.REQUISITION) {
+                const component = new ComponentFactory().createRequisition(payload.parent);
                 stage.selectedComponent = component;
-                stage.requisitions.push(component);
+                if (!payload.parent) {
+                    stage.requisitions.push(component);
+                } else {
+                    payload.parent.carabinaMeta.selected = false;
+                }
             } else {
-                const parentRequisition = parent || new ComponentFactory().createRequisition();
-                const component = new ComponentFactory().createComponent(componentType, parentRequisition);
+                const parentRequisition = payload.parent || new ComponentFactory().createRequisition();
+                const component = new ComponentFactory().createComponent(payload.componentType, parentRequisition);
                 stage.selectedComponent = component;
                 parentRequisition.carabinaMeta.selected = false;
-                stage.requisitions.push(parentRequisition);
+                if (!payload.parent) {
+                    stage.requisitions.push(parentRequisition);
+                }
             }
         },
         currentSelectedComponentChanged: (stage: any, event: any) => {

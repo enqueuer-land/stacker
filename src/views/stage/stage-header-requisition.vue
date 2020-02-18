@@ -42,7 +42,7 @@
                     parent = parent.carabinaMeta.parent;
                     result.push({text: parent.name, href: '#', id: parent.id});
                 }
-                return result;
+                return result.reverse();
             }
         }
     });

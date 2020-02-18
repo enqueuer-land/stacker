@@ -55,7 +55,7 @@
         </b-row>
 
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2 new-component-button" style="width: fit-content;"
-               @click="createNewComponent('REQUISITION', component)" no-gutters>
+               @click="createNewComponent({componentType: 'REQUISITION', parent: component})" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
@@ -64,7 +64,7 @@
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
-               @click="createNewComponent('PUBLISHER', component)" no-gutters>
+               @click="createNewComponent({componentType: 'PUBLISHER', parent: component})" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
@@ -73,7 +73,7 @@
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
-               @click="createNewComponent('SUBSCRIPTION', component)" no-gutters>
+               @click="createNewComponent({componentType: 'SUBSCRIPTION', parent: component})" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>

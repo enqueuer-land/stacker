@@ -1,12 +1,11 @@
 <template>
     <div id="side-bar-tree-node" class="tree-node">
-        <b-card no-body class="accordion-container" style="border: none"
-                @dblclick="$root.$emit('bv::toggle::collapse', component.id)">
+        <b-card no-body class="accordion-container" style="border: none">
             <b-button v-if="componentStylish.getChildrenLength() > 0" v-b-toggle="component.id"
                       class="accordion-button">
                 <i :class="['fas fa-caret-right requisition-tree-indicator', !collapsed && 'expanded']"></i>
             </b-button>
-            <SideBarTreeItem :component="component"/>
+            <SideBarTreeItem :component="component" @dblclick="$root.$emit('bv::toggle::collapse', component.id)"/>
             <b-collapse :id="component.id" :class="['pl-4 py-0 px-0']" :visible="!collapsed"
                         v-if="componentStylish.getChildrenLength() > 0">
                 <div>

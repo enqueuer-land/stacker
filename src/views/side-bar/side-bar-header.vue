@@ -4,13 +4,13 @@
             <b-col cols class="align-self-center p-1">
                 <img src="../../assets/logo.png" class="pl-1 img img-fluid mr-auto d-block" style="user-select: none">
             </b-col>
-            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent('REQUISITION')">
+            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent({componentType: 'REQUISITION'})">
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent('PUBLISHER')">
+            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent({componentType: 'PUBLISHER'})">
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent('SUBSCRIPTION')">
+            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent({componentType: 'SUBSCRIPTION'})">
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
         </b-row>
