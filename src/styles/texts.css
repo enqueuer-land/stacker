@@ -15,6 +15,7 @@
 }
 
 .text-label {
+    user-select: none;
     font-size: 14px;
     color: var(--carabina-text-darker-color) !important;
     background-color: transparent !important;;

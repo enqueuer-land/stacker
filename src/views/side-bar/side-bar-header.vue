@@ -4,13 +4,13 @@
             <b-col cols class="align-self-center p-1">
                 <img src="../../assets/logo.png" class="pl-1 img img-fluid mr-auto d-block">
             </b-col>
-            <b-col cols="auto" class="align-self-center px-3" @click="createNewRequisition">
+            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent('REQUISITION')">
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2" @click="createNewPublisher">
+            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent('PUBLISHER')">
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-3" @click="createNewSubscription">
+            <b-col cols="auto" class="align-self-center px-3" @click="createNewComponent('SUBSCRIPTION')">
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
         </b-row>
@@ -41,9 +41,7 @@
             ...mapGetters('side-bar', ['textFilter'])
         },
         methods: {
-            ...mapMutations('side-bar',
-                ['createNewRequisition', 'createNewPublisher',
-                    'createNewSubscription', 'filterTextChanged'])
+            ...mapMutations('side-bar', ['createNewComponent', 'filterTextChanged'])
         }
 
     });

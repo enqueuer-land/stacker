@@ -1,10 +1,11 @@
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentFactory} from "@/components/component-factory";
+import {ComponentTypes} from "@/components/component-types";
 
 export default {
     state: {
         textFilter: '',
-        requisitions: [new ComponentFactory().createRequisition()],
+        requisitions: [],
         selectedComponent: null
     },
     mutations: {
@@ -13,21 +14,26 @@ export default {
                 stage.selectedComponent.carabinaMeta.selected = false;
             }
             stage.selectedComponent = component;
+            stage.selectedComponent.carabinaMeta.selected = true;
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
-        createNewRequisition: (stage: any) => stage.requisitions.push(new ComponentFactory().createRequisition()),
-        createNewPublisher: (stage: any) => {
-            const requisition = new ComponentFactory().createRequisition();
-            const publisher = new ComponentFactory().createPublisher(requisition);
-            requisition.publishers.push(publisher);
-            stage.requisitions.push(requisition)
+        createNewComponent: (stage: any, componentType: ComponentTypes, parent: any) => {
+            if (stage.selectedComponent) {
+                stage.selectedComponent.carabinaMeta.selected = false;
+            }
+
+            if (componentType === ComponentTypes.REQUISITION) {
+                const component = new ComponentFactory().createRequisition();
+                stage.selectedComponent = component;
+                stage.requisitions.push(component);
+            } else {
+                const parentRequisition = parent || new ComponentFactory().createRequisition();
+                const component = new ComponentFactory().createComponent(componentType, parentRequisition);
+                stage.selectedComponent = component;
+                parentRequisition.carabinaMeta.selected = false;
+                stage.requisitions.push(parentRequisition);
+            }
         },
-        createNewSubscription: (stage: any) => {
-            const requisition = new ComponentFactory().createRequisition();
-            const subscription = new ComponentFactory().createSubscription(requisition);
-            requisition.publishers.push(subscription);
-            stage.requisitions.push(requisition)
-        }
     },
     getters: {
         textFilter: (state: any) => state.textFilter,

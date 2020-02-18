@@ -45,27 +45,30 @@
             </b-col>
         </b-row>
 
-        <b-row class="m-0 p-0 pt-2 mb-2 new-component-button" style="width: fit-content;" no-gutters>
+        <b-row class="m-0 p-0 pt-2 pl-1 mb-2 new-component-button" style="width: fit-content;"
+               @click="createNewComponent('REQUISITION')" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer">
+            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
                 Add new requisition
             </b-col>
         </b-row>
-        <b-row class="m-0 p-0 pt-2 mb-2  new-component-button" style="width: fit-content;" no-gutters>
+        <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
+               @click="createNewComponent('PUBLISHER')" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer">
+            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
                 Add new publisher
             </b-col>
         </b-row>
-        <b-row class="m-0 p-0 pt-2 mb-2  new-component-button" style="width: fit-content;" no-gutters>
+        <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
+               @click="createNewComponent('SUBSCRIPTION')" no-gutters>
             <b-col cols="auto" class="align-self-center px-2" style="cursor: pointer">
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer">
+            <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
                 Add new publisher
             </b-col>
         </b-row>
@@ -74,13 +77,17 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css'
+    import {mapGetters, mapMutations} from 'vuex';
 
     export default Vue.extend({
         name: 'StageBodyRequisition',
         data: function () {
             return {
-                parallel: false
+                parallel: false,
             }
+        },
+        methods: {
+            ...mapMutations('side-bar', ['createNewComponent'])
         }
     });
 </script>

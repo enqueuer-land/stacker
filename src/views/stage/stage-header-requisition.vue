@@ -7,8 +7,9 @@
         <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
-<!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
+                    <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
+                                  @input="(value) => $parent.updateAttribute('name', value)"
                                   class="text-input carabina-text">
                     </b-form-input>
                 </b-input-group>
@@ -70,7 +71,7 @@
     .run-button {
         border: none;
         box-shadow: none;
-        color: var(--carabina-publisher-color);
+        color: var(--carabina-requisition-color);
         background-color: transparent;
         transition: all ease 100ms;
     }
@@ -82,8 +83,9 @@
     .run-button:active {
         transform: scale(1.1);
         box-shadow: none !important;
-        color: var(--carabina-publisher-color) !important;
+        color: var(--carabina-requisition-color) !important;
         filter: brightness(150%);
         background-color: transparent !important;
     }
+
 </style>

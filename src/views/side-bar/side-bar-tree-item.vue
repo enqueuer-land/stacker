@@ -12,10 +12,10 @@
                 <b-col cols class="align-self-center item-name" :style="componentNameStyle">
                     {{component.name}}
                 </b-col>
-                <b-col cols="auto" class="align-self-center">
+<!--                <b-col cols="auto" class="align-self-center">-->
 <!--                    <span class="item-name-tag px-2" :style="componentNameTagStyle">{{componentNameTag}}</span>-->
-                    <span class="item-name-tag px-2" style="visibility: hidden">{{componentNameTag}}</span>
-                </b-col>
+<!--                    <span class="item-name-tag px-2" style="visibility: hidden">{{componentNameTag}}</span>-->
+<!--                </b-col>-->
                 <b-col cols="auto" class="align-self-center">
                     <i class="fas fa-ellipsis-v px-2 pt-1 carabina-icon option-icon" style="font-size: 14px"></i>
                 </b-col>
@@ -39,13 +39,16 @@
         },
         data: function () {
             return {
-                selected: false,
+                selected: this.component.carabinaMeta.selected,
                 componentStylish: new ComponentStylish(this.component)
             }
         },
         mounted() {
             this.$store.subscribe((mutation) => {
                 if (mutation.type === 'side-bar/componentSelected') {
+                    this.selected = mutation.payload.id === this.component.id;
+                }
+                if (mutation.type === 'side-bar/createNewComponent') {
                     this.selected = mutation.payload.id === this.component.id;
                 }
             });
@@ -112,9 +115,6 @@
     }
 
     .bottom-line {
-        /*position: relative;*/
-        /*left: 10%;*/
-        /*width: 80%;*/
         border-bottom: 1px solid var(--carabina-header-background-color);
     }
 

@@ -14,7 +14,12 @@
 
     export default Vue.extend({
         name: 'Stage',
-        components: {StageHeaderRequisition, StageBodyRequisition, StageFooter}
+        components: {StageHeaderRequisition, StageBodyRequisition, StageFooter},
+        methods: {
+            updateAttribute(attributeName, value) {
+                console.log(attributeName, value);
+            }
+        }
     });
 </script>
 

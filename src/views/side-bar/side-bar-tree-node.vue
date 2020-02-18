@@ -4,7 +4,7 @@
             <b-button block v-b-toggle="component.id" class="accordion-button">
                 <SideBarTreeItem :component="component" :collapsed="collapsed"/>
             </b-button>
-            <b-collapse :id="component.id" class="pl-4 py-0 px-0"
+            <b-collapse :id="component.id" :class="['pl-4 py-0 px-0']" :visible="!collapsed"
                         v-if="componentStylish.getChildrenLength() > 0">
                 <div>
                     <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
@@ -35,12 +35,13 @@
         data: function () {
             return {
                 componentStylish: new ComponentStylish(this.component),
-                collapsed: true,
+                collapsed: this.component.carabinaMeta.collapsed,
             }
         },
         mounted() {
             this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
                 if (this.component.id === collapseId) {
+                    // console.log('bv::collapse::state')
                     this.collapsed = !isJustShown;
                 }
             })

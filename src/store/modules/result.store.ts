@@ -1,6 +1,5 @@
 import {TestFlattener} from "@/components/test-flattener";
 import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
-import {Components} from "@/components/components";
 
 export default {
     state: {

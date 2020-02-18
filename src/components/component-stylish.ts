@@ -1,4 +1,4 @@
-import {Components} from "@/components/components";
+import {ComponentTypes} from "@/components/component-types";
 
 //TODO test it
 export class ComponentStylish {
@@ -9,11 +9,11 @@ export class ComponentStylish {
     }
 
     public shouldPrintType = (): boolean => {
-        return this.component.carabinaMeta.componentName !== Components.REQUISITION;
+        return this.component.carabinaMeta.componentName !== ComponentTypes.REQUISITION;
     };
 
     public getType = (): string => {
-        if (this.component.carabinaMeta.componentName === Components.REQUISITION) {
+        if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
             return '';
         }
         return this.component.type.substr(0, 7);
@@ -34,13 +34,14 @@ export class ComponentStylish {
 
     public componentNameTagStyle = (): any => {
         const style: any = {
+            'user-select': 'none'
         };
         const componentName = this.component.carabinaMeta.componentName;
-        if (componentName === Components.REQUISITION) {
+        if (componentName === ComponentTypes.REQUISITION) {
             style['color'] = 'var(--carabina-requisition-color)'
-        } else if (componentName === Components.PUBLISHER) {
+        } else if (componentName === ComponentTypes.PUBLISHER) {
             style['color'] = 'var(--carabina-publisher-color)'
-        } else if (componentName === Components.SUBSCRIPTION) {
+        } else if (componentName === ComponentTypes.SUBSCRIPTION) {
             style['color'] = 'var(--carabina-subscription-color)'
         }
         return style;
