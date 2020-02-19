@@ -1,7 +1,3 @@
-/**
- * Automatically imports all the modules and exports as a single module object
- */
-
 const modules: any = {};
 const requireModule = require.context('.', false, /\.store\.ts$/);
 const moduleNames: string[] = [];

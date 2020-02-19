@@ -16,34 +16,26 @@
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-1 run-button-container">
-                <b-button class="run-button">Run</b-button>
+                <b-button class="run-button" @click="runRequisitionViaGlobal(component)">Run</b-button>
             </b-col>
         </b-row>
     </b-container>
-
 </template>
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import {mapActions, mapGetters} from 'vuex'
 
     export default Vue.extend({
         name: 'StageHeaderRequisition',
         props: {
             component: Object
         },
+        methods: {
+            ...mapActions('stage', ['runRequisitionViaGlobal'])
+        },
         computed: {
-            breadcrumbItems: function () {
-                if (!this.component) {
-                    return [];
-                }
-                const result = [];
-                let parent = this.component;
-                while (parent.carabinaMeta && parent.carabinaMeta.parent) {
-                    parent = parent.carabinaMeta.parent;
-                    result.push({text: parent.name, href: '#', id: parent.id});
-                }
-                return result.reverse();
-            }
+            ...mapGetters('side-bar', ['breadcrumbItems']),
         }
     });
 </script>
@@ -72,7 +64,7 @@
     .run-button {
         border: none;
         box-shadow: none;
-        color: var(--carabina-requisition-color);
+        color: var(--carabina-requisition-color) !important;
         background-color: transparent;
         transition: all ease 100ms;
     }
@@ -84,7 +76,6 @@
     .run-button:active {
         transform: scale(1.1);
         box-shadow: none !important;
-        color: var(--carabina-requisition-color) !important;
         filter: brightness(150%);
         background-color: transparent !important;
     }

@@ -20,9 +20,6 @@
     export default Vue.extend({
         name: 'Stage',
         components: {StageHeaderRequisition, StageBodyRequisition, StageFooter},
-        mounted: function() {
-            console.log(this.selectedComponent);
-        },
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
             updateAttribute(attributeName, value) {

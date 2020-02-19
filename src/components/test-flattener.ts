@@ -11,10 +11,10 @@ export type Hierarchy = {
 
 export class TestFlattener {
     flatten(requisitionModel: RequisitionModel): Hierarchy[] {
-        return this.goDeep(requisitionModel, []);
+        return this.goDeep(requisitionModel);
     }
 
-    goDeep(report: ReportModel, hierarchy: Hierarchy[]): Hierarchy[] {
+    goDeep(report: ReportModel, hierarchy: Hierarchy[] = []): Hierarchy[] {
         const tests = Object
             .keys(report.hooks || {})
             .reduce((acc: Hierarchy[], hookName) => {
@@ -32,12 +32,16 @@ export class TestFlattener {
                         };
                     }));
             }, []);
+        const nested = this.getNestedTests(report, hierarchy);
+        return tests.concat(nested);
+    }
 
+    private getNestedTests(report: ReportModel, hierarchy: Hierarchy[]): Hierarchy[] {
         const subComponents: ReportModel[] = (report.subscriptions || [])
             .concat(report.publishers || [])
             .concat(report.requisitions || []);
 
-        const nested: Hierarchy[] = subComponents
+        return subComponents
             .reduce((acc: Hierarchy[], component: ReportModel) => {
                 const iterationCounter = (component.totalIterations > 1) ? ` [${component.iteration}]` : '';
                 return acc.concat(this.goDeep(component, hierarchy
@@ -45,7 +49,6 @@ export class TestFlattener {
                         id: component.id,
                         name: component.name + iterationCounter,
                     })));
-            }, [] as Hierarchy[]);
-        return tests.concat(nested);
+            }, []);
     }
 }

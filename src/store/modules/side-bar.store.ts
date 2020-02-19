@@ -51,7 +51,16 @@ export default {
         textFilter: (state: any) => state.textFilter,
         requisitions: (state: any) => state.requisitions,
         filteredRequisitions: (state: any) => state.requisitions
-            .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter))
+            .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter)),
+        breadcrumbItems: (state: any): any[] => {
+            const result = [];
+            let parent = state.selectedComponent;
+            while (parent.carabinaMeta && parent.carabinaMeta.parent) {
+                parent = parent.carabinaMeta.parent;
+                result.push({text: parent.name, href: '#', id: parent.id});
+            }
+            return result.reverse();
+        }
     },
     namespaced: true
 }
