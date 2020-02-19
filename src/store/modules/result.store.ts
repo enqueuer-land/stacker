@@ -59,8 +59,30 @@ export default {
         },
         responseName: (state: any) => {
             return state.responses[0].name;
-        }
-
+        },
+        totalTime: (state: any) => {
+            return state.responses.reduce((acc: number, test: any) => acc + test.time.totalTime, 0);
+        },
+        ignoredTests: (state: any) => {
+            return state.flattenTests.reduce((acc: number, test: any) => acc + (test.ignored === true ? 1 : 0), 0);
+        },
+        summary: (state: any) => {
+            const summary = state.flattenTests.reduce((acc: any, test: any) => {
+                    if (test.ignored !== true) {
+                        if (test.valid === true) {
+                            acc.validTests += 1;
+                        }
+                        acc.totalTests += 1;
+                    }
+                    return acc;
+                },
+                {
+                    validTests: 0,
+                    totalTests: 0
+                });
+            const percentage = (100 * summary.validTests / summary.totalTests).toFixed(2);
+            return `${summary.validTests}/${summary.totalTests} (${percentage}%)`;
+        },
     },
     namespaced: true
 }

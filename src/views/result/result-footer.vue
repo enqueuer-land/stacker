@@ -1,14 +1,15 @@
 <template>
     <b-container id="result-footer" class="px-1 carabina-text">
-        <b-row style="width: 100%; height: 100%; font-size: 15px" no-gutters class="m-0 p-0" align-h="between">
+        <b-row style="width: 100%; height: 100%; font-size: 15px" class="m-0 px-1" align-h="between">
             <b-col cols="auto" class="align-self-center pl-1">
                 <span class="label-text">
                     Tests:
                 </span>
-                <span :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
+                <span class="ml-2"
+                      :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
                     {{summary}}
                 </span>
-                <span v-if="ignoredTests > 0" style="margin-left: 5px; color: var(--carabina-ignored-test-color);">
+                <span v-if="ignoredTests > 0" class="ml-3" style="color: var(--carabina-ignored-test-color);">
                     {{ignoredTests}} ignored
                 </span>
             </b-col>
@@ -17,7 +18,7 @@
                     Time:
                 </span>
                 <span :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
-                    {{totalTime}}
+                    {{prettifyTime}}
                 </span>
             </b-col>
         </b-row>
@@ -26,7 +27,6 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css'
-    import {mapGetters} from "vuex";
 
     export default Vue.extend({
         name: 'ResultFooter',
@@ -37,10 +37,8 @@
             ignoredTests: Number,
         },
         computed: {
-            ...mapGetters('result', []),
-        },
-        methods: {
-            prettifyTime: (timeInMilliseconds) => {
+            prettifyTime: function() {
+                let timeInMilliseconds = this.totalTime;
                 const ms = timeInMilliseconds % 1000;
                 timeInMilliseconds = (timeInMilliseconds - ms) / 1000;
                 const secs = timeInMilliseconds % 60;

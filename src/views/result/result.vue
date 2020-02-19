@@ -3,10 +3,12 @@
         <template v-if="responses.length > 0">
             <ResultHeader style="height: var(--carabina-header-size)" :valid="responseIsValid" :name="responseName">
             </ResultHeader>
-            <ResultFlattenTestsBody class="pt-3" style="height: var(--carabina-body-size)" :tests="filteredFlattenTests">
+            <ResultFlattenTestsBody class="pt-3" style="height: var(--carabina-body-size)"
+                                    :tests="filteredFlattenTests">
             </ResultFlattenTestsBody>
-            <ResultFooter style="height: var(--carabina-footer-size)" :valid="false" :total-time="123456"
-                          summary="10/12 (84%)" :ignored-tests="4">
+            <ResultFooter style="height: var(--carabina-footer-size)" :valid="responseIsValid"
+                          :total-time="totalTime"
+                          :summary="summary" :ignored-tests="ignoredTests">
             </ResultFooter>
         </template>
     </div>
@@ -746,7 +748,8 @@
             });
         },
         computed: {
-            ...mapGetters('result', ['responses', 'filteredFlattenTests', 'responseIsValid', 'responseName']),
+            ...mapGetters('result', ['responses', 'filteredFlattenTests',
+                'responseIsValid', 'responseName', 'totalTime', 'ignoredTests', 'summary']),
         },
         methods: {
             ...mapMutations('result', ['updateResponse'])
