@@ -1,76 +1,79 @@
 <template>
-    <b-container fluid id="stage-header-requisition" style="padding: 0 !important;">
+    <b-container fluid id="stage-header" style="padding: 0 !important;">
         <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">
-            <b-breadcrumb class="m-0 p-0 pt-1 pl-1 breadcrumb carabina-text" style="font-size: 14px"
+            <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
         <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
-                    <template v-slot:prepend>
-                        <b-dropdown no-caret lazy variant="carabina" class="carabina-text protocol-selector">
-                            <template v-slot:button-content>
-                                <span style="color: var(--carabina-publisher-color)">{{selectedProtocol}}<i class="mt-1 float-right fas fa-caret-down"></i></span>
-                            </template>
-                            <b-dropdown-item v-for="protocol in protocolsList" :key="protocol.value"
-                                             @click="selectedProtocol = protocol.value">{{protocol.value}}
-                            </b-dropdown-item>
-                        </b-dropdown>
+                    <template v-if="component.carabinaMeta.componentName !== 'REQUISITION'" v-slot:prepend>
+                        <ProtocolSelector
+                                @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
+                                :color="componentColor"
+                                :protocols-list="protocolList"></ProtocolSelector>
                     </template>
-                    <b-form-input id="component-name" placeholder="Enter component name" type="text"
+                    <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
+                    <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
+                                  @input="(value) => $parent.updateAttribute('name', value)"
+                                  :value="component.name"
                                   class="text-input carabina-text">
                     </b-form-input>
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-1 run-button-container">
-                <b-button class="run-button">Run</b-button>
+                <b-button class="run-button" :style="runButtonStyle" @click="runRequisitionViaGlobal(component)">Run
+                </b-button>
             </b-col>
         </b-row>
     </b-container>
-
 </template>
 <script>
-    import '@/styles/texts.css';
-    import '@/styles/dropdown.css';
     import Vue from 'vue';
+    import '@/styles/texts.css';
+    import {mapActions, mapGetters} from 'vuex'
+    import ProtocolSelector from '@/views/stage/protocol-selector'
+    import {ComponentStylish} from "@/components/component-stylish";
 
     export default Vue.extend({
         name: 'StageHeader',
-        data() {
+        components: {
+            ProtocolSelector
+        },
+        props: {
+            component: Object
+        },
+        data: function () {
             return {
-                selectedProtocol: 'AMQP',
-                breadcrumbItems: [
-                    {
-                        text: 'Admin',
-                        href: '#'
-                    },
-                    {
-                        text: 'Manage',
-                        href: '#'
-                    },
-                    {
-                        text: 'Library',
-                        active: true
-                    }
-                ],
-                protocolsList: [
-                    {
-                        value: 'AMQP',
-                        html: `<span style="background-color: transparent; color: red !important;">AMQP</span>`,
-                        selected: true
-                    },
-                    {value: 'HTTP', html: 'HTTP'},
-                    {value: 'HTTP', html: 'HTTP'},
-                    {value: 'HTTP', html: 'HTTP'},
-                    {value: 'HTTP', html: 'HTTP'},
-                    {value: 'LARGE PROTOCOL NAME', html: 'LARGE PROTOCOL NAME'}
-                ]
+                protocolList: [
+                    {value: 'AMQP'},
+                    {value: 'HTTP'},
+                    {value: 'MQTT'},
+                    {value: 'LARGE PROTOCOL NAME'}]
+            }
+        },
+        methods: {
+            ...mapActions('stage', ['runRequisitionViaGlobal'])
+        },
+        computed: {
+            ...mapGetters('side-bar', ['breadcrumbItems']),
+            runButtonStyle: function () {
+                return {
+                    "border": 'none',
+                    'box-shadow': 'none',
+                    'background-color': 'transparent',
+                    'transition': 'all ease 100ms',
+                    color: this.componentColor
+                };
+            },
+            componentColor: function () {
+                return new ComponentStylish(this.component).getComponentColor();
             }
         }
     });
 </script>
 <style type="text/css" scoped>
-    #stage-header-requisition {
+    #stage-header {
         background-color: var(--carabina-body-background-darker-color);
     }
 
@@ -81,21 +84,14 @@
         width: 100%;
     }
 
-    .breadcrumb-item:not(.active) a {
+    .breadcrumb-item a, .breadcrumb-item span {
+        cursor: pointer;
         color: var(--carabina-requisition-color);
         text-decoration: none;
     }
 
     .run-button-container, .run-button-container:hover {
         box-shadow: none;
-    }
-
-    .run-button {
-        border: none;
-        box-shadow: none;
-        color: var(--carabina-publisher-color);
-        background-color: transparent;
-        transition: all ease 100ms;
     }
 
     .run-button:hover {
@@ -105,28 +101,8 @@
     .run-button:active {
         transform: scale(1.1);
         box-shadow: none !important;
-        color: var(--carabina-publisher-color) !important;
         filter: brightness(150%);
         background-color: transparent !important;
-    }
-
-    .protocol-selector, .dropdown-toggle-no-caret, .btn-carabina {
-        width: 120px !important;
-        border: none !important;;
-        color: var(--carabina-publisher-color) !important;
-        background-color: transparent !important;;
-        border-bottom: 1px solid var(--carabina-publisher-color) !important;;
-    }
-
-    .protocol-selector:hover {
-        filter: brightness(1.25);
-        /*border-radius: 5px;*/
-        /*background-color: var(--carabina-body-background-color) !important;;*/
-    }
-
-    .protocol-selector:active, .protocol-selector:focus, .dropdown-toggle:active, .dropdown-toggle:focus, .btn-carabina:focus, .btn-carabina:active {
-        box-shadow: none !important;
-        outline: none !important;;
     }
 
 </style>

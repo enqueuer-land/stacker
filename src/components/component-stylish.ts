@@ -33,18 +33,21 @@ export class ComponentStylish {
     };
 
     public componentNameTagStyle = (): any => {
-        const style: any = {
-            'user-select': 'none'
+        return {
+            'user-select': 'none',
+            color: this.getComponentColor()
         };
+    };
+
+    public getComponentColor = (): any => {
         const componentName = this.component.carabinaMeta.componentName;
         if (componentName === ComponentTypes.REQUISITION) {
-            style['color'] = 'var(--carabina-requisition-color)'
+            return 'var(--carabina-requisition-color)'
         } else if (componentName === ComponentTypes.PUBLISHER) {
-            style['color'] = 'var(--carabina-publisher-color)'
+            return 'var(--carabina-publisher-color)'
         } else if (componentName === ComponentTypes.SUBSCRIPTION) {
-            style['color'] = 'var(--carabina-subscription-color)'
+            return 'var(--carabina-subscription-color)'
         }
-        return style;
     };
 
     public componentStyle = (selected: boolean): any => {

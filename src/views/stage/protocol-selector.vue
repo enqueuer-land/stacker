@@ -1,12 +1,12 @@
 <template id="protocol-selector">
-    <b-dropdown no-caret lazy variant="carabina" class="carabina-text protocol-selector">
+    <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="protocolContainerStyle">
         <template v-slot:button-content>
-            <div class="protocol-selector-name">{{selectedProtocol}}
+            <div :style="protocolSelectorName">{{selectedProtocol.value}}
                 <i class="pl-2 fas fa-caret-down"></i>
             </div>
         </template>
         <b-dropdown-item v-for="(protocol, index) in protocolsList" :key="index"
-                         @click="onSelect(protocol.value)">{{protocol.value}}
+                         @click="onSelect(protocol)">{{protocol.value}}
         </b-dropdown-item>
     </b-dropdown>
 </template>
@@ -18,16 +18,33 @@
     export default Vue.extend({
         name: 'ProtocolSelector',
         props: {
-            protocolsList: Array
+            protocolsList: Array,
+            color: String
         },
         data() {
             return {
-                selectedProtocol: this.protocolsList[0].value,
+                selectedProtocol: this.protocolsList[0],
             }
         },
         methods: {
-            onSelect: function (value) {
-                this.$emit('select', value);
+            onSelect: function (protocol) {
+                this.selectedProtocol = protocol;
+                this.$emit('select', protocol);
+            }
+        },
+        computed: {
+            protocolContainerStyle: function () {
+                return {
+                    border: 'none !important',
+                    'border-bottom': `1px solid ${this.color} !important`
+                }
+            },
+            protocolSelectorName: function () {
+                return {
+                    'text-align': 'left',
+                    'transition': 'all ease 100ms',
+                    'color': this.color
+                }
             }
         }
     });
@@ -36,24 +53,9 @@
     #protocol-selector {
     }
 
-    .protocol-selector {
-        border: none !important;
-        border-bottom: 1px solid var(--carabina-publisher-color) !important;
-    }
-
-    .protocol-selector:hover {
-        color: #bada3e;
-    }
-
     .dropdown-toggle {
         box-shadow: none !important;
         outline: none !important;
-    }
-
-    .protocol-selector-name {
-        color: var(--carabina-publisher-color);
-        text-align: left;
-        transition: all ease 100ms;
     }
 
     .protocol-selector-name:hover {
