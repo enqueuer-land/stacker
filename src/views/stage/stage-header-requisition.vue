@@ -7,6 +7,14 @@
         <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
+                    <template v-slot:prepend>
+                        <ProtocolSelector
+                                @select="(value) => $parent.updateAttribute('type', value)"
+                                :protocols-list="[
+                                {value: 'AMQP'},
+                                {value: 'MQTT'},
+                                {value: 'LARGE PROTOCOL NAME'}]"></ProtocolSelector>
+                    </template>
                     <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
                                   @input="(value) => $parent.updateAttribute('name', value)"
@@ -25,9 +33,13 @@
     import Vue from 'vue';
     import '@/styles/texts.css';
     import {mapActions, mapGetters} from 'vuex'
+    import ProtocolSelector from '@/views/stage/protocol-selector'
 
     export default Vue.extend({
         name: 'StageHeaderRequisition',
+        components: {
+            ProtocolSelector
+        },
         props: {
             component: Object
         },

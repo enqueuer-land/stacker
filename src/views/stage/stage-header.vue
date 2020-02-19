@@ -8,7 +8,6 @@
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
                     <template v-slot:prepend>
-                        <!--                        <b-form-select plain v-model="selectedProtocol" class="carabina-text protocol-selector carabina-select" :options="protocolsList"></b-form-select>-->
                         <b-dropdown no-caret lazy variant="carabina" class="carabina-text protocol-selector">
                             <template v-slot:button-content>
                                 <span style="color: var(--carabina-publisher-color)">{{selectedProtocol}}<i class="mt-1 float-right fas fa-caret-down"></i></span>
