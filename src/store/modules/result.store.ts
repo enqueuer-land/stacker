@@ -51,7 +51,7 @@ export default {
                     };
                     return flattenTest;
                 })
-                .filter((flattenTest: any) => flattenTest.name.includes(state.textFilter) || flattenTest.description.includes(state.textFilter))
+                .filter((flattenTest: any) => JSON.stringify(flattenTest).toLowerCase().includes(state.textFilter.toLowerCase()))
                 .filter((flattenTest: any) => activeIconFilters.some((activeIconFilter: any) => activeIconFilter.filter(flattenTest)));
         },
         responseIsValid: (state: any) => {

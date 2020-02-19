@@ -1,6 +1,7 @@
 <template>
-    <b-container id="result-flatten-tests-body">
-        <ResultFlattenTestItem v-for="test in tests" :key="test.id" :test="test"></ResultFlattenTestItem>
+    <b-container id="result-flatten-tests-body" class="px-0">
+        <ResultFlattenTestItem v-for="test in tests" :expanded="tests.length === 0" :key="test.id"
+                               :test="test"></ResultFlattenTestItem>
     </b-container>
 </template>
 <script>
@@ -23,6 +24,5 @@
         height: 100%;
         overflow-y: scroll;
         width: 100%;
-        padding: 0 !important;
     }
 </style>

@@ -3,7 +3,7 @@
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size)"></StageHeader>
-            <StageBodyRequisition :component="selectedComponent"
+            <StageBodyRequisition class="pt-3" :component="selectedComponent"
                                   style="height: var(--carabina-body-size)"></StageBodyRequisition>
             <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
         </template>

@@ -1,6 +1,6 @@
 <template>
     <b-container id="result-flatten-tests-item">
-        <b-row no-gutters class="pb-1 px-3" align-h="between"  @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
+        <b-row class="pb-1 px-3" align-h="between" @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
             <b-col cols="auto" class="align-self-center" v-b-toggle="test.id">
                 <i v-if="test.ignored" class="fas fa-times carabina-icon"
                    style="color: var(--carabina-ignored-test-color)"></i>
@@ -8,20 +8,21 @@
                    style="color: var(--carabina-passing-test-color)"></i>
                 <i v-else class="fas fa-times  carabina-icon" style="color: var(--carabina-failing-test-color)"></i>
             </b-col>
-            <b-col cols="8" class="align-self-center">
+            <b-col cols class="align-self-center">
                 <b-breadcrumb class="m-0 p-1 carabina-text" :style="breadcrumbStyle"
                               :items="test.hierarchy.map(hierarchy => hierarchy.name).filter((name, index, vec) => !collapsed ? true : (vec.length - index <= 2 ))">
                 </b-breadcrumb>
                 <div class="pl-1 pt-1 carabina-text" :style="textStyle">
                     {{test.name || "Skipped"}}
                 </div>
-                <b-collapse :id="test.id" v-if="test.description" class="p-0 m-0 pt-1 pl-1 carabina-text"
-                            style="color: var(--carabina-text-darker-color)">
-                    <div class="bottom-line mb-3 pt-1"></div>
-                    Description:
-                    <pre class="px-2 carabina-text" :style="textStyle">{{test.description}}</pre>
-                    Arguments:
-                    <pre class="px-2 carabina-text" :style="textStyle"><code>{{test.arguments}}</code></pre>
+                <b-collapse :visible="!collapsed" :id="test.id" v-if="test.description"
+                            class="p-0 m-0 pt-1 pl-1 carabina-text"
+                            style="font-size: 14px; color: var(--carabina-text-darker-color);">
+                    <div class="pt-3" style="color: var(--carabina-requisition-color)">Description:</div>
+                    <span class="px-2 mb-2 carabina-text" style="font-size: 13px; color: var(--carabina-text-darker-color);">{{test.description}}</span>
+                    <div class="pt-3" style="color: var(--carabina-requisition-color)">Arguments:</div>
+                    <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-darker-color);"><code
+                            v-html="syntaxHighlight"></code></pre>
                 </b-collapse>
             </b-col>
             <b-col cols="auto" class="align-self-center carabina-text" style="font-size: 0.85em; cursor: pointer"
@@ -43,11 +44,14 @@
     export default Vue.extend({
         name: 'ResultFlattenTestItem',
         props: {
-            test: Object
+            test: Object,
+            expanded: {
+                default: false
+            }
         },
         data: function () {
             return {
-                collapsed: false
+                collapsed: !this.expanded
             }
         },
         mounted() {
@@ -55,7 +59,7 @@
                 if (this.test.id === collapseId) {
                     this.collapsed = !isJustShown;
                 }
-            })
+            });
         },
         computed: {
             ...mapGetters('result', []),
@@ -79,6 +83,29 @@
                     style.color = 'var(--carabina-text-darker-color)';
                 }
                 return style;
+            },
+            syntaxHighlight: function () {
+                let json = this.test.arguments;
+                if (typeof json != 'string') {
+                    json = JSON.stringify(json, undefined, 2);
+                }
+
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, (match) => {
+                    let color = 'var(--carabina-text-color)'; //number
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            color = 'var(--carabina-requisition-color)'; //key
+                        } else {
+                            color = 'var(--carabina-text-color)'; //string
+                        }
+                    } else if (/true|false/.test(match)) {
+                        color = 'var(--carabina-text-color)'; //boolean
+                    } else if (/null/.test(match)) {
+                        color = 'var(--carabina-text-color)'; //null
+                    }
+                    return '<span style="color:' + color + '">' + match + '</span>';
+                });
             }
         }
     });
@@ -106,7 +133,7 @@
     }
 
     .bottom-line {
-        border-bottom: 1px solid var(--carabina-header-background-color);
+        border-bottom: 1px solid var(--carabina-header-background-lighter-color);
     }
 
 </style>

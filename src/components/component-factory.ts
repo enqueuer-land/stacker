@@ -18,7 +18,7 @@ export class ComponentFactory {
     public createRequisition = (parent?: any): any => {
         const requisition = {
             id: new IdCreator().create(),
-            name: 'New Requisition',
+            name: 'New requisition',
             iterations: 0,
             delay: 0,
             timeout: 0,
@@ -34,7 +34,6 @@ export class ComponentFactory {
             }
         };
         if (parent) {
-            //TODO go up recursively
             parent.requisitions.push(requisition);
             parent.carabinaMeta.collapsed = false;
         }
@@ -45,7 +44,7 @@ export class ComponentFactory {
         const publisher = {
             type: 'HTTP',
             id: new IdCreator().create(),
-            name: 'New Publisher',
+            name: 'New publisher',
             carabinaMeta: {
                 parent,
                 selected: true,
@@ -53,7 +52,6 @@ export class ComponentFactory {
             }
         };
         parent.publishers.push(publisher);
-        //TODO go up recursively
         parent.carabinaMeta.collapsed = false;
         return publisher;
     };
@@ -62,7 +60,7 @@ export class ComponentFactory {
         const subscription = {
             type: 'HTTP',
             id: new IdCreator().create(),
-            name: 'New Subscription',
+            name: 'New subscription',
             carabinaMeta: {
                 parent,
                 selected: true,
@@ -70,7 +68,6 @@ export class ComponentFactory {
             }
         };
         parent.subscriptions.push(subscription);
-        //TODO go up recursively
         parent.carabinaMeta.collapsed = false;
         return subscription;
 

@@ -3,7 +3,7 @@
         <template v-if="responses.length > 0">
             <ResultHeader style="height: var(--carabina-header-size)" :valid="responseIsValid" :name="responseName">
             </ResultHeader>
-            <ResultFlattenTestsBody style="height: var(--carabina-body-size)" :tests="filteredFlattenTests">
+            <ResultFlattenTestsBody class="pt-3" style="height: var(--carabina-body-size)" :tests="filteredFlattenTests">
             </ResultFlattenTestsBody>
             <ResultFooter style="height: var(--carabina-footer-size)" :valid="false" :total-time="123456"
                           summary="10/12 (84%)" :ignored-tests="4">
