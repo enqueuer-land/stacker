@@ -17,10 +17,12 @@
   "dependencies": {
     "bootstrap-vue": "^2.4.0",
     "enqueuer": "file:../enqueuer-land/enqueuer",
+    "prismjs": "^1.19.0",
     "require-from-string": "^2.0.2",
     "split.js": "^1.5.11",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.2",
+    "vue-prism-editor": "^0.5.1",
     "vue-property-decorator": "^8.3.0",
     "vuex": "^3.1.2"
   },

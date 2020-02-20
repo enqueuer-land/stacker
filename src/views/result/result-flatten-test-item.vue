@@ -95,7 +95,7 @@
                     let color = 'var(--carabina-text-color)'; //number
                     if (/^"/.test(match)) {
                         if (/:$/.test(match)) {
-                            color = 'var(--carabina-requisition-color)'; //key
+                            color = 'var(--carabina-text-darker-color)'; //key
                         } else {
                             color = 'var(--carabina-text-color)'; //string
                         }

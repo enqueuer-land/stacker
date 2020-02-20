@@ -20,7 +20,10 @@
         props: {
             defaultSelection: Object,
             availableList: Array,
-            color: String
+            color: {
+                type: String,
+                default: 'var(--carabina-text-darker-color)'
+            }
         },
         data() {
             return {
