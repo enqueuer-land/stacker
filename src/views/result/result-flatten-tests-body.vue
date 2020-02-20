@@ -1,6 +1,6 @@
 <template>
     <b-container id="result-flatten-tests-body" class="px-0">
-        <ResultFlattenTestItem v-for="test in tests" :expanded="tests.length === 0" :key="test.id"
+        <ResultFlattenTestItem v-for="test in tests" :expanded="tests.length === 1" :key="test.id"
                                :test="test"></ResultFlattenTestItem>
     </b-container>
 </template>
