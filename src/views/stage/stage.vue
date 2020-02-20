@@ -2,7 +2,7 @@
     <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
-                         style="height: var(--carabina-header-size); overflow-y: scroll;"></StageHeader>
+                         style="height: var(--carabina-header-size);"></StageHeader>
             <!--            <StageBodyRequisition class="pt-3" :component="selectedComponent"-->
             <!--                                  style="height: var(&#45;&#45;carabina-body-size)"></StageBodyRequisition>-->
             <StageBodyHttpPublisher class="pt-3" :component="selectedComponent"

@@ -21,9 +21,6 @@
     import Stage from '@/views/stage/stage';
     import Result from "@/views/result/result";
     import SideBar from "@/views/side-bar/side-bar";
-    import DropdownSelector from "@/views/stage/dropdown-selector";
-
-    Vue.component('DropdownSelector', DropdownSelector);
 
     export default Vue.extend({
         name: 'Main',
