@@ -60,7 +60,7 @@
                 <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
-                Add new requisition
+                Insert new requisition
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
@@ -69,7 +69,7 @@
                 <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
-                Add new publisher
+                Insert new publisher
             </b-col>
         </b-row>
         <b-row class="m-0 p-0 pt-2 pl-1 mb-2  new-component-button" style="width: fit-content;"
@@ -78,7 +78,7 @@
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
-                Add new publisher
+                Insert new publisher
             </b-col>
         </b-row>
     </b-container>

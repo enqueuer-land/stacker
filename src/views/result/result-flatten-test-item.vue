@@ -2,7 +2,7 @@
     <b-container id="result-flatten-tests-item">
         <b-row class="pb-1 px-3" align-h="between" @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
             <b-col cols="auto" class="align-self-center" v-b-toggle="test.id">
-                <i v-if="test.ignored" class="fas fa-times carabina-icon"
+                <i v-if="test.ignored" class="fas fa-exclamation carabina-icon"
                    style="color: var(--carabina-ignored-test-color)"></i>
                 <i v-else-if="test.valid" class="fas fa-check carabina-icon"
                    style="color: var(--carabina-passing-test-color)"></i>

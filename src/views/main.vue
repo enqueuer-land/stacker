@@ -14,14 +14,18 @@
     </div>
 </template>
 <script>
-    import '@/styles/color-palette.css'
-    import '@/styles/dimensions.css'
-    import split from 'split.js'
-    import Stage from '@/views/stage/stage'
-    import SideBar from "@/views/side-bar/side-bar";
+    import Vue from 'vue';
+    import split from 'split.js';
+    import '@/styles/dimensions.css';
+    import '@/styles/color-palette.css';
+    import Stage from '@/views/stage/stage';
     import Result from "@/views/result/result";
+    import SideBar from "@/views/side-bar/side-bar";
+    import DropdownSelector from "@/views/stage/dropdown-selector";
 
-    export default {
+    Vue.component('DropdownSelector', DropdownSelector);
+
+    export default Vue.extend({
         name: 'Main',
         components: {
             Result,
@@ -41,6 +45,6 @@
                 })
             });
         }
-    };
+    });
 
 </script>

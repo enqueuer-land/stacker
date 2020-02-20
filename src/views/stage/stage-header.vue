@@ -8,10 +8,10 @@
             <b-col cols class="align-self-center px-1">
                 <b-input-group>
                     <template v-if="component.carabinaMeta.componentName !== 'REQUISITION'" v-slot:prepend>
-                        <ProtocolSelector
+                        <DropdownSelector
                                 @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                                 :color="componentColor"
-                                :protocols-list="protocolList"></ProtocolSelector>
+                                :availableList="protocolList"></DropdownSelector>
                     </template>
                     <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
@@ -32,13 +32,11 @@
     import Vue from 'vue';
     import '@/styles/texts.css';
     import {mapActions, mapGetters} from 'vuex'
-    import ProtocolSelector from '@/views/stage/protocol-selector'
     import {ComponentStylish} from "@/components/component-stylish";
 
     export default Vue.extend({
         name: 'StageHeader',
         components: {
-            ProtocolSelector
         },
         props: {
             component: Object

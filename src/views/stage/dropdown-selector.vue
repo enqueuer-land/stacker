@@ -1,12 +1,12 @@
-<template id="protocol-selector">
-    <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="protocolContainerStyle">
+<template id="dropdown-selector">
+    <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="containerStyle">
         <template v-slot:button-content>
-            <div :style="protocolSelectorName">{{selectedProtocol.value}}
+            <div :style="selectorName">{{selected.value}}
                 <i class="pl-2 fas fa-caret-down"></i>
             </div>
         </template>
-        <b-dropdown-item v-for="(protocol, index) in protocolsList" :key="index"
-                         @click="onSelect(protocol)">{{protocol.value}}
+        <b-dropdown-item v-for="(item, index) in availableList" :key="index"
+                         @click="onSelect(item)">{{item.value}}
         </b-dropdown-item>
     </b-dropdown>
 </template>
@@ -16,30 +16,31 @@
     import '@/styles/dropdown.css';
 
     export default Vue.extend({
-        name: 'ProtocolSelector',
+        name: 'DropdownSelector',
         props: {
-            protocolsList: Array,
+            defaultSelection: Object,
+            availableList: Array,
             color: String
         },
         data() {
             return {
-                selectedProtocol: this.protocolsList[0],
+                selected: this.defaultSelection || this.availableList[0],
             }
         },
         methods: {
             onSelect: function (protocol) {
-                this.selectedProtocol = protocol;
+                this.selected = protocol;
                 this.$emit('select', protocol);
             }
         },
         computed: {
-            protocolContainerStyle: function () {
+            containerStyle: function () {
                 return {
                     border: 'none !important',
                     'border-bottom': `1px solid ${this.color} !important`
                 }
             },
-            protocolSelectorName: function () {
+            selectorName: function () {
                 return {
                     'text-align': 'left',
                     'transition': 'all ease 100ms',
@@ -50,7 +51,7 @@
     });
 </script>
 <style type="text/css" scoped>
-    #protocol-selector {
+    #dropdown-selector {
     }
 
     .dropdown-toggle {
