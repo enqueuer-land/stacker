@@ -89,8 +89,6 @@
         },
         methods: {
             syntaxHighlight: function (value) {
-                console.log(typeof value)
-                console.log(value)
                 let json = value;
                 if (typeof json != 'string') {
                     json = JSON.stringify(json, undefined, 2);
@@ -132,8 +130,7 @@
         color: var(--carabina-text-darker-color);
     }
 
-    .breadcrumb-item a, .breadcrumb-item span {
-        cursor: pointer;
+    .breadcrumb-item a {
         color: var(--carabina-requisition-color);
         text-decoration: none;
     }

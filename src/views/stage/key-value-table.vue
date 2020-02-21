@@ -4,16 +4,17 @@
                align-h="between"
                :key="pair.id" id="key-value-table">
             <b-col cols="5" class="align-self-center pl-2">
-                <b-form-group>
+                <b-form-group class="mb-2">
                     <b-form-input placeholder="Enter key"
                                   :value="pair.key"
+                                  @blur="detectAutoDeleteTable"
                                   @input="(key) => onKeyChanged(key, index)"
                                   class="text-input carabina-text" lazy>
                     </b-form-input>
                 </b-form-group>
             </b-col>
             <b-col cols="5" class="align-self-center pl-2 pr-0">
-                <b-form-group>
+                <b-form-group class="mb-2">
                     <b-form-input placeholder="Enter value"
                                   :value="pair.value"
                                   @input="(value) => onValueChanged(value, index)"
@@ -49,7 +50,6 @@
         },
         methods: {
             update: function () {
-                this.detectAutoDeleteTable();
                 this.detectNeedRow();
                 return this.createObject();
             },
@@ -78,7 +78,7 @@
                 this.$emit('change', this.update())
             },
             onRowDeleted: function (index) {
-                this.pairs.splice(index, 1);
+                this.pairs = this.pairs.filter((pair, i) => i !== index);
                 this.$emit('change', this.update())
             }
         }

@@ -3,10 +3,14 @@
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
-            <!--            <StageBodyRequisition class="pt-3" :component="selectedComponent"-->
-            <!--                                  style="height: var(&#45;&#45;carabina-body-size)"></StageBodyRequisition>-->
-            <StageBodyHttpPublisher class="pt-3" :component="selectedComponent"
-                                    style="height: var(--carabina-body-size)"></StageBodyHttpPublisher>
+            <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'" class="pt-3"
+                                  :component="selectedComponent"
+                                  style="height: var(--carabina-body-size)"></StageBodyRequisition>
+            <keep-alive v-else-if="body">
+                <component :is="body" v-bind="{component: selectedComponent}"
+                           class="pt-3" style="height: var(--carabina-body-size)"></component>
+            </keep-alive>
+            <div v-else style="height: var(--carabina-body-size)"></div>
             <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
         </template>
     </div>
@@ -16,20 +20,25 @@
     import Vue from 'vue';
     import {mapGetters, mapMutations} from 'vuex';
     import StageFooter from '@/views/stage/stage-footer'
-    import StageBodyHttpPublisher from '@/views/stage/stage-body-http-publisher'
+    import StageBodyRequisition from '@/views/stage/stage-body-requisition'
     import StageHeader from '@/views/stage/stage-header'
+    import PluginsLoader from "@/plugins/plugins-loader";
 
     export default Vue.extend({
         name: 'Stage',
-        components: {StageHeader, StageBodyHttpPublisher, StageFooter},
+        components: {StageHeader, StageBodyRequisition, StageFooter},
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
-            updateAttribute(attributeName, value) {
+            async updateAttribute(attributeName, value) {
                 this.currentSelectedComponentChanged({attributeName, value});
             }
         },
         computed: {
-            ...mapGetters('side-bar', ['selectedComponent'])
+            ...mapGetters('side-bar', ['selectedComponent']),
+            body: function () {
+                const pluginsLoader = PluginsLoader.getInstance();
+                return pluginsLoader.getPlugin(this.selectedComponent.carabinaMeta.componentName, this.selectedComponent.type);
+            }
         },
     });
 </script>

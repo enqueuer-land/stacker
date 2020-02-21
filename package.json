@@ -15,6 +15,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@types/require-from-string": "^1.2.0",
     "bootstrap-vue": "^2.4.0",
     "enqueuer": "file:../enqueuer-land/enqueuer",
     "prismjs": "^1.19.0",

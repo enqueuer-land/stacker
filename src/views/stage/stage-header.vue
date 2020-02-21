@@ -11,7 +11,7 @@
                         <DropdownSelector
                                 @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                                 :color="componentColor"
-                                :availableList="protocolList"></DropdownSelector>
+                                :availableList="protocolsList"></DropdownSelector>
                     </template>
                     <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
@@ -33,21 +33,22 @@
     import '@/styles/texts.css';
     import {mapActions, mapGetters} from 'vuex'
     import {ComponentStylish} from "@/components/component-stylish";
+    import PluginsLoader from "@/plugins/plugins-loader";
+    import {ComponentTypes} from "@/components/component-types";
 
     export default Vue.extend({
         name: 'StageHeader',
-        components: {
-        },
+        components: {},
         props: {
             component: Object
         },
         data: function () {
+            const pluginsLoader = PluginsLoader.getInstance();
+            const publisherProtocols = pluginsLoader.getProtocols(ComponentTypes.PUBLISHER).map(protocol => ({value: protocol}));
+            const subscriptionProtocols = pluginsLoader.getProtocols(ComponentTypes.SUBSCRIPTION).map(protocol => ({value: protocol}));
             return {
-                protocolList: [
-                    {value: 'AMQP'},
-                    {value: 'HTTP'},
-                    {value: 'MQTT'},
-                    {value: 'LARGE PROTOCOL NAME'}]
+                publisherProtocols,
+                subscriptionProtocols
             }
         },
         methods: {
@@ -55,6 +56,15 @@
         },
         computed: {
             ...mapGetters('side-bar', ['breadcrumbItems']),
+            protocolsList: function () {
+                if (this.component.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
+                    return this.subscriptionProtocols;
+                }
+                if (this.component.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
+                    return this.publisherProtocols;
+                }
+                return undefined;
+            },
             runButtonStyle: function () {
                 return {
                     "border": 'none',
