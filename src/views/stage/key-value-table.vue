@@ -6,6 +6,7 @@
             <b-col cols="5" class="align-self-center pl-2">
                 <b-form-group class="mb-2">
                     <b-form-input placeholder="Enter key"
+                                  style="text-align: right"
                                   :value="pair.key"
                                   @blur="detectAutoDeleteTable"
                                   @input="(key) => onKeyChanged(key, index)"
@@ -22,7 +23,7 @@
                     </b-form-input>
                 </b-form-group>
             </b-col>
-            <b-col cols="auto" class="align-self-center p-0 mb-2 mr-1" @click="onRowDeleted">
+            <b-col cols="auto" class="align-self-center p-0 mb-2 mr-1" @click="onRowDeleted(index)">
                 <i class="fas fa-times carabina-icon delete-icon" style="font-size: 14px"></i>
             </b-col>
         </b-row>
@@ -78,6 +79,7 @@
                 this.$emit('change', this.update())
             },
             onRowDeleted: function (index) {
+                console.log(index);
                 this.pairs = this.pairs.filter((pair, i) => i !== index);
                 this.$emit('change', this.update())
             }

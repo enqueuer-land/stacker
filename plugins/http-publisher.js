@@ -3,7 +3,7 @@ const plugin = {
         type: 'http',
         hooks: ['onInit', 'onFinish', 'onResponseReceived'],
         template: `
-            <b-container fluid id="stage-body-http-requisition" class="p-0 m-0">
+            <b-container fluid class="p-0 m-0">
                 <b-form-group
                         class="carabina-text px-4 mb-4"
                         label="URL"
@@ -23,7 +23,7 @@ const plugin = {
                         </b-form-input>
                     </b-input-group>
                 </b-form-group>
-                <label class="pl-3 d-block carabina-text">Headers</label>
+                <label class="pl-3 d-block carabina-text mb-0">Headers</label>
                 <KeyValueTable @change="(headers) => $parent.updateAttribute('headers', headers)"
                                :table="{'content-type': 'json/application'}" class="mb-4"></KeyValueTable>
 

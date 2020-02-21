@@ -41,7 +41,7 @@ export default class PluginsLoader {
             case ComponentTypes.PUBLISHER:
                 return this.plugins.publishers.find((publisher: any) => publisher.type.toLowerCase() === type.toLowerCase());
             case ComponentTypes.SUBSCRIPTION:
-                return this.plugins.publishers.find((publisher: any) => publisher.type === type);
+                return this.plugins.subscriptions.find((subscription: any) => subscription.type.toLowerCase() === type.toLowerCase());
             default:
                 return undefined;
         }
@@ -52,21 +52,22 @@ export default class PluginsLoader {
             case ComponentTypes.PUBLISHER:
                 return this.plugins.publishers.map((publisher: any) => publisher.type.toUpperCase());
             case ComponentTypes.SUBSCRIPTION:
-                return this.plugins.subscriptions.map((publisher: any) => publisher.type.toUpperCase());
+                return this.plugins.subscriptions.map((subscription: any) => subscription.type.toUpperCase());
         }
         return [];
     }
 
     private loadPlugins(): void {
-        fs.readdirSync('./plugins').forEach(filename => {
-            try {
-                const file = fs.readFileSync('./plugins/' + filename).toString();
-                const plugin = requireFromString(file);
-                this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
-
-            } catch (e) {
-                console.error(e);
-            }
-        });
+        fs.readdirSync('./plugins')
+            .forEach(filename => {
+                try {
+                    const file = fs.readFileSync('./plugins/' + filename).toString();
+                    const plugin = requireFromString(file);
+                    this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
+                    this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
+                } catch (e) {
+                    console.error(e);
+                }
+            });
     }
 }
