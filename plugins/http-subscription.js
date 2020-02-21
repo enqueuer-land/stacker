@@ -23,13 +23,13 @@ const plugin = {
                                 label="Endpoint"
                                 label-for="method-url">
                             <b-input-group id="method-url">
-                                <DropdownSelector
+                                <dropdown-selector
                                         @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                         :availableList="[
                     {value: 'GET'},
                     {value: 'POST'},
                     {value: 'PUT'},
-                    {value: 'DELETE'}]"></DropdownSelector>
+                    {value: 'DELETE'}]"></dropdown-selector>
                                 <b-form-input placeholder="Enter endpoint" type="text"
                                               @input="(value) => $parent.updateAttribute('endpoint', value)"
                                               :value="component.endpoint"
@@ -40,9 +40,9 @@ const plugin = {
                     </b-col>
                 </b-row>
                 <label class="pl-3 d-block carabina-text mb-0">Headers</label>
-                <KeyValueTable
+                <key-value-table
                         @change="(headers) => $parent.updateAttribute('response', {...component.response, headers})"
-                        :table="{'content-type': 'json/application'}" class="mb-4"></KeyValueTable>
+                        :table="{'content-type': 'json/application'}" class="mb-4"></key-value-table>
 
                 <b-row no-gutters align-h="between">
                     <b-col cols="3" class="align-self-center pl-1">
@@ -50,7 +50,7 @@ const plugin = {
                                 class="carabina-text pl-4 mb-4"
                                 label="Status"
                                 label-for="status">
-                            <b-form-input id="status" placeholder="200" type="number"
+                            <b-form-input id="status" type="number"
                                           @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
                                           :value="component.status"
                                           class="text-input carabina-text" trim>
@@ -58,10 +58,10 @@ const plugin = {
                         </b-form-group>
                     </b-col>
                 </b-row>
-                <label class="pl-3 d-block carabina-text mb-0">Payload</label>
-                <prism-editor language="js" lineNumbers :code="component.payload"
-                              @change="(value) => $parent.updateAttribute('response', {...component.response, payload: value})"
-                              class="px-3" style="min-height: 300px; max-height: 400px;"></prism-editor>
+                <label class="pl-3 d-block carabina-text mb-2">Payload</label>
+                <payload :code="component.payload"
+                         @change="(value) => $parent.updateAttribute('response', {...component.response, payload: value})"
+                         class="px-3"></payload>
             </b-container>
         `,
         props: {

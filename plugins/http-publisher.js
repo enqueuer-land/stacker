@@ -9,13 +9,13 @@ const plugin = {
                         label="URL"
                         label-for="method-url">
                     <b-input-group id="method-url">
-                        <DropdownSelector
+                        <dropdown-selector
                                 @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                 :availableList="[
                     {value: 'GET'},
                     {value: 'POST'},
                     {value: 'PUT'},
-                    {value: 'DELETE'}]"></DropdownSelector>
+                    {value: 'DELETE'}]"></dropdown-selector>
                         <b-form-input placeholder="Enter url" type="text"
                                       @input="(value) => $parent.updateAttribute('url', value)"
                                       :value="component.url"
@@ -24,14 +24,12 @@ const plugin = {
                     </b-input-group>
                 </b-form-group>
                 <label class="pl-3 d-block carabina-text mb-0">Headers</label>
-                <KeyValueTable @change="(headers) => $parent.updateAttribute('headers', headers)"
-                               :table="{'content-type': 'json/application'}" class="mb-4"></KeyValueTable>
+                <key-value-table @change="(headers) => $parent.updateAttribute('headers', headers)"
+                               :table="{'content-type': 'json/application'}" class="mb-4"></key-value-table>
 
-                <label class="pl-3 d-block carabina-text">Payload</label>
-                <prism-editor language="js" lineNumbers :code="component.payload"
-                              @change="(value) => $parent.updateAttribute('payload', value)"
-                              class="px-3" style="min-height: 300px; max-height: 400px;"></prism-editor>
-
+                <label class="pl-3 d-block carabina-text mb-2">Payload</label>
+                <payload :code="component.payload" @change="(value) => $parent.updateAttribute('payload', value)"
+                         class="px-3"></payload>
             </b-container>`,
         props: {
             component: Object

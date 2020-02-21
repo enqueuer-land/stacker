@@ -22,7 +22,7 @@
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-1 run-button-container">
-                <b-button class="run-button" :style="runButtonStyle" @click="runRequisitionViaGlobal(component)">Run
+                <b-button class="run-button" :style="runButtonStyle" @click="runRequisition(component)">Run
                 </b-button>
             </b-col>
         </b-row>
@@ -52,7 +52,7 @@
             }
         },
         methods: {
-            ...mapActions('stage', ['runRequisitionViaGlobal'])
+            ...mapActions('stage', ['runRequisition'])
         },
         computed: {
             ...mapGetters('side-bar', ['breadcrumbItems']),

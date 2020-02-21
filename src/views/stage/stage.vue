@@ -3,14 +3,14 @@
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
-            <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'" class="pt-3"
-                                  :component="selectedComponent"
-                                  style="height: var(--carabina-body-size)"></StageBodyRequisition>
-            <keep-alive v-else-if="body">
-                <component :is="body" v-bind="{component: selectedComponent}"
+            <keep-alive>
+                <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'" class="pt-3"
+                                      :component="selectedComponent"
+                                      style="height: var(--carabina-body-size)"></StageBodyRequisition>
+                <component v-else-if="body" :is="body" v-bind="{component: selectedComponent}"
                            class="pt-3" style="height: var(--carabina-body-size)"></component>
+                <div v-else style="height: var(--carabina-body-size)"></div>
             </keep-alive>
-            <div v-else style="height: var(--carabina-body-size)"></div>
             <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
         </template>
     </div>

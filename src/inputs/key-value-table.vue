@@ -33,7 +33,7 @@
     import Vue from 'vue';
     import '@/styles/texts.css'
     import '@/styles/icons.css'
-    import {IdCreator} from '../../components/id-creator';
+    import {IdCreator} from '../components/id-creator';
 
     const idCreator = new IdCreator();
     export default Vue.extend({

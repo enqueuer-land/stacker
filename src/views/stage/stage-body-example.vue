@@ -15,7 +15,7 @@
             <!--            <button @click="add">Add Another</button>-->
             <!--            <h3 @click="runNqr" style="cursor: pointer">runNqr</h3>-->
             <!--            <h3 @click="runRequisitionViaGlobal" style="cursor: pointer">runNqr</h3>-->
-            <h3 @click="runRequisitionViaGlobal(requisition)" style="cursor: pointer">runNqr</h3>
+<!--            <h3 @click="runRequisitionViaGlobal(requisition)" style="cursor: pointer">runNqr</h3>-->
         </div>
     </div>
 </template>
@@ -89,7 +89,7 @@
         },
         computed: {},
         methods: {
-            ...mapActions('stage', ['runRequisitionViaGlobal', 'runRequisition'])
+            ...mapActions('stage', ['runRequisition'])
         }
         /*methods: {
             runNqr: async function () {

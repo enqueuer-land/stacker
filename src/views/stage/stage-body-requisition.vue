@@ -78,7 +78,7 @@
                 <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 carabina-text" style="cursor: pointer; user-select: none">
-                Insert new publisher
+                Insert new subscription
             </b-col>
         </b-row>
     </b-container>
@@ -86,7 +86,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css'
-    import {mapGetters, mapMutations} from 'vuex';
+    import {mapMutations} from 'vuex';
 
     export default Vue.extend({
         name: 'StageBodyRequisition',
