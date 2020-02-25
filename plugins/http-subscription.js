@@ -1,7 +1,7 @@
 const plugin = {
     subscriptions: [{
         type: 'http',
-        hooks: ['onInit', 'onFinish', 'onMessageReceived'],
+        hooks: ['onMessageReceived'],
         template: `
             <b-container fluid class="p-0 m-0">
                 <b-row no-gutters align-h="between">

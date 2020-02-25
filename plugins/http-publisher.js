@@ -1,7 +1,7 @@
 const plugin = {
     publishers: [{
         type: 'http',
-        hooks: ['onInit', 'onFinish', 'onResponseReceived'],
+        hooks: ['onResponseReceived'],
         template: `
             <b-container fluid class="p-0 m-0">
                 <b-form-group

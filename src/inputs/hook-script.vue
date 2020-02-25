@@ -47,7 +47,7 @@
 
 
     export default Vue.extend({
-        name: 'Payload',
+        name: 'HookScript',
         components: {
             // PrismEditor,
             codemirror

@@ -3,14 +3,15 @@
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
-            <keep-alive>
-                <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'" class="pt-3"
-                                      :component="selectedComponent"
-                                      style="height: var(--carabina-body-size)"></StageBodyRequisition>
-                <component v-else-if="body" :is="body" v-bind="{component: selectedComponent}"
-                           class="pt-3" style="height: var(--carabina-body-size)"></component>
-                <div v-else style="height: var(--carabina-body-size)"></div>
-            </keep-alive>
+            <div class="pt-3" style="overflow-y: scroll; height: var(--carabina-body-size)">
+                <HooksBody class="mb-4" :hooks="hooks"></HooksBody>
+                <keep-alive>
+                    <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'"
+                                          :component="selectedComponent"></StageBodyRequisition>
+                    <component v-else-if="body" :is="body" v-bind="{component: selectedComponent}"></component>
+                    <div v-else></div>
+                </keep-alive>
+            </div>
             <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
         </template>
     </div>
@@ -22,11 +23,12 @@
     import StageFooter from '@/views/stage/stage-footer'
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
     import StageHeader from '@/views/stage/stage-header'
+    import HooksBody from '@/views/stage/hooks-body'
     import PluginsLoader from "@/plugins/plugins-loader";
 
     export default Vue.extend({
         name: 'Stage',
-        components: {StageHeader, StageBodyRequisition, StageFooter},
+        components: {StageHeader, HooksBody, StageBodyRequisition, StageFooter},
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
             async updateAttribute(attributeName, value) {
@@ -38,6 +40,16 @@
             body: function () {
                 const pluginsLoader = PluginsLoader.getInstance();
                 return pluginsLoader.getPlugin(this.selectedComponent.carabinaMeta.componentName, this.selectedComponent.type);
+            },
+            hooks: function () {
+                let hooks = ['onInit'];
+                const plugin = this.body;
+                if (plugin) {
+                    hooks = hooks.concat(plugin.hooks)
+                }
+                hooks.push('onFinish');
+                console.log(hooks);
+                return hooks;
             }
         },
     });
