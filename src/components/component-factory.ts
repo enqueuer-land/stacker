@@ -28,7 +28,7 @@ export class ComponentFactory {
             subscriptions: [],
             carabinaMeta: {
                 parent,
-                selected: true,
+                selected: false,
                 collapsed: false,
                 componentName: ComponentTypes.REQUISITION
             }
@@ -47,7 +47,7 @@ export class ComponentFactory {
             name: 'New publisher',
             carabinaMeta: {
                 parent,
-                selected: true,
+                selected: false,
                 componentName: ComponentTypes.PUBLISHER
             }
         };
@@ -59,11 +59,13 @@ export class ComponentFactory {
     private createSubscription = (parent: any): any => {
         const subscription = {
             type: 'HTTP',
+            timeout: 0,
+            avoidable: false,
             id: new IdCreator().create(),
             name: 'New subscription',
             carabinaMeta: {
                 parent,
-                selected: true,
+                selected: false,
                 componentName: ComponentTypes.SUBSCRIPTION
             }
         };

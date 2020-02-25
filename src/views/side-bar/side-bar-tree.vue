@@ -19,7 +19,7 @@
         },
         mounted() {
             if (this.requisitions.length === 0) {
-                this.createNewComponent({componentType: 'PUBLISHER'});
+                this.createNewComponent({componentType: 'PUBLISHER', startSelected: true});
             }
         },
         methods: {

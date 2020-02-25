@@ -8,14 +8,12 @@
             <SideBarTreeItem :component="component" @dblclick="$root.$emit('bv::toggle::collapse', component.id)"/>
             <b-collapse :id="component.id" :class="['pl-4 py-0 px-0']" :visible="!collapsed"
                         v-if="componentStylish.getChildrenLength() > 0">
-                <div>
-                    <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
-                                     :component="requisition"></SideBarTreeNode>
-                    <SideBarTreeItem v-for="publisher in component.publishers" :key="publisher.id"
-                                     :component="publisher"></SideBarTreeItem>
-                    <SideBarTreeItem v-for="subscription in component.subscriptions" :key="subscription.id"
-                                     :component="subscription"></SideBarTreeItem>
-                </div>
+                <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
+                                 :component="requisition"></SideBarTreeNode>
+                <SideBarTreeItem v-for="publisher in component.publishers" :key="publisher.id"
+                                 :component="publisher"></SideBarTreeItem>
+                <SideBarTreeItem v-for="subscription in component.subscriptions" :key="subscription.id"
+                                 :component="subscription"></SideBarTreeItem>
             </b-collapse>
         </b-card>
     </div>

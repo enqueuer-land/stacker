@@ -9,8 +9,9 @@ const plugin = {
                         <b-form-group
                                 class="carabina-text px-4 mb-4"
                                 label="Port"
+                                label-class="mb-0"
                                 label-for="port">
-                            <b-form-input id="port" placeholder="8080" type="number"
+                            <b-form-input id="port" type="number"
                                           @input="(value) => $parent.updateAttribute('port', value)"
                                           :value="component.port"
                                           class="text-input carabina-text" trim>
@@ -21,6 +22,7 @@ const plugin = {
                         <b-form-group
                                 class="carabina-text px-4 mb-4"
                                 label="Endpoint"
+                                label-class="mb-0"
                                 label-for="method-url">
                             <b-input-group id="method-url">
                                 <dropdown-selector
@@ -49,6 +51,7 @@ const plugin = {
                         <b-form-group
                                 class="carabina-text pl-4 mb-4"
                                 label="Status"
+                                label-class="mb-0"
                                 label-for="status">
                             <b-form-input id="status" type="number"
                                           @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"

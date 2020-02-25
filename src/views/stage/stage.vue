@@ -48,7 +48,6 @@
                     hooks = hooks.concat(plugin.hooks)
                 }
                 hooks.push('onFinish');
-                console.log(hooks);
                 return hooks;
             }
         },

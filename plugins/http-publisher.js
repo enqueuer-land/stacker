@@ -7,6 +7,7 @@ const plugin = {
                 <b-form-group
                         class="carabina-text px-4 mb-4"
                         label="URL"
+                        label-class="mb-0"
                         label-for="method-url">
                     <b-input-group id="method-url">
                         <dropdown-selector

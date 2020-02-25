@@ -5,6 +5,7 @@
                 <b-form-group
                         class="mb-0 text-label"
                         label="Delay (ms)"
+                        label-class="mb-0"
                         label-for="delay">
                     <b-form-input id="delay" placeholder="Enter delay"
                                   :value="component.delay"
@@ -17,6 +18,7 @@
                 <b-form-group
                         class="mb-0 text-label"
                         label="Timeout (ms)"
+                        label-class="mb-0"
                         label-for="timeout">
                     <b-form-input id="timeout" placeholder="Enter timeout"
                                   :value="component.timeout"
@@ -31,6 +33,7 @@
                 <b-form-group
                         class="mb-0 text-label"
                         label="Iterations"
+                        label-class="mb-0"
                         label-for="iterations">
                     <b-form-input id="iterations" placeholder="Enter iterations"
                                   :value="component.iterations"
@@ -43,9 +46,10 @@
                 <b-form-group
                         class="mb-0 text-label"
                         label="Parallel"
+                        label-class="pt-2 mb-0"
                         label-for="parallel">
                     <b-button block id="parallel"
-                              :value="component.parallel" :class="[component.parallel ? 'active': '']"
+                              :value="component.parallel" :class="[component.parallel ? 'active': '', 'mt-2']"
                               @click="() => {$parent.updateAttribute('parallel', !component.parallel); }"
                               variant="carabina">
                         {{component.parallel ? 'Turn off' : 'Turn on'}}

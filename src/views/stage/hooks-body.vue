@@ -34,12 +34,14 @@
             hooks: Array
         },
         data: function () {
-            return {
-                expanded: false,
-                buttons: this.hooks.map(hook => ({caption: hook, state: false}))
-            }
+            return this.initFromProps();
         },
         watch: {
+            hooks: function (value) {
+                const reset = this.initFromProps();
+                this.expanded = reset.expanded;
+                this.buttons = reset.buttons;
+            },
             expanded: function (value) {
                 if (value === this.expanded) {
                     this.$root.$emit('bv::toggle::collapse', 'hook-body')
@@ -47,6 +49,12 @@
             }
         },
         methods: {
+            initFromProps: function () {
+                return {
+                    expanded: false,
+                    buttons: this.hooks.map(hook => ({caption: hook, state: false}))
+                }
+            },
             onChange: function (value) {
                 const selectedHook = this.buttons.find(btn => btn.state);
                 this.$parent.updateAttribute(selectedHook.caption, {script: value});

@@ -18,26 +18,24 @@ export default {
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
         createNewComponent: (stage: any, payload: any) => {
-            if (stage.selectedComponent) {
-                stage.selectedComponent.carabinaMeta.selected = false;
-            }
-
             if (payload.componentType === ComponentTypes.REQUISITION) {
                 const component = new ComponentFactory().createRequisition(payload.parent);
-                stage.selectedComponent = component;
                 if (!payload.parent) {
                     stage.requisitions.push(component);
-                } else {
-                    payload.parent.carabinaMeta.selected = false;
                 }
+                return component;
             } else {
                 const parentRequisition = payload.parent || new ComponentFactory().createRequisition();
                 const component = new ComponentFactory().createComponent(payload.componentType, parentRequisition);
-                stage.selectedComponent = component;
-                parentRequisition.carabinaMeta.selected = false;
+                if (payload.startSelected) {
+                    component.carabinaMeta.selected = true;
+                    stage.selectedComponent = component;
+                    parentRequisition.carabinaMeta.selected = false;
+                }
                 if (!payload.parent) {
                     stage.requisitions.push(parentRequisition);
                 }
+                return component;
             }
         },
         currentSelectedComponentChanged: (stage: any, event: any) => {
