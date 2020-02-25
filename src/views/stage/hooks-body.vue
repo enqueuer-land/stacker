@@ -2,7 +2,7 @@
     <div style="text-align: right" class="carabina-text">
         <b-button-group class="mr-3">
             <b-button
-                    v-for="(btn, idx) in buttons"
+                    v-for="(btn, idx) in events"
                     :key="idx"
                     @click="onClick(idx)"
                     class="pr-1 ml-3"
@@ -14,7 +14,8 @@
         </b-button-group>
         <b-collapse id="hook-body" class="carabina-text">
             <label class="pl-3 d-block carabina-text mb-2">Script</label>
-            <hook-script @change="value => onChange(value)" class="px-3"></hook-script>
+            <hook-script :code="currentScript" @change="value => onChange(value)"
+                         class="px-3"></hook-script>
             <div class="bottom-line py-2 mx-2"></div>
         </b-collapse>
     </div>
@@ -31,16 +32,17 @@
             HookScript
         },
         props: {
-            hooks: Array
+            hooks: Array,
+            component: Object
         },
         data: function () {
             return this.initFromProps();
         },
         watch: {
-            hooks: function (value) {
+            hooks: function () {
                 const reset = this.initFromProps();
                 this.expanded = reset.expanded;
-                this.buttons = reset.buttons;
+                this.events = reset.events;
             },
             expanded: function (value) {
                 if (value === this.expanded) {
@@ -48,27 +50,46 @@
                 }
             }
         },
+        computed: {
+            currentScript: function () {
+                const selectedEvent = this.getSelectedEvent();
+                if (selectedEvent) {
+                    return selectedEvent.script;
+                }
+                return '';
+            }
+        },
         methods: {
             initFromProps: function () {
                 return {
                     expanded: false,
-                    buttons: this.hooks.map(hook => ({caption: hook, state: false}))
+                    events: this.hooks.map(hook => ({
+                        caption: hook,
+                        state: false,
+                        script: this.component[hook].script
+                    }))
                 }
             },
             onChange: function (value) {
-                const selectedHook = this.buttons.find(btn => btn.state);
-                this.$parent.updateAttribute(selectedHook.caption, {script: value});
+                const selectedHook = this.getSelectedEvent();
+                if (selectedHook) {
+                    selectedHook.script = value;
+                    this.$parent.updateAttribute(selectedHook.caption, {script: selectedHook.script});
+                }
+            },
+            getSelectedEvent: function () {
+                return this.events.find(btn => btn.state);
             },
             onClick: function (idx) {
                 const icons = Array.from(document.querySelectorAll('.carabina-icon'));
-                const prevState = this.buttons[idx].state;
-                this.buttons.forEach((button, index) => {
+                const prevState = this.events[idx].state;
+                this.events.forEach((button, index) => {
                     button.state = false;
                     icons[index].classList.remove('active');
                 });
-                this.buttons[idx].state = !prevState;
+                this.events[idx].state = !prevState;
                 icons[idx].classList.toggle('active');
-                this.expanded = this.buttons.some(btn => btn.state);
+                this.expanded = this.events.some(btn => btn.state);
             }
         }
     });

@@ -4,7 +4,7 @@
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
             <div class="pt-3" style="overflow-y: scroll; height: var(--carabina-body-size)">
-                <HooksBody class="mb-4" :hooks="hooks"></HooksBody>
+                <HooksBody class="mb-4" :component="selectedComponent" :hooks="hooks"></HooksBody>
                 <keep-alive>
                     <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'"
                                           :component="selectedComponent"></StageBodyRequisition>
