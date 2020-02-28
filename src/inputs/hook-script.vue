@@ -1,5 +1,6 @@
 <template>
-    <codemirror :value="code"
+    <codemirror id="hook-script"
+                :value="code"
                 :options="cmOptions"
                 @input="onChange">
     </codemirror>
@@ -83,5 +84,8 @@
         }
     });
 </script>
-<style type="text/css" scoped>
+<style type="text/css">
+    #hook-script .CodeMirror {
+        height: 140px !important;
+    }
 </style>

@@ -4,7 +4,7 @@
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
             <div class="pt-3" style="overflow-y: scroll; height: var(--carabina-body-size)">
-                <HooksBody class="mb-4" :component="selectedComponent" :hooks="hooks"></HooksBody>
+                <Hooks class="mb-4" :component="selectedComponent" :hooks="hooks"></Hooks>
                 <keep-alive>
                     <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'"
                                           :component="selectedComponent"></StageBodyRequisition>
@@ -23,12 +23,12 @@
     import StageFooter from '@/views/stage/stage-footer'
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
     import StageHeader from '@/views/stage/stage-header'
-    import HooksBody from '@/views/stage/hooks-body'
+    import Hooks from '@/views/stage/hooks'
     import PluginsLoader from "@/plugins/plugins-loader";
 
     export default Vue.extend({
         name: 'Stage',
-        components: {StageHeader, HooksBody, StageBodyRequisition, StageFooter},
+        components: {StageHeader, Hooks, StageBodyRequisition, StageFooter},
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
             async updateAttribute(attributeName, value) {
