@@ -1,19 +1,26 @@
 <template>
     <b-container fluid id="side-bar-header" class="p-1">
         <b-row class="m-0 pt-1" style="width: 100%; height: 40%" no-gutters>
-            <b-col cols="auto" class="align-self-center p-1">
+            <b-col cols="auto" class="align-self-center">
                 <img src="../../assets/logo.png" class="pl-1 img img-fluid" style="user-select: none">
             </b-col>
-            <b-col cols class="">
+            <b-col cols>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent({componentType: 'REQUISITION'})">
-                <i id="new-requisition-button" class="fas fa-plus carabina-icon"></i>
-            </b-col>
-            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent({componentType: 'PUBLISHER'})">
-                <i id="new-publisher-button" class="fas fa-plus carabina-icon"></i>
-            </b-col>
-            <b-col cols="auto" class="align-self-center px-2" @click="createNewComponent({componentType: 'SUBSCRIPTION'})">
-                <i id="new-subscription-button" class="fas fa-plus carabina-icon"></i>
+            <b-col cols="auto" class="align-self-center mx-1">
+                <b-dropdown split @click="createNewComponent({componentType: 'REQUISITION'})" variant="creators">
+                    <template v-slot:button-content>
+                        <i id="new-requisition-button" class="fas fa-plus carabina-icon mr-1"></i>
+                        Requisition
+                    </template>
+                    <b-dropdown-item @click="createNewComponent({componentType: 'PUBLISHER'})">
+                        <i id="new-publisher-button" class="fas fa-plus carabina-icon mr-2"></i>
+                        Requisition / publisher
+                    </b-dropdown-item>
+                    <b-dropdown-item @click="createNewComponent({componentType: 'SUBSCRIPTION'})">
+                        <i id="new-subscription-button" class="fas fa-plus carabina-icon mr-2"></i>
+                        Requisition / subscription
+                    </b-dropdown-item>
+                </b-dropdown>
             </b-col>
         </b-row>
         <b-row class="m-0 mt-1" style="width: 100%" no-gutters>
@@ -32,6 +39,7 @@
     import Vue from 'vue';
     import '@/styles/icons.css'
     import '@/styles/texts.css'
+    import '@/styles/dropdown.css'
     import {mapGetters, mapMutations} from 'vuex';
 
     export default Vue.extend({
@@ -48,19 +56,36 @@
 
     });
 </script>
-<style scoped>
+<style>
     #side-bar-header {
         background-color: var(--carabina-body-background-darker-color);
     }
 
     .img {
-        min-width: 170px !important;
-        width: 170px !important;
+        min-width: 140px !important;
+        width: 140px !important;
+    }
+
+    .btn-creators {
+        color: var(--carabina-header-background-darker-color);
+        background-color: var(--carabina-requisition-color);
+        margin: 0;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .btn-creators:hover {
+        color: var(--carabina-text-darker-color);
+    }
+
+    .btn-creators:active, .btn-creators:focus {
+        outline: none !important;
+        box-shadow: none !important;
     }
 
     #new-requisition-button {
         font-size: 16px;
-        color: var(--carabina-requisition-color);
+        color: var(--carabina-header-background-darker-color);
     }
 
     #new-publisher-button {
