@@ -6,6 +6,8 @@
         <label class="pl-3 d-block carabina-text mb-0">Store</label>
         <key-value-table @change="value => onStoreChange(value)"
                          :table="store" class="mb-4"></key-value-table>
+        <label class="pl-3 d-block carabina-text mb-0">Assertions</label>
+        <Assertions :value="assertions" @change="value => onAssertionsChange(value)" class="mx-1"></Assertions>
         <div class="bottom-line py-2 mx-2"></div>
     </div>
 </template>
@@ -14,11 +16,12 @@
     import Vue from 'vue';
     import '@/styles/texts.css'
     import HookScript from '@/inputs/hook-script'
+    import Assertions from '@/inputs/assertions'
 
     export default Vue.extend({
         name: 'HookBody',
         components: {
-            HookScript
+            HookScript, Assertions
         },
         props: {
             component: Object
@@ -54,11 +57,13 @@
             onAssertionsChange: function (value) {
                 this.assertions = value;
                 this.emit();
-            },
+            }
         }
     });
 </script>
 
 <style scoped>
-
+    .bottom-line {
+        border-bottom: 1px solid var(--carabina-header-background-lighter-color);
+    }
 </style>
