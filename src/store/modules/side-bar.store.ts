@@ -52,6 +52,33 @@ export default {
                 item.carabinaMeta.unsaved = true;
             }
         },
+        deleteComponentById: (stage: any, event: any) => {
+            const item = new ComponentFinder(stage.requisitions).findItem(event.id);
+            stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== item.id);
+            if (item) {
+                if (stage.selectedComponent) {
+                    if (stage.selectedComponent.id === event.id) {
+                        stage.selectedComponent = null;
+                    }
+                }
+                const parent = item.carabinaMeta.parent;
+                if (parent) {
+                    parent.requisitions = parent.requisitions.filter((requisition: any) => requisition.id !== item.id);
+                    parent.publishers = parent.publishers.filter((publisher: any) => publisher.id !== item.id);
+                    parent.subscriptions = parent.subscriptions.filter((subscription: any) => subscription.id !== item.id);
+                }
+                if (item.subscriptions) {
+                    item.subscriptions = item.subscriptions.filter((subscription: any) => subscription.id !== item.id);
+                }
+                if (item.publishers) {
+                    item.publishers = item.publishers.filter((publisher: any) => publisher.id !== item.id);
+                }
+                if (item.requisitions) {
+                    item.requisitions = item.requisitions.filter((requisition: any) => requisition.id !== item.id);
+                }
+            }
+
+        },
     },
     getters: {
         selectedComponent: (state: any) => state.selectedComponent,

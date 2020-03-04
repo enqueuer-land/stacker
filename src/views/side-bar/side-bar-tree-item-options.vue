@@ -5,7 +5,7 @@
                style="font-size: 14px"></i>
         </template>
         <b-dropdown-item v-for="(item, index) in actions" :key="index">
-            <b-row class="pl-2" @click="item.action()">
+            <b-row class="pl-2" @click="item.action">
                 <b-col cols="auto" class="align-self-center px-1">
                     <i :class="['carabina-icon option-item-class', item.iconClass]" style="font-size: 14px"></i>
                 </b-col>
@@ -38,22 +38,30 @@
                     {
                         name: 'Ignore',
                         iconClass: 'fas fa-ban',
-                        action: () => this.changeAttributeById({
-                            id: this.component.id,
-                            attributeName: 'ignore',
-                            value: !this.component.ignore
-                        })
+                        action: (event) => {
+                            event.stopPropagation();
+                            this.changeAttributeById({
+                                id: this.component.id,
+                                attributeName: 'ignore',
+                                value: !this.component.ignore
+                            });
+                        }
                     },
                     {
                         name: 'Delete',
                         iconClass: 'fas fa-trash',
-                        action: () => console.log('deleted')
+                        action: (event) => {
+                            event.stopPropagation();
+                            this.deleteComponentById({
+                                id: this.component.id
+                            });
+                        }
                     },
                 ]
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeById']),
+            ...mapMutations('side-bar', ['changeAttributeById', 'deleteComponentById']),
         }
 
     });
