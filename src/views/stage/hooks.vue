@@ -8,6 +8,8 @@
                     class="pr-1 ml-3"
                     :pressed="event.state"
                     variant="carabina">
+                <i v-if="eventHasAttribute(event.caption)" class="fas fa-circle carabina-icon pr-1"
+                   style="visibility: visible; font-size: 8px"></i>
                 {{ event.caption }}
                 <i class="fas fa-chevron-down carabina-icon pl-1"></i>
             </b-button>
@@ -60,6 +62,18 @@
             selectedEvent: function () {
                 return this.events.find(btn => btn.state);
             },
+            eventHasAttribute: function () {
+                return function (name) {
+                    const componentEvent = this.component[name];
+                    if (componentEvent) {
+                        const scriptCondition = componentEvent.script !== '';
+                        const assertionsCondition = componentEvent.assertions.length > 0 && componentEvent.assertions.some(assertion => Object.values(assertion).length > 0);
+                        const storeCondition = Object.keys(componentEvent.store).some(key => key !== '') && Object.keys(componentEvent.store).length > 0;
+                        return scriptCondition || assertionsCondition || storeCondition;
+                    }
+                    return false;
+                }
+            }
         },
         methods: {
             onChange: function (name, value) {

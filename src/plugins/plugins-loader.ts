@@ -1,7 +1,8 @@
-import {remote} from 'electron'
 import requireFromString from "require-from-string";
 import {ComponentTypes} from "@/components/component-types";
+import * as os from 'os';
 import * as fs from 'fs';
+import * as path from 'path';
 
 export type Plugin = {
     stacker: {
@@ -30,7 +31,7 @@ export default class PluginsLoader {
     public static getInstance(): PluginsLoader {
         if (!PluginsLoader.instance) {
             const instance = new PluginsLoader();
-            instance.loadPlugins();
+            instance.loadPluginsFromFolders('./plugins', os.homedir() + '/.stacker/plugins');
             PluginsLoader.instance = instance;
         }
         return PluginsLoader.instance;
@@ -57,17 +58,20 @@ export default class PluginsLoader {
         return [];
     }
 
-    private loadPlugins(): void {
-        fs.readdirSync('./plugins')
-            .forEach(filename => {
-                try {
-                    const file = fs.readFileSync('./plugins/' + filename).toString();
-                    const plugin = requireFromString(file);
-                    this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
-                    this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
+    private loadPluginsFromFolders(...directories: string[]): void {
+        directories.forEach(directory => {
+            console.log(`Reading plugins from ${directory}`);
+            fs.readdirSync(directory)
+                .forEach(filename => {
+                    try {
+                        const file = fs.readFileSync(path.join(directory, filename)).toString();
+                        const plugin = requireFromString(file);
+                        this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
+                        this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                });
+        });
     }
 }

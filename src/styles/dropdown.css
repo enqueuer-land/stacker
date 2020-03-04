@@ -1,5 +1,6 @@
 .dropdown-menu {
     padding: 0;
+    border: none;
     width: max-content;
     border-radius: 5px;
 }
@@ -16,6 +17,7 @@
     padding: 15px 20px;
     font-weight: lighter;
     color: var(--carabina-text-darker-color);
+    border-bottom: 1px solid var(--carabina-header-background-lighter-color);
     background-color: var(--carabina-header-background-darker-color);
 }
 
