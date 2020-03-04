@@ -18,7 +18,7 @@ export default {
             if (msg.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
                 requisition = {publishers: [msg], name: msg.name, id: new IdCreator().create()};
             } else if (msg.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
-                requisition = {subscriptions: [msg], name: msg.name, id: new IdCreator().create()};
+                requisition = {timeout: -1, subscriptions: [msg], name: msg.name, id: new IdCreator().create()};
             }
             const ruEnqueuerFunction = remote.getGlobal('runEnqueuer');
             const responses = await ruEnqueuerFunction(requisition);

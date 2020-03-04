@@ -41,6 +41,7 @@ export default {
         currentSelectedComponentChanged: (stage: any, event: any) => {
             if (stage.selectedComponent) {
                 stage.selectedComponent[event.attributeName] = event.value;
+                stage.selectedComponent.carabinaMeta.unsaved = true;
             }
         },
     },

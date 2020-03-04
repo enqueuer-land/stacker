@@ -23,11 +23,13 @@ export class ComponentFactory {
             delay: 0,
             timeout: 0,
             parallel: false,
+            ignore: false,
             requisitions: [],
             publishers: [],
             subscriptions: [],
             carabinaMeta: {
                 parent,
+                unsaved: false,
                 selected: false,
                 collapsed: false,
                 componentName: ComponentTypes.REQUISITION
@@ -45,9 +47,11 @@ export class ComponentFactory {
             type: 'HTTP',
             id: new IdCreator().create(),
             name: 'New publisher',
+            ignore: false,
             carabinaMeta: {
                 parent,
                 selected: false,
+                unsaved: false,
                 componentName: ComponentTypes.PUBLISHER
             }
         };
@@ -59,13 +63,15 @@ export class ComponentFactory {
     private createSubscription = (parent: any): any => {
         const subscription = {
             type: 'HTTP',
-            timeout: 0,
+            timeout: 3000,
             avoidable: false,
             id: new IdCreator().create(),
             name: 'New subscription',
+            ignore: false,
             carabinaMeta: {
                 parent,
                 selected: false,
+                unsaved: false,
                 componentName: ComponentTypes.SUBSCRIPTION
             }
         };

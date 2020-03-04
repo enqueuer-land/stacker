@@ -2,11 +2,12 @@
     <div id="side-bar-tree-node" class="tree-node">
         <b-card no-body class="accordion-container" style="border: none">
             <b-button v-if="componentStylish.getChildrenLength() > 0" v-b-toggle="component.id"
-                      class="accordion-button">
-                <i :class="['fas fa-caret-right requisition-tree-indicator', !collapsed && 'expanded']"></i>
+                      :class="['accordion-button requisition-tree-indicator', !collapsed && 'expanded']">
+                <i class="fas fa-caret-right"></i>
             </b-button>
             <SideBarTreeItem :component="component" @dblclick="$root.$emit('bv::toggle::collapse', component.id)"/>
-            <b-collapse :id="component.id" :class="['pl-4 py-0 px-0']" :visible="!collapsed"
+            <b-collapse :id="component.id" :class="['ml-4 py-0 px-0']" :visible="!collapsed"
+                        class="collapse-body"
                         v-if="componentStylish.getChildrenLength() > 0">
                 <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
                                  :component="requisition"></SideBarTreeNode>
@@ -35,7 +36,7 @@
         data: function () {
             return {
                 componentStylish: new ComponentStylish(this.component),
-                collapsed: this.component.carabinaMeta.collapsed,
+                collapsed: this.component.carabinaMeta.collapsed
             }
         },
         mounted() {
@@ -62,7 +63,6 @@
     .accordion-button {
         position: absolute;
         top: calc(var(--carabina-tree-node-item-height) / 2 - 10px);
-        /*top: 15px;*/
         left: 20px;
         padding: 0;
         margin: 0;
@@ -80,14 +80,18 @@
         transition: all ease 250ms;
     }
 
-    #side-bar-tree-node:hover .requisition-tree-indicator, .requisition-tree-indicator:hover {
-        filter: brightness(1);
+    .requisition-tree-indicator:hover {
         transform: rotate(45deg) scale(1);
+        filter: brightness(1);
     }
 
     .expanded {
         transform: rotate(90deg) scale(1.15);
         filter: brightness(1.15);
+    }
+
+    .collapse-body {
+        border-left: 1px solid var(--carabina-body-background-color);
     }
 
 </style>

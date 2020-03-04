@@ -1,19 +1,25 @@
 <template>
     <div id="side-bar-tree-item" :style="componentStyle">
-        <b-container fluid class="px-1 carabina-text" style="height: 100%" @click="componentSelected(component)">
+        <b-container fluid class="pl-2 pr-1 carabina-text" style="height: 100%" @click="componentSelected(component)">
             <b-row style="width: 100%; height: 100%" no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
                     <span v-if="!componentStylish.isRequisition()" class="item-name-tag"
                           :style="componentNameTagStyle">{{componentStylish.getType()}}</span>
                 </b-col>
-                <b-col cols class="align-self-center item-name" :style="componentNameStyle">
+                <b-col cols class="align-self-center item-name mr-1" :style="componentNameStyle">
                     {{component.name}}
                 </b-col>
+                <b-col cols="auto" class="align-self-center"
+                       v-if="componentStylish.isRequisition() && componentStylish.getChildrenLength() > 0">
+                    <small class="item-name-tag" style="user-select: none; font-size: 12px; filter: brightness(0.65)">
+                        {{componentStylish.getChildrenLength()}} {{componentStylish.getChildrenLength() > 1? 'items': 'item'}}
+                    </small>
+                </b-col>
                 <b-col cols="auto" class="align-self-center">
-                    <i class="fas fa-ellipsis-v px-2 pt-1 carabina-icon option-icon" style="font-size: 14px"></i>
+                    <SideBarTreeItemOptions :component="component">
+                    </SideBarTreeItemOptions>
                 </b-col>
             </b-row>
-            <div class="bottom-line"></div>
         </b-container>
     </div>
 </template>
@@ -24,9 +30,13 @@
     import '@/styles/component-tree.css';
     import {mapMutations, mapGetters} from 'vuex';
     import {ComponentStylish} from "@/components/component-stylish";
+    import SideBarTreeItemOptions from "@/views/side-bar/side-bar-tree-item-options";
 
     export default Vue.extend({
         name: 'SideBarTreeItem',
+        components: {
+            SideBarTreeItemOptions
+        },
         props: {
             component: Object
         },
@@ -48,9 +58,6 @@
         },
         computed: {
             ...mapGetters('side-bar', []),
-            componentNameTag: function () {
-                return this.componentStylish.getComponentTag();
-            },
             componentNameTagStyle: function () {
                 return this.componentStylish.componentNameTagStyle();
             },
@@ -73,17 +80,8 @@
         transition: all ease 200ms;
     }
 
-    #side-bar-tree-item:hover .option-icon {
-        color: var(--carabina-text-darker-color);
-    }
-
     #side-bar-tree-item:hover .item-name {
         color: var(--carabina-text-color);
-    }
-
-    .option-icon {
-        color: transparent;
-        transition: all 200ms ease;
     }
 
     .item-name {
