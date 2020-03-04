@@ -1,6 +1,6 @@
 <template>
-    <div id="side-bar-tree-item" :style="componentStyle">
-        <b-container fluid class="pl-2 pr-1 carabina-text" style="height: 100%" @click="componentSelected(component)">
+    <div id="side-bar-tree-item" :style="componentStyle" @click="componentSelected(component)">
+        <b-container fluid class="pl-2 pr-1 carabina-text" style="height: 100%">
             <b-row style="width: 100%; height: 100%" no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
                     <span v-if="!componentStylish.isRequisition()" class="item-name-tag"
@@ -12,7 +12,8 @@
                 <b-col cols="auto" class="align-self-center"
                        v-if="componentStylish.isRequisition() && componentStylish.getChildrenLength() > 0">
                     <small class="item-name-tag" style="user-select: none; font-size: 12px; filter: brightness(0.65)">
-                        {{componentStylish.getChildrenLength()}} {{componentStylish.getChildrenLength() > 1? 'items': 'item'}}
+                        {{componentStylish.getChildrenLength()}} {{componentStylish.getChildrenLength() > 1? 'items':
+                        'item'}}
                     </small>
                 </b-col>
                 <b-col cols="auto" class="align-self-center">
@@ -62,10 +63,10 @@
                 return this.componentStylish.componentNameTagStyle();
             },
             componentStyle: function () {
-                return this.componentStylish.componentStyle(this.selected);
+                return this.componentStylish.componentStyle();
             },
             componentNameStyle: function () {
-                return this.componentStylish.componentNameStyle(this.selected);
+                return this.componentStylish.componentNameStyle();
             }
         },
         methods: {

@@ -1,6 +1,7 @@
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentFactory} from "@/components/component-factory";
 import {ComponentTypes} from "@/components/component-types";
+import {ComponentFinder} from "@/components/ComponentFinder";
 
 export default {
     state: {
@@ -42,6 +43,13 @@ export default {
             if (stage.selectedComponent) {
                 stage.selectedComponent[event.attributeName] = event.value;
                 stage.selectedComponent.carabinaMeta.unsaved = true;
+            }
+        },
+        changeAttributeById: (stage: any, event: any) => {
+            const item = new ComponentFinder(stage.requisitions).findItem(event.id);
+            if (item) {
+                item[event.attributeName] = event.value;
+                item.carabinaMeta.unsaved = true;
             }
         },
     },

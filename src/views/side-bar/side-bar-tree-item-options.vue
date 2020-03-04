@@ -19,6 +19,8 @@
 <script>
     import Vue from 'vue';
     import '@/styles/icons.css';
+    import {mapMutations} from 'vuex';
+    import {component} from "../../../external";
 
     export default Vue.extend({
         name: 'SideBarTreeItemOptions',
@@ -36,7 +38,11 @@
                     {
                         name: 'Ignore',
                         iconClass: 'fas fa-ban',
-                        action: () => console.log('ignore')
+                        action: () => this.changeAttributeById({
+                            id: this.component.id,
+                            attributeName: 'ignore',
+                            value: !this.component.ignore
+                        })
                     },
                     {
                         name: 'Delete',
@@ -46,15 +52,13 @@
                 ]
             }
         },
-        computed: {},
-        methods: {}
+        methods: {
+            ...mapMutations('side-bar', ['changeAttributeById']),
+        }
 
     });
 </script>
 <style type="text/css" scoped>
-    #side-bar-tree-item-options {
-    }
-
     #side-bar-tree-item:hover .option-icon {
         color: var(--carabina-text-darker-color);
     }

@@ -25,18 +25,16 @@ export class ComponentStylish {
             this.component.subscriptions.length;
     };
 
-    public getComponentTag = (): string => {
-        return this.component.carabinaMeta.componentName
-            .substr(0, 3)
-            .toUpperCase();
-
-    };
-
     public componentNameTagStyle = (): any => {
-        return {
+        const style: any = {
             'user-select': 'none',
             color: this.getComponentColor()
         };
+        if (this.component.ignore) {
+            style['text-decoration'] = 'line-through';
+        }
+
+        return style;
     };
 
     public getComponentColor = (): any => {
@@ -50,20 +48,23 @@ export class ComponentStylish {
         }
     };
 
-    public componentStyle = (selected: boolean): any => {
+    public componentStyle = (): any => {
         const style: any = {};
-        if (selected) {
+        if (this.component.carabinaMeta.selected) {
             style['background-color'] = 'var(--carabina-header-background-color)';
         }
         return style;
     };
 
-    public componentNameStyle = (selected: boolean): any => {
+    public componentNameStyle = (): any => {
         const style: any = {
             'user-select': 'none'
         };
-        if (selected) {
+        if (this.component.carabinaMeta.selected) {
             style['color'] = 'var(--carabina-text-color)';
+        }
+        if (this.component.ignore) {
+            style['text-decoration'] = 'line-through';
         }
         return style;
     };

@@ -72,6 +72,9 @@
     }
 
     .requisition-tree-indicator {
+        position: absolute;
+        top: 8px;
+        left: 20px;
         font-size: 20px;
         text-align: center;
         color: var(--carabina-requisition-color);
