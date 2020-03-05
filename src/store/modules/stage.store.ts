@@ -20,9 +20,9 @@ export default {
             } else if (msg.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
                 requisition = {timeout: -1, subscriptions: [msg], name: msg.name, id: new IdCreator().create()};
             }
-            const ruEnqueuerFunction = remote.getGlobal('runEnqueuer');
-            const responses = await ruEnqueuerFunction(requisition);
-            commit('updateResponse', responses)
+            //runEnqueuer
+            remote.getGlobal('eventEmitter').emit('runEnqueuer', requisition);
+            remote.getGlobal('eventEmitter').on('runEnqueuerReply', (responses: any) => commit('updateResponse', responses));
         }
     },
     getters: {

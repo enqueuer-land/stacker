@@ -1,9 +1,10 @@
 'use strict';
 
+import '@/menu-template'
+import {EventEmitter} from 'events';
+import EnqueuerRunner from "@/enqueuer-runner";
 import {app, protocol, BrowserWindow} from 'electron'
 import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
-import EnqueuerRunner from "@/enqueuer-runner";
-import * as fs from "fs";
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -37,7 +38,6 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     });
-
 }
 
 // Quit when all windows are closed.
@@ -87,8 +87,7 @@ app.on('ready', async () => {
     }
 );
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-global.fs = fs;
+global.eventEmitter = new EventEmitter();
 
 new EnqueuerRunner().run();

@@ -7,7 +7,7 @@
                         label="Delay (ms)"
                         label-class="mb-0"
                         label-for="delay">
-                    <b-form-input id="delay" placeholder="Enter delay"
+                    <b-form-input id="delay" placeholder="Delay"
                                   :value="component.delay"
                                   @input="(value) => $parent.updateAttribute('delay', value)"
                                   class="text-input carabina-text" lazy>
@@ -20,7 +20,7 @@
                         label="Timeout (ms)"
                         label-class="mb-0"
                         label-for="timeout">
-                    <b-form-input id="timeout" placeholder="Enter timeout"
+                    <b-form-input id="timeout" placeholder="Timeout"
                                   :value="component.timeout"
                                   @input="(value) => $parent.updateAttribute('timeout', value)"
                                   class="text-input carabina-text" lazy>
@@ -35,7 +35,7 @@
                         label="Iterations"
                         label-class="mb-0"
                         label-for="iterations">
-                    <b-form-input id="iterations" placeholder="Enter iterations"
+                    <b-form-input id="iterations" placeholder="Iterations"
                                   :value="component.iterations"
                                   @input="(value) => $parent.updateAttribute('iterations', value)"
                                   class="text-input carabina-text" lazy>

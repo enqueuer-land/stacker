@@ -1,5 +1,6 @@
-import requireFromString from "require-from-string";
-import {ComponentTypes} from "@/components/component-types";
+import requireFromString from 'require-from-string';
+import {ComponentTypes} from '@/components/component-types';
+import * as httpPublisher from '@/plugins/http-publisher';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -31,7 +32,8 @@ export default class PluginsLoader {
     public static getInstance(): PluginsLoader {
         if (!PluginsLoader.instance) {
             const instance = new PluginsLoader();
-            instance.loadPluginsFromFolders('./plugins', os.homedir() + '/.stacker/plugins');
+            instance.loadPluginsFromFolders('./plugins', os.homedir() + '/.nqr/stacker/plugins');
+            instance.loadPlugin(httpPublisher.default);
             PluginsLoader.instance = instance;
         }
         return PluginsLoader.instance;
@@ -61,17 +63,25 @@ export default class PluginsLoader {
     private loadPluginsFromFolders(...directories: string[]): void {
         directories.forEach(directory => {
             console.log(`Reading plugins from ${directory}`);
-            fs.readdirSync(directory)
-                .forEach(filename => {
-                    try {
-                        const file = fs.readFileSync(path.join(directory, filename)).toString();
-                        const plugin = requireFromString(file);
-                        this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
-                        this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
-                    } catch (e) {
-                        console.error(e);
-                    }
-                });
+            try {
+                fs.readdirSync(directory)
+                    .forEach(filename => {
+                        try {
+                            const file = fs.readFileSync(path.join(directory, filename)).toString();
+                            const plugin = requireFromString(file);
+                            this.loadPlugin(plugin);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    });
+            } catch (e) {
+                console.log(e);
+            }
         });
+    }
+
+    private loadPlugin(plugin: any) {
+        this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
+        this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
     }
 }

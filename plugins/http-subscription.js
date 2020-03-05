@@ -32,7 +32,7 @@ const plugin = {
                     {value: 'POST'},
                     {value: 'PUT'},
                     {value: 'DELETE'}]"></dropdown-selector>
-                                <b-form-input placeholder="Enter endpoint" type="text"
+                                <b-form-input placeholder="Endpoint" type="text"
                                               @input="(value) => $parent.updateAttribute('endpoint', value)"
                                               :value="component.endpoint"
                                               class="text-input carabina-text" trim>

@@ -14,7 +14,7 @@
                                 :availableList="protocolsList"></DropdownSelector>
                     </template>
                     <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
-                    <b-form-input id="component-name" placeholder="Enter requisition name" type="text"
+                    <b-form-input id="component-name" placeholder="Component name" type="text"
                                   @input="(value) => $parent.updateAttribute('name', value)"
                                   :value="component.name"
                                   class="text-input carabina-text">

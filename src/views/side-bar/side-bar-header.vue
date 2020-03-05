@@ -27,7 +27,7 @@
         <b-row class="m-0 mt-1" style="width: 100%" no-gutters>
             <b-col cols class="align-self-center">
                 <div class="p-1 px-2">
-                    <b-form-input placeholder="Enter filter" type="text"
+                    <b-form-input placeholder="Filter" type="text"
                                   @input="filterTextChanged"
                                   :value="textFilter" class="text-input carabina-text">
                     </b-form-input>
@@ -76,7 +76,7 @@
     }
 
     .btn-creators:hover {
-        color: var(--carabina-text-darker-color);
+        color: var(--carabina-header-background-lighter-color);
     }
 
     .btn-creators:active, .btn-creators:focus {

@@ -1,9 +1,9 @@
-//TODO test it
 import * as fs from 'fs';
 import {remote} from 'electron';
 import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
 
+//TODO test it
 export class ComponentSaver {
 
     public save(item: any) {

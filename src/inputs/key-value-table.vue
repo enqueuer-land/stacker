@@ -5,7 +5,7 @@
                :key="pair.id" id="key-value-table">
             <b-col cols class="align-self-center pl-2">
                 <b-form-group class="mb-2">
-                    <b-form-input placeholder="Enter key"
+                    <b-form-input placeholder="Key"
                                   style="text-align: right"
                                   :value="pair.key"
                                   @blur="detectAutoDeleteTable"
@@ -16,7 +16,7 @@
             </b-col>
             <b-col cols class="align-self-center px-2">
                 <b-form-group class="mb-2">
-                    <b-form-input placeholder="Enter value"
+                    <b-form-input placeholder="Value"
                                   :value="pair.value"
                                   @input="(value) => onValueChanged(value, index)"
                                   class="text-input carabina-text" lazy>

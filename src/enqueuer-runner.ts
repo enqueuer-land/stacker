@@ -1,5 +1,4 @@
 import {ChildProcess, spawn} from 'child_process';
-import {ipcMain} from 'electron';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 
 type ResponseMap = {
@@ -17,16 +16,14 @@ export default class EnqueuerRunner {
         try {
             this.enqueuerProcess = spawn("enqueuer", {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
-            if (ipcMain) {
-                ipcMain.on('runRequisition',
-                    async (event, requisition: InputRequisitionModel) => event
-                        .reply('runRequisitionReply', await this.sendRequisition(requisition)));
-            }
-
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
             this.enqueuerProcess.send({event: 'GET_ASSERTERS'});
             // @ts-ignore
-            global.runEnqueuer = (requisition: InputRequisitionModel) => this.sendRequisition(requisition);
+            global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
+                const reply = await this.sendRequisition(requisition);
+                // @ts-ignore
+                global.eventEmitter.emit('runEnqueuerReply', reply);
+            });
         } catch (e) {
             console.error(`Error running enqueuer sub process`);
             throw e;

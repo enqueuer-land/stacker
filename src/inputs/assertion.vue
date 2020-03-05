@@ -7,7 +7,7 @@
                         :defaultSelection="selectedAssertion"
                         :availableList="possibleAssertions">
                 </dropdown-selector>
-                <b-form-input placeholder="Enter actual value" type="text"
+                <b-form-input placeholder="Actual value" type="text"
                               @blur="(event) => updateActualValue(event.target.value)"
                               :value="actualValue"
                               class="text-input carabina-text" trim>
@@ -17,7 +17,7 @@
                                        :defaultSelection="selectedCriterium"
                                        @select="value => criteriumChanged(value)"
                                        :availableList="selectedAssertion.criteria"></dropdown-selector>
-                    <b-form-input placeholder="Enter expected value" type="text"
+                    <b-form-input placeholder="Expected value" type="text"
                                   @blur="(event) => updateExpectedValue(event.target.value)"
                                   :value="expectedValue"
                                   class="text-input carabina-text" trim>
