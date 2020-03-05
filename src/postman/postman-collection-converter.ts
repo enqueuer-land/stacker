@@ -1,9 +1,10 @@
 import * as postman from './postman-types';
 import {PostmanEventExtractor} from './postman-event-extractor';
-import {InputRequisitionModel, InputPublisherModel, InputSubscriptionModel, Event} from 'enqueuer';
+import {Event, InputPublisherModel, InputRequisitionModel, InputSubscriptionModel} from 'enqueuer';
 
-export class EnqueuerRequisitionMapper {
+export class PostmanCollectionConverter {
     public convert(postmanCollection: postman.Collection): InputRequisitionModel {
+        console.log(postmanCollection);
         const requisition: any = {
             name: postmanCollection.info.name,
             id: postmanCollection.info._postman_id,
@@ -19,7 +20,6 @@ export class EnqueuerRequisitionMapper {
         if (onFinish !== undefined) {
             requisition.onFinish = onFinish;
         }
-        // @ts-ignore
         return requisition;
     }
 
@@ -44,7 +44,7 @@ export class EnqueuerRequisitionMapper {
     }
 
     private createRequisitions(postmanCollection: postman.Collection | postman.Folder): InputRequisitionModel[] {
-        const requisitions: InputRequisitionModel[] = postmanCollection
+        return postmanCollection
             .item
             .map((item: postman.Item | postman.Folder) => {
                 if ((item as any).request === undefined) {
@@ -53,11 +53,9 @@ export class EnqueuerRequisitionMapper {
                     return this.createItem(item as postman.Item);
                 }
             });
-        return requisitions;
     }
 
     private createItem(item: postman.Item): InputRequisitionModel {
-        // @ts-ignore
         const requisition: any = {
             name: item.name,
             subscriptions: (item.response || []).map(response => this.createSubscription(response)),
@@ -74,10 +72,10 @@ export class EnqueuerRequisitionMapper {
 
     private createPublisher(request: postman.Request, onInit?: Event, onMessageReceived?: Event): InputPublisherModel {
         const publisher: any = {
-            type: request.url.protocol,
+            type: request.url.protocol || "HTTP",
             url: request.url.raw,
             method: request.method,
-            payload: request.body.raw,
+            payload: request.body ? request.body.raw : '',
             headers: this.createHeaders(request.header),
         };
 

@@ -3,7 +3,7 @@ import * as postman from './postman-types';
 
 type EventExtract = {
     event?: postman.Event[];
-    variable?: postman.Variable[]
+    variable?: postman.Variable[];
 };
 
 export class PostmanEventExtractor {
@@ -14,7 +14,7 @@ export class PostmanEventExtractor {
     }
 
     public extractOnInitEvent(): Event | undefined {
-        let event: any = this.extractEvent('prerequest');
+        let event = this.extractEvent('prerequest');
         if (this.element.variable) {
             if (!event) {
                 event = {};
@@ -39,12 +39,10 @@ export class PostmanEventExtractor {
             const event = this.element.event
                 .find((event: postman.Event) => event.listen === eventName, {});
             if (event && Array.isArray(event.script.exec) && event.script.exec.length > 0) {
-                // @ts-ignore
                 return {
                     script: event.script.exec.join('; ')
                 };
             }
-
         }
     }
 

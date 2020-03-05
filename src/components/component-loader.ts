@@ -5,6 +5,7 @@ import * as yaml from 'yamljs';
 import {remote} from 'electron';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from "@/components/component-factory";
+import {PostmanCollectionConverter} from "@/postman/postman-collection-converter";
 
 
 //TODO test it
@@ -12,19 +13,25 @@ export class ComponentLoader {
 
     public enable() {
         remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
+        remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());
     }
 
-    public static loadComponents(): void {
-        (ComponentLoader.pickFiles() || [])
+    private static importPostmanCollection(): void {
+        (ComponentLoader.pickFiles(['openFile', 'multiSelections']) || [])
+            .map(file => ComponentLoader.loadFromPostman(file))
+            .filter(file => file)
+            .forEach(requisition => store.commit('side-bar/addRequisition', requisition));
+    }
+
+    private static loadComponents(): void {
+        (ComponentLoader.pickFiles(['openFile', 'openDirectory', 'multiSelections']) || [])
             .map(file => ComponentLoader.load(file))
             .filter(file => file)
             .forEach(requisition => store.commit('side-bar/addRequisition', requisition));
     }
 
-    private static pickFiles(): string[] | undefined {
-        return remote.dialog.showOpenDialogSync({
-            properties: ['openFile', 'openDirectory', 'multiSelections']
-        });
+    private static pickFiles(properties: any): string[] | undefined {
+        return remote.dialog.showOpenDialogSync({properties});
     }
 
     private static load(file: string) {
@@ -37,6 +44,17 @@ export class ComponentLoader {
 
     private static loadDirectory(dirname: string) {
         return fs.readdirSync(dirname).map(file => ComponentLoader.loadFile(path.join(dirname, file)));
+    }
+
+    private static loadFromPostman(file: string) {
+        try {
+            const fileContent = JSON.parse(fs.readFileSync(file).toString());
+            const converted = new PostmanCollectionConverter().convert(fileContent as any);
+            return ComponentLoader.loadRequisition(converted);
+        } catch (e) {
+            console.log(e);
+        }
+        return null;
     }
 
     private static loadFile(file: string) {
