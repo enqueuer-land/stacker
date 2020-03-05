@@ -1,7 +1,7 @@
-import {InputRequisitionModel} from "enqueuer";
-import {ipcRenderer, remote} from "electron";
-import {ComponentTypes} from "@/components/component-types";
-import {IdCreator} from "@/components/id-creator";
+import {InputRequisitionModel} from 'enqueuer';
+import {remote} from 'electron';
+import {ComponentTypes} from '@/components/component-types';
+import {IdCreator} from '@/components/id-creator';
 
 export default {
     state: {

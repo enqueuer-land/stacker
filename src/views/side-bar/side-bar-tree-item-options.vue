@@ -20,7 +20,6 @@
     import Vue from 'vue';
     import '@/styles/icons.css';
     import {mapMutations} from 'vuex';
-    import {component} from "../../../external";
 
     export default Vue.extend({
         name: 'SideBarTreeItemOptions',
@@ -33,15 +32,20 @@
                     {
                         name: 'Save',
                         iconClass: 'fas fa-save',
-                        action: () => console.log('save hit')
+                        action: (event) => {
+                            event.stopPropagation();
+                            this.saveComponent({
+                                component: this.component
+                            });
+                        }
                     },
                     {
                         name: 'Ignore',
                         iconClass: 'fas fa-ban',
                         action: (event) => {
                             event.stopPropagation();
-                            this.changeAttributeById({
-                                id: this.component.id,
+                            this.changeAttributeOfComponent({
+                                component: this.component,
                                 attributeName: 'ignore',
                                 value: !this.component.ignore
                             });
@@ -53,7 +57,7 @@
                         action: (event) => {
                             event.stopPropagation();
                             this.deleteComponentById({
-                                id: this.component.id
+                                component: this.component
                             });
                         }
                     },
@@ -61,7 +65,7 @@
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeById', 'deleteComponentById']),
+            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'deleteComponentById', 'saveComponent']),
         }
 
     });

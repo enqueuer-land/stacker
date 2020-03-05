@@ -1,7 +1,7 @@
 import {InputRequisitionModel} from 'enqueuer';
-import {ComponentFactory} from "@/components/component-factory";
-import {ComponentTypes} from "@/components/component-types";
-import {ComponentFinder} from "@/components/ComponentFinder";
+import {ComponentFactory} from '@/components/component-factory';
+import {ComponentTypes} from '@/components/component-types';
+import {ComponentSaver} from '@/components/component-saver';
 
 export default {
     state: {
@@ -45,39 +45,35 @@ export default {
                 stage.selectedComponent.carabinaMeta.unsaved = true;
             }
         },
-        changeAttributeById: (stage: any, event: any) => {
-            const item = new ComponentFinder(stage.requisitions).findItem(event.id);
-            if (item) {
-                item[event.attributeName] = event.value;
-                item.carabinaMeta.unsaved = true;
-            }
+        changeAttributeOfComponent: (stage: any, event: any) => {
+            event.component[event.attributeName] = event.value;
+            event.component.carabinaMeta.unsaved = true;
+        },
+        saveComponent: (stage: any, event: any) => {
+            new ComponentSaver().save(event.component);
         },
         deleteComponentById: (stage: any, event: any) => {
-            const item = new ComponentFinder(stage.requisitions).findItem(event.id);
-            stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== item.id);
-            if (item) {
-                if (stage.selectedComponent) {
-                    if (stage.selectedComponent.id === event.id) {
-                        stage.selectedComponent = null;
-                    }
-                }
-                const parent = item.carabinaMeta.parent;
-                if (parent) {
-                    parent.requisitions = parent.requisitions.filter((requisition: any) => requisition.id !== item.id);
-                    parent.publishers = parent.publishers.filter((publisher: any) => publisher.id !== item.id);
-                    parent.subscriptions = parent.subscriptions.filter((subscription: any) => subscription.id !== item.id);
-                }
-                if (item.subscriptions) {
-                    item.subscriptions = item.subscriptions.filter((subscription: any) => subscription.id !== item.id);
-                }
-                if (item.publishers) {
-                    item.publishers = item.publishers.filter((publisher: any) => publisher.id !== item.id);
-                }
-                if (item.requisitions) {
-                    item.requisitions = item.requisitions.filter((requisition: any) => requisition.id !== item.id);
+            stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
+            if (stage.selectedComponent) {
+                if (stage.selectedComponent.id === event.id) {
+                    stage.selectedComponent = null;
                 }
             }
-
+            const parent = event.component.carabinaMeta.parent;
+            if (parent) {
+                parent.requisitions = parent.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
+                parent.publishers = parent.publishers.filter((publisher: any) => publisher.id !== event.component.id);
+                parent.subscriptions = parent.subscriptions.filter((subscription: any) => subscription.id !== event.component.id);
+            }
+            if (event.component.subscriptions) {
+                event.component.subscriptions = event.component.subscriptions.filter((subscription: any) => subscription.id !== event.component.id);
+            }
+            if (event.component.publishers) {
+                event.component.publishers = event.component.publishers.filter((publisher: any) => publisher.id !== event.component.id);
+            }
+            if (event.component.requisitions) {
+                event.component.requisitions = event.component.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
+            }
         },
     },
     getters: {

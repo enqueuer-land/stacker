@@ -1,5 +1,5 @@
-import {ComponentTypes} from "@/components/component-types";
-import {IdCreator} from "@/components/id-creator";
+import {ComponentTypes} from '@/components/component-types';
+import {IdCreator} from '@/components/id-creator';
 
 //TODO test it
 export class ComponentFactory {
@@ -21,7 +21,7 @@ export class ComponentFactory {
             name: 'New requisition',
             iterations: 1,
             delay: 0,
-            timeout: 0,
+            timeout: 5000,
             parallel: false,
             ignore: false,
             requisitions: [],
@@ -64,6 +64,8 @@ export class ComponentFactory {
         const subscription = {
             type: 'HTTP',
             timeout: 3000,
+            port: 80,
+            endpoint: '/',
             avoidable: false,
             id: new IdCreator().create(),
             name: 'New subscription',
