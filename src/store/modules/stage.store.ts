@@ -2,6 +2,18 @@ import {InputRequisitionModel} from 'enqueuer';
 import {remote} from 'electron';
 import {ComponentTypes} from '@/components/component-types';
 import {IdCreator} from '@/components/id-creator';
+import {ComponentDecycler} from "@/components/component-decycler";
+
+const prepareRequisition = (msg: any) => {
+    const componentName = msg.carabinaMeta.componentName;
+    let decycled = new ComponentDecycler().decycle(msg);
+    if (componentName === ComponentTypes.PUBLISHER) {
+        decycled = {publishers: [decycled], name: decycled.name, id: new IdCreator().create()};
+    } else if (componentName === ComponentTypes.SUBSCRIPTION) {
+        decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
+    }
+    return decycled;
+};
 
 export default {
     state: {
@@ -13,16 +25,11 @@ export default {
         },
     },
     actions: {
-        runRequisition: async ({state, commit}: any, msg: InputRequisitionModel) => {
-            let requisition: any = msg;
-            if (msg.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
-                requisition = {publishers: [msg], name: msg.name, id: new IdCreator().create()};
-            } else if (msg.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
-                requisition = {timeout: -1, subscriptions: [msg], name: msg.name, id: new IdCreator().create()};
-            }
-            //runEnqueuer
-            remote.getGlobal('eventEmitter').emit('runEnqueuer', requisition);
-            remote.getGlobal('eventEmitter').on('runEnqueuerReply', (responses: any) => commit('updateResponse', responses));
+        runComponent: async ({state, commit}: any, msg: InputRequisitionModel) => {
+            const decycled = prepareRequisition(msg);
+            console.log(JSON.stringify(decycled));
+            remote.getGlobal('eventEmitter').emit('runEnqueuer', decycled);
+            remote.getGlobal('eventEmitter').once('runEnqueuerReply', (responses: any) => commit('updateResponse', responses));
         }
     },
     getters: {

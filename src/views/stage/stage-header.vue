@@ -1,3 +1,4 @@
+import {remote} from "electron";
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
         <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">
@@ -22,7 +23,7 @@
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-1 run-button-container">
-                <b-button class="run-button" :style="runButtonStyle" @click="runRequisition(component)">Run
+                <b-button class="run-button" :style="runButtonStyle" @click="runComponent(component)">Run
                 </b-button>
             </b-col>
         </b-row>
@@ -31,10 +32,11 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import {remote} from 'electron';
     import {mapActions, mapGetters} from 'vuex'
-    import {ComponentStylish} from "@/components/component-stylish";
     import PluginsLoader from "@/plugins/plugins-loader";
     import {ComponentTypes} from "@/components/component-types";
+    import {ComponentStylish} from "@/components/component-stylish";
 
     export default Vue.extend({
         name: 'StageHeader',
@@ -51,8 +53,11 @@
                 subscriptionProtocols
             }
         },
+        mounted() {
+            remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => this.runComponent(this.component));
+        },
         methods: {
-            ...mapActions('stage', ['runRequisition'])
+            ...mapActions('stage', ['runComponent'])
         },
         computed: {
             ...mapGetters('side-bar', ['breadcrumbItems']),

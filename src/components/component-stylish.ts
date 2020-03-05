@@ -16,7 +16,7 @@ export class ComponentStylish {
         if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
             return '';
         }
-        return this.component.type.substr(0, 7);
+        return this.component.type.substr(0, 7).toUpperCase();
     };
 
     public getChildrenLength = (): number => {

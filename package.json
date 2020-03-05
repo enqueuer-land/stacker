@@ -16,6 +16,7 @@
   "main": "background.js",
   "dependencies": {
     "@types/require-from-string": "^1.2.0",
+    "@types/yamljs": "^0.2.30",
     "bootstrap-vue": "^2.4.0",
     "enqueuer": "file:../enqueuer-land/enqueuer",
     "require-from-string": "^2.0.2",
@@ -24,7 +25,8 @@
     "vue-class-component": "^7.2.2",
     "vue-codemirror": "^4.0.6",
     "vue-property-decorator": "^8.3.0",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",

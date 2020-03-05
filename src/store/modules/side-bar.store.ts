@@ -18,6 +18,7 @@ export default {
             stage.selectedComponent.carabinaMeta.selected = true;
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
+        addRequisition: (stage: any, component: any) => stage.requisitions.push(component),
         createNewComponent: (stage: any, payload: any) => {
             if (payload.componentType === ComponentTypes.REQUISITION) {
                 const component = new ComponentFactory().createRequisition(payload.parent);

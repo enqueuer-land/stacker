@@ -75,8 +75,8 @@
         padding-right: 6px;
     }
 
-    .btn-creators:hover {
-        color: var(--carabina-header-background-lighter-color);
+    .dropdown:hover .btn-creators {
+        filter: brightness(1.1);
     }
 
     .btn-creators:active, .btn-creators:focus {

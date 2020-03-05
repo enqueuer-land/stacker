@@ -3,7 +3,7 @@ import {Menu, shell} from 'electron'
 const isMac = process.platform === 'darwin';
 
 const template = [
-    { role: 'appMenu' },
+    {role: 'appMenu'},
     // ...(isMac ? [{
     //     label: 'Stacker',
     //     submenu: [
@@ -23,7 +23,7 @@ const template = [
         submenu: [
             {
                 label: 'New...',
-                role: 'new',
+                accelerator: 'CommandOrControl+N',
                 submenu: [
                     {
                         label: 'Requisition',
@@ -44,22 +44,28 @@ const template = [
             },
             {
                 label: 'Open',
-                role: 'open',
-                accelerator: 'CommandOrControl+O'
+                accelerator: 'CommandOrControl+O',
+                // @ts-ignore
+                click: () => global.eventEmitter.emit('openComponent'),
             },
             {type: 'separator'},
             {
                 label: 'Import...',
                 submenu: [
                     {
-                        label: 'From Postman',
+                        label: 'Postman collection',
                         // @ts-ignore
-                        click: () => global.eventEmitter.emit('importFromPostman'),
+                        click: () => global.eventEmitter.emit('importPostmanCollection'),
+                    },
+                    {
+                        label: 'Postman environment',
+                        // @ts-ignore
+                        click: () => global.eventEmitter.emit('importPostmanEnvironment'),
                     }
                 ]
             },
-            {type: 'separator'},
-            {label: 'Save All'},
+            // {type: 'separator'},
+            // {label: 'Save All'},
             {type: 'separator'},
             {role: 'quit'},
             isMac ? {role: 'close'} : {role: 'quit'}
@@ -67,6 +73,18 @@ const template = [
     },
     {role: 'editMenu'},
     {role: 'viewMenu'},
+    {
+        label: 'Run',
+        submenu: [
+            {
+                label: 'Run current component',
+                accelerator: 'CmdOrCtrl+Return',
+                // @ts-ignore
+                click: () => global.eventEmitter.emit('runCurrentlySelectedComponent'),
+            },
+
+        ]
+    },
     {role: 'windowMenu'},
     {
         role: 'help',
