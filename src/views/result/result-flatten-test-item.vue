@@ -8,12 +8,11 @@
                    style="color: var(--carabina-passing-test-color)"></i>
                 <i v-else class="fas fa-times  carabina-icon" style="color: var(--carabina-failing-test-color)"></i>
             </b-col>
-            <b-col class="align-self-center px-1 col-10">
+            <b-col class="align-self-center px-1 col-10" @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
                 <b-breadcrumb class="m-0 p-1 carabina-text" :style="breadcrumbStyle"
                               :items="test.hierarchy.map(hierarchy => hierarchy.name).filter((name, index, vec) => !collapsed ? true : (vec.length - index <= 2 ))">
                 </b-breadcrumb>
-                <div class="pl-1 pt-1 carabina-text" :style="textStyle"
-                     @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
+                <div class="pl-1 pt-1 carabina-text" :style="textStyle">
                     {{test.name || "Skipped"}}
                 </div>
                 <b-collapse :visible="!collapsed" :id="test.id" v-if="test.description"

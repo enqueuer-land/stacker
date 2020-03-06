@@ -3,7 +3,7 @@
         <template v-if="selectedComponent !== null">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
-            <div class="pt-3" style="overflow-y: scroll; height: var(--carabina-body-size)">
+            <div class="pt-3" id="body-container">
                 <Hooks class="mb-4" :component="selectedComponent" :hooks="hooks"></Hooks>
                 <keep-alive>
                     <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'"
@@ -19,6 +19,7 @@
 
 <script>
     import Vue from 'vue';
+    import '@/styles/scrollbar.css';
     import {mapGetters, mapMutations} from 'vuex';
     import StageFooter from '@/views/stage/stage-footer'
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
@@ -55,4 +56,9 @@
 </script>
 
 <style scoped>
+    #body-container {
+        overflow-y: scroll;
+        background-color: var(--carabina-header-background-darker-color);
+        height: var(--carabina-body-size);
+    }
 </style>

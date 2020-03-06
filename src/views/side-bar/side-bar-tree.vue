@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid id="side-bar-tree" class="p-0 m-0" style="overflow-y: scroll; width: 100%; height: 100%">
+    <b-container fluid id="side-bar-tree" class="p-0 m-0">
         <div v-for="requisition in filteredRequisitions" :key="requisition.id">
             <SideBarTreeNode :component="requisition"></SideBarTreeNode>
         </div>

@@ -18,6 +18,8 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true,
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
+        title: 'Stacker',
+        frame: false,
         width: 1600,
         height: 1000,
         webPreferences: {

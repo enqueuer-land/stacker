@@ -6,6 +6,7 @@
 </template>
 <script>
     import Vue from 'vue';
+    import '@/styles/scrollbar.css';
     import ResultFlattenTestItem from '@/views/result/result-flatten-test-item'
 
     export default Vue.extend({

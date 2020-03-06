@@ -9,7 +9,7 @@
                               class="text-input carabina-text">
                 </b-form-input>
             </b-col>
-            <template v-if="environment.role !== 'none'">
+            <template>
                 <b-col v-for="(actionIcon, index) in actionIcons" cols="auto" :key="index"
                        class="pl-4 align-self-center env-mgmt-button"
                        @click="actionIcon.action">

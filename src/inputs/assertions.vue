@@ -30,6 +30,13 @@
                 this.$emit('change', this.assertions);
                 this.needsToRemoveRow();
             },
+            needsToRemoveRow: function () {
+                this.assertions = this.assertions
+                    .filter((assertion, index) => (Object.values(assertion).some(value => value !== '') &&
+                        Object.keys(assertion).length > 0) ||
+                        index === this.assertions.length - 1);
+                this.needsToAddRow();
+            },
             needsToAddRow: function () {
                 console.log('needsToAddRow: ' + JSON.stringify(this.assertions));
                 if (this.assertions.every(assertion =>
@@ -38,14 +45,8 @@
                     this.assertions.push({});
                 }
             },
-            needsToRemoveRow: function () {
-                this.assertions = this.assertions
-                    .filter((assertion, index) => (Object.values(assertion).some(value => value !== '') &&
-                        Object.keys(assertion).length > 0) ||
-                        index === this.assertions.length - 1);
-                this.needsToAddRow();
-            },
             onAssertionsChange: function (index, value) {
+                console.log(value);
                 this.$set(this.assertions, index, value);
                 this.emit();
             },

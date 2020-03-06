@@ -27,6 +27,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/icons.css';
+    import '@/styles/scrollbar.css';
     import '@/styles/dimensions.css';
     import '@/styles/component-tree.css';
     import {mapMutations, mapGetters} from 'vuex';
@@ -86,9 +87,9 @@
     }
 
     .item-name {
-        overflow-y: scroll;
-        overflow-x: auto;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .bottom-line {

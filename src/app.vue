@@ -1,5 +1,5 @@
 <template>
-    <div id="app" style="height: 100vh">
+    <div id="app">
         <Main></Main>
     </div>
 </template>

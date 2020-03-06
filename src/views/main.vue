@@ -1,7 +1,7 @@
 <template>
-    <div style="height: 100vh; background-color: var(--carabina-header-background-darker-color)">
-        <NavBar class="mb-1 p-0"></NavBar>
-        <div class="wrapper" style="display: flex; height: 100%;">
+    <div style="height: 100vh; background-color: var(--carabina-header-background-darker-color);">
+        <NavBar class="m-0 p-0" style="height: var(--carabina-nav-bar-size)"></NavBar>
+        <div class="wrapper" style="display: flex; height: calc(100% - var(--carabina-nav-bar-size))">
             <div id="splitter-side-bar">
                 <SideBar></SideBar>
             </div>
@@ -40,6 +40,7 @@
                 gutterStyle: () => ({
                     position: 'relative',
                     width: '3px',
+                    // height: '100%',
                     cursor: 'col-resize',
                     'background-color': 'var(--carabina-body-background-color)'
                 })
