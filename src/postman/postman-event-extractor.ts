@@ -30,10 +30,6 @@ export class PostmanEventExtractor {
         return this.extractEvent('test');
     }
 
-    public extractOnFinishEvent(): Event | undefined {
-        return this.extractEvent('test');
-    }
-
     private extractEvent(eventName: string): Event | undefined {
         if (this.element.event) {
             const event = this.element.event

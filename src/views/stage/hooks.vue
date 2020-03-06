@@ -67,7 +67,7 @@
                     const componentEvent = this.component[name];
                     if (componentEvent) {
                         const scriptCondition = componentEvent.script !== '';
-                        const assertionsCondition = componentEvent.assertions.length > 0 &&
+                        const assertionsCondition = componentEvent.assertions && componentEvent.assertions.length > 0 &&
                             componentEvent.assertions.some(assertion => Object.values(assertion).some(value => value.length > 0) ||
                                 Object.keys(assertion).length > 0);
                         const storeCondition = Object.keys(componentEvent.store || {}).some(key => key !== '') && Object.keys(componentEvent.store || {}).length > 0;

@@ -1,76 +1,43 @@
-import * as postman from './postman-types';
+import {Collection, Folder, Item, Request, Response, Header} from './postman-types';
 import {PostmanEventExtractor} from './postman-event-extractor';
 import {Event, InputPublisherModel, InputRequisitionModel, InputSubscriptionModel} from 'enqueuer';
 
 export class PostmanCollectionConverter {
-    public convert(postmanCollection: postman.Collection): InputRequisitionModel {
-        console.log(postmanCollection);
-        const requisition: any = {
-            name: postmanCollection.info.name,
-            id: postmanCollection.info._postman_id,
-            subscriptions: [],
-            publishers: [],
-            requisitions: this.createRequisitions(postmanCollection)
-        };
-        const onInit = new PostmanEventExtractor(postmanCollection).extractOnInitEvent();
-        if (onInit !== undefined) {
-            requisition.onInit = onInit;
-        }
-        const onFinish = new PostmanEventExtractor(postmanCollection).extractOnFinishEvent();
-        if (onFinish !== undefined) {
-            requisition.onFinish = onFinish;
-        }
+    public convert(postmanCollection: Collection): InputRequisitionModel {
+        const requisition = this.createRequisition(postmanCollection.item, postmanCollection.info.name);
+        console.log(requisition);
         return requisition;
     }
 
-    private createFolder(folder: postman.Folder): InputRequisitionModel {
-        const result: any = {
-            name: folder.name,
+    private createRequisition(items: (Item | Folder)[], name: string) {
+        const requisitions: any = {
+            name,
             subscriptions: [],
             publishers: [],
-            requisitions: this.createRequisitions(folder)
-        };
-        const onInit = new PostmanEventExtractor(folder).extractOnInitEvent();
-        if (onInit !== undefined) {
-            result.onInit = onInit;
-        }
-        const onFinish = new PostmanEventExtractor(folder).extractOnFinishEvent();
-        if (onInit !== undefined) {
-            result.onFinish = onFinish;
-        }
-
-        return result;
-
-    }
-
-    private createRequisitions(postmanCollection: postman.Collection | postman.Folder): InputRequisitionModel[] {
-        return postmanCollection
-            .item
-            .map((item: postman.Item | postman.Folder) => {
-                if ((item as any).request === undefined) {
-                    return this.createFolder(item as postman.Folder);
-                } else {
-                    return this.createItem(item as postman.Item);
-                }
-            });
-    }
-
-    private createItem(item: postman.Item): InputRequisitionModel {
-        const requisition: any = {
-            name: item.name,
-            subscriptions: (item.response || []).map(response => this.createSubscription(response)),
-            publishers: [this.createPublisher(item.request,
-                new PostmanEventExtractor(item).extractOnInitEvent(),
-                new PostmanEventExtractor(item).extractOnMessageReceivedEvent())],
             requisitions: []
         };
-        if (item.id) {
-            requisition.id = item.id;
-        }
-        return requisition;
+
+        items
+            .forEach((item: Item | Folder) => {
+                const items = (item as any).item;
+                if (items !== undefined) {
+                    requisitions.requisitions.push(this.createRequisition(items, item.name));
+                } else {
+                    const castedItem = item as Item;
+                    const publisher = this.createPublisher(castedItem.request,
+                        new PostmanEventExtractor(castedItem).extractOnInitEvent(),
+                        new PostmanEventExtractor(castedItem).extractOnMessageReceivedEvent());
+                    publisher.name = item.name;
+                    requisitions.publishers.push(publisher);
+
+                    requisitions.subscriptions.concat((castedItem.response || [])
+                        .map(response => this.createSubscription(response)));
+                }
+            });
+        return requisitions;
     }
 
-    private createPublisher(request: postman.Request, onInit?: Event, onMessageReceived?: Event): InputPublisherModel {
+    private createPublisher(request: Request, onInit?: Event, onResponseReceived?: Event): InputPublisherModel {
         const publisher: any = {
             type: request.url.protocol || "HTTP",
             url: request.url.raw,
@@ -94,14 +61,14 @@ export class PostmanCollectionConverter {
         if (onInit !== undefined) {
             publisher.onInit = onInit;
         }
-        if (onMessageReceived !== undefined) {
-            publisher.onMessageReceived = onMessageReceived;
+        if (onResponseReceived !== undefined) {
+            publisher.onResponseReceived = onResponseReceived;
         }
         return publisher;
 
     }
 
-    private createSubscription(response: postman.Response): InputSubscriptionModel {
+    private createSubscription(response: Response): InputSubscriptionModel {
         const protocol = response.originalRequest.url.protocol;
         let port: any = response.originalRequest.url.port;
         if (port === undefined) {
@@ -125,7 +92,7 @@ export class PostmanCollectionConverter {
         return subscription;
     }
 
-    private createHeaders(headers?: postman.Header[]) {
+    private createHeaders(headers?: Header[]) {
         const result: any = {};
         (headers || [])
             .filter(element => element.disabled !== false)
