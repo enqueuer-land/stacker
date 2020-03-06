@@ -27,7 +27,6 @@ export default {
     actions: {
         runComponent: async ({state, commit}: any, msg: InputRequisitionModel) => {
             const decycled = prepareRequisition(msg);
-            console.log(JSON.stringify(decycled));
             remote.getGlobal('eventEmitter').emit('runEnqueuer', decycled);
             remote.getGlobal('eventEmitter').once('runEnqueuerReply', (responses: any) => commit('updateResponse', responses));
         }

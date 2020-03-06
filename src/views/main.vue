@@ -1,13 +1,14 @@
 <template>
-    <div style="height: 100vh">
+    <div style="height: 100vh; background-color: var(--carabina-header-background-darker-color)">
+        <NavBar class="mb-1 p-0"></NavBar>
         <div class="wrapper" style="display: flex; height: 100%;">
-            <div class="panel" id="splitter-side-bar">
+            <div id="splitter-side-bar">
                 <SideBar></SideBar>
             </div>
-            <div class="panel" id="splitter-stage">
+            <div id="splitter-stage">
                 <Stage/>
             </div>
-            <div class="panel" id="splitter-result">
+            <div id="splitter-result">
                 <Result></Result>
             </div>
         </div>
@@ -18,6 +19,7 @@
     import split from 'split.js';
     import '@/styles/dimensions.css';
     import '@/styles/color-palette.css';
+    import NavBar from '@/views/nav-bar/nav-bar';
     import Stage from '@/views/stage/stage';
     import Result from "@/views/result/result";
     import SideBar from "@/views/side-bar/side-bar";
@@ -27,6 +29,7 @@
         components: {
             Result,
             SideBar,
+            NavBar,
             Stage
         },
         mounted() {

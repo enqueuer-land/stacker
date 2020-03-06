@@ -1,8 +1,8 @@
 <template id="dropdown-selector">
-    <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="containerStyle">
+    <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="containerStyle" right>
         <template v-slot:button-content>
             <div :style="selectorName">{{selected.value}}
-                <i class="pl-2 fas fa-caret-down"></i>
+                <i class="pl-3 pt-1 fas fa-caret-down float-right"></i>
             </div>
         </template>
         <b-dropdown-item v-for="(item, index) in availableList" :key="index"
@@ -28,6 +28,12 @@
         data() {
             return {
                 selected: this.defaultSelection || this.availableList[0],
+            }
+        },
+        watch: {
+            defaultSelection: function () {
+                this.selected = this.defaultSelection || this.availableList[0];
+                console.log(this.selected)
             }
         },
         methods: {

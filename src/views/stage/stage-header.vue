@@ -74,9 +74,9 @@ import {remote} from "electron";
                 return {
                     "border": 'none',
                     'box-shadow': 'none',
-                    'background-color': 'transparent',
+                    'background-color': this.componentColor,
                     'transition': 'all ease 100ms',
-                    color: this.componentColor
+                    color: 'var(--carabina-header-background-darker-color)'
                 };
             },
             componentColor: function () {
@@ -108,14 +108,12 @@ import {remote} from "electron";
     }
 
     .run-button:hover {
-        filter: brightness(125%);
+        filter: brightness(112%);
     }
 
     .run-button:active {
-        transform: scale(1.1);
         box-shadow: none !important;
-        filter: brightness(150%);
-        background-color: transparent !important;
+        filter: brightness(125%);
     }
 
 </style>

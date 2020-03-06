@@ -46,7 +46,7 @@
                 .map(key => ({key, value: this.table[key], id: idCreator.create()}));
             pairs.push({key: '', value: '', id: idCreator.create()});
             return {
-                pairs: pairs,
+                pairs,
             }
         },
         methods: {
