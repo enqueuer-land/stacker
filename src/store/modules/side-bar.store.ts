@@ -1,7 +1,12 @@
+import {remote} from "electron";
 import {InputRequisitionModel} from 'enqueuer';
-import {ComponentFactory} from '@/components/component-factory';
-import {ComponentTypes} from '@/components/component-types';
 import {ComponentSaver} from '@/components/component-saver';
+import {ComponentTypes} from '@/components/component-types';
+import {ComponentFactory} from '@/components/component-factory';
+import {ComponentLoader} from "@/components/component-loader";
+
+remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
+remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());
 
 export default {
     state: {

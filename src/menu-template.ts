@@ -43,10 +43,16 @@ const template = [
                 ]
             },
             {
-                label: 'Open',
+                label: 'Open requisition',
                 accelerator: 'CommandOrControl+O',
                 // @ts-ignore
                 click: () => global.eventEmitter.emit('openComponent'),
+            },
+            {type: 'separator'},
+            {
+                label: 'Open environment',
+                // @ts-ignore
+                click: () => global.eventEmitter.emit('openEnvironment'),
             },
             {type: 'separator'},
             {

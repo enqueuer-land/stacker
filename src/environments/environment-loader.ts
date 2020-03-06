@@ -8,17 +8,13 @@ import store from "@/store";
 //TODO test it
 export class EnvironmentLoader {
 
-    public listenMenuEvents() {
-        remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
-    }
-
     public load(): any {
         return (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
             .map((file: string) => EnvironmentLoader.load(file))
             .filter((file: any) => file);
     }
 
-    private static importPostmanEnvironment(): void {
+    public static importPostmanEnvironment(): void {
         (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
             .map((file: string) => EnvironmentLoader.loadPostmanEnvironment(file))
             .forEach(environment => store.commit('nav-bar/addEnvironment', environment));

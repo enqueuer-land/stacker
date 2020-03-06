@@ -11,19 +11,14 @@ import {PostmanCollectionConverter} from "@/postman/postman-collection-converter
 //TODO test it
 export class ComponentLoader {
 
-    public enable() {
-        remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
-        remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());
-    }
-
-    private static importPostmanCollection(): void {
+    public static importPostmanCollection(): void {
         (ComponentLoader.pickFiles(['openFile', 'multiSelections']) || [])
             .map(file => ComponentLoader.loadFromPostman(file))
             .filter(file => file)
             .forEach(requisition => store.commit('side-bar/addRequisition', requisition));
     }
 
-    private static loadComponents(): void {
+    public static loadComponents(): void {
         (ComponentLoader.pickFiles(['openFile', 'openDirectory', 'multiSelections']) || [])
             .map(file => ComponentLoader.load(file))
             .filter(file => file)

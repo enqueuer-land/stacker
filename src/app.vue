@@ -10,11 +10,6 @@
     import KeyValueTable from '@/inputs/key-value-table'
     import Payload from '@/inputs/payload'
     import PluginsLoader from "@/plugins/plugins-loader";
-    import {ComponentLoader} from "@/components/component-loader";
-    import {EnvironmentLoader} from "@/environments/environment-loader";
-
-    new ComponentLoader().enable();
-    new EnvironmentLoader().listenMenuEvents();
 
     Vue.component('Payload', Payload);
     Vue.component('DropdownSelector', DropdownSelector);

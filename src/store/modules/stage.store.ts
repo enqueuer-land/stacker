@@ -13,6 +13,19 @@ const prepareRequisition = (msg: any) => {
     } else if (componentName === ComponentTypes.SUBSCRIPTION) {
         decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
     }
+    const selectedEnvironment = store.getters['nav-bar/selectedEnvironment'];
+    if (selectedEnvironment && selectedEnvironment.store) {
+        if (decycled.onInit) {
+            decycled.onInit.store = {
+                ...selectedEnvironment.store,
+                ...decycled.onInit.store
+            };
+        } else {
+            decycled.onInit = {
+                store: selectedEnvironment.store
+            };
+        }
+    }
     return decycled;
 };
 

@@ -1,9 +1,13 @@
+import {remote} from "electron";
 import {IdCreator} from "@/components/id-creator";
 import {EnvironmentSaver} from "@/environments/environment-saver";
 import {EnvironmentLoader} from "@/environments/environment-loader";
+import store from "@/store";
+
+remote.getGlobal('eventEmitter').on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
+remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
 
 const noEnvironment = {name: 'No environment', role: 'none'};
-
 export default {
     state: {
         environments: [noEnvironment],
@@ -34,11 +38,13 @@ export default {
             stage.environments.push(clone);
         },
         addNewEnvironment: (stage: any) => {
-            stage.environments.push({
-                name: 'New Environment',
+            const environment = {
+                name: `New Environment ${stage.environments.length}`,
                 id: new IdCreator().create(),
                 store: {}
-            });
+            };
+            stage.environments.push(environment);
+            stage.selectedEnvironment = {...environment};
         },
         addEnvironment: (stage: any, payload: any) => {
             stage.environments.push(payload);

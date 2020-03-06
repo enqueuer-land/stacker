@@ -14,7 +14,10 @@
                         :availableList="environments.map(item => ({ ...item, value: item.name}))"></dropdown-selector>
             </b-col>
             <b-col cols="auto" class="px-4 align-self-center env-button" v-b-modal.view-environments-modal>
-                <i class="fas fa-pen carabina-icon"></i>
+                <i class="fas fa-pen carabina-icon" :style="editStyle"></i>
+            </b-col>
+            <b-col cols="auto" class="pr-4 align-self-center env-button" @click="addNewEnvironment" v-b-modal.view-environments-modal>
+                <i class="fas fa-plus carabina-icon"></i>
             </b-col>
             <b-col cols="auto" class="pr-4 align-self-center env-button" v-b-modal.manage-environments-modal>
                 <i class="fas fa-cog carabina-icon"></i>
@@ -48,17 +51,7 @@
                 <NavBarEnvironmentManagement v-if="environment.role !== 'none'" :environment="environment">
                 </NavBarEnvironmentManagement>
             </div>
-            <b-row class="m-0 px-0 pt-4 pb-1 justify-content-md-center" style="width: 100%; height: 100%">
-                <b-col v-for="(button, index) in buttons" :key="index" cols="auto"
-                       class="align-self-center carabina-text mx-5" @click="button.action">
-                    <i :class="['carabina-icon', button.iconClass]"></i>
-                    <b-button class="carabina-text" variant="env-mgmt-button">
-                        {{button.label}}
-                    </b-button>
-                </b-col>
-            </b-row>
         </b-modal>
-
     </b-container>
 </template>
 <script>
@@ -74,34 +67,20 @@
         components: {
             NavBarEnvironmentManagement
         },
-        data: function () {
-            return {
-                buttons: [
-                    {
-                        label: 'New',
-                        iconClass: 'fas fa-plus',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.addNewEnvironment({});
-                        }
-                    },
-                    {
-                        label: 'Open',
-                        iconClass: 'fas fa-folder-open',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.loadEnvironment({});
-                        }
-                    },
-                ]
-            }
-        },
         computed: {
             ...mapGetters('nav-bar', ['environments', 'selectedEnvironment']),
+            editStyle: function () {
+                const style = {};
+                if (this.selectedEnvironment.role === 'none') {
+                    style.color = 'var(--carabina-text-darker-color)';
+                    style['pointer-events'] = 'none'
+                }
+                return style;
+            }
         },
         methods: {
             ...mapMutations('nav-bar', ['environmentSelected', 'changeSelectedEnvironmentStore',
-                'addNewEnvironment', 'loadEnvironment']),
+                'addNewEnvironment']),
         }
     });
 </script>

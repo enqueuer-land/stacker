@@ -65,8 +65,7 @@
             }
         },
         methods: {
-            ...
-                mapMutations('nav-bar', ['changeSelectedEnvironmentName', 'deleteEnvironment', 'cloneEnvironment', 'saveEnvironment']),
+            ...mapMutations('nav-bar', ['changeSelectedEnvironmentName', 'deleteEnvironment', 'cloneEnvironment', 'saveEnvironment']),
         }
     });
 </script>
