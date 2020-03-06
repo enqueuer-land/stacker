@@ -42,7 +42,7 @@ export class ComponentSaver {
 
     private static pickDestination(item: any): string | undefined {
         return remote.dialog.showSaveDialogSync({
-            defaultPath: item.name + '.nqr.json',
+            defaultPath: item.name + '.nqr.yml',
             showsTagField: false,
         });
     }

@@ -33,7 +33,6 @@
         watch: {
             defaultSelection: function () {
                 this.selected = this.defaultSelection || this.availableList[0];
-                console.log(this.selected)
             }
         },
         methods: {

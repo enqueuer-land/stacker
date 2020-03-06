@@ -79,6 +79,7 @@ export class ComponentLoader {
         const defaultRequisition = new ComponentFactory().createRequisition(parent);
         Object.keys(rawRequisition)
             .filter(key => !['publishers', 'subscriptions', 'requisitions'].includes(key))
+            .filter(key => rawRequisition[key] !== undefined)
             .forEach(key => {
                 defaultRequisition[key] = rawRequisition[key];
             });
@@ -94,7 +95,7 @@ export class ComponentLoader {
     private static loadPublisher(component: any, parent: any) {
         const defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
         Object.keys(component)
-            .filter(key => !['publishers', 'subscriptions', 'requisitions'].includes(key))
+            .filter(key => component[key] !== undefined)
             .forEach(key => {
                 defaultPublisher[key] = component[key];
             });
@@ -104,7 +105,7 @@ export class ComponentLoader {
     private static loadSubscription(component: any, parent: any) {
         const defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
         Object.keys(component)
-            .filter(key => !['publishers', 'subscriptions', 'requisitions'].includes(key))
+            .filter(key => component[key] !== undefined)
             .forEach(key => {
                 defaultPublisher[key] = component[key];
             });

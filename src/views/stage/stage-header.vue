@@ -22,7 +22,7 @@ import {remote} from "electron";
                     </b-form-input>
                 </b-input-group>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-1 run-button-container">
+            <b-col cols="auto" class="align-self-center px-2 run-button-container">
                 <b-button class="run-button" :style="runButtonStyle" @click="runComponent(component)">Run
                 </b-button>
             </b-col>
