@@ -38,7 +38,6 @@
                 this.needsToAddRow();
             },
             needsToAddRow: function () {
-                console.log('needsToAddRow: ' + JSON.stringify(this.assertions));
                 if (this.assertions.every(assertion =>
                     Object.values(assertion)
                         .every(value => value !== '') && Object.keys(assertion).length > 0)) {

@@ -19,9 +19,11 @@ function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
         title: 'Stacker',
-        frame: false,
-        width: 1600,
-        height: 1000,
+        fullscreen: true,
+        minWidth: 1600,
+        minHeight: 1000,
+        width: 2000,
+        height: 1250,
         webPreferences: {
             nodeIntegration: true
         }

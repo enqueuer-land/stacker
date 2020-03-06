@@ -1,6 +1,7 @@
+import store from '@/store'
 import {TestFlattener} from "@/components/test-flattener";
-import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 import {TestModel} from 'enqueuer/js/models/outputs/test-model';
+import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 
 export default {
     state: {
@@ -26,10 +27,24 @@ export default {
                 color: 'var(--carabina-ignored-test-color)',
                 filter: (test: OutputTestModel) => test.ignored === true
             }
-        ]
+        ],
+        enqueuerRunningShowModal: false,
+        enqueuerRunningStartTime: null
     },
     mutations: {
+        disableEnqueuerRunningModal: (stage: any) => {
+            stage.enqueuerRunningShowModal = false;
+        },
+        runRequisition: (stage: any, requisition: any) => {
+            stage.enqueuerRunningShowModal = true;
+            stage.enqueuerRunningStartTime = new Date().getTime();
+        },
         updateResponse: (stage: any, value: OutputRequisitionModel[]) => {
+            const elapsedTime = new Date().getTime() - stage.enqueuerRunningStartTime;
+            const remainingTime = Math.max(500 - elapsedTime, 0);
+            console.log(remainingTime);
+            setTimeout(() => store.commit('result/disableEnqueuerRunningModal'), remainingTime);
+
             stage.responses = value;
             stage.flattenTests = value
                 .reduce((acc: any[], test: OutputRequisitionModel) => acc.concat(new TestFlattener().flatten(test)), []);
@@ -38,6 +53,7 @@ export default {
         iconFilterClicked: (stage: any, value: any) => value.active = !value.active,
     },
     getters: {
+        enqueuerRunningShowModal: (state: any) => state.enqueuerRunningShowModal,
         responses: (state: any) => state.responses,
         textFilter: (state: any) => state.textFilter,
         iconFilters: (state: any) => state.iconFilters,

@@ -1,6 +1,14 @@
 <template>
     <div id="result" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
-        <template v-if="responses.length > 0">
+        <b-container v-if="enqueuerRunningShowModal" id="running-modal">
+            <b-row style="height: 100%" align-h="center" align-v="center">
+                <b-col cols="auto">
+                    <b-spinner style="width: 3rem; height: 3rem; color: var(--carabina-theme-color)"
+                               label="Large Spinner"></b-spinner>
+                </b-col>
+            </b-row>
+        </b-container>
+        <template v-else-if="responses.length > 0">
             <ResultHeader style="height: var(--carabina-header-size)" :valid="responseIsValid" :name="responseName">
             </ResultHeader>
             <ResultFlattenTestsBody class="pt-3" style="height: var(--carabina-body-size)"
@@ -23,19 +31,25 @@
     export default Vue.extend({
         name: 'Result',
         components: {ResultHeader, ResultFooter, ResultFlattenTestsBody},
-        mounted() {
-            this.$store.subscribe((mutation) => {
-                if (mutation.type === 'stage/updateResponse') {
-                    this.updateResponse(mutation.payload);
-                }
-            });
+        data: function() {
+          return {
+              showModal: false,
+          }
         },
         computed: {
             ...mapGetters('result', ['responses', 'filteredFlattenTests',
-                'responseIsValid', 'responseName', 'totalTime', 'ignoredTests', 'summary']),
+                'responseIsValid', 'responseName', 'totalTime', 'ignoredTests', 'summary', 'enqueuerRunningShowModal']),
         },
         methods: {
             ...mapMutations('result', ['updateResponse'])
         }
     });
 </script>
+<style type="text/css" scoped>
+    #running-modal {
+        background-color: var(--carabina-header-background-darker-color);
+        filter: opacity(0.75);
+        position: relative;
+        height: 100%;
+    }
+</style>

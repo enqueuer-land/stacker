@@ -104,7 +104,6 @@
 </script>
 <style type="text/css" scoped>
     #stage-body-requisition {
-        height: 100%;
         background-color: var(--carabina-body-background-darker-color);
     }
 

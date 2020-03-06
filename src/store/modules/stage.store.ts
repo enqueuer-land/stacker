@@ -1,7 +1,8 @@
-import {InputRequisitionModel} from 'enqueuer';
+import store from '@/store'
 import {remote} from 'electron';
-import {ComponentTypes} from '@/components/component-types';
+import {InputRequisitionModel} from 'enqueuer';
 import {IdCreator} from '@/components/id-creator';
+import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from "@/components/component-decycler";
 
 const prepareRequisition = (msg: any) => {
@@ -22,11 +23,13 @@ export default {
     mutations: {
         updateResponse: (stage: any, responses: any[]) => {
             stage.responses = responses;
+            store.commit('result/updateResponse', responses);
         },
     },
     actions: {
         runComponent: async ({state, commit}: any, msg: InputRequisitionModel) => {
             const decycled = prepareRequisition(msg);
+            store.commit('result/runRequisition', decycled);
             remote.getGlobal('eventEmitter').emit('runEnqueuer', decycled);
             remote.getGlobal('eventEmitter').once('runEnqueuerReply', (responses: any) => commit('updateResponse', responses));
         }

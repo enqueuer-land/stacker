@@ -23,7 +23,7 @@ import {remote} from "electron";
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 run-button-container">
-                <b-button class="run-button" :style="runButtonStyle" @click="runComponent(component)">Run
+                <b-button class="run-button px-4" :style="runButtonStyle" @click="runComponent(component)">Run
                 </b-button>
             </b-col>
         </b-row>

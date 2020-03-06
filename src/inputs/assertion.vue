@@ -99,13 +99,15 @@
                 this.emit();
             },
             emit: function () {
-                const value = {
+                const toEmit = {
                     [this.selectedAssertion.name]: this.actualValue,
                 };
                 if (this.selectedAssertion.criteria.length > 0) {
-                    value[this.selectedCriterium.name] = this.expectedValue;
+                    toEmit[this.selectedCriterium.name] = this.expectedValue;
                 }
-                this.$emit('change', value);
+                if (Object.values(toEmit).some(value => value.length > 0)) {
+                    this.$emit('change', toEmit);
+                }
             },
             emitDeletion: function () {
                 this.$emit('delete');
