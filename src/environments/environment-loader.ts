@@ -3,6 +3,7 @@ import * as path from "path";
 import * as yaml from "yamljs";
 import {remote} from "electron";
 import {IdCreator} from "@/components/id-creator";
+import store from "@/store";
 
 //TODO test it
 export class EnvironmentLoader {
@@ -18,7 +19,9 @@ export class EnvironmentLoader {
     }
 
     private static importPostmanEnvironment(): void {
-        console.log('importPostmanEnvironment');
+        (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
+            .map((file: string) => EnvironmentLoader.loadPostmanEnvironment(file))
+            .forEach(environment => store.commit('nav-bar/addEnvironment', environment));
     }
 
     private static load(file: string): any {
@@ -64,5 +67,21 @@ export class EnvironmentLoader {
             });
 
         return defaultEnvironment;
+    }
+
+    private static loadPostmanEnvironment(file: string) {
+        try {
+            const raw = JSON.parse(fs.readFileSync(file).toString());
+            raw.store = (raw.values || []).reduce((acc: any, value: any) => {
+                if (value.enabled) {
+                    acc[value.key] = value.value
+                }
+                return acc;
+            }, {});
+            return EnvironmentLoader.loadEnvironment(raw);
+        } catch (e) {
+            console.log(e);
+        }
+        return null;
     }
 }

@@ -21,6 +21,7 @@
             </b-col>
         </b-row>
         <b-modal v-if="selectedEnvironment && selectedEnvironment.role !== 'none'" id="view-environments-modal"
+                 centered
                  size="xl" scrollable
                  :title="selectedEnvironment.name"
                  header-bg-variant="header"
@@ -35,6 +36,7 @@
         </b-modal>
 
         <b-modal id="manage-environments-modal" size="lg" scrollable
+                 centered
                  title="Manage environments"
                  header-bg-variant="header"
                  header-text-variant="header"
@@ -42,9 +44,10 @@
                  body-text-variant="body"
                  footer-bg-variant="footer"
                  footer-text-variant="footer">
-            <NavBarEnvironmentManagement v-for="environment in environments" :key="environment.id"
-                                   :environment="environment">
-            </NavBarEnvironmentManagement>
+            <div v-for="environment in environments" :key="environment.id">
+                <NavBarEnvironmentManagement v-if="environment.role !== 'none'" :environment="environment">
+                </NavBarEnvironmentManagement>
+            </div>
             <b-row class="m-0 px-0 pt-4 pb-1 justify-content-md-center" style="width: 100%; height: 100%">
                 <b-col v-for="(button, index) in buttons" :key="index" cols="auto"
                        class="align-self-center carabina-text mx-5" @click="button.action">
@@ -119,7 +122,7 @@
     }
 
     .modal-header {
-        border-bottom: 1px solid var(--carabina-body-background-color);
+        border: none;
     }
 
     .bg-body, .bg-header, .modal-content {
@@ -147,6 +150,7 @@
         outline: none !important;
         box-shadow: none !important;
     }
+
     .btn-env-mgmt-button:active {
         transform: scale(1.12);
     }

@@ -14,7 +14,7 @@ export class EnvironmentSaver {
 
     private static pickDestination(item: any): string | undefined {
         return remote.dialog.showSaveDialogSync({
-            defaultPath: item.name + '.conf.yml',
+            defaultPath: item.name + '.nqr.env.yml',
             showsTagField: false,
         });
     }
