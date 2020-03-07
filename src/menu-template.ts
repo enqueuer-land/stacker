@@ -60,17 +60,22 @@ const template = [
             },
             {type: 'separator'},
             {
-                label: 'Import from postman...',
+                label: 'Import',
                 submenu: [
                     {
-                        label: 'Postman collection',
-                        // @ts-ignore
-                        click: () => global.eventEmitter.emit('importPostmanCollection'),
-                    },
-                    {
-                        label: 'Postman environment',
-                        // @ts-ignore
-                        click: () => global.eventEmitter.emit('importPostmanEnvironment'),
+                        label: 'From postman...',
+                        submenu: [
+                            {
+                                label: 'Collection',
+                                // @ts-ignore
+                                click: () => global.eventEmitter.emit('importPostmanCollection'),
+                            },
+                            {
+                                label: 'Environment',
+                                // @ts-ignore
+                                click: () => global.eventEmitter.emit('importPostmanEnvironment'),
+                            }
+                        ]
                     }
                 ]
             },

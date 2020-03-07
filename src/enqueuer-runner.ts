@@ -14,10 +14,17 @@ export default class EnqueuerRunner {
 
     public run(): void {
         try {
-            this.enqueuerProcess = spawn("enqueuer", {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+            this.enqueuerProcess = spawn('enqueuer', [' -b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
             this.enqueuerProcess.send({event: 'GET_ASSERTERS'});
+            // @ts-ignore
+            global.eventEmitter.on('addPlugins', async (plugins: string[]) => {
+                plugins.forEach(plugin => {
+                    console.log('Add module: ' + plugin);
+                    this.enqueuerProcess.send({event: 'ADD_MODULE', value: plugin});
+                });
+            });
             // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
@@ -31,11 +38,19 @@ export default class EnqueuerRunner {
     }
 
     private registerChildListeners(): void {
-        this.enqueuerProcess.stdout.on("data", (data: string) => console.log(`nqr::stdout: ${data}`));
-        this.enqueuerProcess.stderr.on("data", (data: string) => console.log(`nqr::stderr: ${data}`));
+        this.enqueuerProcess.stdout.on('data', (data: string) => {
+            // @ts-ignore
+            global.eventEmitter.emit('enqueuerLog', data)
+            console.log('enqueuerLog: ' + data.toString());
+        });
+        this.enqueuerProcess.stderr.on('data', (data: string) => {
+            // @ts-ignore
+            global.eventEmitter.emit('enqueuerError', data);
+            console.log('enqueuerError: ' + data.toString());
+        });
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
         this.enqueuerProcess.on('error', (error: any) => console.log(`error: ${error.message}`));
-        this.enqueuerProcess.on("close", (code: number) => console.log(`child process exited with code ${code}`));
+        this.enqueuerProcess.on("close", (code: number) => console.log(`Enqueuer sub process exited with code: ${code}`));
         this.enqueuerProcess.on('message', (data: any) => this.onMessageReceived(data));
     }
 

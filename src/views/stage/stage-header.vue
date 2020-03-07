@@ -14,7 +14,7 @@ import {remote} from "electron";
                                 :color="componentColor"
                                 :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
                     </template>
-                    <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
+                    <!--https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Component name" type="text"
                                   @input="(value) => $parent.updateAttribute('name', value)"
                                   :value="component.name"
