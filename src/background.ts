@@ -1,5 +1,7 @@
+/* global __static */
 'use strict';
 
+import path from 'path'
 import '@/menu-template'
 import {EventEmitter} from 'events';
 import EnqueuerRunner from "@/enqueuer-runner";
@@ -24,6 +26,7 @@ function createWindow() {
         minHeight: 1000,
         width: 2000,
         height: 1250,
+        icon: path.join(__static, 'icon.png'),
         webPreferences: {
             nodeIntegration: true
         }

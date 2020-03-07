@@ -7,6 +7,7 @@ import {ComponentFinder} from '@/components/component-finder';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
+import {ComponentParent} from "@/components/component-parent";
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
@@ -80,7 +81,7 @@ export default {
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
             if (stage.selectedComponent) {
-                if (stage.selectedComponent.id === event.component.id) {
+                if (stage.selectedComponent.id === event.component.id || new ComponentParent(stage.selectedComponent).isGrandChildOf(event.component)) {
                     stage.selectedComponent = null;
                 }
             }

@@ -54,10 +54,10 @@ import {remote} from "electron";
             ...mapGetters('stage', ['protocolsOfComponentList']),
             runButtonStyle: function () {
                 return {
-                    "border": 'none',
+                    border: 'none',
                     'box-shadow': 'none',
+                    transition: 'all ease 100ms',
                     'background-color': this.componentColor,
-                    'transition': 'all ease 100ms',
                     color: 'var(--carabina-header-background-darker-color)'
                 };
             },

@@ -2,7 +2,7 @@
     <b-container fluid id="nav-bar" class="pr-1">
         <b-row class="m-0 px-0" style="width: 100%; height: 100%" no-gutters>
             <b-col cols="auto pl-3" class="align-self-center">
-                <img src="../../assets/logo.png" class="img img-fluid" style="user-select: none; filter: brightness(2.5)">
+                <img src="../../assets/logo.png" class="img img-fluid" style="user-select: none; filter: brightness(2)">
             </b-col>
             <b-col cols class="align-self-center">
             </b-col>

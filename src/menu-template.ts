@@ -92,12 +92,17 @@ const template = [
         label: 'Run',
         submenu: [
             {
-                label: 'Run current component',
+                label: 'Run component',
                 accelerator: 'CmdOrCtrl+Return',
                 // @ts-ignore
                 click: () => global.eventEmitter.emit('runCurrentlySelectedComponent'),
             },
-
+            {
+                label: 'Run highest parent',
+                accelerator: 'CmdOrCtrl+Shift+Return',
+                // @ts-ignore
+                click: () => global.eventEmitter.emit('runHighestParentOfSelectedComponent'),
+            },
         ]
     },
     {role: 'windowMenu'},

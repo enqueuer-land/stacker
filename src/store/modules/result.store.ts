@@ -104,7 +104,7 @@ export default {
                     validTests: 0,
                     totalTests: 0
                 });
-            const percentage = (100 * summary.validTests / summary.totalTests).toFixed(2);
+            const percentage = summary.totalTests > 0 ? (100 * summary.validTests / summary.totalTests).toFixed(2): 100;
             return `${summary.validTests}/${summary.totalTests} (${percentage}%)`;
         },
     },

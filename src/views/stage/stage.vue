@@ -1,6 +1,6 @@
 <template>
     <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
-        <template v-if="selectedComponent !== null">
+        <template v-if="selectedComponent">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
             <div class="pt-3" id="body-container">
