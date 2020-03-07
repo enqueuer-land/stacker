@@ -50,7 +50,6 @@
     export default Vue.extend({
         name: 'HookScript',
         components: {
-            // PrismEditor,
             codemirror
         },
         props: {

@@ -30,8 +30,10 @@ export default {
     mutations: {
         componentSelected: (stage: any, component: {}) => {
             if (stage.selectedComponent) {
-                new ComponentFinder(stage.requisitions)
-                    .findItem(stage.selectedComponent.id).carabinaMeta.selected = false;
+                const foundItem = new ComponentFinder(stage.requisitions).findItem(stage.selectedComponent.id);
+                if (foundItem) {
+                    foundItem.carabinaMeta.selected = false;
+                }
             }
             stage.selectedComponent = component;
             stage.selectedComponent.carabinaMeta.selected = true;

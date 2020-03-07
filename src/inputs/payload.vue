@@ -50,7 +50,6 @@
     export default Vue.extend({
         name: 'Payload',
         components: {
-            // PrismEditor,
             codemirror
         },
         props: {
