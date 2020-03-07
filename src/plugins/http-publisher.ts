@@ -46,12 +46,15 @@ export default {
                 }
             },
             data: function () {
-                console.log('http publisher data');
                 return {
                     availableMethods: [{value: 'GET'},
                         {value: 'POST'},
                         {value: 'PUT'},
                         {value: 'PATCH'},
+                        {value: 'HEAD'},
+                        {value: 'CONNECT'},
+                        {value: 'OPTIONS'},
+                        {value: 'TRACE'},
                         {value: 'DELETE'}]
                 }
             },

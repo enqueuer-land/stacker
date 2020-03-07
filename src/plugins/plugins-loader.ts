@@ -1,8 +1,9 @@
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from "path";
 import {remote} from "electron";
 import Store from 'electron-store';
-import {exec} from 'child_process';
+import {execSync} from 'child_process';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
@@ -20,30 +21,31 @@ export class PluginsLoader {
             subscriptions: {http: httpSubscription.default.subscriptions.http}
         };
         this.pluginsString = pluginsRepository.get('pluginsString', []);
-        this.pluginsString.forEach((pluginString: string) => this.loadStringPlugin(pluginString));
+        this.pluginsString
+            .forEach((pluginString: string) => this.loadStringPlugin(pluginString));
+        this.tellEnqueuerToAddModules();
     }
 
-    public getPlugins() {
+    public getPlugins(): object {
         return this.plugins;
     }
 
-
-    public loadPlugins() {
+    public loadPlugins(): void {
         (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
-            .map(file => this.load(file));
-        return this.plugins;
+            .forEach(file => this.load(file));
+        this.tellEnqueuerToAddModules();
     }
 
-    private load(file: string) {
+    private load(file: string): void {
         const stats = fs.statSync(file);
         if (stats.isDirectory()) {
-            return this.loadDirectory(file);
+            this.loadDirectory(file);
         }
-        return this.loadFromFileSystem(file);
+        this.loadFromFileSystem(file);
     }
 
-    private loadDirectory(dirname: string) {
-        return fs.readdirSync(dirname)
+    private loadDirectory(dirname: string): void {
+        fs.readdirSync(dirname)
             .map(file => this.loadFromFileSystem(path.join(dirname, file)));
     }
 
@@ -59,17 +61,34 @@ export class PluginsLoader {
         }
     }
 
-    private loadStringPlugin(pluginString: string) {
+    private loadStringPlugin(pluginString: string): any {
         try {
             const plugin = requireFromString(pluginString);
-            this.loadPlugin(plugin);
+            this.addPlugin(plugin);
             return plugin;
         } catch (e) {
             console.log(e);
         }
     }
 
-    private loadPlugin(plugin: any) {
+    private tellEnqueuerToAddModules() {
+        remote.getGlobal('eventEmitter')
+            .emit('addPlugins', PluginsLoader.getEnqueuerDependencies(this.plugins));
+    }
+
+    private installEnqueuerPlugins(plugin: any): string[] {
+        const enqueuerDependencies = PluginsLoader.getEnqueuerDependencies(plugin);
+        return enqueuerDependencies
+            .filter(enqueuerPlugin => enqueuerPlugin)
+            .map(enqueuerPlugin => {
+                console.log(`npm install --prefix ${os.homedir()}/.nqr '${enqueuerPlugin}'`);
+                const executed = execSync(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`).toString();
+                console.log(`Installing plugin '${enqueuerPlugin}' ${executed}`);
+                return enqueuerPlugin;
+            });
+    }
+
+    private addPlugin(plugin: any) {
         this.plugins.publishers = {
             ...this.plugins.publishers,
             ...plugin.publishers
@@ -78,31 +97,17 @@ export class PluginsLoader {
             ...this.plugins.subscriptions,
             ...plugin.subscriptions
         };
-        const pluginsToAdd = Object
-            .keys(plugin.publishers || {})
-            .map(key => plugin.publishers[key].enqueuerPlugin)
-            .filter(enqueuerPlugin => enqueuerPlugin);
-        remote.getGlobal('eventEmitter').emit('addPlugins', pluginsToAdd);
     }
 
-    private installEnqueuerPlugins(plugin: any) {
+    private static getEnqueuerDependencies(plugin: any) {
         const publisherPlugins = Object
             .keys(plugin.publishers || {})
             .map(key => plugin.publishers[key].enqueuerPlugin);
         const subscriptionPlugins = Object
-            .keys(plugin.subscriptions || {});
-        publisherPlugins
+            .keys(plugin.subscriptions || {})
+            .map(key => plugin.publishers[key].enqueuerPlugin);
+        return publisherPlugins
             .concat(subscriptionPlugins)
-            .filter(enqueuerPlugin => enqueuerPlugin)
-            .forEach(enqueuerPlugin => {
-                console.log(`npm i '${enqueuerPlugin}'`);
-                exec(`npm i ${enqueuerPlugin}`, (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`Enqueuer plugin '${enqueuerPlugin}' fail to load: ${error}`, stderr);
-                    } else {
-                        console.log(`Enqueuer plugin '${enqueuerPlugin}' loaded`);
-                    }
-                });
-            });
+            .filter(name => name);
     }
 }

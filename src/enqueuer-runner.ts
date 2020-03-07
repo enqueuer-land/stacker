@@ -1,3 +1,4 @@
+import * as os from 'os';
 import {ChildProcess, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 
@@ -14,6 +15,7 @@ export default class EnqueuerRunner {
 
     public run(): void {
         try {
+            spawn('mkdir', [os.homedir() + '/.nqr']);
             this.enqueuerProcess = spawn('enqueuer', [' -b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
@@ -65,7 +67,6 @@ export default class EnqueuerRunner {
     }
 
     private onMessageReceived(message: any): void {
-        console.log(message.event);
         if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
             const requisitionOutput: OutputRequisitionModel = message.value.requisition;
             const responsesMap = this.responsesMap[requisitionOutput.id.toString()];

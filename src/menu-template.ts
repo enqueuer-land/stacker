@@ -60,10 +60,10 @@ const template = [
             },
             {type: 'separator'},
             {
-                label: 'Import',
+                label: 'Import from',
                 submenu: [
                     {
-                        label: 'From postman...',
+                        label: 'Postman...',
                         submenu: [
                             {
                                 label: 'Collection',
@@ -107,7 +107,7 @@ const template = [
             {
                 label: 'Learn More',
                 click: async () => {
-                    await shell.openExternal('https://enqueuer.com')
+                    await shell.openExternal('https://enqueuer.com/docs')
                 }
             }
         ]

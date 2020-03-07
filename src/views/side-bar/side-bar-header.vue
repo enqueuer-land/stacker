@@ -5,7 +5,7 @@
             </b-col>
             <b-col cols="auto" class="align-self-center mx-2">
                 <b-dropdown split @click="createNewComponent({componentType: 'REQUISITION'})" variant="creators"
-                            class="carabina-text">
+                            right class="carabina-text">
                     <template v-slot:button-content>
                         <i id="new-requisition-button" class="fas fa-plus carabina-icon mr-1"></i>
                         Requisition
@@ -72,8 +72,16 @@
         padding-right: 6px;
     }
 
+    .dropdown-toggle-split {
+        filter: brightness(0.85);
+    }
+
     .dropdown:hover .btn-creators {
         filter: brightness(1.1);
+    }
+
+    .dropdown:hover .dropdown-toggle-split {
+        filter: brightness(1);
     }
 
     .btn-creators:active, .btn-creators:focus {

@@ -10,6 +10,7 @@ import {remote} from "electron";
                 <b-input-group>
                     <template v-if="component.carabinaMeta.componentName !== 'REQUISITION'" v-slot:prepend>
                         <DropdownSelector
+                                :defaultSelection="{value: component.type}"
                                 @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                                 :color="componentColor"
                                 :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
