@@ -44,19 +44,8 @@
         },
         data: function () {
             return {
-                selected: this.component.carabinaMeta.selected,
                 componentStylish: new ComponentStylish(this.component)
             }
-        },
-        mounted() {
-            this.$store.subscribe((mutation) => {
-                if (mutation.type === 'side-bar/componentSelected') {
-                    this.selected = mutation.payload.id === this.component.id;
-                }
-                if (mutation.type === 'side-bar/createNewComponent') {
-                    this.selected = mutation.payload.id === this.component.id;
-                }
-            });
         },
         computed: {
             ...mapGetters('side-bar', []),

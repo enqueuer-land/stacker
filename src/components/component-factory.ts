@@ -29,7 +29,6 @@ export class ComponentFactory {
             subscriptions: [],
             carabinaMeta: {
                 parent,
-                unsaved: false,
                 selected: false,
                 collapsed: false,
                 componentName: ComponentTypes.REQUISITION
@@ -51,7 +50,6 @@ export class ComponentFactory {
             carabinaMeta: {
                 parent,
                 selected: false,
-                unsaved: false,
                 componentName: ComponentTypes.PUBLISHER
             }
         };
@@ -73,7 +71,6 @@ export class ComponentFactory {
             carabinaMeta: {
                 parent,
                 selected: false,
-                unsaved: false,
                 componentName: ComponentTypes.SUBSCRIPTION
             }
         };

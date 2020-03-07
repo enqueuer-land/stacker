@@ -1,12 +1,13 @@
 import {remote} from "electron";
-
-const Store = require('electron-store');
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentLoader} from "@/components/component-loader";
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from "@/components/component-decycler";
+import {ComponentFinder} from "@/components/component-finder";
+
+const Store = require('electron-store');
 
 const sidebarRepository = new Store('side-bar');
 
@@ -29,7 +30,8 @@ export default {
     mutations: {
         componentSelected: (stage: any, component: {}) => {
             if (stage.selectedComponent) {
-                stage.selectedComponent.carabinaMeta.selected = false;
+                new ComponentFinder(stage.requisitions)
+                    .findItem(stage.selectedComponent.id).carabinaMeta.selected = false;
             }
             stage.selectedComponent = component;
             stage.selectedComponent.carabinaMeta.selected = true;
@@ -66,13 +68,11 @@ export default {
         currentSelectedComponentChanged: (stage: any, event: any) => {
             if (stage.selectedComponent) {
                 stage.selectedComponent[event.attributeName] = event.value;
-                stage.selectedComponent.carabinaMeta.unsaved = true;
                 persist(stage);
             }
         },
         changeAttributeOfComponent: (stage: any, event: any) => {
             event.component[event.attributeName] = event.value;
-            event.component.carabinaMeta.unsaved = true;
             persist(stage);
         },
         saveComponent: (stage: any, event: any) => {

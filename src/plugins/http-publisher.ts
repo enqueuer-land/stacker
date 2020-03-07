@@ -25,7 +25,7 @@ export default {
                                  :table="{'content-type': 'json/application'}" class="mb-4"></key-value-table>
 
                 <label class="pl-3 d-block carabina-text mb-2">Payload</label>
-                <payload :code="component.payload" @change="(value) => $parent.updateAttribute('payload', value)"
+                <payload :code="component.payload || ''" @change="(value) => $parent.updateAttribute('payload', value)"
                          class="px-3"></payload>
             </b-container>`,
         props: {
