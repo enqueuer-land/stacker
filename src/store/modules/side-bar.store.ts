@@ -83,7 +83,7 @@ export default {
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
             if (stage.selectedComponent) {
-                if (stage.selectedComponent.id === event.id) {
+                if (stage.selectedComponent.id === event.component.id) {
                     stage.selectedComponent = null;
                 }
             }

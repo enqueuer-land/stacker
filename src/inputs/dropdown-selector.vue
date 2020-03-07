@@ -27,15 +27,21 @@
         },
         data() {
             return {
-                selected: this.defaultSelection || this.availableList[0],
+                selected: this.content()
             }
         },
         watch: {
             defaultSelection: function () {
-                this.selected = this.defaultSelection || this.availableList[0];
+                this.selected = this.content();
+            },
+            availableList: function () {
+                this.selected = this.content();
             }
         },
         methods: {
+            content: function () {
+                return this.defaultSelection || (this.availableList && this.availableList.length > 0 ? this.availableList[0] : {value: ''});
+            },
             onSelect: function (protocol) {
                 this.selected = protocol;
                 this.$emit('select', protocol);

@@ -21,8 +21,11 @@ export class ComponentDecycler {
 
     private static removeCarabinaMeta(item: any): any {
         const clone = Object.assign({}, item);
-        if (clone.carabinaMeta) {
-            delete clone.carabinaMeta.parent;
+        if (item) {
+            clone.carabinaMeta = Object.assign({}, item.carabinaMeta);
+            if (clone.carabinaMeta) {
+                delete clone.carabinaMeta.parent;
+            }
         }
         return clone;
     }

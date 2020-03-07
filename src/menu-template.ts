@@ -48,15 +48,19 @@ const template = [
                 // @ts-ignore
                 click: () => global.eventEmitter.emit('openComponent'),
             },
-            {type: 'separator'},
             {
                 label: 'Open environment',
                 // @ts-ignore
                 click: () => global.eventEmitter.emit('openEnvironment'),
             },
+            {
+                label: 'Load plugin',
+                // @ts-ignore
+                click: () => global.eventEmitter.emit('loadPlugin'),
+            },
             {type: 'separator'},
             {
-                label: 'Import...',
+                label: 'Import from postman...',
                 submenu: [
                     {
                         label: 'Postman collection',
