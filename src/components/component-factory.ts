@@ -49,6 +49,7 @@ export class ComponentFactory {
             ignore: false,
             url: 'http://localhost:80/',
             method: 'GET',
+            headers: {'content-type': 'json/application'},
             payload: '',
             carabinaMeta: {
                 parent,
@@ -70,7 +71,7 @@ export class ComponentFactory {
             method: 'GET',
             avoidable: false,
             response: {
-                headers: {},
+                headers: {'content-type': 'json/application'},
                 status: 200,
                 payload: ''
             },

@@ -40,7 +40,7 @@ export default {
                     <label class="pl-3 d-block carabina-text mb-0">Headers</label>
                     <key-value-table
                             @change="(headers) => $parent.updateAttribute('response', {...component.response, headers})"
-                            :table="{'content-type': 'json/application'}" class="mb-4"></key-value-table>
+                            :table="component.response.headers" class="mb-4"></key-value-table>
 
                     <b-row no-gutters align-h="between">
                         <b-col cols="3" class="align-self-center pl-1 pr-3">
@@ -51,23 +51,36 @@ export default {
                                     label-for="status">
                                 <b-form-input id="status" type="number"
                                               @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
-                                              :value="component.status"
+                                              :value="component.response.status"
                                               class="text-input carabina-text" trim>
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
                         <b-col cols class="align-self-center pl-4 pr-1 mt-3" style="color: red">
-                            <label class="carabina-text" style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
+                            <label class="carabina-text"
+                                   style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
                         </b-col>
                     </b-row>
                     <label class="pl-1 d-block carabina-text mb-2">Payload</label>
-                    <payload :code="component.payload"
+                    <payload :code="component.response.payload"
                              @change="(value) => $parent.updateAttribute('response', {...component.response, payload: value})"
                              class="px-3"></payload>
                 </b-container>
             `,
             props: {
-                component: Object
+                component: {
+                    response: {
+                        type: Object,
+                        default: {
+                            headers: {
+                                type: Object,
+                                default: {'content-type': 'json/application'}
+                            },
+                            status: 333,
+                            payload: '',
+                        }
+                    }
+                }
             },
             data: function () {
                 return {
@@ -84,11 +97,11 @@ export default {
                         '100': 'Continue',
                         '101': 'Switching Protocols',
                         '102': 'Processing (WebDAV)',
-                        '200': '★ OK',
-                        '201': '★ Created',
+                        '200': 'OK',
+                        '201': 'Created',
                         '202': 'Accepted',
                         '203': 'Non-Authoritative Information',
-                        '204': '★ No Content',
+                        '204': 'No Content',
                         '205': 'Reset Content',
                         '206': 'Partial Content',
                         '207': 'Multi-Status (WebDAV)',
@@ -98,21 +111,21 @@ export default {
                         '301': 'Moved Permanently',
                         '302': 'Found',
                         '303': 'See Other',
-                        '304': '★ Not Modified',
+                        '304': 'Not Modified',
                         '305': 'Use Proxy',
                         '306': '(Unused)',
                         '307': 'Temporary Redirect',
                         '308': 'Permanent Redirect (experimental)',
-                        '400': '★ Bad Request',
-                        '401': '★ Unauthorized',
+                        '400': 'Bad Request',
+                        '401': 'Unauthorized',
                         '402': 'Payment Required',
-                        '403': '★ Forbidden',
-                        '404': '★ Not Found',
+                        '403': 'Forbidden',
+                        '404': 'Not Found',
                         '405': 'Method Not Allowed',
                         '406': 'Not Acceptable',
                         '407': 'Proxy Authentication Required',
                         '408': 'Request Timeout',
-                        '409': '★ Conflict',
+                        '409': 'Conflict',
                         '410': 'Gone',
                         '411': 'Length Required',
                         '412': 'Precondition Failed',
@@ -135,8 +148,8 @@ export default {
                         '449': 'Retry With (Microsoft)',
                         '450': 'Blocked by Windows Parental Controls (Microsoft)',
                         '451': 'Unavailable For Legal Reasons',
-                        '499': '★ Client Closed Request (Nginx)',
-                        '500': '★ Internal Server Error',
+                        '499': 'Client Closed Request (Nginx)',
+                        '500': 'Internal Server Error',
                         '501': 'Not Implemented',
                         '502': 'Bad Gateway',
                         '503': 'Service Unavailable',
