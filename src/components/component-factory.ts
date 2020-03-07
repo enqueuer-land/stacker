@@ -47,6 +47,9 @@ export class ComponentFactory {
             id: new IdCreator().create(),
             name: 'New publisher',
             ignore: false,
+            url: 'http://localhost:80/',
+            method: 'GET',
+            payload: '',
             carabinaMeta: {
                 parent,
                 selected: false,
@@ -64,7 +67,13 @@ export class ComponentFactory {
             timeout: 3000,
             port: 80,
             endpoint: '/',
+            method: 'GET',
             avoidable: false,
+            response: {
+                headers: {},
+                status: 200,
+                payload: ''
+            },
             id: new IdCreator().create(),
             name: 'New subscription',
             ignore: false,

@@ -24,7 +24,7 @@ export class ComponentDecycler {
         if (item) {
             clone.carabinaMeta = Object.assign({}, item.carabinaMeta);
             if (clone.carabinaMeta) {
-                delete clone.carabinaMeta.parent;
+                clone.carabinaMeta.parent = null;
             }
         }
         return clone;

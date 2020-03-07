@@ -1,17 +1,14 @@
 import {remote} from "electron";
+import Store from 'electron-store';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
-import {ComponentLoader} from "@/components/component-loader";
+import {ComponentFinder} from '@/components/component-finder';
+import {ComponentLoader} from '@/components/component-loader';
 import {ComponentFactory} from '@/components/component-factory';
-import {ComponentDecycler} from "@/components/component-decycler";
-import {ComponentFinder} from "@/components/component-finder";
+import {ComponentDecycler} from '@/components/component-decycler';
 
-const Store = require('electron-store');
-
-const sidebarRepository = new Store('side-bar');
-
-// rm "/Users/guilherme.moraes/Library/Application Support/carabina/config.json"
+const sidebarRepository = new Store({name: 'side-bar'});
 
 remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
 remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());

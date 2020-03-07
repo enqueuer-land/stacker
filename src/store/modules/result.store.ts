@@ -1,11 +1,10 @@
 import store from '@/store'
+import Store from 'electron-store';
 import {TestFlattener} from "@/components/test-flattener";
 import {TestModel} from 'enqueuer/js/models/outputs/test-model';
 import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 
-const Store = require('electron-store');
-
-const resultRepository = new Store('result');
+const resultRepository = new Store({name: 'result'});
 
 function persist(stage: any) {
     resultRepository.set('responses', stage.responses);

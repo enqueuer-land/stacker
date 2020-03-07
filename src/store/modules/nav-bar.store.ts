@@ -1,11 +1,11 @@
 import store from "@/store";
 import {remote} from "electron";
-const Store = require('electron-store');
+import Store from 'electron-store';
 import {IdCreator} from "@/components/id-creator";
 import {EnvironmentSaver} from "@/environments/environment-saver";
 import {EnvironmentLoader} from "@/environments/environment-loader";
 
-const navBarRepository = new Store('nav-bar');
+const navBarRepository = new Store({name: 'nav-bar'});
 
 remote.getGlobal('eventEmitter').on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
 remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
@@ -25,7 +25,7 @@ export default {
     mutations: {
         environmentSelected: (stage: any, environment: any) => {
             stage.selectedEnvironment = {...environment};
-            navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
+            persist(stage);
         },
         changeSelectedEnvironmentStore: (stage: any, payload: any) => {
             const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
@@ -63,10 +63,14 @@ export default {
         },
         addEnvironment: (stage: any, payload: any) => {
             stage.environments.push(payload);
+            const lastEnvironment = stage.environments[stage.environments.length - 1];
+            stage.selectedEnvironment = {...lastEnvironment};
             persist(stage);
         },
         loadEnvironment: (stage: any) => {
             stage.environments = stage.environments.concat(new EnvironmentLoader().load());
+            const lastEnvironment = stage.environments[stage.environments.length - 1];
+            stage.selectedEnvironment = {...lastEnvironment};
             persist(stage);
         },
         saveEnvironment: (stage: any, payload: any) => {

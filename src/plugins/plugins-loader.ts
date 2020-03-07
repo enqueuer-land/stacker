@@ -1,87 +1,78 @@
-import requireFromString from 'require-from-string';
-import {ComponentTypes} from '@/components/component-types';
-import * as httpPublisher from '@/plugins/http-publisher';
-import * as os from 'os';
 import * as fs from 'fs';
-import * as path from 'path';
+import * as path from "path";
+import {remote} from "electron";
+import Store from 'electron-store';
+import requireFromString from 'require-from-string';
+import * as httpPublisher from '@/plugins/http-publisher';
 
-export type Plugin = {
-    stacker: {
-        type: string;
-        component: ComponentTypes;
-    };
-    template: string;
-    props: {
-        component: string;
-    };
-};
-
+const pluginsRepository = new Store({name: 'plugins'});
 
 //TODO test it
-export default class PluginsLoader {
-    private static instance: PluginsLoader;
+export class PluginsLoader {
     private readonly plugins: any;
+    private readonly pluginsString: string[];
 
-    private constructor() {
+    constructor() {
         this.plugins = {
-            publishers: [],
-            subscriptions: []
+            publishers: {http: httpPublisher.default.publishers.http},
+            subscriptions: {}
         };
+        this.pluginsString = pluginsRepository.get('pluginsString', []);
+        this.pluginsString.forEach((pluginString: string) => this.loadStringPlugin(pluginString));
     }
 
-    public static getInstance(): PluginsLoader {
-        if (!PluginsLoader.instance) {
-            const instance = new PluginsLoader();
-            instance.loadPluginsFromFolders('./plugins', os.homedir() + '/.nqr/stacker/plugins');
-            instance.loadPlugin(httpPublisher.default);
-            PluginsLoader.instance = instance;
+    public getPlugins() {
+        return this.plugins;
+    }
+
+
+    public loadPlugins() {
+        (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
+            .map(file => this.load(file));
+        return this.plugins;
+    }
+
+    private load(file: string) {
+        const stats = fs.statSync(file);
+        if (stats.isDirectory()) {
+            return this.loadDirectory(file);
         }
-        return PluginsLoader.instance;
+        return this.loadFromFileSystem(file);
     }
 
-    public getPlugin(componentType: ComponentTypes, type: string): Plugin | undefined {
-        switch (componentType) {
-            case ComponentTypes.PUBLISHER:
-                return this.plugins.publishers.find((publisher: any) => publisher.type.toLowerCase() === type.toLowerCase());
-            case ComponentTypes.SUBSCRIPTION:
-                return this.plugins.subscriptions.find((subscription: any) => subscription.type.toLowerCase() === type.toLowerCase());
-            default:
-                return undefined;
+    private loadDirectory(dirname: string) {
+        return fs.readdirSync(dirname)
+            .map(file => this.loadFromFileSystem(path.join(dirname, file)));
+    }
+
+    private loadFromFileSystem(filename: string): void {
+        try {
+            const fileContent = fs.readFileSync(filename).toString();
+            this.loadStringPlugin(fileContent);
+            this.pluginsString.push(fileContent);
+            pluginsRepository.set('pluginsString', this.pluginsString);
+        } catch (e) {
+            console.log(e);
         }
     }
 
-    public getProtocols(componentType: ComponentTypes): string[] {
-        switch (componentType) {
-            case ComponentTypes.PUBLISHER:
-                return this.plugins.publishers.map((publisher: any) => publisher.type.toUpperCase());
-            case ComponentTypes.SUBSCRIPTION:
-                return this.plugins.subscriptions.map((subscription: any) => subscription.type.toUpperCase());
+    private loadStringPlugin(pluginString: string) {
+        try {
+            const plugin = requireFromString(pluginString);
+            this.loadPlugin(plugin);
+        } catch (e) {
+            console.log(e);
         }
-        return [];
-    }
-
-    private loadPluginsFromFolders(...directories: string[]): void {
-        directories.forEach(directory => {
-            console.log(`Reading plugins from ${directory}`);
-            try {
-                fs.readdirSync(directory)
-                    .forEach(filename => {
-                        try {
-                            const file = fs.readFileSync(path.join(directory, filename)).toString();
-                            const plugin = requireFromString(file);
-                            this.loadPlugin(plugin);
-                        } catch (e) {
-                            console.log(e);
-                        }
-                    });
-            } catch (e) {
-                console.log(e);
-            }
-        });
     }
 
     private loadPlugin(plugin: any) {
-        this.plugins.publishers = this.plugins.publishers.concat(plugin.publishers || []);
-        this.plugins.subscriptions = this.plugins.subscriptions.concat(plugin.subscriptions || []);
+        this.plugins.publishers = {
+            ...this.plugins.publishers,
+            ...plugin.publishers
+        };
+        this.plugins.subscriptions = {
+            ...this.plugins.subscriptions,
+            ...plugin.subscriptions
+        };
     }
 }

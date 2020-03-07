@@ -12,7 +12,7 @@ import {remote} from "electron";
                         <DropdownSelector
                                 @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                                 :color="componentColor"
-                                :availableList="protocolsList"></DropdownSelector>
+                                :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
                     </template>
                     <!--                    https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Component name" type="text"
@@ -34,8 +34,6 @@ import {remote} from "electron";
     import '@/styles/texts.css';
     import {remote} from 'electron';
     import {mapActions, mapGetters} from 'vuex'
-    import PluginsLoader from "@/plugins/plugins-loader";
-    import {ComponentTypes} from "@/components/component-types";
     import {ComponentStylish} from "@/components/component-stylish";
 
     export default Vue.extend({
@@ -43,15 +41,6 @@ import {remote} from "electron";
         components: {},
         props: {
             component: Object
-        },
-        data: function () {
-            const pluginsLoader = PluginsLoader.getInstance();
-            const publisherProtocols = pluginsLoader.getProtocols(ComponentTypes.PUBLISHER).map(protocol => ({value: protocol}));
-            const subscriptionProtocols = pluginsLoader.getProtocols(ComponentTypes.SUBSCRIPTION).map(protocol => ({value: protocol}));
-            return {
-                publisherProtocols,
-                subscriptionProtocols
-            }
         },
         mounted() {
             remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => this.runComponent(this.component));
@@ -61,15 +50,7 @@ import {remote} from "electron";
         },
         computed: {
             ...mapGetters('side-bar', ['breadcrumbItems']),
-            protocolsList: function () {
-                if (this.component.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
-                    return this.subscriptionProtocols;
-                }
-                if (this.component.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
-                    return this.publisherProtocols;
-                }
-                return undefined;
-            },
+            ...mapGetters('stage', ['protocolsOfComponentList']),
             runButtonStyle: function () {
                 return {
                     "border": 'none',
