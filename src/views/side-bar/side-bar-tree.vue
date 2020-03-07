@@ -17,11 +17,6 @@
         data: function () {
             return {}
         },
-        mounted() {
-            if (this.requisitions.length === 0) {
-                this.createNewComponent({componentType: 'PUBLISHER', startSelected: true});
-            }
-        },
         methods: {
             ...mapMutations('side-bar', ['createNewComponent'])
         },

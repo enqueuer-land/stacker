@@ -1,18 +1,30 @@
 import {remote} from "electron";
+
+const Store = require('electron-store');
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
-import {ComponentFactory} from '@/components/component-factory';
 import {ComponentLoader} from "@/components/component-loader";
+import {ComponentFactory} from '@/components/component-factory';
+import {ComponentDecycler} from "@/components/component-decycler";
+
+const sidebarRepository = new Store('side-bar');
+
+// rm "/Users/guilherme.moraes/Library/Application Support/carabina/config.json"
 
 remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
 remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());
 
+function persist(stage: any) {
+    sidebarRepository.set('selectedComponent', new ComponentDecycler().decycle(stage.selectedComponent));
+    sidebarRepository.set('requisitions', stage.requisitions.map((requisition: any) => new ComponentDecycler().decycle(requisition)));
+}
+
 export default {
     state: {
         textFilter: '',
-        requisitions: [],
-        selectedComponent: null
+        requisitions: sidebarRepository.get('requisitions', []),
+        selectedComponent: sidebarRepository.get('selectedComponent', null),
     },
     mutations: {
         componentSelected: (stage: any, component: {}) => {
@@ -21,15 +33,20 @@ export default {
             }
             stage.selectedComponent = component;
             stage.selectedComponent.carabinaMeta.selected = true;
+            persist(stage);
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
-        addRequisition: (stage: any, component: any) => stage.requisitions.push(component),
+        addRequisition: (stage: any, component: any) => {
+            stage.requisitions.push(component);
+            persist(stage);
+        },
         createNewComponent: (stage: any, payload: any) => {
             if (payload.componentType === ComponentTypes.REQUISITION) {
                 const component = new ComponentFactory().createRequisition(payload.parent);
                 if (!payload.parent) {
                     stage.requisitions.push(component);
                 }
+                persist(stage);
                 return component;
             } else {
                 const parentRequisition = payload.parent || new ComponentFactory().createRequisition();
@@ -42,6 +59,7 @@ export default {
                 if (!payload.parent) {
                     stage.requisitions.push(parentRequisition);
                 }
+                persist(stage);
                 return component;
             }
         },
@@ -49,11 +67,13 @@ export default {
             if (stage.selectedComponent) {
                 stage.selectedComponent[event.attributeName] = event.value;
                 stage.selectedComponent.carabinaMeta.unsaved = true;
+                persist(stage);
             }
         },
         changeAttributeOfComponent: (stage: any, event: any) => {
             event.component[event.attributeName] = event.value;
             event.component.carabinaMeta.unsaved = true;
+            persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
             new ComponentSaver().save(event.component);
@@ -80,6 +100,7 @@ export default {
             if (event.component.requisitions) {
                 event.component.requisitions = event.component.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
             }
+            persist(stage);
         },
     },
     getters: {

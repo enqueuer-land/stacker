@@ -7,13 +7,13 @@ export class ComponentDecycler {
 
     private static removeMetadataFromRequisition(item: any) {
         const clone = ComponentDecycler.removeCarabinaMeta(item);
-        if (item.publishers) {
+        if (clone.publishers) {
             clone.publishers = item.publishers.map((publisher: any) => ComponentDecycler.removeCarabinaMeta(publisher));
         }
-        if (item.subscriptions) {
+        if (clone.subscriptions) {
             clone.subscriptions = item.subscriptions.map((subscription: any) => ComponentDecycler.removeCarabinaMeta(subscription));
         }
-        if (item.requisitions) {
+        if (clone.requisitions) {
             clone.requisitions = item.requisitions.map((requisition: any) => ComponentDecycler.removeMetadataFromRequisition(requisition));
         }
         return clone;
@@ -21,7 +21,9 @@ export class ComponentDecycler {
 
     private static removeCarabinaMeta(item: any): any {
         const clone = Object.assign({}, item);
-        delete clone.carabinaMeta;
+        if (clone.carabinaMeta) {
+            delete clone.carabinaMeta.parent;
+        }
         return clone;
     }
 

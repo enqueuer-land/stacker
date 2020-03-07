@@ -1,41 +1,55 @@
+import store from "@/store";
 import {remote} from "electron";
+const Store = require('electron-store');
 import {IdCreator} from "@/components/id-creator";
 import {EnvironmentSaver} from "@/environments/environment-saver";
 import {EnvironmentLoader} from "@/environments/environment-loader";
-import store from "@/store";
+
+const navBarRepository = new Store('nav-bar');
 
 remote.getGlobal('eventEmitter').on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
 remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
 
 const noEnvironment = {name: 'No environment', role: 'none'};
+
+function persist(stage: any) {
+    navBarRepository.set('environments', stage.environments);
+    navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
+}
+
 export default {
     state: {
-        environments: [noEnvironment],
-        selectedEnvironment: noEnvironment
+        environments: navBarRepository.get('environments', [noEnvironment]),
+        selectedEnvironment: navBarRepository.get('selectedEnvironment', noEnvironment),
     },
     mutations: {
         environmentSelected: (stage: any, environment: any) => {
             stage.selectedEnvironment = {...environment};
+            navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
         },
         changeSelectedEnvironmentStore: (stage: any, payload: any) => {
             const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
             environment.store = payload.store;
             stage.selectedEnvironment = {...environment};
+            persist(stage);
         },
         changeSelectedEnvironmentName: (stage: any, payload: any) => {
             const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
             environment.name = payload.name;
             stage.selectedEnvironment = {...environment};
+            persist(stage);
         },
         deleteEnvironment: (stage: any, payload: any) => {
             stage.environments = stage.environments.filter((item: any) => item.id !== payload.environment.id);
             if (stage.selectedEnvironment.id === payload.environment.id) {
                 stage.selectedEnvironment = {...noEnvironment};
             }
+            persist(stage);
         },
         cloneEnvironment: (stage: any, payload: any) => {
             const clone = {...payload.environment, id: new IdCreator().create()};
             stage.environments.push(clone);
+            persist(stage);
         },
         addNewEnvironment: (stage: any) => {
             const environment = {
@@ -45,12 +59,15 @@ export default {
             };
             stage.environments.push(environment);
             stage.selectedEnvironment = {...environment};
+            persist(stage);
         },
         addEnvironment: (stage: any, payload: any) => {
             stage.environments.push(payload);
+            persist(stage);
         },
         loadEnvironment: (stage: any) => {
             stage.environments = stage.environments.concat(new EnvironmentLoader().load());
+            persist(stage);
         },
         saveEnvironment: (stage: any, payload: any) => {
             new EnvironmentSaver().save(payload.environment);

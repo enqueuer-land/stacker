@@ -3,11 +3,22 @@ import {TestFlattener} from "@/components/test-flattener";
 import {TestModel} from 'enqueuer/js/models/outputs/test-model';
 import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 
+const Store = require('electron-store');
+
+const resultRepository = new Store('result');
+
+function persist(stage: any) {
+    resultRepository.set('responses', stage.responses);
+    resultRepository.set('flattenTests', stage.flattenTests);
+}
+
 export default {
     state: {
-        responses: [] as OutputRequisitionModel[],
-        flattenTests: [] as any[],
+        responses: resultRepository.get('responses', [] as OutputRequisitionModel[]),
+        flattenTests: resultRepository.get('flattenTests', [] as any[]),
         textFilter: '',
+        enqueuerRunningShowModal: false,
+        enqueuerRunningStartTime: null,
         iconFilters: [
             {
                 active: true,
@@ -28,8 +39,6 @@ export default {
                 filter: (test: OutputTestModel) => test.ignored === true
             }
         ],
-        enqueuerRunningShowModal: false,
-        enqueuerRunningStartTime: null
     },
     mutations: {
         disableEnqueuerRunningModal: (stage: any) => {
@@ -47,6 +56,7 @@ export default {
             stage.responses = value;
             stage.flattenTests = value
                 .reduce((acc: any[], test: OutputRequisitionModel) => acc.concat(new TestFlattener().flatten(test)), []);
+            persist(stage);
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
         iconFilterClicked: (stage: any, value: any) => value.active = !value.active,
