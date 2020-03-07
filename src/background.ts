@@ -26,6 +26,7 @@ function createWindow() {
         minHeight: 1000,
         width: 2000,
         height: 1250,
+        // @ts-ignore
         icon: path.join(__static, 'icon.png'),
         webPreferences: {
             nodeIntegration: true
