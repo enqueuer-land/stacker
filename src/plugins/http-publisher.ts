@@ -11,6 +11,7 @@ export default {
                             label-for="method-url">
                         <b-input-group id="method-url">
                             <dropdown-selector
+                                    :defaultSelection="{value: component.method}"
                                     @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                     :availableList="availableMethods"></dropdown-selector>
                             <b-form-input placeholder="Url" type="text"
