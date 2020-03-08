@@ -43,9 +43,6 @@ import {remote} from "electron";
         props: {
             component: Object
         },
-        mounted() {
-            remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => this.runComponent(this.component));
-        },
         methods: {
             ...mapActions('stage', ['runComponent'])
         },

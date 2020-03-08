@@ -21,27 +21,27 @@ const template = [
     {
         label: 'File',
         submenu: [
-            {
-                label: 'New...',
-                accelerator: 'CommandOrControl+N',
-                submenu: [
-                    {
-                        label: 'Requisition',
-                        // @ts-ignore
-                        click: () => global.eventEmitter.emit('newRequisition'),
-                    },
-                    {
-                        label: 'Publisher',
-                        // @ts-ignore
-                        click: () => global.eventEmitter.emit('newPublisher'),
-                    },
-                    {
-                        label: 'Subscription',
-                        // @ts-ignore
-                        click: () => global.eventEmitter.emit('newSubscription'),
-                    }
-                ]
-            },
+            // {
+            //     label: 'New...',
+            //     accelerator: 'CommandOrControl+N',
+            //     submenu: [
+            //         {
+            //             label: 'Requisition',
+            //             // @ts-ignore
+            //             click: () => global.eventEmitter.emit('newRequisition'),
+            //         },
+            //         {
+            //             label: 'Publisher',
+            //             // @ts-ignore
+            //             click: () => global.eventEmitter.emit('newPublisher'),
+            //         },
+            //         {
+            //             label: 'Subscription',
+            //             // @ts-ignore
+            //             click: () => global.eventEmitter.emit('newSubscription'),
+            //         }
+            //     ]
+            // },
             {
                 label: 'Open requisition',
                 accelerator: 'CommandOrControl+O',

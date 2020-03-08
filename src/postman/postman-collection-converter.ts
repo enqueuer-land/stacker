@@ -1,12 +1,10 @@
-import {Collection, Folder, Item, Request, Response, Header} from './postman-types';
+import {Collection, Folder, Header, Item, Request, Response} from './postman-types';
 import {PostmanEventExtractor} from './postman-event-extractor';
 import {Event, InputPublisherModel, InputRequisitionModel, InputSubscriptionModel} from 'enqueuer';
 
 export class PostmanCollectionConverter {
     public convert(postmanCollection: Collection): InputRequisitionModel {
-        const requisition = this.createRequisition(postmanCollection.item, postmanCollection.info.name);
-        console.log(requisition);
-        return requisition;
+        return this.createRequisition(postmanCollection.item, postmanCollection.info.name);
     }
 
     private createRequisition(items: (Item | Folder)[], name: string) {

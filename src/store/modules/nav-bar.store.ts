@@ -13,14 +13,18 @@ remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => Environmen
 const noEnvironment = {name: 'No environment', role: 'none'};
 
 function persist(stage: any) {
+    remote.getGlobal('eventEmitter').emit('setEnqueuerStore', stage.selectedEnvironment.store);
     navBarRepository.set('environments', stage.environments);
     navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
 }
 
+const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
+remote.getGlobal('eventEmitter').emit('setEnqueuerStore', selectedEnvironment.store);
+
 export default {
     state: {
         environments: navBarRepository.get('environments', [noEnvironment]),
-        selectedEnvironment: navBarRepository.get('selectedEnvironment', noEnvironment),
+        selectedEnvironment: selectedEnvironment,
     },
     mutations: {
         environmentSelected: (stage: any, environment: any) => {

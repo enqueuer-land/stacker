@@ -1,3 +1,4 @@
+import store from '@/store'
 import {remote} from "electron";
 import Store from 'electron-store';
 import {InputRequisitionModel} from 'enqueuer';
@@ -10,9 +11,19 @@ import {ComponentDecycler} from '@/components/component-decycler';
 import {ComponentParent} from "@/components/component-parent";
 
 const sidebarRepository = new Store({name: 'side-bar'});
-
-remote.getGlobal('eventEmitter').on('openComponent', () => ComponentLoader.loadComponents());
-remote.getGlobal('eventEmitter').on('importPostmanCollection', () => ComponentLoader.importPostmanCollection());
+//    //
+remote.getGlobal('eventEmitter')
+    .on('openComponent', () => (remote.dialog
+        .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
+        .map(file => ComponentLoader.importFile(file))
+        .filter(file => file)
+        .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
+remote.getGlobal('eventEmitter')
+    .on('importPostmanCollection', () => (remote.dialog
+        .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
+        .map(file => ComponentLoader.importFromPostman(file))
+        .filter(file => file)
+        .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
 
 function persist(stage: any) {
     sidebarRepository.set('selectedComponent', new ComponentDecycler().decycle(stage.selectedComponent));

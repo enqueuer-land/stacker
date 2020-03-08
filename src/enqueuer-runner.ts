@@ -18,6 +18,10 @@ export default class EnqueuerRunner {
             spawn('mkdir', [os.homedir() + '/.nqr']);
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
+            //TODO set enqueuer env
+
+            // @ts-ignore
+            global.eventEmitter.on('setEnqueuerStore', (data: any) => console.log('setEnqueuerStore: ' + JSON.stringify(data)));
             // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
