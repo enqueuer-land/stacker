@@ -54,11 +54,9 @@
                 if (this.selectedComponent && this.selectedComponent.carabinaMeta) {
                     if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
                         const publisher = this.plugins.publishers[this.selectedComponent.type.toLowerCase()];
-                        console.log(this.selectedComponent, publisher);
                         return publisher;
                     } else if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
                         const subscription = this.plugins.subscriptions[this.selectedComponent.type.toLowerCase()];
-                        console.log(this.selectedComponent, subscription);
                         return subscription;
                     }
                 }

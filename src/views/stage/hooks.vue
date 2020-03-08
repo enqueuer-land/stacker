@@ -48,6 +48,10 @@
             };
         },
         watch: {
+            hooks: function () {
+                this.expanded = false;
+                this.events = this.hooks.map((event, index) => ({caption: event, state: false, index}));
+            },
             component: function () {
                 this.expanded = false;
                 this.events = this.hooks.map((event, index) => ({caption: event, state: false, index}));

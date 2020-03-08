@@ -77,7 +77,7 @@ export class ComponentFactory {
                 payload: ''
             },
             id: new IdCreator().create(),
-            name: 'New subscription' + parent.subscriptions.length,
+            name: 'New subscription ' + parent.subscriptions.length,
             ignore: false,
             carabinaMeta: {
                 parent,

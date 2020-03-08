@@ -47,6 +47,11 @@
                 componentStylish: new ComponentStylish(this.component)
             }
         },
+        watch: {
+          'component.type': function () {
+              this.componentStylish = new ComponentStylish(this.component);
+          },
+        },
         computed: {
             ...mapGetters('side-bar', []),
             componentNameTagStyle: function () {

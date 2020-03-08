@@ -18,7 +18,9 @@
         },
         data: function () {
             const initial = [...this.value];
-            if (initial.length === 0) {
+            if (initial.length === 0 || initial
+                .every(assertion => Object.values(assertion)
+                    .every(value => value !== '') && Object.keys(assertion).length > 0)) {
                 initial.push({});
             }
             return {
@@ -27,7 +29,7 @@
         },
         methods: {
             emit: function () {
-                this.$emit('change', this.assertions);
+                this.$emit('change', this.assertions.filter(assertion => Object.keys(assertion).length > 0));
                 this.needsToRemoveRow();
             },
             needsToRemoveRow: function () {
