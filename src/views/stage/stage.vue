@@ -1,6 +1,14 @@
 <template>
     <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
-        <template v-if="selectedComponent">
+        <b-container v-if="installingPluginModal" id="installing-plugin-modal" fluid="">
+            <b-row style="height: 100%" align-h="center" align-v="center">
+                <b-col cols="auto">
+                    <b-spinner style="width: 10rem; height: 10rem; color: var(--carabina-theme-color)"
+                               label="Large Spinner"></b-spinner>
+                </b-col>
+            </b-row>
+        </b-container>
+        <template v-else-if="selectedComponent">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
             <div class="pt-3" id="body-container">
@@ -40,7 +48,7 @@
             }
         },
         computed: {
-            ...mapGetters('stage', ['plugins']),
+            ...mapGetters('stage', ['plugins', 'installingPluginModal']),
             ...mapGetters('side-bar', ['selectedComponent']),
             componentBody: function () {
                 if (this.selectedComponent && this.selectedComponent.carabinaMeta) {
@@ -78,5 +86,15 @@
 
     #stage-footer {
         height: var(--carabina-footer-size);
+    }
+
+    #installing-plugin-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.5);
     }
 </style>

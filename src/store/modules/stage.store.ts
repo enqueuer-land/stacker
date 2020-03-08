@@ -7,8 +7,8 @@ import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from "@/components/component-decycler";
 import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 
-remote.getGlobal('eventEmitter').on('loadPlugin', () => store.commit('stage/loadPlugin'));
-remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
+remote.getGlobal('eventEmitter').on('loadPlugin', () => store.dispatch('stage/loadPlugins'));
+remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', {raw: data}));
 // remote.getGlobal('eventEmitter').on('enqueuerError', (data: any) => store.commit('stage/addEnqueuerLog', data));
 // remote.getGlobal('eventEmitter').on('messageReceivedFromEnqueuer', (data: any) => console.log(data));
 
@@ -38,18 +38,29 @@ function prepareRequisition(msg: any) {
 
 export default {
     state: {
-        pluginsLoader: new PluginsLoader(),
+        plugins: new PluginsLoader().getPlugins(),
         enqueuerLogParser: new EnqueuerLogParser(),
+        installingPluginModal: false,
     },
     mutations: {
-        loadPlugin: (stage: any) => {
-            stage.pluginsLoader.loadPlugins();
-        },
         addEnqueuerLog: (stage: any, data: any) => {
-            stage.enqueuerLogParser.addLogs(data);
+            if (data.raw) {
+                stage.enqueuerLogParser.addLogs(data.raw);
+            } else if (data.parsed) {
+                stage.enqueuerLogParser.addParsedLogs(data.parsed);
+            }
+        },
+        addInstallingPluginModal: (stage: any) => {
+            stage.installingPluginModal = true;
+        },
+        removeInstallingPluginModal: (stage: any) => {
+            stage.installingPluginModal = false;
         },
     },
     actions: {
+        loadPlugins: async ({state}: any) => {
+            state.plugins = new PluginsLoader().loadPlugins();
+        },
         runComponent: async (_: any, msg: InputRequisitionModel) => {
             const decycled = prepareRequisition(msg);
             store.commit('result/runRequisition', decycled);
@@ -58,15 +69,16 @@ export default {
         },
     },
     getters: {
-        plugins: (state: any) => state.pluginsLoader.getPlugins(),
+        plugins: (state: any) => state.plugins,
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
+        installingPluginModal: (state: any) => state.installingPluginModal,
         environments: (state: any) => state.environments,
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {
             switch (componentType) {
                 case ComponentTypes.PUBLISHER:
-                    return Object.keys(state.pluginsLoader.getPlugins().publishers).map((publisherKey: any) => ({value: publisherKey.toUpperCase()}));
+                    return Object.keys(state.plugins.publishers).map((publisherKey: any) => ({value: publisherKey.toUpperCase()}));
                 case ComponentTypes.SUBSCRIPTION:
-                    return Object.keys(state.pluginsLoader.getPlugins().subscriptions).map((subscriptionKey: any) => ({value: subscriptionKey.toUpperCase()}));
+                    return Object.keys(state.plugins.subscriptions).map((subscriptionKey: any) => ({value: subscriptionKey.toUpperCase()}));
             }
             return [];
         },

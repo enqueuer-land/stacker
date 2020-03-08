@@ -19,12 +19,7 @@ export default class EnqueuerRunner {
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
             // @ts-ignore
-            global.eventEmitter.on('addPlugins', async (plugins: string[]) => {
-                plugins.forEach(plugin => {
-                    console.log('Add module: ' + plugin);
-                    this.enqueuerProcess.send({event: 'ADD_MODULE', value: plugin});
-                });
-            });
+            global.eventEmitter.on('resetEnqueuer', () => console.log('restart enqueuer'));
             // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);

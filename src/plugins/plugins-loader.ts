@@ -1,12 +1,14 @@
 import * as fs from 'fs';
 import * as os from 'os';
+import store from "@/store";
 import * as path from "path";
 import {remote} from "electron";
 import Store from 'electron-store';
-import {execSync} from 'child_process';
+import {exec} from 'child_process';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
+import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 
 const pluginsRepository = new Store({name: 'plugins'});
 
@@ -23,33 +25,33 @@ export class PluginsLoader {
         this.pluginsString = pluginsRepository.get('pluginsString', []);
         this.pluginsString
             .forEach((pluginString: string) => this.loadStringPlugin(pluginString));
-        this.tellEnqueuerToAddModules();
     }
 
     public getPlugins(): object {
         return this.plugins;
     }
 
-    public loadPlugins(): void {
-        (remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']}) || [])
-            .forEach(file => this.load(file));
-        this.tellEnqueuerToAddModules();
+    public loadPlugins(): object {
+        const pickedFiles = remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']});
+        ((pickedFiles) || []).forEach(file => this.loadFromFileSystem(file));
+        remote.getGlobal('eventEmitter').emit('resetEnqueuer');
+        return this.plugins;
     }
 
-    private load(file: string): void {
+    private loadFromFileSystem(file: string): void {
         const stats = fs.statSync(file);
         if (stats.isDirectory()) {
             this.loadDirectory(file);
         }
-        this.loadFromFileSystem(file);
+        this.loadFileFromFileSystem(file);
     }
 
     private loadDirectory(dirname: string): void {
         fs.readdirSync(dirname)
-            .map(file => this.loadFromFileSystem(path.join(dirname, file)));
+            .forEach(file => this.loadFileFromFileSystem(path.join(dirname, file)));
     }
 
-    private loadFromFileSystem(filename: string): void {
+    private loadFileFromFileSystem(filename: string): void {
         try {
             const fileContent = fs.readFileSync(filename).toString();
             const plugin = this.loadStringPlugin(fileContent);
@@ -71,20 +73,21 @@ export class PluginsLoader {
         }
     }
 
-    private tellEnqueuerToAddModules() {
-        remote.getGlobal('eventEmitter')
-            .emit('addPlugins', PluginsLoader.getEnqueuerDependencies(this.plugins));
-    }
-
-    private installEnqueuerPlugins(plugin: any): string[] {
+    private installEnqueuerPlugins(plugin: any): void {
         const enqueuerDependencies = PluginsLoader.getEnqueuerDependencies(plugin);
-        return enqueuerDependencies
+        enqueuerDependencies
             .filter(enqueuerPlugin => enqueuerPlugin)
-            .map(enqueuerPlugin => {
-                console.log(`npm install --prefix ${os.homedir()}/.nqr '${enqueuerPlugin}'`);
-                const executed = execSync(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`).toString();
-                console.log(`Installing plugin '${enqueuerPlugin}' ${executed}`);
-                return enqueuerPlugin;
+            .forEach(enqueuerPlugin => {
+                store.commit('stage/addInstallingPluginModal');
+                store.commit('stage/addEnqueuerLog', {
+                    parsed: new EnqueuerLogParser().generateLog(`Installing '${enqueuerPlugin}'`, 'INFO')
+                });
+                exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
+                    store.commit('stage/addEnqueuerLog', {
+                        parsed: new EnqueuerLogParser().generateLog(`'${enqueuerPlugin}' installation: ${stdout}`, 'INFO')
+                    });
+                    store.commit('stage/removeInstallingPluginModal');
+                }));
             });
     }
 

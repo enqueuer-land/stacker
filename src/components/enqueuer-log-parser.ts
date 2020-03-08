@@ -1,6 +1,6 @@
 import {IdCreator} from '@/components/id-creator';
 
-type Logs = {
+type Log = {
     timestamp: string;
     level: string;
     message: string;
@@ -10,11 +10,24 @@ type Logs = {
 //TODO test it
 export class EnqueuerLogParser {
 
-    private readonly logs: Logs[] = [];
+    private readonly logs: Log[] = [];
     private readonly regExp = /\[([^\]]*)\] \[([^\]]*)\] - (.*)/;
 
-    public getLogs(): Logs[] {
+    public getLogs(): Log[] {
         return this.logs;
+    }
+
+    public generateLog(message: string, level: string): Log {
+        return {
+            id: new IdCreator().create(),
+            timestamp: this.formatDate(new Date()),
+            level: level.toUpperCase(),
+            message
+        }
+    }
+
+    public addParsedLogs(parsed: Log) {
+        this.logs.push(parsed)
     }
 
     public addLogs(rawLog: string): void {
@@ -40,7 +53,6 @@ export class EnqueuerLogParser {
             log.message = log.message.concat(remaining);
         }
     }
-
 
     private formatDate(timestamp: Date) {
         return `${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}:${timestamp
