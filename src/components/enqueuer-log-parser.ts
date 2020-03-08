@@ -8,8 +8,13 @@ type Log = {
 };
 
 export class EnqueuerLogParser {
+    private bufferSize: number;
 
-    private readonly logs: Log[] = [];
+    constructor(bufferSize = 50) {
+        this.bufferSize = bufferSize;
+    }
+
+    private logs: Log[] = [];
     private readonly regExp = /(\[[^\]]*\]).*(\[[^\]]*\]) - (.*)/;
 
     public getLogs(): Log[] {
@@ -26,7 +31,7 @@ export class EnqueuerLogParser {
     }
 
     public addParsedLogs(parsed: Log) {
-        this.logs.push(parsed)
+        this.addLogToBuffer(parsed);
     }
 
     public addLogs(rawLog: string): void {
@@ -47,8 +52,14 @@ export class EnqueuerLogParser {
                     level: level.substr(1, level.length - 2).toUpperCase(),
                     message: splitted.shift() as string
                 };
-                this.logs.push(log);
+                this.addLogToBuffer(log);
             });
+    }
+
+    private addLogToBuffer(parsed: Log) {
+        this.logs.push(parsed);
+        this.logs = this.logs
+            .filter((log, index) => index >= this.logs.length - 50);
     }
 
     private static formatDate(timestamp: Date) {

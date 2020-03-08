@@ -20,15 +20,14 @@
                  body-text-variant="nqr-logs-body"
                  footer-bg-variant="nqr-logs-footer"
                  footer-text-variant="nqr-logs-footer">
-            <div v-for="log in enqueuerLogs" :key="log.id">
-                <div class="carabina-text"
-                     :style="logLevelStyle(log.level)">
+            <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text" style="font-size: 14px">
+                <div :style="logLevelStyle(log.level)">
                     {{log.level}}
                 </div>
-                <span class="carabina-text pl-2" style="color: var(--carabina-text-color)">
+                <span class="pl-2" style="color: var(--carabina-text-color)">
                     {{log.timestamp}}
                 </span>
-                <span class="carabina-text pl-3">
+                <span class="pl-3">
                     {{log.message}}
                 </span>
             </div>
@@ -53,6 +52,14 @@
                 }
             }
         },
+        mounted() {
+            this.$root.$on('bv::modal::shown', () => {
+                const modalBodyElement = document.querySelector('#enqueuer-logs-modal___BV_modal_body_');
+                if (modalBodyElement) {
+                    modalBodyElement.scrollTop = modalBodyElement.scrollHeight;
+                }
+            })
+        },
         computed: {
             ...mapGetters('stage', ['enqueuerLogs', 'enqueuerErrors']),
             lastLog: function () {
@@ -62,8 +69,8 @@
                 return (level) => {
                     return {
                         color: this.logLevelColorMap[level.toLowerCase()] || 'var(--carabina-text-color)',
-                        width: '60px',
-                        display: 'inline-flex'
+                        width: '50px',
+                        display: 'inline-flex',
                     }
                 };
             }

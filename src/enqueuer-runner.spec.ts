@@ -1,6 +1,5 @@
 import {spawn} from 'child_process';
 import EnqueuerRunner from '@/enqueuer-runner';
-import {EventEmitter} from "events";
 
 jest.mock('electron');
 jest.mock('child_process');

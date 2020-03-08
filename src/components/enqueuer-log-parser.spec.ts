@@ -52,4 +52,16 @@ describe('EnqueuerLogParser', () => {
         expect(logs[1].message).toBe('message2');
         expect(logs[1].timestamp).toBeDefined();
     });
+
+    it('should limit log buffer', () => {
+        const bufferSize = 50;
+        const enqueuerLogParser = new EnqueuerLogParser(bufferSize);
+        for (let i = 0; i < bufferSize + 1; ++i) {
+            enqueuerLogParser.addParsedLogs(EnqueuerLogParser.generateLog('message', 'level'));
+        }
+
+        const logs = enqueuerLogParser.getLogs();
+
+        expect(logs.length).toBe(bufferSize);
+    });
 });
