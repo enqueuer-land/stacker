@@ -95,6 +95,9 @@
     "last 2 versions"
   ],
   "jest": {
+    "testMatch": [
+      "**/src/**/*.spec.ts"
+    ],
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
     "globals": {
       "ts-jest": {
@@ -103,7 +106,7 @@
     },
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "tests/**/*.spec.ts",
+      "**/src/**/*.spec.ts",
       "!**/node_modules/**"
     ],
     "coverageReporters": [

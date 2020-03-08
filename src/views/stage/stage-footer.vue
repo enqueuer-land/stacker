@@ -28,7 +28,7 @@
                 <span class="carabina-text pl-2" style="color: var(--carabina-text-color)">
                     {{log.timestamp}}
                 </span>
-                <span class="carabina-text pl-2">
+                <span class="carabina-text pl-3">
                     {{log.message}}
                 </span>
             </div>

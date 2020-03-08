@@ -79,13 +79,11 @@ export class PluginsLoader {
             .filter(enqueuerPlugin => enqueuerPlugin)
             .forEach(enqueuerPlugin => {
                 store.commit('stage/addInstallingPluginModal');
-                store.commit('stage/addEnqueuerLog', {
-                    parsed: new EnqueuerLogParser().generateLog(`Installing '${enqueuerPlugin}'`, 'INFO')
-                });
+                store.commit('stage/addLog', EnqueuerLogParser
+                    .generateLog(`Installing '${enqueuerPlugin}'`, 'INFO'));
                 exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
-                    store.commit('stage/addEnqueuerLog', {
-                        parsed: new EnqueuerLogParser().generateLog(`'${enqueuerPlugin}' installation: ${stdout}`, 'INFO')
-                    });
+                    store.commit('stage/addLog', EnqueuerLogParser
+                        .generateLog(`'${enqueuerPlugin}' installation: ${stdout}`, 'INFO'));
                     store.commit('stage/removeInstallingPluginModal');
                 }));
             });

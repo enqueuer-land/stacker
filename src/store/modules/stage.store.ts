@@ -8,7 +8,7 @@ import {ComponentDecycler} from "@/components/component-decycler";
 import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 
 remote.getGlobal('eventEmitter').on('loadPlugin', () => store.dispatch('stage/loadPlugins'));
-remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', {raw: data}));
+remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
 // remote.getGlobal('eventEmitter').on('enqueuerError', (data: any) => store.commit('stage/addEnqueuerLog', data));
 // remote.getGlobal('eventEmitter').on('messageReceivedFromEnqueuer', (data: any) => console.log(data));
 
@@ -44,11 +44,10 @@ export default {
     },
     mutations: {
         addEnqueuerLog: (stage: any, data: any) => {
-            if (data.raw) {
-                stage.enqueuerLogParser.addLogs(data.raw);
-            } else if (data.parsed) {
-                stage.enqueuerLogParser.addParsedLogs(data.parsed);
-            }
+            stage.enqueuerLogParser.addLogs(data);
+        },
+        addLog: (stage: any, data: any) => {
+            stage.enqueuerLogParser.addParsedLogs(data);
         },
         addInstallingPluginModal: (stage: any) => {
             stage.installingPluginModal = true;

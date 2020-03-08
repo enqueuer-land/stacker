@@ -19,8 +19,6 @@ export default class EnqueuerRunner {
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
             // @ts-ignore
-            global.eventEmitter.on('resetEnqueuer', () => console.log('restart enqueuer'));
-            // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
                 // @ts-ignore

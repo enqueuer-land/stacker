@@ -4,18 +4,18 @@
             <b-row style="height: 100%" align-h="center" align-v="center">
                 <b-col cols="auto">
                     <b-spinner style="width: 10rem; height: 10rem; color: var(--carabina-theme-color)"
-                               label="Large Spinner"></b-spinner>
+                               label="Loading plugin"></b-spinner>
                 </b-col>
             </b-row>
         </b-container>
-        <template v-else-if="selectedComponent">
+        <template v-if="selectedComponent">
             <StageHeader :component="selectedComponent"
                          style="height: var(--carabina-header-size);"></StageHeader>
             <div class="pt-3" id="body-container">
                 <template v-if="selectedComponent && selectedComponent.carabinaMeta">
                     <Hooks class="mb-4" :component="selectedComponent" :hooks="hooks"></Hooks>
                     <keep-alive>
-                        <StageBodyRequisition v-if="selectedComponent.carabinaMeta.componentName === 'REQUISITION'"
+                        <StageBodyRequisition v-if="componentIsRequisition"
                                               :component="selectedComponent"></StageBodyRequisition>
                         <component v-else-if="componentBody" :is="componentBody"
                                    v-bind="{component: selectedComponent}"></component>
@@ -50,14 +50,15 @@
         computed: {
             ...mapGetters('stage', ['plugins', 'installingPluginModal']),
             ...mapGetters('side-bar', ['selectedComponent']),
+            componentIsRequisition: function() {
+                return this.selectedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION;
+            },
             componentBody: function () {
                 if (this.selectedComponent && this.selectedComponent.carabinaMeta) {
                     if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
-                        const publisher = this.plugins.publishers[this.selectedComponent.type.toLowerCase()];
-                        return publisher;
+                        return this.plugins.publishers[this.selectedComponent.type.toLowerCase()];
                     } else if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
-                        const subscription = this.plugins.subscriptions[this.selectedComponent.type.toLowerCase()];
-                        return subscription;
+                        return this.plugins.subscriptions[this.selectedComponent.type.toLowerCase()];
                     }
                 }
                 return undefined;
