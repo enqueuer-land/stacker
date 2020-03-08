@@ -6,11 +6,12 @@ import {PluginsLoader} from "@/plugins/plugins-loader";
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from "@/components/component-decycler";
 import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
+import {ComponentParent} from "@/components/component-parent";
 
 remote.getGlobal('eventEmitter').on('loadPlugin', () => store.dispatch('stage/loadPlugins'));
 remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
-// remote.getGlobal('eventEmitter').on('enqueuerError', (data: any) => store.commit('stage/addEnqueuerLog', data));
-// remote.getGlobal('eventEmitter').on('messageReceivedFromEnqueuer', (data: any) => console.log(data));
+remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => store.commit('stage/runCurrentlySelectedComponent'));
+remote.getGlobal('eventEmitter').on('runHighestParentOfSelectedComponent', () => store.commit('stage/runHighestParentOfSelectedComponent'));
 
 function prepareRequisition(msg: any) {
     const componentName = msg.carabinaMeta.componentName;
@@ -19,19 +20,6 @@ function prepareRequisition(msg: any) {
         decycled = {publishers: [decycled], name: decycled.name, id: new IdCreator().create()};
     } else if (componentName === ComponentTypes.SUBSCRIPTION) {
         decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
-    }
-    const selectedEnvironment = store.getters['nav-bar/selectedEnvironment'];
-    if (selectedEnvironment && selectedEnvironment.store) {
-        if (decycled.onInit) {
-            decycled.onInit.store = {
-                ...selectedEnvironment.store,
-                ...decycled.onInit.store
-            };
-        } else {
-            decycled.onInit = {
-                store: selectedEnvironment.store
-            };
-        }
     }
     return decycled;
 }
@@ -55,6 +43,18 @@ export default {
         removeInstallingPluginModal: (stage: any) => {
             stage.installingPluginModal = false;
         },
+        runCurrentlySelectedComponent: () => {
+            const selectedComponent = store.getters['side-bar/selectedComponent'];
+            store.dispatch('stage/runComponent', selectedComponent)
+                .then(() => console.log('dispatched'));
+        },
+        runHighestParentOfSelectedComponent: () => {
+            const selectedComponent = store.getters['side-bar/selectedComponent'];
+            const highestParent = new ComponentParent(selectedComponent).findHighestParent();
+            console.log(highestParent);
+            store.dispatch('stage/runComponent', highestParent)
+                .then(() => console.log('dispatched'));
+        }
     },
     actions: {
         loadPlugins: async ({state}: any) => {
