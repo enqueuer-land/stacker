@@ -14,8 +14,9 @@
                     </keep-alive>
                 </template>
             </div>
-            <StageFooter style="height: var(--carabina-footer-size)"></StageFooter>
         </template>
+        <div v-else style="height: calc(var(--carabina-header-size) + var(--carabina-body-size))"></div>
+        <StageFooter id="stage-footer"></StageFooter>
     </div>
 </template>
 
@@ -73,5 +74,9 @@
         overflow-y: scroll;
         background-color: var(--carabina-header-background-darker-color);
         height: var(--carabina-body-size);
+    }
+
+    #stage-footer {
+        height: var(--carabina-footer-size);
     }
 </style>

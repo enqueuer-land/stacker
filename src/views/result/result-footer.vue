@@ -67,7 +67,7 @@
     }
 
     .label-text {
-        font-size: 14px;
+        font-size: 16px;
         text-align: right;
         font-weight: lighter;
         color: var(--carabina-text-darker-color);

@@ -23,24 +23,28 @@ const plugin = {
             },
             data: function () {
                 console.log('data', this.component);
+                const content = this.getContent();
                 return {
-                    ...this.getContent()
+                    ...content
                 }
+            },
+            mounted: function() {
+                console.log('shell mounted', this.$state);
+                this.$parent.updateAttribute('options', this.options);
+                this.$parent.updateAttribute('command', this.command);
             },
             methods: {
                 getContent: function () {
                     return {
                         options: (this.component && this.component.options) || {'timeout': 10000, maxBuffer: 1024, killSignal: 31},
-                        command: (this.component && this.component.command) || '',
+                        command: (this.component && this.component.command) || 'echo "stacker"',
                     }
                 },
                 onOptionsChange: function (value) {
-                    console.log('onOptionsChange', value);
                     this.options = value;
                     this.$parent.updateAttribute('options', value);
                 },
                 onCommandChange: function (value) {
-                    console.log('onCommandChange', value);
                     this.command = value;
                     this.$parent.updateAttribute('command', value);
                 }

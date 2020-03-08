@@ -24,6 +24,7 @@
             </b-col>
         </b-row>
         <b-modal v-if="selectedEnvironment && selectedEnvironment.role !== 'none'" id="view-environments-modal"
+                 no-fade
                  centered
                  size="xl" scrollable
                  :title="selectedEnvironment.name"
@@ -39,6 +40,7 @@
         </b-modal>
 
         <b-modal id="manage-environments-modal" size="lg" scrollable
+                 no-fade
                  centered
                  title="Manage environments"
                  header-bg-variant="header"

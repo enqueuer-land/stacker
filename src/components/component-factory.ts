@@ -35,6 +35,7 @@ export class ComponentFactory {
             }
         };
         if (parent) {
+            requisition.name = requisition.name + ' ' + parent.requisitions.length;
             parent.requisitions.push(requisition);
             parent.carabinaMeta.collapsed = false;
         }
@@ -45,7 +46,7 @@ export class ComponentFactory {
         const publisher = {
             type: 'HTTP',
             id: new IdCreator().create(),
-            name: 'New publisher',
+            name: 'New publisher ' + parent.publishers.length,
             ignore: false,
             url: 'http://localhost:80/',
             method: 'GET',
@@ -76,7 +77,7 @@ export class ComponentFactory {
                 payload: ''
             },
             id: new IdCreator().create(),
-            name: 'New subscription',
+            name: 'New subscription' + parent.subscriptions.length,
             ignore: false,
             carabinaMeta: {
                 parent,

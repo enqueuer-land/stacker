@@ -16,10 +16,8 @@ export default class EnqueuerRunner {
     public run(): void {
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
-            this.enqueuerProcess = spawn('enqueuer', [' -b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+            this.enqueuerProcess = spawn('enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
-            this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
-            this.enqueuerProcess.send({event: 'GET_ASSERTERS'});
             // @ts-ignore
             global.eventEmitter.on('addPlugins', async (plugins: string[]) => {
                 plugins.forEach(plugin => {
@@ -40,16 +38,10 @@ export default class EnqueuerRunner {
     }
 
     private registerChildListeners(): void {
-        this.enqueuerProcess.stdout.on('data', (data: string) => {
-            // @ts-ignore
-            global.eventEmitter.emit('enqueuerLog', data)
-            console.log('enqueuerLog: ' + data.toString());
-        });
-        this.enqueuerProcess.stderr.on('data', (data: string) => {
-            // @ts-ignore
-            global.eventEmitter.emit('enqueuerError', data);
-            console.log('enqueuerError: ' + data.toString());
-        });
+        // @ts-ignore
+        this.enqueuerProcess.stdout.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerLog', data.toString()));
+        // @ts-ignore
+        this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
         this.enqueuerProcess.on('error', (error: any) => console.log(`error: ${error.message}`));
         this.enqueuerProcess.on("close", (code: number) => console.log(`Enqueuer sub process exited with code: ${code}`));
@@ -67,6 +59,9 @@ export default class EnqueuerRunner {
     }
 
     private onMessageReceived(message: any): void {
+        // @ts-ignore
+        global.eventEmitter.emit('messageReceivedFromEnqueuer', message);
+
         if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
             const requisitionOutput: OutputRequisitionModel = message.value.requisition;
             const responsesMap = this.responsesMap[requisitionOutput.id.toString()];

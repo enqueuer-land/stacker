@@ -5,8 +5,12 @@ import {IdCreator} from '@/components/id-creator';
 import {PluginsLoader} from "@/plugins/plugins-loader";
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from "@/components/component-decycler";
+import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 
 remote.getGlobal('eventEmitter').on('loadPlugin', () => store.commit('stage/loadPlugin'));
+remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
+// remote.getGlobal('eventEmitter').on('enqueuerError', (data: any) => store.commit('stage/addEnqueuerLog', data));
+// remote.getGlobal('eventEmitter').on('messageReceivedFromEnqueuer', (data: any) => console.log(data));
 
 function prepareRequisition(msg: any) {
     const componentName = msg.carabinaMeta.componentName;
@@ -35,10 +39,14 @@ function prepareRequisition(msg: any) {
 export default {
     state: {
         pluginsLoader: new PluginsLoader(),
+        enqueuerLogParser: new EnqueuerLogParser(),
     },
     mutations: {
         loadPlugin: (stage: any) => {
             stage.pluginsLoader.loadPlugins();
+        },
+        addEnqueuerLog: (stage: any, data: any) => {
+            stage.enqueuerLogParser.addLogs(data);
         },
     },
     actions: {
@@ -51,6 +59,7 @@ export default {
     },
     getters: {
         plugins: (state: any) => state.pluginsLoader.getPlugins(),
+        enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
         environments: (state: any) => state.environments,
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {
             switch (componentType) {
@@ -61,21 +70,6 @@ export default {
             }
             return [];
         },
-        // componentBody: (state: any) => (selectedComponent: any) => {
-        //     if (selectedComponent && selectedComponent.carabinaMeta) {
-        //         switch (selectedComponent.carabinaMeta.componentName) {
-        //             case ComponentTypes.PUBLISHER:
-        //                 return state.pluginsLoader.getPlugins().publishers
-        //                     .find((publisher: any) => publisher.type.toLowerCase() === selectedComponent.type.toLowerCase());
-        //             case ComponentTypes.SUBSCRIPTION:
-        //                 return state.pluginsLoader.getPlugins().subscriptions
-        //                     .find((subscription: any) => subscription.type.toLowerCase() === selectedComponent.type.toLowerCase());
-        //             default:
-        //                 return undefined;
-        //         }
-        //     }
-        // }
-
     },
     namespaced: true
 };

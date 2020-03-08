@@ -74,6 +74,8 @@
 
     .dropdown-toggle-split {
         filter: brightness(0.85);
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     .dropdown:hover .btn-creators {
