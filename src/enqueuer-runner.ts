@@ -12,16 +12,16 @@ type ResponseMap = {
 export default class EnqueuerRunner {
     private enqueuerProcess?: ChildProcess | any;
     private responsesMap: ResponseMap = {};
+    private enqueuerStore: any = {};
 
     public run(): void {
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
-            this.enqueuerProcess = spawn('enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+            this.enqueuerProcess = spawn('enqueuer', ['-b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
             this.registerChildListeners();
-            //TODO set enqueuer env
 
             // @ts-ignore
-            global.eventEmitter.on('setEnqueuerStore', (data: any) => console.log('setEnqueuerStore: ' + JSON.stringify(data)));
+            global.eventEmitter.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
             // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
@@ -46,6 +46,8 @@ export default class EnqueuerRunner {
     }
 
     private sendRequisition(requisitionInput: InputRequisitionModel): Promise<OutputRequisitionModel[]> {
+        this.enqueuerProcess.send({event: 'CLEAN_STORE'});
+        this.enqueuerProcess.send({event: 'SET_STORE', value: this.enqueuerStore});
         this.enqueuerProcess.send({event: 'RUN_REQUISITION', value: requisitionInput});
         return new Promise(resolve => {
             this.responsesMap[requisitionInput.id.toString()] = {
