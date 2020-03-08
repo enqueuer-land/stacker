@@ -1,4 +1,3 @@
-//TODO test it
 export class ComponentDecycler {
 
     public decycle(component: any) {
@@ -24,7 +23,7 @@ export class ComponentDecycler {
         if (item) {
             clone.carabinaMeta = Object.assign({}, item.carabinaMeta);
             if (clone.carabinaMeta) {
-                clone.carabinaMeta.parent = null;
+                delete clone.carabinaMeta.parent;
             }
         }
         return clone;

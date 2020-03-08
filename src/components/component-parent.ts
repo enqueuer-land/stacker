@@ -6,6 +6,14 @@ export class ComponentParent {
         this.component = component;
     }
 
+    public findHighestParent(): any {
+        const parent = this.component.carabinaMeta.parent;
+        if (parent) {
+            return new ComponentParent(parent).findHighestParent();
+        }
+        return this.component;
+    }
+
     public isGrandChildOf(parentComponent: any): boolean {
         const parent = this.component.carabinaMeta.parent;
         if (parent) {
@@ -16,4 +24,5 @@ export class ComponentParent {
         }
         return false;
     }
+
 }
