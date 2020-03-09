@@ -16,13 +16,13 @@ import {remote} from "electron";
                                 :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
                     </template>
                     <!--https://github.com/SyedWasiHaider/vue-highlightable-input-->
-                    <b-form-input id="component-name" placeholder="Component name" type="text"
-                                  @input="(value) => $parent.updateAttribute('name', value)"
-                                  :state="component.name.length > 2 ? null : false"
-                                  :value="component.name"
-                                  trim
-                                  class="text-input carabina-text px-1">
-                    </b-form-input>
+                    <stacker-input id="component-name" placeholder="Component name" type="text"
+                                   @input="(value) => $parent.updateAttribute('name', value)"
+                                   :state="component.name.length > 2 ? null : false"
+                                   :value="component.name"
+                                   trim
+                                   class="text-input carabina-text px-1">
+                    </stacker-input>
                 </b-input-group>
             </b-col>
             <b-col cols="auto" class="align-self-center px-2 run-button-container">
@@ -37,10 +37,11 @@ import {remote} from "electron";
     import '@/styles/texts.css';
     import {mapActions, mapGetters} from 'vuex'
     import {ComponentStylish} from "@/components/component-stylish";
+    import StackerInput from "@/inputs/stacker-input";
 
     export default Vue.extend({
         name: 'StageHeader',
-        components: {},
+        components: {StackerInput},
         props: {
             component: Object
         },

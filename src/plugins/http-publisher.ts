@@ -14,11 +14,12 @@ export default {
                                     :defaultSelection="{value: component.method}"
                                     @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                     :availableList="availableMethods"></dropdown-selector>
-                            <b-form-input placeholder="Url" type="text"
+                            <stacker-input placeholder="Url" type="text"
+                                           :state="component.url.length > 0"
                                           @input="(value) => $parent.updateAttribute('url', value)"
                                           :value="component.url"
                                           class="text-input carabina-text px-1" trim>
-                            </b-form-input>
+                            </stacker-input>
                         </b-input-group>
                     </b-form-group>
                     <label class="pl-3 d-block carabina-text mb-0">Headers</label>

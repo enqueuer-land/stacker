@@ -24,11 +24,11 @@
         <b-row class="m-0 mt-1" style="width: 100%" no-gutters>
             <b-col cols class="align-self-center">
                 <div class="p-1 px-2">
-                    <b-form-input placeholder="Filter" type="text"
+                    <stacker-input placeholder="Filter" type="text"
                                   @input="filterTextChanged"
                                   trim
                                   :value="textFilter" class="text-input carabina-text">
-                    </b-form-input>
+                    </stacker-input>
                 </div>
             </b-col>
         </b-row>

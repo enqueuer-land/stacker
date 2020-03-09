@@ -15,11 +15,11 @@
         </b-row>
         <b-row class="m-0 px-2" style="width: 100%" no-gutters>
             <b-col cols class="align-self-center">
-                <b-form-input placeholder="Filter" type="text"
+                <stacker-input placeholder="Filter" type="text"
                               @input="filterTextChanged"
                               trim
                               :value="textFilter" class="text-input carabina-text">
-                </b-form-input>
+                </stacker-input>
             </b-col>
             <b-col v-for="iconFilter in iconFilters" cols="auto" :key="iconFilter.icon"
                    class="align-self-center carabina-icon filter-icon"

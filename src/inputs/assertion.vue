@@ -7,21 +7,21 @@
                         :defaultSelection="selectedAssertion"
                         :availableList="possibleAssertions">
                 </dropdown-selector>
-                <b-form-input placeholder="Actual value" type="text"
+                <stacker-input placeholder="Actual value" type="text"
                               @blur="(event) => updateActualValue(event.target.value)"
                               :value="actualValue"
                               class="text-input carabina-text" trim>
-                </b-form-input>
+                </stacker-input>
                 <template v-if="selectedAssertion.criteria.length > 0">
                     <dropdown-selector class="ml-3"
                                        :defaultSelection="selectedCriterium"
                                        @select="value => criteriumChanged(value)"
                                        :availableList="selectedAssertion.criteria"></dropdown-selector>
-                    <b-form-input placeholder="Expected value" type="text"
+                    <stacker-input placeholder="Expected value" type="text"
                                   @blur="(event) => updateExpectedValue(event.target.value)"
                                   :value="expectedValue"
                                   class="text-input carabina-text" trim>
-                    </b-form-input>
+                    </stacker-input>
                 </template>
                 <b-col cols="auto" class="align-self-center p-0 mb-2 mx-2" @click="emitDeletion">
                     <i class="fas fa-times carabina-icon delete-icon" style="font-size: 14px"></i>

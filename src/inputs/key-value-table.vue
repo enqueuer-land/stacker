@@ -5,23 +5,23 @@
                :key="pair.id" id="key-value-table">
             <b-col cols class="align-self-center pl-2">
                 <b-form-group class="mb-2">
-                    <b-form-input placeholder="Key"
+                    <stacker-input placeholder="Key"
                                   trim
                                   style="text-align: right"
                                   :value="pair.key"
                                   @blur="detectAutoDeleteTable"
                                   @input="(key) => onKeyChanged(key, index)"
                                   class="text-input carabina-text">
-                    </b-form-input>
+                    </stacker-input>
                 </b-form-group>
             </b-col>
             <b-col cols class="align-self-center px-2">
                 <b-form-group class="mb-2">
-                    <b-form-input placeholder="Value"
+                    <stacker-input placeholder="Value"
                                   :value="pair.value"
                                   @input="(value) => onValueChanged(value, index)"
                                   class="text-input carabina-text" trim>
-                    </b-form-input>
+                    </stacker-input>
                 </b-form-group>
             </b-col>
             <b-col cols="auto" class="align-self-center p-0 mb-2" @click="onRowDeleted(index)">

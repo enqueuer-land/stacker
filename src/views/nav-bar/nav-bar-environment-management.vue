@@ -2,13 +2,13 @@
     <b-container fluid id="environment-management" class="p-0 m-0">
         <b-row class="m-0 p-0" style="width: 100%; height: 100%" no-gutters>
             <b-col cols class="align-self-center carabina-text">
-                <b-form-input type="text"
+                <stacker-input type="text"
                               trim
                               :readonly="environment.role === 'none'"
                               @input="(name) => changeSelectedEnvironmentName({environment, name})"
                               :value="environment.name"
                               class="text-input carabina-text">
-                </b-form-input>
+                </stacker-input>
             </b-col>
             <template>
                 <b-col v-for="(actionIcon, index) in actionIcons" cols="auto" :key="index"

@@ -36,7 +36,7 @@
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
                 gutterSize: 2,
                 sizes: [24, 38, 38],
-                minSize: [300, 400, 400],
+                minSize: [400, 500, 400],
                 gutterStyle: () => ({
                     position: 'relative',
                     width: '3px',

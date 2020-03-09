@@ -7,12 +7,12 @@
                         label="Delay (ms)"
                         label-class="mb-0"
                         label-for="delay">
-                    <b-form-input id="delay" placeholder="Delay"
+                    <stacker-input id="delay" placeholder="Delay"
                                   :value="component.delay"
                                   @input="(value) => $parent.updateAttribute('delay', value)"
                                   :state="component.delay >= 0 ? null : false"
                                   class="text-input carabina-text" trim>
-                    </b-form-input>
+                    </stacker-input>
                 </b-form-group>
             </b-col>
             <b-col cols="5" class="align-self-center pr-2">
@@ -21,12 +21,12 @@
                         label="Timeout (ms)"
                         label-class="mb-0"
                         label-for="timeout">
-                    <b-form-input id="timeout" placeholder="Timeout"
+                    <stacker-input id="timeout" placeholder="Timeout"
                                   :value="component.timeout"
                                   @input="(value) => $parent.updateAttribute('timeout', value)"
                                   :state="component.timeout >= -1 ? null : false"
                                   class="text-input carabina-text" trim>
-                    </b-form-input>
+                    </stacker-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -37,12 +37,12 @@
                         label="Iterations"
                         label-class="mb-0"
                         label-for="iterations">
-                    <b-form-input id="iterations" placeholder="Iterations"
+                    <stacker-input id="iterations" placeholder="Iterations"
                                   :value="component.iterations"
                                   @input="(value) => $parent.updateAttribute('iterations', value)"
                                   :state="component.iterations >= 0 ? null : false"
                                   class="text-input carabina-text" trim>
-                    </b-form-input>
+                    </stacker-input>
                 </b-form-group>
             </b-col>
             <b-col cols="5" class="align-self-center pr-2">

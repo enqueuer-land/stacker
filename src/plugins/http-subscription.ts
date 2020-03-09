@@ -5,23 +5,23 @@ export default {
             template: `
                 <b-container fluid class="p-0 m-0">
                     <b-row no-gutters align-h="between">
-                        <b-col cols="3" class="align-self-center pl-1">
+                        <b-col cols="2" class="align-self-center pl-1">
                             <b-form-group
-                                    class="carabina-text px-4 mb-4"
+                                    class="carabina-text pl-4 mb-4"
                                     label="Port"
                                     label-class="mb-0"
                                     label-for="port">
-                                <b-form-input id="port" type="number"
+                                <stacker-input id="port" type="number"
                                               @input="(value) => $parent.updateAttribute('port', value)"
                                               :value="component.port"
-                                              :state="(component.port >=0 && component.port <= 65535) ? null : false"
+                                              :state="(component.port.length !== 0 && component.port >=0 && component.port <= 65535) ? null : false"
                                               class="text-input carabina-text" trim>
-                                </b-form-input>
+                                </stacker-input>
                             </b-form-group>
                         </b-col>
-                        <b-col cols class="align-self-center pr-1">
+                        <b-col cols class="align-self-center px-1">
                             <b-form-group
-                                    class="carabina-text px-4 mb-4"
+                                    class="carabina-text px-1 mb-4"
                                     label="Endpoint"
                                     label-class="mb-0"
                                     label-for="method-url">
@@ -30,12 +30,12 @@ export default {
                                             :defaultSelection="{value: component.method}"
                                             @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                             :availableList="availableMethods"></dropdown-selector>
-                                    <b-form-input placeholder="Endpoint" type="text"
+                                    <stacker-input placeholder="Endpoint" type="text"
                                                   @input="(value) => $parent.updateAttribute('endpoint', value)"
                                                   :value="component.endpoint"
                                                   :state="component.endpoint.startsWith('/') ? null : false"
                                                   class="text-input carabina-text px-1" trim>
-                                    </b-form-input>
+                                    </stacker-input>
                                 </b-input-group>
                             </b-form-group>
                         </b-col>
@@ -46,21 +46,21 @@ export default {
                             :table="component.response.headers" class="mb-4"></key-value-table>
 
                     <b-row no-gutters align-h="between">
-                        <b-col cols="3" class="align-self-center pl-1 pr-3">
+                        <b-col cols="2" class="align-self-center px-1">
                             <b-form-group
                                     class="carabina-text pl-4 mb-4"
                                     label="Status"
                                     label-class="mb-0"
                                     label-for="status">
-                                <b-form-input id="status" type="number"
+                                <stacker-input id="status" type="number"
                                               @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
                                               :state="(component.response.status >= 100 && component.response.status < 599) ? null : false"
                                               :value="component.response.status"
                                               class="text-input carabina-text" trim>
-                                </b-form-input>
+                                </stacker-input>
                             </b-form-group>
                         </b-col>
-                        <b-col cols class="align-self-center pl-4 pr-1 mt-3" style="color: red">
+                        <b-col cols class="align-self-center px-1 mt-1" style="color: red">
                             <label class="carabina-text"
                                    style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
                         </b-col>
