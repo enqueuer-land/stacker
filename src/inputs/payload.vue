@@ -85,6 +85,6 @@
 </script>
 <style type="text/css">
     #payload .CodeMirror {
-        height: 300px !important;
+        height: 450px !important;
     }
 </style>

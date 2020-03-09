@@ -14,6 +14,7 @@ export default {
                                 <b-form-input id="port" type="number"
                                               @input="(value) => $parent.updateAttribute('port', value)"
                                               :value="component.port"
+                                              :state="(component.port >=0 && component.port <= 65535) ? null : false"
                                               class="text-input carabina-text" trim>
                                 </b-form-input>
                             </b-form-group>
@@ -32,6 +33,7 @@ export default {
                                     <b-form-input placeholder="Endpoint" type="text"
                                                   @input="(value) => $parent.updateAttribute('endpoint', value)"
                                                   :value="component.endpoint"
+                                                  :state="component.endpoint.startsWith('/') ? null : false"
                                                   class="text-input carabina-text" trim>
                                     </b-form-input>
                                 </b-input-group>
@@ -52,6 +54,7 @@ export default {
                                     label-for="status">
                                 <b-form-input id="status" type="number"
                                               @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
+                                              :state="(component.response.status >= 100 && component.response.status < 599) ? null : false"
                                               :value="component.response.status"
                                               class="text-input carabina-text" trim>
                                 </b-form-input>

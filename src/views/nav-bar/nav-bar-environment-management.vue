@@ -3,8 +3,9 @@
         <b-row class="m-0 p-0" style="width: 100%; height: 100%" no-gutters>
             <b-col cols class="align-self-center carabina-text">
                 <b-form-input type="text"
+                              trim
                               :readonly="environment.role === 'none'"
-                              @input="(name) => changeSelectedEnvironmentName({environment: environment, name})"
+                              @input="(name) => changeSelectedEnvironmentName({environment, name})"
                               :value="environment.name"
                               class="text-input carabina-text">
                 </b-form-input>

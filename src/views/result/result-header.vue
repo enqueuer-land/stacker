@@ -17,6 +17,7 @@
             <b-col cols class="align-self-center">
                 <b-form-input placeholder="Filter" type="text"
                               @input="filterTextChanged"
+                              trim
                               :value="textFilter" class="text-input carabina-text">
                 </b-form-input>
             </b-col>
@@ -54,6 +55,7 @@
             },
             resultNameStyle() {
                 return {
+                    'font-size': '18px',
                     'height': '30px',
                     'overflow-y': 'scroll',
                     'overflow-x': 'auto',

@@ -10,7 +10,8 @@
                     <b-form-input id="delay" placeholder="Delay"
                                   :value="component.delay"
                                   @input="(value) => $parent.updateAttribute('delay', value)"
-                                  class="text-input carabina-text" lazy>
+                                  :state="component.delay >= 0 ? null : false"
+                                  class="text-input carabina-text" trim>
                     </b-form-input>
                 </b-form-group>
             </b-col>
@@ -23,7 +24,8 @@
                     <b-form-input id="timeout" placeholder="Timeout"
                                   :value="component.timeout"
                                   @input="(value) => $parent.updateAttribute('timeout', value)"
-                                  class="text-input carabina-text" lazy>
+                                  :state="component.timeout >= -1 ? null : false"
+                                  class="text-input carabina-text" trim>
                     </b-form-input>
                 </b-form-group>
             </b-col>
@@ -38,7 +40,8 @@
                     <b-form-input id="iterations" placeholder="Iterations"
                                   :value="component.iterations"
                                   @input="(value) => $parent.updateAttribute('iterations', value)"
-                                  class="text-input carabina-text" lazy>
+                                  :state="component.iterations >= 0 ? null : false"
+                                  class="text-input carabina-text" trim>
                     </b-form-input>
                 </b-form-group>
             </b-col>

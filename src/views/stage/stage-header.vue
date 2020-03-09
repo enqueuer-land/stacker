@@ -18,7 +18,9 @@ import {remote} from "electron";
                     <!--https://github.com/SyedWasiHaider/vue-highlightable-input-->
                     <b-form-input id="component-name" placeholder="Component name" type="text"
                                   @input="(value) => $parent.updateAttribute('name', value)"
+                                  :state="component.name.length > 2 ? null : false"
                                   :value="component.name"
+                                  trim
                                   class="text-input carabina-text">
                     </b-form-input>
                 </b-input-group>
@@ -60,7 +62,7 @@ import {remote} from "electron";
             },
             componentColor: function () {
                 return new ComponentStylish(this.component).getComponentColor();
-            }
+            },
         }
     });
 </script>

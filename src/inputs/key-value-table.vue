@@ -6,11 +6,12 @@
             <b-col cols class="align-self-center pl-2">
                 <b-form-group class="mb-2">
                     <b-form-input placeholder="Key"
+                                  trim
                                   style="text-align: right"
                                   :value="pair.key"
                                   @blur="detectAutoDeleteTable"
                                   @input="(key) => onKeyChanged(key, index)"
-                                  class="text-input carabina-text" lazy>
+                                  class="text-input carabina-text">
                     </b-form-input>
                 </b-form-group>
             </b-col>
@@ -19,7 +20,7 @@
                     <b-form-input placeholder="Value"
                                   :value="pair.value"
                                   @input="(value) => onValueChanged(value, index)"
-                                  class="text-input carabina-text" lazy>
+                                  class="text-input carabina-text" trim>
                     </b-form-input>
                 </b-form-group>
             </b-col>

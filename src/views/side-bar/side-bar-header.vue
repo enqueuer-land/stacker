@@ -26,6 +26,7 @@
                 <div class="p-1 px-2">
                     <b-form-input placeholder="Filter" type="text"
                                   @input="filterTextChanged"
+                                  trim
                                   :value="textFilter" class="text-input carabina-text">
                     </b-form-input>
                 </div>
