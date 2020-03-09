@@ -1,7 +1,7 @@
 export interface Event {
     listen: 'test' | 'prerequest' | string;
     script: {
-        exec: string[]
+        exec: string[];
     };
 }
 
@@ -15,9 +15,9 @@ export type Auth = {
     type: authType;
 
     [prop: string]: {
-        key: string,
-        value: string,
-        type: string
+        key: string;
+        value: string;
+        type: string;
     }[] | authType;
 };
 

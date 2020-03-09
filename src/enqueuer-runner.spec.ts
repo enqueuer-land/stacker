@@ -6,8 +6,8 @@ jest.mock('child_process');
 
 // @ts-ignore
 global.eventEmitter = {
-    on: (data: string) => console.log('on: ' + data),
-    emit: (data: string) => console.log('emit: ' + data)
+    on: () => {/* */},
+    emit: () => {/* */}
 };
 
 const onMock = jest.fn();

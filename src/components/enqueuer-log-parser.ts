@@ -34,8 +34,9 @@ export class EnqueuerLogParser {
         return this.logs.filter(log => log.priority >= this.priorityFilter);
     }
 
-    public setPriorityFilter(level: string) {
+    public setPriorityFilter(level: string): EnqueuerLogParser {
         this.priorityFilter = logLevel.findIndex(item => item === level.toUpperCase());
+        return this;
     }
 
     public clearBuffer(): void {

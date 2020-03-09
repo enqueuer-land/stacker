@@ -1,5 +1,5 @@
 {
-  "name": "Stacker",
+  "name": "stacker",
   "version": "0.1.0",
   "description": "Polyglot flow GUI testing tool",
   "author": {
@@ -14,9 +14,7 @@
   },
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test": "npm run test:unit",
+    "test": "npm run lint && npm run test:unit",
     "test:unit": "node_modules/.bin/vue-cli-service test:unit",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "electron:build": "node_modules/.bin/vue-cli-service electron:build",
@@ -75,6 +73,9 @@
       "ecmaVersion": 2020
     },
     "rules": {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/ban-ts-ignore": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
       "no-explicit-any": "off",
       "ban-ts-ignore": 0
     },
@@ -95,20 +96,24 @@
     "last 2 versions"
   ],
   "jest": {
+    "verbose": true,
     "testMatch": [
       "**/src/**/*.spec.ts"
     ],
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false
-      }
-    },
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/src/**/*.spec.ts",
       "!**/node_modules/**"
     ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 95,
+        "branches": 95,
+        "functions": 95,
+        "lines": 95
+      }
+    },
     "coverageReporters": [
       "html",
       "text-summary"

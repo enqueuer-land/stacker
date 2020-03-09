@@ -25,5 +25,10 @@ npm run test:unit
 npm run lint
 ```
 
+### Run your tests and lints files
+```
+npm run test
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

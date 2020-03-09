@@ -35,7 +35,6 @@ import {remote} from "electron";
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import {remote} from 'electron';
     import {mapActions, mapGetters} from 'vuex'
     import {ComponentStylish} from "@/components/component-stylish";
 

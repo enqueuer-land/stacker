@@ -27,7 +27,7 @@ function prepareRequisition(msg: any) {
 export default {
     state: {
         plugins: new PluginsLoader().getPlugins(),
-        enqueuerLogParser: new EnqueuerLogParser(),
+        enqueuerLogParser: new EnqueuerLogParser().setPriorityFilter('INFO'),
         installingPluginModal: false,
     },
     mutations: {
@@ -75,9 +75,9 @@ export default {
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {
             switch (componentType) {
                 case ComponentTypes.PUBLISHER:
-                    return Object.keys(state.plugins.publishers).map((publisherKey: any) => ({value: publisherKey.toUpperCase()}));
+                    return Object.keys(state.plugins.publishers).map((publisherKey: string) => ({value: publisherKey.toUpperCase()}));
                 case ComponentTypes.SUBSCRIPTION:
-                    return Object.keys(state.plugins.subscriptions).map((subscriptionKey: any) => ({value: subscriptionKey.toUpperCase()}));
+                    return Object.keys(state.plugins.subscriptions).map((subscriptionKey: string) => ({value: subscriptionKey.toUpperCase()}));
             }
             return [];
         },

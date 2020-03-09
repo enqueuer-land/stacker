@@ -43,7 +43,7 @@ export default {
         disableEnqueuerRunningModal: (stage: any) => {
             stage.enqueuerRunningShowModal = false;
         },
-        runRequisition: (stage: any, requisition: any) => {
+        runRequisition: (stage: any) => {
             stage.enqueuerRunningShowModal = true;
             stage.enqueuerRunningStartTime = new Date().getTime();
         },
