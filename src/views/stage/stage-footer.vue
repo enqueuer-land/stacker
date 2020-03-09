@@ -20,16 +20,14 @@
                  body-text-variant="nqr-logs-body"
                  footer-bg-variant="nqr-logs-footer"
                  footer-text-variant="nqr-logs-footer">
-            <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text" style="font-size: 14px">
+            <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text">
                 <div :style="logLevelStyle(log.level)">
                     {{log.level}}
                 </div>
-                <span class="pl-2" style="color: var(--carabina-text-color)">
+                <span class="px-2" style="color: var(--carabina-text-color)">
                     {{log.timestamp}}
                 </span>
-                <span class="pl-3">
-                    {{log.message}}
-                </span>
+                {{log.message}}
             </div>
         </b-modal>
     </b-container>
@@ -91,6 +89,7 @@
 
     .bg-nqr-logs-body {
         background-color: var(--carabina-nav-bar-background-color);
+        font-size: 14px;
     }
 
     .bg-nqr-logs-footer {

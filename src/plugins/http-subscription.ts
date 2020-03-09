@@ -65,7 +65,7 @@ export default {
                                    style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
                         </b-col>
                     </b-row>
-                    <label class="pl-1 d-block carabina-text mb-2">Payload</label>
+                    <label class="pl-3 d-block carabina-text mb-2">Payload</label>
                     <payload :code="component.response.payload"
                              @change="(value) => $parent.updateAttribute('response', {...component.response, payload: value})"
                              class="px-3"></payload>
