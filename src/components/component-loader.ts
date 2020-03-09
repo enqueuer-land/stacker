@@ -34,14 +34,13 @@ export class ComponentLoader {
         }
     }
 
-    private static loadRequisition(rawRequisition: any, parent?: any) {
-        const defaultRequisition = new ComponentFactory().createRequisition(parent);
-        Object.keys(rawRequisition)
-            .filter(key => !['publishers', 'subscriptions', 'requisitions'].includes(key))
-            .filter(key => rawRequisition[key] !== undefined)
-            .forEach(key => {
-                defaultRequisition[key] = rawRequisition[key];
-            });
+    public static loadRequisition(rawRequisition: any, parent?: any) {
+        let defaultRequisition = new ComponentFactory().createRequisition(parent);
+
+        const carabinaMetaBkp = defaultRequisition.carabinaMeta;
+        defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);
+        defaultRequisition.carabinaMeta = Object.assign({}, carabinaMetaBkp, rawRequisition.carabinaMeta);
+
         defaultRequisition.requisitions = (rawRequisition.requisitions || [])
             .map((requisition: any) => ComponentLoader.loadRequisition(requisition, defaultRequisition));
         defaultRequisition.publishers = (rawRequisition.publishers || [])
@@ -52,22 +51,18 @@ export class ComponentLoader {
     }
 
     private static loadPublisher(component: any, parent: any) {
-        const defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
-        Object.keys(component)
-            .filter(key => component[key] !== undefined)
-            .forEach(key => {
-                defaultPublisher[key] = component[key];
-            });
+        let defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
+        const carabinaMetaBkp = defaultPublisher.carabinaMeta;
+        defaultPublisher = Object.assign({}, defaultPublisher, component);
+        defaultPublisher.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
         return defaultPublisher;
     }
 
     private static loadSubscription(component: any, parent: any) {
-        const defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
-        Object.keys(component)
-            .filter(key => component[key] !== undefined)
-            .forEach(key => {
-                defaultPublisher[key] = component[key];
-            });
-        return defaultPublisher;
+        let defaultSubscription = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
+        const carabinaMetaBkp = defaultSubscription.carabinaMeta;
+        defaultSubscription = Object.assign({}, defaultSubscription, component);
+        defaultSubscription.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
+        return defaultSubscription;
     }
 }

@@ -42,7 +42,7 @@ describe('EnqueuerRunner', () => {
     it('should spawn enqueuer', () => {
         new EnqueuerRunner().run();
 
-        expect(spawnMock).toHaveBeenNthCalledWith(2, 'enqueuer', ['-b', 'info'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+        expect(spawnMock).toHaveBeenNthCalledWith(2, 'enqueuer', ['-b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
     });
 
     it('should listen to enqueuer stdout and stderr', () => {

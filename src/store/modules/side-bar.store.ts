@@ -1,14 +1,14 @@
 import store from '@/store'
-import {remote} from "electron";
+import {remote} from 'electron';
 import Store from 'electron-store';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFinder} from '@/components/component-finder';
+import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
-import {ComponentParent} from "@/components/component-parent";
 
 const sidebarRepository = new Store({name: 'side-bar'});
 //    //
@@ -26,15 +26,24 @@ remote.getGlobal('eventEmitter')
         .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
 
 function persist(stage: any) {
-    sidebarRepository.set('selectedComponent', new ComponentDecycler().decycle(stage.selectedComponent));
+    sidebarRepository.set('selectedComponentId', stage.selectedComponent ? stage.selectedComponent.id : null);
     sidebarRepository.set('requisitions', stage.requisitions.map((requisition: any) => new ComponentDecycler().decycle(requisition)));
+}
+
+const initialRequisitions = sidebarRepository.get('requisitions', [])
+    .map((requisition: any) => ComponentLoader.loadRequisition(requisition));
+
+let initialSelectedComponent = null;
+const initialSelectedComponentId = sidebarRepository.get('selectedComponentId', null);
+if (initialSelectedComponentId) {
+    initialSelectedComponent = new ComponentFinder(initialRequisitions).findItem(initialSelectedComponentId);
 }
 
 export default {
     state: {
         textFilter: '',
-        requisitions: sidebarRepository.get('requisitions', []),
-        selectedComponent: sidebarRepository.get('selectedComponent', null),
+        requisitions: initialRequisitions,
+        selectedComponent: initialSelectedComponent,
     },
     mutations: {
         componentSelected: (stage: any, component: {}) => {
