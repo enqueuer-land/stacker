@@ -1,23 +1,23 @@
 <template>
     <b-container id="result-flatten-tests-item">
-        <b-row class="pb-1 px-3" no-gutters align-h="between">
-            <b-col cols="auto" class="align-self-center px-1" v-b-toggle="test.id">
+        <b-row class="pb-1 px-2" no-gutters align-h="between">
+            <b-col cols="auto" class="align-self-center pl-1" v-b-toggle="test.id">
                 <i v-if="test.ignored" class="fas fa-exclamation carabina-icon"
                    style="color: var(--carabina-ignored-test-color)"></i>
                 <i v-else-if="test.valid" class="fas fa-check carabina-icon"
                    style="color: var(--carabina-passing-test-color)"></i>
                 <i v-else class="fas fa-times  carabina-icon" style="color: var(--carabina-failing-test-color)"></i>
             </b-col>
-            <b-col class="align-self-center px-1 col-10" @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
+            <b-col cols="10" class="align-self-center mx-1">
                 <b-breadcrumb class="m-0 p-1 carabina-text" :style="breadcrumbStyle"
                               :items="test.hierarchy.map(hierarchy => hierarchy.name).filter((name, index, vec) => !collapsed ? true : (vec.length - index <= 2 ))">
                 </b-breadcrumb>
-                <div class="pl-1 pt-1 carabina-text" :style="textStyle">
+                <div class="pl-1 pt-1 carabina-text" :style="textStyle"  @dblclick="$root.$emit('bv::toggle::collapse', test.id)">
                     {{test.name || "Skipped"}}
                 </div>
                 <b-collapse :visible="!collapsed" :id="test.id" v-if="test.description"
                             class="p-0 m-0 pt-1 pl-1 carabina-text"
-                            style="font-size: 14px; color: var(--carabina-text-darker-color);">
+                            style="font-size: 13px; color: var(--carabina-text-darker-color);">
                     <div class="pt-3" style="color: var(--carabina-text-color)">Description:</div>
                     <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-darker-color);"><code
                             v-html="syntaxHighlight(test.description)"></code></pre>
@@ -26,7 +26,7 @@
                             v-html="syntaxHighlight(test.arguments)"></code></pre>
                 </b-collapse>
             </b-col>
-            <b-col cols="auto" class="align-self-center carabina-text px-1" style="font-size: 0.85em; cursor: pointer"
+            <b-col cols="auto" class="align-self-center carabina-text pr-1" style="font-size: 0.85em; cursor: pointer"
                    v-b-toggle="test.id">
                 #{{test.carabinaMeta.flattenIndex + 1}}
             </b-col>

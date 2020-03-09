@@ -34,7 +34,7 @@ export default {
                                                   @input="(value) => $parent.updateAttribute('endpoint', value)"
                                                   :value="component.endpoint"
                                                   :state="component.endpoint.startsWith('/') ? null : false"
-                                                  class="text-input carabina-text" trim>
+                                                  class="text-input carabina-text px-1" trim>
                                     </b-form-input>
                                 </b-input-group>
                             </b-form-group>

@@ -15,10 +15,10 @@
 
     import 'codemirror/theme/3024-night.css'
     import 'codemirror/mode/javascript/javascript.js'
-    import 'codemirror/mode/jsx/jsx.js'
+    // import 'codemirror/mode/jsx/jsx.js'
 
     // active-line.js
-    import 'codemirror/addon/selection/active-line.js'
+    // import 'codemirror/addon/selection/active-line.js'
     // styleSelectedText
     import 'codemirror/addon/selection/mark-selection.js'
     import 'codemirror/addon/search/searchcursor.js'

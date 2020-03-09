@@ -2,7 +2,7 @@
     <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="containerStyle" right>
         <template v-slot:button-content>
             <div :style="selectorName">{{selected.value}}
-                <i class="pl-3 pt-1 fas fa-caret-down float-right"></i>
+                <i class="pl-2 pt-1 fas fa-caret-down float-right" style="font-size: 12px"></i>
             </div>
         </template>
         <b-dropdown-item v-for="(item, index) in availableList" :key="index"
@@ -56,6 +56,7 @@
             },
             selectorName: function () {
                 return {
+                    'font-size': '14px',
                     'text-align': 'left',
                     'transition': 'all ease 100ms',
                     'color': this.color

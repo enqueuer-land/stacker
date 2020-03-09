@@ -21,7 +21,7 @@ import {remote} from "electron";
                                   :state="component.name.length > 2 ? null : false"
                                   :value="component.name"
                                   trim
-                                  class="text-input carabina-text">
+                                  class="text-input carabina-text px-1">
                     </b-form-input>
                 </b-input-group>
             </b-col>

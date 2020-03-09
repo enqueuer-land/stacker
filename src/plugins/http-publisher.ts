@@ -17,7 +17,7 @@ export default {
                             <b-form-input placeholder="Url" type="text"
                                           @input="(value) => $parent.updateAttribute('url', value)"
                                           :value="component.url"
-                                          class="text-input carabina-text" trim>
+                                          class="text-input carabina-text px-1" trim>
                             </b-form-input>
                         </b-input-group>
                     </b-form-group>

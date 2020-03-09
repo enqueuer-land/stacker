@@ -73,13 +73,13 @@
 
     .requisition-tree-indicator {
         position: absolute;
-        top: 8px;
-        left: 20px;
-        font-size: 20px;
+        top: 15px;
+        left: 22px;
+        font-size: 15px;
         text-align: center;
         color: var(--carabina-requisition-color);
         filter: brightness(0.85);
-        transform: rotate(0deg) scale(0.85);
+        transform: rotate(0deg) scale(0.95);
         transition: all ease 250ms;
     }
 
@@ -89,7 +89,7 @@
     }
 
     .expanded {
-        transform: rotate(90deg) scale(1.15);
+        transform: rotate(90deg) scale(1.05);
         filter: brightness(1.15);
     }
 
