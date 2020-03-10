@@ -10,12 +10,21 @@ type ResponseMap = {
 };
 
 export default class EnqueuerRunner {
+    private readonly window?: Electron.BrowserWindow;
+
+    constructor(window?: Electron.BrowserWindow) {
+        this.window = window;
+    }
+
     private enqueuerProcess?: ChildProcess | any;
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
     private logBuffer: string[] = [];
 
     public run(): void {
+        if (this.window) {
+            this.window.webContents.send('ping', 'whoooooooh!');
+        }
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
@@ -56,7 +65,7 @@ export default class EnqueuerRunner {
         // @ts-ignore
         this.enqueuerProcess.stdout.on('data', (data: Buffer) => this.logBuffer.push(data.toString()));
         // @ts-ignore
-        // this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
+        this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
         this.enqueuerProcess.on('error', (error: any) => {
             // @ts-ignore

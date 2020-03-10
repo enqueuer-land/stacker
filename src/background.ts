@@ -47,6 +47,9 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     });
+
+
+    setTimeout(() => new EnqueuerRunner(win!).run(), 1000);
 }
 
 // Quit when all windows are closed.
@@ -98,5 +101,3 @@ app.on('ready', async () => {
 
 // @ts-ignore
 global.eventEmitter = new EventEmitter();
-
-setTimeout(() => new EnqueuerRunner().run(), 1000);
