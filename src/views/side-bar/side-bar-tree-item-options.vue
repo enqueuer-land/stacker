@@ -10,7 +10,7 @@
                     <i :class="['carabina-icon option-item-class', item.iconClass]" style="font-size: 14px"></i>
                 </b-col>
                 <b-col cols class="align-self-center">
-                    {{item.name}}
+                    {{item.name(component)}}
                 </b-col>
             </b-row>
         </b-dropdown-item>
@@ -30,7 +30,7 @@
             return {
                 actions: [
                     {
-                        name: 'Save',
+                        name: () => 'Save',
                         iconClass: 'fas fa-save',
                         action: (event) => {
                             event.stopPropagation();
@@ -40,7 +40,7 @@
                         }
                     },
                     {
-                        name: 'Ignore',
+                        name: (component) => component.ignore ? 'Enable' : 'Disable',
                         iconClass: 'fas fa-ban',
                         action: (event) => {
                             event.stopPropagation();
@@ -52,7 +52,7 @@
                         }
                     },
                     {
-                        name: 'Delete',
+                        name: () => 'Delete',
                         iconClass: 'fas fa-trash',
                         action: (event) => {
                             event.stopPropagation();

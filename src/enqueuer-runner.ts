@@ -13,11 +13,12 @@ export default class EnqueuerRunner {
     private enqueuerProcess?: ChildProcess | any;
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
+    private logBuffer: string[] = [];
 
     public run(): void {
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
-            this.enqueuerProcess = spawn('enqueuer', ['-b', 'trace'], {
+            this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
                 stdio: ['pipe', 'pipe', 'pipe', 'ipc']
             });
             // @ts-ignore
@@ -27,6 +28,14 @@ export default class EnqueuerRunner {
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
 
             this.registerChildListeners();
+
+            setInterval(() => {
+                if (this.logBuffer.length > 0) {
+                    // @ts-ignore
+                    global.eventEmitter.emit('enqueuerLog', this.logBuffer.join('\n'));
+                    this.logBuffer.splice(0, this.logBuffer.length);
+                }
+            }, 1500);
 
             // @ts-ignore
             global.eventEmitter.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
@@ -45,9 +54,9 @@ export default class EnqueuerRunner {
 
     private registerChildListeners(): void {
         // @ts-ignore
-        this.enqueuerProcess.stdout.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerLog', data.toString()));
+        this.enqueuerProcess.stdout.on('data', (data: Buffer) => this.logBuffer.push(data.toString()));
         // @ts-ignore
-        this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
+        // this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
         this.enqueuerProcess.on('error', (error: any) => {
             // @ts-ignore

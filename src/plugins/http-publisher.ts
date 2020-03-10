@@ -14,8 +14,8 @@ export default {
                                     :defaultSelection="{value: component.method}"
                                     @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                     :availableList="availableMethods"></dropdown-selector>
-                            <stacker-input placeholder="Url" type="text"
-                                           :state="component.url.length > 0"
+                            <stacker-input placeholder="Url" type="text" 
+                                          :state="component.url.length > 0 ? null : false"
                                           @input="(value) => $parent.updateAttribute('url', value)"
                                           :value="component.url"
                                           class="text-input carabina-text px-1" trim>
