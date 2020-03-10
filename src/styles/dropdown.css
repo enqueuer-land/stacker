@@ -51,3 +51,8 @@
 .dropdown-toggle {
     color: unset;
 }
+
+.dropdown-toggle:hover {
+    color: unset;
+    filter: brightness(1.1);
+}

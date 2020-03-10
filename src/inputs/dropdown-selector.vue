@@ -66,18 +66,3 @@
         }
     });
 </script>
-<style type="text/css" scoped>
-    #dropdown-selector {
-    }
-
-    .dropdown-toggle {
-        box-shadow: none !important;
-        outline: none !important;
-    }
-
-    .protocol-selector-name:hover {
-        filter: brightness(1.1);
-        transform: scale(1.005);
-    }
-
-</style>

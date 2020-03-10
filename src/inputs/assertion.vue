@@ -2,30 +2,31 @@
     <b-container fluid id="assertion" class="px-1">
         <b-form-group class="carabina-text">
             <b-input-group>
-                <dropdown-selector
-                        @select="value => assertionChanged(value)"
-                        :defaultSelection="selectedAssertion"
-                        :availableList="possibleAssertions">
-                </dropdown-selector>
-                <stacker-input placeholder="Actual value" type="text"
-                              @blur="(event) => updateActualValue(event.target.value)"
-                              :value="actualValue"
-                              class="text-input carabina-text" trim>
-                </stacker-input>
-                <template v-if="selectedAssertion.criteria.length > 0">
+                <template class="mx-2">
+                    <dropdown-selector
+                            @select="value => assertionChanged(value)"
+                            :defaultSelection="selectedAssertion"
+                            :availableList="possibleAssertions">
+                    </dropdown-selector>
+                    <stacker-input placeholder="Actual value" type="text"
+                                   @blur="(event) => updateActualValue(event.target.value)"
+                                   :value="actualValue"
+                                   class="text-input carabina-text" trim>
+                    </stacker-input>
+                </template>
+                <template v-if="selectedAssertion.criteria.length > 0" class="mx-2">
                     <dropdown-selector class="ml-3"
                                        :defaultSelection="selectedCriterium"
                                        @select="value => criteriumChanged(value)"
                                        :availableList="selectedAssertion.criteria"></dropdown-selector>
                     <stacker-input placeholder="Expected value" type="text"
-                                  @blur="(event) => updateExpectedValue(event.target.value)"
-                                  :value="expectedValue"
-                                  class="text-input carabina-text" trim>
+                                   @blur="(event) => updateExpectedValue(event.target.value)"
+                                   :value="expectedValue"
+                                   class="text-input carabina-text" trim>
                     </stacker-input>
                 </template>
-                <b-col cols="auto" class="align-self-center p-0 mb-2 mx-2" @click="emitDeletion">
-                    <i class="fas fa-times carabina-icon delete-icon" style="font-size: 14px"></i>
-                </b-col>
+                <i class="fas fa-times carabina-icon delete-icon p-0 mt-2 mx-1" @click="emitDeletion"
+                   style="font-size: 14px"></i>
             </b-input-group>
         </b-form-group>
     </b-container>

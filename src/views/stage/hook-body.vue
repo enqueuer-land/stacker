@@ -7,8 +7,7 @@
         <key-value-table @change="value => onStoreChange(value)"
                          :table="store" class="mb-4"></key-value-table>
         <label class="pl-3 d-block carabina-text mb-0">Assertions</label>
-        <Assertions :value="assertions" @change="value => onAssertionsChange(value)" class="mx-1"></Assertions>
-        <div class="bottom-line py-2 mx-2 mb-5"></div>
+        <Assertions :value="assertions" @change="value => onAssertionsChange(value)" class="mx-1 mb-5"></Assertions>
     </div>
 </template>
 
