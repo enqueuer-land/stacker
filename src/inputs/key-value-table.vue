@@ -1,33 +1,22 @@
 <template>
     <b-container fluid>
-        <b-row v-for="(pair, index) in pairs" class="m-0 px-1 py-0 mb-0" style="width: 100%"
-               align-h="between"
-               :key="pair.id" id="key-value-table">
-            <b-col cols class="align-self-center pl-2">
-                <b-form-group class="mb-2">
-                    <stacker-input placeholder="Key"
-                                  trim
-                                  style="text-align: right"
-                                  :value="pair.key"
-                                  @blur="detectAutoDeleteTable"
-                                  @input="(key) => onKeyChanged(key, index)"
-                                  class="text-input carabina-text">
-                    </stacker-input>
-                </b-form-group>
-            </b-col>
-            <b-col cols class="align-self-center px-2">
-                <b-form-group class="mb-2">
-                    <stacker-input placeholder="Value"
-                                  :value="pair.value"
-                                  @input="(value) => onValueChanged(value, index)"
-                                  class="text-input carabina-text" trim>
-                    </stacker-input>
-                </b-form-group>
-            </b-col>
-            <b-col cols="auto" class="align-self-center p-0 mb-2" @click="onRowDeleted(index)">
-                <i class="fas fa-times carabina-icon delete-icon" style="font-size: 14px"></i>
-            </b-col>
-        </b-row>
+        <b-input-group v-for="(pair, index) in pairs" class="m-0 px-1 py-0 mb-2"
+                       :key="pair.id" id="key-value-table">
+            <stacker-input placeholder="Key"
+                           trim
+                           style="text-align: right"
+                           :value="pair.key"
+                           @blur="detectAutoDeleteTable"
+                           @input="(key) => onKeyChanged(key, index)"
+                           class="text-input carabina-text mx-2">
+            </stacker-input>
+            <stacker-input placeholder="Value"
+                           :value="pair.value"
+                           @input="(value) => onValueChanged(value, index)"
+                           class="text-input carabina-text ml-2" trim>
+            </stacker-input>
+            <i class="fas fa-times carabina-icon delete-icon ml-2 mt-3" style="font-size: 14px"></i>
+        </b-input-group>
     </b-container>
 </template>
 <script>
