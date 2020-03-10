@@ -1,7 +1,7 @@
 <template>
     <div id="side-bar-tree-item" :style="componentStyle" @click="componentSelected(component)">
-        <b-container fluid class="pl-2 pr-0 carabina-text" style="height: 100%">
-            <b-row style="height: 100%" no-gutters class="m-0 p-0 pl-1 tree-item">
+        <b-container fluid class="pl-2 pr-0 carabina-text">
+            <b-row no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
                     <span v-if="!componentStylish.isRequisition()" class="item-name-tag"
                           :style="componentNameTagStyle">{{componentStylish.getType()}}</span>

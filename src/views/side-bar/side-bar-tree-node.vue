@@ -1,14 +1,14 @@
 <template>
     <div id="side-bar-tree-node" class="tree-node">
         <b-card no-body class="accordion-container" style="border: none">
-            <b-button v-if="componentStylish.getChildrenLength() > 0" v-b-toggle="component.id"
+            <b-button v-if="componentStylish.getChildrenLength() > 0" @click="collapsed = !collapsed"
                       :class="['accordion-button requisition-tree-indicator', !collapsed && 'expanded']">
                 <i class="fas fa-caret-right"></i>
             </b-button>
-            <SideBarTreeItem :component="component" @dblclick="$root.$emit('bv::toggle::collapse', component.id)"/>
+            <SideBarTreeItem :component="component" @dblclick="collapsed = !collapsed"/>
             <b-collapse :id="component.id" :class="['ml-4 py-0 px-0']" :visible="!collapsed"
                         class="collapse-body"
-                        v-if="componentStylish.getChildrenLength() > 0">
+                        v-if="componentStylish.getChildrenLength() > 0 && !collapsed">
                 <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
                                  :component="requisition"></SideBarTreeNode>
                 <SideBarTreeItem v-for="publisher in component.publishers" :key="publisher.id"
@@ -21,7 +21,7 @@
 </template>
 <script>
     import Vue from 'vue';
-    import {mapGetters} from 'vuex';
+    import {mapMutations} from 'vuex';
     import '@/styles/dimensions.css';
     import '@/styles/component-tree.css';
     import {ComponentStylish} from '@/components/component-stylish';
@@ -39,15 +39,19 @@
                 collapsed: this.component.carabinaMeta.collapsed
             }
         },
-        mounted() {
-            this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
-                if (this.component.id === collapseId) {
-                    this.collapsed = !isJustShown;
-                }
-            })
+        watch: {
+            collapsed() {
+                const carabinaMeta = this.component.carabinaMeta;
+                carabinaMeta.collapsed = this.collapsed;
+                this.changeAttributeOfComponent({
+                    component: this.component,
+                    attributeName: 'carabinaMeta',
+                    value: carabinaMeta
+                });
+            }
         },
-        computed: {
-            ...mapGetters('side-bar', []),
+        methods: {
+            ...mapMutations('side-bar', ['changeAttributeOfComponent']),
         }
     });
 </script>
@@ -79,7 +83,7 @@
         text-align: center;
         color: var(--carabina-requisition-color);
         filter: brightness(0.85);
-        transform: rotate(0deg) scale(0.95);
+        transform: rotate(0deg) scale(1);
         transition: all ease 250ms;
     }
 

@@ -14,14 +14,11 @@
     export default Vue.extend({
         name: 'SideBarTree',
         components: {SideBarTreeNode},
-        data: function () {
-            return {}
-        },
         methods: {
             ...mapMutations('side-bar', ['createNewComponent'])
         },
         computed: {
-            ...mapGetters('side-bar', ['filteredRequisitions', 'requisitions'])
+            ...mapGetters('side-bar', ['filteredRequisitions'])
         }
     });
 </script>

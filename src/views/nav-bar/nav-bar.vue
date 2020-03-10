@@ -68,7 +68,7 @@
     export default Vue.extend({
         name: 'NavBar',
         components: {
-            NavBarEnvironmentManagement: () => NavBarEnvironmentManagement
+            NavBarEnvironmentManagement
         },
         computed: {
             ...mapGetters('nav-bar', ['environments', 'selectedEnvironment']),
