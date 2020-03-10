@@ -1,5 +1,5 @@
 import store from '@/store'
-import {remote} from 'electron';
+import {ipcRenderer, remote} from 'electron';
 import Store from 'electron-store';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
@@ -11,17 +11,18 @@ import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 
 const sidebarRepository = new Store({name: 'side-bar'});
-//    //
+
+ipcRenderer.on('ping', ((event, args) => console.log(args)));
 remote.getGlobal('eventEmitter')
     .on('openComponent', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
-        .map(file => ComponentLoader.importFile(file))
+        .map(async file => await ComponentLoader.importFile(file))
         .filter(file => file)
         .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
 remote.getGlobal('eventEmitter')
     .on('importPostmanCollection', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
-        .map(file => ComponentLoader.importFromPostman(file))
+        .map(async file => await ComponentLoader.importFromPostman(file))
         .filter(file => file)
         .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
 
@@ -81,6 +82,7 @@ export default {
                 if (!payload.parent) {
                     stage.requisitions.push(parentRequisition);
                 }
+                parentRequisition.carabinaMeta.collapsed = false;
                 persist(stage);
                 return component;
             }
@@ -126,7 +128,6 @@ export default {
     getters: {
         selectedComponent: (state: any) => state.selectedComponent,
         textFilter: (state: any) => state.textFilter,
-        requisitions: (state: any) => state.requisitions,
         filteredRequisitions: (state: any) => state.requisitions
             .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter)),
         breadcrumbItems: (state: any): any[] => {

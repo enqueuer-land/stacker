@@ -7,8 +7,8 @@ import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 const resultRepository = new Store({name: 'result'});
 
 function persist(stage: any) {
-    // resultRepository.set('responses', stage.responses);
-    // resultRepository.set('flattenTests', stage.flattenTests);
+    resultRepository.set('responses', stage.responses);
+    resultRepository.set('flattenTests', stage.flattenTests);
 }
 
 export default {
@@ -64,10 +64,7 @@ export default {
     },
     getters: {
         enqueuerRunningShowModal: (state: any) => state.enqueuerRunningShowModal,
-        responses: (state: any) => {
-            console.log(state.responses);
-            return state.responses
-        },
+        responses: (state: any) => state.responses,
         textFilter: (state: any) => state.textFilter,
         iconFilters: (state: any) => state.iconFilters,
         filteredFlattenTests: (state: any) => {
