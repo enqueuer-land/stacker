@@ -37,7 +37,6 @@ export class ComponentFactory {
         if (parent) {
             requisition.name = requisition.name + ' ' + parent.requisitions.length;
             parent.requisitions.push(requisition);
-            parent.carabinaMeta.collapsed = false;
         }
         return requisition;
     };
@@ -59,7 +58,6 @@ export class ComponentFactory {
             }
         };
         parent.publishers.push(publisher);
-        parent.carabinaMeta.collapsed = false;
         return publisher;
     };
 
@@ -86,7 +84,6 @@ export class ComponentFactory {
             }
         };
         parent.subscriptions.push(subscription);
-        parent.carabinaMeta.collapsed = false;
         return subscription;
 
     };

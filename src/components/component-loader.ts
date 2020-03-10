@@ -6,37 +6,53 @@ import {PostmanCollectionConverter} from '@/postman/postman-collection-converter
 
 export class ComponentLoader {
 
-    public static importFile(file: string): any {
-        try {
-            const fileContent = fs.readFileSync(file).toString();
+    public static async importFile(file: string): Promise<any> {
+        return new Promise((resolve, reject) => {
             try {
-                return ComponentLoader.loadRequisition(JSON.parse(fileContent));
+                fs.readFile(file, (err, data) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    const fileContent = data.toString();
+                    try {
+                        resolve(ComponentLoader.loadRequisition(JSON.parse(fileContent)));
+                    } catch (e) {
+                        try {
+                            resolve(ComponentLoader.loadRequisition(yaml.parse(fileContent)));
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                });
             } catch (e) {
-                try {
-                    return ComponentLoader.loadRequisition(yaml.parse(fileContent));
-                } catch (e) {
-                    console.log(e);
-                }
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
-        }
-        return null;
+            resolve(null);
+        });
     }
 
-    public static importFromPostman(file: string): any {
-        try {
-            const fileContent = JSON.parse(fs.readFileSync(file).toString());
-            const converted = new PostmanCollectionConverter().convert(fileContent as any);
-            return ComponentLoader.loadRequisition(converted);
-        } catch (e) {
-            console.log(e);
-        }
+    public static async importFromPostman(file: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            try {
+                fs.readFile(file, (err, data) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    const fileContent = data.toString();
+                    const converted = new PostmanCollectionConverter().convert(fileContent as any);
+                    resolve(ComponentLoader.loadRequisition(converted));
+                });
+            } catch (e) {
+                console.log(e);
+            }
+            resolve(null);
+        });
     }
 
     public static loadRequisition(rawRequisition: any, parent?: any) {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
-
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
         defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);
         defaultRequisition.carabinaMeta = Object.assign({}, carabinaMetaBkp, rawRequisition.carabinaMeta);
