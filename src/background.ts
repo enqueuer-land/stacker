@@ -28,6 +28,7 @@ function createWindow() {
         height: 1250,
         // @ts-ignore
         icon: path.join(__static, 'icon.png'),
+        backgroundColor: '#201f20',
         webPreferences: {
             nodeIntegration: true
         }

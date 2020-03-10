@@ -40,7 +40,6 @@
                 gutterStyle: () => ({
                     position: 'relative',
                     width: '3px',
-                    // height: '100%',
                     cursor: 'col-resize',
                     'background-color': 'var(--carabina-body-background-color)'
                 })

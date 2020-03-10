@@ -52,7 +52,7 @@
         },
         mounted() {
             this.$root.$on('bv::modal::shown', () => {
-                const modalBodyElement = document.querySelector('#enqueuer-logs-modal___BV_modal_body_');
+                const modalBodyElement = document.getElementById('enqueuer-logs-modal___BV_modal_body_');
                 if (modalBodyElement) {
                     modalBodyElement.scrollTop = modalBodyElement.scrollHeight;
                 }

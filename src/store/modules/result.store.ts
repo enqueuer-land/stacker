@@ -7,8 +7,8 @@ import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
 const resultRepository = new Store({name: 'result'});
 
 function persist(stage: any) {
-    resultRepository.set('responses', stage.responses);
-    resultRepository.set('flattenTests', stage.flattenTests);
+    // resultRepository.set('responses', stage.responses);
+    // resultRepository.set('flattenTests', stage.flattenTests);
 }
 
 export default {
@@ -49,8 +49,10 @@ export default {
         },
         updateResponse: (stage: any, value: OutputRequisitionModel[]) => {
             const elapsedTime = new Date().getTime() - stage.enqueuerRunningStartTime;
-            const remainingTime = Math.max(500 - elapsedTime, 0);
+            const remainingTime = Math.max(100 - elapsedTime, 0);
+            console.log(value);
             setTimeout(() => store.commit('result/disableEnqueuerRunningModal'), remainingTime);
+            store.commit('result/disableEnqueuerRunningModal');
 
             stage.responses = value;
             stage.flattenTests = value
@@ -62,7 +64,10 @@ export default {
     },
     getters: {
         enqueuerRunningShowModal: (state: any) => state.enqueuerRunningShowModal,
-        responses: (state: any) => state.responses,
+        responses: (state: any) => {
+            console.log(state.responses);
+            return state.responses
+        },
         textFilter: (state: any) => state.textFilter,
         iconFilters: (state: any) => state.iconFilters,
         filteredFlattenTests: (state: any) => {

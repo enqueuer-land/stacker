@@ -17,6 +17,15 @@
     Vue.component('DropdownSelector', DropdownSelector);
 
     export default {
-        components: {Main}
+        components: {Main},
+        mounted() {
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    console.log('document is hidden');
+                } else {
+                    console.log('document is being shown');
+                }
+            })
+        }
     };
 </script>

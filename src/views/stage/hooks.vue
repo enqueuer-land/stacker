@@ -86,7 +86,7 @@
                 this.$parent.updateAttribute(this.selectedEvent.caption, value);
             },
             onClick: function (idx) {
-                const icons = Array.from(document.querySelectorAll('.carabina-icon'));
+                const icons = Array.from(document.getElementsByClassName('carabina-icon'));
                 const prevState = this.events[idx].state;
                 this.events.forEach((button, index) => {
                     button.state = false;

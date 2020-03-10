@@ -35,12 +35,17 @@
     import {mapGetters, mapMutations} from 'vuex';
     import StageFooter from '@/views/stage/stage-footer'
     import StageHeader from '@/views/stage/stage-header'
+    import {ComponentTypes} from '@/components/component-types';
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
-    import {ComponentTypes} from "@/components/component-types";
 
     export default Vue.extend({
         name: 'Stage',
-        components: {StageHeader, Hooks, StageBodyRequisition, StageFooter},
+        components: {
+            StageHeader,
+            Hooks,
+            StageBodyRequisition,
+            StageFooter
+        },
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
             async updateAttribute(attributeName, value) {
@@ -50,7 +55,7 @@
         computed: {
             ...mapGetters('stage', ['plugins', 'installingPluginModal']),
             ...mapGetters('side-bar', ['selectedComponent']),
-            componentIsRequisition: function() {
+            componentIsRequisition: function () {
                 return this.selectedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION;
             },
             componentBody: function () {
