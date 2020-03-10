@@ -19,68 +19,80 @@ export default class EnqueuerRunner {
     private enqueuerProcess?: ChildProcess | any;
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
+
     private logBuffer: string[] = [];
+    private readonly maxBufferSize = 100;
+    private readonly logSendInterval = 100;
+    private readonly logsPerMessage = 30;
 
     public run(): void {
-        if (this.window) {
-            this.window.webContents.send('ping', 'whoooooooh!');
-        }
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
                 stdio: ['pipe', 'pipe', 'pipe', 'ipc']
             });
-            // @ts-ignore
-            global.eventEmitter.emit('addLog', {message: `Enqueuer pid: ${this.enqueuerProcess.pid}`, level: 'DEBUG'});
+            this.window!.webContents.send('addLog', {
+                message: `Enqueuer pid: ${this.enqueuerProcess.pid}`,
+                level: 'DEBUG'
+            });
 
             //Handshake purposes
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
 
             this.registerChildListeners();
 
-            setInterval(() => {
-                if (this.logBuffer.length > 0) {
-                    // @ts-ignore
-                    global.eventEmitter.emit('enqueuerLog', this.logBuffer.join('\n'));
-                    this.logBuffer.splice(0, this.logBuffer.length);
-                }
-            }, 1500);
+            if (this.window) {
+                setInterval(() => {
+                    if (this.logBuffer.length > 0) {
+                        // @ts-ignore
+                        const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
+                        this.window!.webContents.send('enqueuerLog', logs);
+
+                        this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logsPerMessage);
+                    }
+                }, this.logSendInterval);
+            }
 
             // @ts-ignore
             global.eventEmitter.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
             // @ts-ignore
             global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
-                // @ts-ignore
-                global.eventEmitter.emit('runEnqueuerReply', reply);
+                this.window!.webContents.send('runEnqueuerReply', reply);
             });
         } catch (e) {
-            // @ts-ignore
-            global.eventEmitter.emit('addLog', {message: `Error running enqueuer sub process: ${e}`, level: 'ERROR'});
+            this.window!.webContents.send('addLog', {
+                message: `Error running enqueuer sub process: ${e}`,
+                level: 'ERROR'
+            });
             throw e;
         }
     }
 
     private registerChildListeners(): void {
         // @ts-ignore
-        this.enqueuerProcess.stdout.on('data', (data: Buffer) => this.logBuffer.push(data.toString()));
-        // @ts-ignore
-        this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
-        this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
-        this.enqueuerProcess.on('error', (error: any) => {
-            // @ts-ignore
-            global.eventEmitter.emit('addLog', {message: `Child enqueuer errored: ${error}`, level: 'ERROR'});
+        this.enqueuerProcess.stdout.on('data', (data: Buffer) => {
+            this.logBuffer.push(data.toString());
+            this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logBuffer.length - this.maxBufferSize);
         });
+        this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
+        this.enqueuerProcess.on('error', (error: any) => this.window!.webContents.send('addLog', {
+            message: `Child enqueuer errored: ${error}`,
+            level: 'ERROR'
+        }));
         this.enqueuerProcess.on("close", (code: number) => {
-            // @ts-ignore
-            global.eventEmitter.emit('addLog', {message: `Child enqueuer closed: ${code}`, level: 'ERROR'});
+            this.window!.webContents.send('addLog', {message: `Child enqueuer closed: ${code}`, level: 'ERROR'});
             exec('type enqueuer', ((error, stdout) => {
                 if (error) {
-                    // @ts-ignore
-                    global.eventEmitter.emit('addLog', {message: `Type 'enqueuer' error: ${error}`, level: 'ERROR'});
+                    this.window!.webContents.send('addLog', {
+                        message: `Type 'enqueuer' error: ${error}`,
+                        level: 'ERROR'
+                    });
                 } else {
-                    // @ts-ignore
-                    global.eventEmitter.emit('addLog', {message: `Type 'enqueuer': ${stdout}`, level: 'DEBUG'});
+                    this.window!.webContents.send('addLog', {
+                        message: `Type 'enqueuer' error: ${stdout}`,
+                        level: 'DEBUG'
+                    });
                 }
             }));
         });
@@ -100,9 +112,6 @@ export default class EnqueuerRunner {
     }
 
     private onMessageReceived(message: any): void {
-        // @ts-ignore
-        global.eventEmitter.emit('messageReceivedFromEnqueuer', message);
-
         if (message.event === 'REQUISITION_FINISHED' && message.value.requisition) {
             const requisitionOutput: OutputRequisitionModel = message.value.requisition;
             const responsesMap = this.responsesMap[requisitionOutput.id.toString()];

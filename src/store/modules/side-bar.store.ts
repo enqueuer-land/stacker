@@ -1,5 +1,5 @@
 import store from '@/store'
-import {ipcRenderer, remote} from 'electron';
+import {remote} from 'electron';
 import Store from 'electron-store';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
@@ -12,7 +12,6 @@ import {ComponentDecycler} from '@/components/component-decycler';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
-ipcRenderer.on('ping', ((event, args) => console.log(args)));
 remote.getGlobal('eventEmitter')
     .on('openComponent', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])

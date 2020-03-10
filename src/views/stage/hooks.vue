@@ -15,14 +15,14 @@
             </b-button>
         </b-button-group>
         <b-collapse :visible="expanded" id="hook-body-collapse">
-            <div v-if="selectedEvent">
+            <template v-if="selectedEvent">
                 <div v-for="(event, idx) in events"
                      :key="idx">
                     <HookBody :component="component[event.caption]"
                               v-if="selectedEvent.index === idx"
                               @change="value => onChange(event.caption, value)"></HookBody>
                 </div>
-            </div>
+            </template>
         </b-collapse>
     </div>
 </template>

@@ -2,10 +2,10 @@
 'use strict';
 
 import path from 'path'
-import '@/menu-template'
 import {EventEmitter} from 'events';
-import EnqueuerRunner from "@/enqueuer-runner";
-import {app, protocol, BrowserWindow} from 'electron'
+import EnqueuerRunner from '@/enqueuer-runner';
+import * as menuTemplate from '@/menu-template';
+import {app, protocol, BrowserWindow, Menu} from 'electron'
 import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -47,6 +47,10 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     });
+
+    // @ts-ignore
+    const menu = Menu.buildFromTemplate(menuTemplate.default(win));
+    Menu.setApplicationMenu(menu);
 
 
     setTimeout(() => new EnqueuerRunner(win!).run(), 1000);

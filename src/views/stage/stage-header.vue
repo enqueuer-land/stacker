@@ -1,4 +1,3 @@
-import {remote} from "electron";
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
         <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">

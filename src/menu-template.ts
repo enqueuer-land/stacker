@@ -1,8 +1,8 @@
-import {Menu, shell} from 'electron'
+import {shell} from 'electron'
 
 const isMac = process.platform === 'darwin';
 
-const template = [
+export default (window: Electron.BrowserWindow) => [
     {role: 'appMenu'},
     // ...(isMac ? [{
     //     label: 'Stacker',
@@ -56,7 +56,7 @@ const template = [
             {
                 label: 'Load plugin',
                 // @ts-ignore
-                click: () => global.eventEmitter.emit('loadPlugin'),
+                click: () => window.webContents.send('loadPlugin'),
             },
             {type: 'separator'},
             {
@@ -94,14 +94,13 @@ const template = [
             {
                 label: 'Run component',
                 accelerator: 'CmdOrCtrl+Return',
-                // @ts-ignore
-                click: () => global.eventEmitter.emit('runCurrentlySelectedComponent'),
+                click: () => window.webContents.send('runCurrentlySelectedComponent'),
             },
             {
                 label: 'Run highest parent',
                 accelerator: 'CmdOrCtrl+Shift+Return',
                 // @ts-ignore
-                click: () => global.eventEmitter.emit('runHighestParentOfSelectedComponent'),
+                click: () => window.webContents.send('runHighestParentOfSelectedComponent'),
             },
         ]
     },
@@ -118,7 +117,3 @@ const template = [
         ]
     }
 ];
-
-// @ts-ignore
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);

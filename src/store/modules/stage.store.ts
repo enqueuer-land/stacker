@@ -1,5 +1,5 @@
 import store from '@/store'
-import {remote} from 'electron';
+import {remote, ipcRenderer} from 'electron';
 import {InputRequisitionModel} from 'enqueuer';
 import {IdCreator} from '@/components/id-creator';
 import {PluginsLoader} from "@/plugins/plugins-loader";
@@ -8,11 +8,11 @@ import {ComponentDecycler} from "@/components/component-decycler";
 import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 import {ComponentParent} from "@/components/component-parent";
 
-remote.getGlobal('eventEmitter').on('loadPlugin', () => store.dispatch('stage/loadPlugins'));
-remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
-remote.getGlobal('eventEmitter').on('addLog', (data: any) => store.commit('stage/addLog', data));
-remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => store.commit('stage/runCurrentlySelectedComponent'));
-remote.getGlobal('eventEmitter').on('runHighestParentOfSelectedComponent', () => store.commit('stage/runHighestParentOfSelectedComponent'));
+ipcRenderer.on('loadPlugin', ((_, data) => store.commit('stage/loadPlugins', data)));
+ipcRenderer.on('enqueuerLog', ((_, data) => store.commit('stage/addEnqueuerLog', data)));
+ipcRenderer.on('addLog', ((_, data) => store.commit('stage/addLog', data)));
+ipcRenderer.on('runCurrentlySelectedComponent', ((_) => store.commit('stage/runCurrentlySelectedComponent')));
+ipcRenderer.on('runHighestParentOfSelectedComponent', ((_) => store.commit('stage/runHighestParentOfSelectedComponent')));
 
 function prepareRequisition(msg: any) {
     const componentName = msg.carabinaMeta.componentName;
@@ -64,7 +64,7 @@ export default {
             const decycled = prepareRequisition(msg);
             store.commit('result/runRequisition', decycled);
             remote.getGlobal('eventEmitter').emit('runEnqueuer', decycled);
-            remote.getGlobal('eventEmitter').once('runEnqueuerReply', (responses: any) => store.commit('result/updateResponse', responses));
+            ipcRenderer.on('runEnqueuerReply', ((event, responses) => store.commit('result/updateResponse', responses)));
         },
     },
     getters: {

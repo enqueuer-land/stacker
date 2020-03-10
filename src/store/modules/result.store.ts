@@ -49,9 +49,6 @@ export default {
         },
         updateResponse: (stage: any, value: OutputRequisitionModel[]) => {
             const elapsedTime = new Date().getTime() - stage.enqueuerRunningStartTime;
-            const remainingTime = Math.max(100 - elapsedTime, 0);
-            console.log(value);
-            setTimeout(() => store.commit('result/disableEnqueuerRunningModal'), remainingTime);
             store.commit('result/disableEnqueuerRunningModal');
 
             stage.responses = value;
