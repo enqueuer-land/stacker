@@ -1,9 +1,8 @@
 <template id="dropdown-selector">
     <b-dropdown no-caret lazy variant="carabina" class="carabina-text" :style="containerStyle" right>
-        <template v-slot:button-content>
-            <div :style="selectorName">{{selected.value}}
-                <i class="pl-2 pt-1 fas fa-caret-down float-right" style="font-size: 12px"></i>
-            </div>
+        <template v-slot:button-content :style="selectorName">
+            {{selected.value}}
+            <i class="pl-2 pt-1 fas fa-caret-down float-right" style="font-size: 12px"></i>
         </template>
         <b-dropdown-item v-for="(item, index) in availableList" :key="index"
                          @click="onSelect(item)">{{item.value}}
@@ -50,6 +49,8 @@
         computed: {
             containerStyle: function () {
                 return {
+                    color: this.color + ' !important',
+                    height: '35px',
                     border: 'none !important',
                     'border-bottom': `1px solid ${this.color} !important`
                 }
@@ -59,7 +60,7 @@
                     'font-size': '14px',
                     'text-align': 'left',
                     'transition': 'all ease 100ms',
-                    'color': this.color
+                    color: this.color + ' !important',
                 }
             }
         }
@@ -78,4 +79,5 @@
         filter: brightness(1.1);
         transform: scale(1.005);
     }
+
 </style>

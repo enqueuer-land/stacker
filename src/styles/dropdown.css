@@ -47,3 +47,7 @@
     margin: .01rem 0;
     overflow: hidden;
 }
+
+.dropdown-toggle {
+    color: unset;
+}
