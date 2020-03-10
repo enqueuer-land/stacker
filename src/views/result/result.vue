@@ -3,8 +3,7 @@
         <b-container v-if="enqueuerRunningShowModal" id="running-modal">
             <b-row style="height: 100%" align-h="center" align-v="center">
                 <b-col cols="auto">
-                    <b-spinner style="width: 3rem; height: 3rem; color: var(--carabina-theme-color)"
-                               label="Large Spinner"></b-spinner>
+                    <b-spinner style="width: 3rem; height: 3rem; color: var(--carabina-theme-color)"></b-spinner>
                 </b-col>
             </b-row>
         </b-container>

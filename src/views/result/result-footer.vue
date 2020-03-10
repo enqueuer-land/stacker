@@ -37,7 +37,7 @@
             ignoredTests: Number,
         },
         computed: {
-            prettifyTime: function() {
+            prettifyTime: function () {
                 let timeInMilliseconds = this.totalTime;
                 const ms = timeInMilliseconds % 1000;
                 timeInMilliseconds = (timeInMilliseconds - ms) / 1000;
@@ -51,10 +51,7 @@
                 if (secs > 0) {
                     result += secs + 's'
                 }
-                if (ms > 0) {
-                    result += ' ' + ms + 'ms'
-                }
-                return result;
+                return result + ' ' + ms + 'ms';
             }
         }
     });

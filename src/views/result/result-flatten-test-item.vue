@@ -19,10 +19,10 @@
                             class="p-0 m-0 pt-1 pl-1 carabina-text"
                             style="font-size: 13px; color: var(--carabina-text-darker-color);">
                     <div class="pt-3" style="color: var(--carabina-text-color)">Description:</div>
-                    <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-darker-color);"><code
+                    <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-color);"><code
                             v-html="syntaxHighlight(test.description)"></code></pre>
                     <div class="pt-3" style="color: var(--carabina-text-color)">Arguments:</div>
-                    <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-darker-color);"><code
+                    <pre class="px-2" style="font-size: 13px; color: var(--carabina-text-color);"><code
                             v-html="syntaxHighlight(test.arguments)"></code></pre>
                 </b-collapse>
             </b-col>
@@ -95,19 +95,19 @@
 
                 json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, (match) => {
-                    let color = 'var(--carabina-text-color)'; //number
+                    // let color = 'var(--carabina-text-color)'; //number
                     if (/^"/.test(match)) {
                         if (/:$/.test(match)) {
-                            color = 'var(--carabina-text-darker-color)'; //key
+                            return '<span style="color: var(--carabina-text-darker-color">' + match + '</span>';
                         } else {
-                            color = 'var(--carabina-text-color)'; //string
+                            // color = 'var(--carabina-text-color)'; //string
                         }
                     } else if (/true|false/.test(match)) {
-                        color = 'var(--carabina-text-color)'; //boolean
+                        // color = 'var(--carabina-text-color)'; //boolean
                     } else if (/null/.test(match)) {
-                        color = 'var(--carabina-text-color)'; //null
+                        // color = 'var(--carabina-text-color)'; //null
                     }
-                    return '<span style="color:' + color + '">' + match + '</span>';
+                    return match;
                 });
             }
         }

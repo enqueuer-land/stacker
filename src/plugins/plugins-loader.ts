@@ -8,7 +8,6 @@ import {exec} from 'child_process';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
-import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 
 const pluginsRepository = new Store({name: 'plugins'});
 
@@ -79,11 +78,13 @@ export class PluginsLoader {
             .filter(enqueuerPlugin => enqueuerPlugin)
             .forEach(enqueuerPlugin => {
                 store.commit('stage/addInstallingPluginModal');
-                store.commit('stage/addLog', EnqueuerLogParser
-                    .generateLog(`Installing '${enqueuerPlugin}'`, 'INFO'));
+                store.commit('stage/addLog', {message: `Installing '${enqueuerPlugin}'`, level:  'INFO'});
                 exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
-                    store.commit('stage/addLog', EnqueuerLogParser
-                        .generateLog(`'${enqueuerPlugin}' installation: ${stdout}`, 'INFO'));
+                    if (error) {
+                        store.commit('stage/addLog', {message: `'${enqueuerPlugin}' installation: ${error}`, level:  'ERROR'});
+                    } else {
+                        store.commit('stage/addLog', {message: `'${enqueuerPlugin}' installation: ${stdout}`, level:  'INFO'});
+                    }
                     store.commit('stage/removeInstallingPluginModal');
                 }));
             });

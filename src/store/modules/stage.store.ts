@@ -10,6 +10,7 @@ import {ComponentParent} from "@/components/component-parent";
 
 remote.getGlobal('eventEmitter').on('loadPlugin', () => store.dispatch('stage/loadPlugins'));
 remote.getGlobal('eventEmitter').on('enqueuerLog', (data: any) => store.commit('stage/addEnqueuerLog', data));
+remote.getGlobal('eventEmitter').on('addLog', (data: any) => store.commit('stage/addLog', data));
 remote.getGlobal('eventEmitter').on('runCurrentlySelectedComponent', () => store.commit('stage/runCurrentlySelectedComponent'));
 remote.getGlobal('eventEmitter').on('runHighestParentOfSelectedComponent', () => store.commit('stage/runHighestParentOfSelectedComponent'));
 
@@ -35,7 +36,7 @@ export default {
             stage.enqueuerLogParser.addLogs(data);
         },
         addLog: (stage: any, data: any) => {
-            stage.enqueuerLogParser.addParsedLogs(data);
+            stage.enqueuerLogParser.addParsedLogs(EnqueuerLogParser.generateLog(data.message, data.level));
         },
         addInstallingPluginModal: (stage: any) => {
             stage.installingPluginModal = true;
@@ -46,14 +47,13 @@ export default {
         runCurrentlySelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
             store.dispatch('stage/runComponent', selectedComponent)
-                .then(() => console.log('dispatched'));
+                .then(() => {/* do nothing */});
         },
         runHighestParentOfSelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
             const highestParent = new ComponentParent(selectedComponent).findHighestParent();
-            console.log(highestParent);
             store.dispatch('stage/runComponent', highestParent)
-                .then(() => console.log('dispatched'));
+                .then(() => {/* do nothing */});
         }
     },
     actions: {

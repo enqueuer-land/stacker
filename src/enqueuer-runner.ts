@@ -1,5 +1,5 @@
 import * as os from 'os';
-import {ChildProcess, spawn} from 'child_process';
+import {ChildProcess, spawn, exec} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 
 type ResponseMap = {
@@ -17,7 +17,15 @@ export default class EnqueuerRunner {
     public run(): void {
         try {
             spawn('mkdir', [os.homedir() + '/.nqr']);
-            this.enqueuerProcess = spawn('enqueuer', ['-b', 'trace'], {stdio: ['pipe', 'pipe', 'pipe', 'ipc']});
+            this.enqueuerProcess = spawn('enqueuer', ['-b', 'trace'], {
+                stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+            });
+            // @ts-ignore
+            global.eventEmitter.emit('addLog', {message: `Enqueuer pid: ${this.enqueuerProcess.pid}`, level: 'DEBUG'});
+
+            //Handshake purposes
+            this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
+
             this.registerChildListeners();
 
             // @ts-ignore
@@ -29,7 +37,8 @@ export default class EnqueuerRunner {
                 global.eventEmitter.emit('runEnqueuerReply', reply);
             });
         } catch (e) {
-            console.error(`Error running enqueuer sub process`);
+            // @ts-ignore
+            global.eventEmitter.emit('addLog', {message: `Error running enqueuer sub process: ${e}`, level: 'ERROR'});
             throw e;
         }
     }
@@ -40,8 +49,23 @@ export default class EnqueuerRunner {
         // @ts-ignore
         this.enqueuerProcess.stderr.on('data', (data: Buffer) => global.eventEmitter.emit('enqueuerError', data.toString()));
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
-        this.enqueuerProcess.on('error', (error: any) => console.log(`error: ${error.message}`));
-        this.enqueuerProcess.on("close", (code: number) => console.log(`Enqueuer sub process exited with code: ${code}`));
+        this.enqueuerProcess.on('error', (error: any) => {
+            // @ts-ignore
+            global.eventEmitter.emit('addLog', {message: `Child enqueuer errored: ${error}`, level: 'ERROR'});
+        });
+        this.enqueuerProcess.on("close", (code: number) => {
+            // @ts-ignore
+            global.eventEmitter.emit('addLog', {message: `Child enqueuer closed: ${code}`, level: 'ERROR'});
+            exec('type enqueuer', ((error, stdout) => {
+                if (error) {
+                    // @ts-ignore
+                    global.eventEmitter.emit('addLog', {message: `Type 'enqueuer' error: ${error}`, level: 'ERROR'});
+                } else {
+                    // @ts-ignore
+                    global.eventEmitter.emit('addLog', {message: `Type 'enqueuer': ${stdout}`, level: 'DEBUG'});
+                }
+            }));
+        });
         this.enqueuerProcess.on('message', (data: any) => this.onMessageReceived(data));
     }
 

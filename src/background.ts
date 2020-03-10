@@ -98,4 +98,4 @@ app.on('ready', async () => {
 // @ts-ignore
 global.eventEmitter = new EventEmitter();
 
-new EnqueuerRunner().run();
+setTimeout(() => new EnqueuerRunner().run(), 1000);
