@@ -2,9 +2,7 @@
     <b-container id="result-footer" class="px-1 carabina-text">
         <b-row style="width: 100%; height: 100%; font-size: 15px" class="m-0 px-1" align-h="between">
             <b-col cols="auto" class="align-self-center pl-1">
-                <span class="label-text">
-                    Tests:
-                </span>
+                Tests:
                 <span class="ml-2"
                       :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
                     {{summary}}
@@ -14,9 +12,7 @@
                 </span>
             </b-col>
             <b-col cols="auto" class="align-self-center pr-1">
-                <span class="label-text">
-                    Time:
-                </span>
+                Time:
                 <span :style="{color: valid? 'var(--carabina-passing-test-color)': 'var(--carabina-failing-test-color)'}">
                     {{prettifyTime}}
                 </span>

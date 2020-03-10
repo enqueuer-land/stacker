@@ -15,7 +15,8 @@
                            @input="(value) => onValueChanged(value, index)"
                            class="text-input carabina-text ml-2" trim>
             </stacker-input>
-            <i class="fas fa-times carabina-icon delete-icon ml-2 mt-3" style="font-size: 14px"></i>
+            <i class="fas fa-times carabina-icon delete-icon ml-2 mt-3" style="font-size: 14px"
+               @click="onRowDeleted(index)"></i>
         </b-input-group>
     </b-container>
 </template>

@@ -3,6 +3,7 @@
                   :type="type"
                   :state="state"
                   :value="value"
+                  @blur="value => $emit('blur', value)"
                   @input="value => $emit('input', value)"
                   trim>
     </b-form-input>
