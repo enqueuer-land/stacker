@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as os from 'os';
 import store from "@/store";
-import * as path from "path";
 import {remote} from "electron";
 import Store from 'electron-store';
 import {exec} from 'child_process';
@@ -31,23 +30,10 @@ export class PluginsLoader {
     }
 
     public loadPlugins(): object {
-        const pickedFiles = remote.dialog.showOpenDialogSync({properties: ['openFile', 'openDirectory', 'multiSelections']});
-        ((pickedFiles) || []).forEach(file => this.loadFromFileSystem(file));
+        const pickedFiles = remote.dialog.showOpenDialogSync({properties: ['openFile', 'multiSelections']});
+        ((pickedFiles) || []).forEach(file => this.loadFileFromFileSystem(file));
         remote.getGlobal('eventEmitter').emit('resetEnqueuer');
         return this.plugins;
-    }
-
-    private loadFromFileSystem(file: string): void {
-        const stats = fs.statSync(file);
-        if (stats.isDirectory()) {
-            this.loadDirectory(file);
-        }
-        this.loadFileFromFileSystem(file);
-    }
-
-    private loadDirectory(dirname: string): void {
-        fs.readdirSync(dirname)
-            .forEach(file => this.loadFileFromFileSystem(path.join(dirname, file)));
     }
 
     private loadFileFromFileSystem(filename: string): void {
