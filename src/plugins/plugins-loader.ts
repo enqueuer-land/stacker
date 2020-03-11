@@ -32,7 +32,6 @@ export class PluginsLoader {
     public loadPlugins(): object {
         const pickedFiles = remote.dialog.showOpenDialogSync({properties: ['openFile', 'multiSelections']});
         ((pickedFiles) || []).forEach(file => this.loadFileFromFileSystem(file));
-        remote.getGlobal('eventEmitter').emit('resetEnqueuer');
         return this.plugins;
     }
 

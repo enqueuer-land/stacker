@@ -43,15 +43,13 @@ export default (window: Electron.BrowserWindow) => [
             //     ]
             // },
             {
-                label: 'Open requisition',
+                label: 'Open component',
                 accelerator: 'CommandOrControl+O',
-                // @ts-ignore
-                click: () => global.eventEmitter.emit('openComponent'),
+                click: () => window.webContents.send('openComponent'),
             },
             {
                 label: 'Open environment',
-                // @ts-ignore
-                click: () => global.eventEmitter.emit('openEnvironment'),
+                click: () => window.webContents.send('openEnvironment'),
             },
             {
                 label: 'Load plugin',
@@ -67,13 +65,11 @@ export default (window: Electron.BrowserWindow) => [
                         submenu: [
                             {
                                 label: 'Collection',
-                                // @ts-ignore
-                                click: () => global.eventEmitter.emit('importPostmanCollection'),
+                                click: () => window.webContents.send('importPostmanCollection'),
                             },
                             {
                                 label: 'Environment',
-                                // @ts-ignore
-                                click: () => global.eventEmitter.emit('importPostmanEnvironment'),
+                                click: () => window.webContents.send('importPostmanEnvironment'),
                             }
                         ]
                     }
@@ -99,7 +95,6 @@ export default (window: Electron.BrowserWindow) => [
             {
                 label: 'Run highest parent',
                 accelerator: 'CmdOrCtrl+Shift+Return',
-                // @ts-ignore
                 click: () => window.webContents.send('runHighestParentOfSelectedComponent'),
             },
         ]

@@ -1,5 +1,5 @@
 import store from '@/store'
-import {remote, ipcRenderer} from 'electron';
+import {ipcRenderer} from 'electron';
 import {InputRequisitionModel} from 'enqueuer';
 import {IdCreator} from '@/components/id-creator';
 import {PluginsLoader} from "@/plugins/plugins-loader";
@@ -63,7 +63,7 @@ export default {
         runComponent: async (_: any, msg: InputRequisitionModel) => {
             const decycled = prepareRequisition(msg);
             store.commit('result/runRequisition', decycled);
-            remote.getGlobal('eventEmitter').emit('runEnqueuer', decycled);
+            ipcRenderer.send('runEnqueuer', decycled);
             ipcRenderer.on('runEnqueuerReply', ((event, responses) => store.commit('result/updateResponse', responses)));
         },
     },

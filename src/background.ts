@@ -102,6 +102,3 @@ app.on('ready', async () => {
         }
     }
 );
-
-// @ts-ignore
-global.eventEmitter = new EventEmitter();

@@ -1,5 +1,5 @@
 import store from "@/store";
-import {remote} from "electron";
+import {ipcRenderer, remote} from "electron";
 import Store from 'electron-store';
 import {IdCreator} from "@/components/id-creator";
 import {EnvironmentSaver} from "@/environments/environment-saver";
@@ -7,19 +7,19 @@ import {EnvironmentLoader} from "@/environments/environment-loader";
 
 const navBarRepository = new Store({name: 'nav-bar'});
 
-remote.getGlobal('eventEmitter').on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
-remote.getGlobal('eventEmitter').on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
+ipcRenderer.on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
+ipcRenderer.on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
 
 const noEnvironment = {name: 'No environment', role: 'none'};
 
 function persist(stage: any) {
-    remote.getGlobal('eventEmitter').emit('setEnqueuerStore', stage.selectedEnvironment.store);
+    ipcRenderer.send('setEnqueuerStore', stage.selectedEnvironment.store);
     navBarRepository.set('environments', stage.environments);
     navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
 }
 
 const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
-remote.getGlobal('eventEmitter').emit('setEnqueuerStore', selectedEnvironment.store);
+ipcRenderer.send('setEnqueuerStore', selectedEnvironment.store);
 
 export default {
     state: {

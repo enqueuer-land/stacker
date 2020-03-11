@@ -27,8 +27,8 @@ export class ComponentLoader {
                 });
             } catch (e) {
                 console.log(e);
+                resolve(null);
             }
-            resolve(null);
         });
     }
 
@@ -40,18 +40,18 @@ export class ComponentLoader {
                         reject(err);
                         return;
                     }
-                    const fileContent = data.toString();
+                    const fileContent = JSON.parse(data.toString());
                     const converted = new PostmanCollectionConverter().convert(fileContent as any);
                     resolve(ComponentLoader.loadRequisition(converted));
                 });
             } catch (e) {
                 console.log(e);
+                resolve(null);
             }
-            resolve(null);
         });
     }
 
-    public static loadRequisition(rawRequisition: any, parent?: any) {
+    public static loadRequisition(rawRequisition: any, parent?: any): any {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
         defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);

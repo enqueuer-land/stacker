@@ -1,6 +1,6 @@
 import store from '@/store'
-import {remote} from 'electron';
 import Store from 'electron-store';
+import {ipcRenderer, remote} from 'electron';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
@@ -12,18 +12,18 @@ import {ComponentDecycler} from '@/components/component-decycler';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
-remote.getGlobal('eventEmitter')
+ipcRenderer
     .on('openComponent', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFile(file))
-        .filter(file => file)
-        .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
-remote.getGlobal('eventEmitter')
+        .filter(async file => await file)
+        .forEach( async requisition => store.commit('side-bar/addRequisition', await requisition)));
+ipcRenderer
     .on('importPostmanCollection', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFromPostman(file))
-        .filter(file => file)
-        .forEach(requisition => store.commit('side-bar/addRequisition', requisition)));
+        .filter(async file => await file)
+        .forEach(async requisition => store.commit('side-bar/addRequisition', await requisition)));
 
 function persist(stage: any) {
     sidebarRepository.set('selectedComponentId', stage.selectedComponent ? stage.selectedComponent.id : null);

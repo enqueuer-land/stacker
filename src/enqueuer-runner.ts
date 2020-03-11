@@ -1,6 +1,7 @@
 import * as os from 'os';
 import {ChildProcess, spawn, exec} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
+import {ipcMain, ipcRenderer} from "electron";
 
 type ResponseMap = {
     [id: string]: {
@@ -53,10 +54,8 @@ export default class EnqueuerRunner {
                 }, this.logSendInterval);
             }
 
-            // @ts-ignore
-            global.eventEmitter.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
-            // @ts-ignore
-            global.eventEmitter.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
+            ipcMain.on('setEnqueuerStore', (_, data: any) => this.enqueuerStore = data);
+            ipcMain.on('runEnqueuer', async (_, requisition: InputRequisitionModel) => {
                 const reply = await this.sendRequisition(requisition);
                 this.window!.webContents.send('runEnqueuerReply', reply);
             });
