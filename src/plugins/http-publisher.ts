@@ -4,24 +4,24 @@ export default {
             hooks: ['onResponseReceived'],
             template: `
                 <b-container fluid class="p-0 m-0">
-                    <b-form-group
-                            class="carabina-text px-4 mb-4"
-                            label="URL"
-                            label-class="mb-0"
-                            label-for="method-url">
-                        <b-input-group id="method-url">
+                    <label class="pl-3 d-block carabina-text mb-2">URL</label>
+                    <b-row class="px-3 mb-4" no-gutters>
+                        <b-col cols="auto" class="align-self-center">
                             <dropdown-selector
                                     :defaultSelection="{value: component.method}"
                                     @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                     :availableList="availableMethods"></dropdown-selector>
-                            <stacker-input placeholder="Url" type="text" 
-                                          :state="component.url.length > 0 ? null : false"
-                                          @input="(value) => $parent.updateAttribute('url', value)"
-                                          :value="component.url"
-                                          class="text-input carabina-text px-1" trim>
+                        </b-col>
+                        <b-col cols="10" class="align-self-center mt-1">
+                            <stacker-input placeholder="Url" type="text"
+                                           :highlightableRegex="/\\A?(\\w+=[^&]+)/g"
+                                           :state="component.url.length > 0 ? null : false"
+                                           @input="(value) => $parent.updateAttribute('url', value)"
+                                           :value="component.url"
+                                           class="text-input carabina-text px-1" trim>
                             </stacker-input>
-                        </b-input-group>
-                    </b-form-group>
+                        </b-col>
+                    </b-row>
                     <label class="pl-3 d-block carabina-text mb-0">Headers</label>
                     <key-value-table @change="(headers) => $parent.updateAttribute('headers', headers)"
                                      :table="component.headers" class="mb-4"></key-value-table>

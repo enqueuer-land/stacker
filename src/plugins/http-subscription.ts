@@ -4,43 +4,39 @@ export default {
             hooks: ['onMessageReceived'],
             template: `
                 <b-container fluid class="p-0 m-0">
-                    <b-row no-gutters align-h="between">
+                    <b-row no-gutters class="px-4 mb-4">
                         <b-col cols="2" class="align-self-center pl-1">
-                            <b-form-group
-                                    class="carabina-text pl-4 mb-4"
-                                    label="Port"
-                                    label-class="mb-0"
-                                    label-for="port">
-                                <stacker-input id="port" type="number"
-                                              @input="(value) => $parent.updateAttribute('port', value)"
-                                              :value="component.port"
-                                              :state="(component.port.length !== 0 && component.port >=0 && component.port <= 65535) ? null : false"
-                                              class="text-input carabina-text" trim>
-                                </stacker-input>
-                            </b-form-group>
+                            <label class="d-block carabina-text mb-3">Port</label>
+                            <stacker-input id="port" type="number"
+                                           @input="(value) => $parent.updateAttribute('port', value)"
+                                           :value="component.port"
+                                           :state="(component.port.length !== 0 && component.port >=0 && component.port <= 65535) ? null : false"
+                                           class="text-input carabina-text" trim>
+                            </stacker-input>
                         </b-col>
-                        <b-col cols class="align-self-center px-1">
-                            <b-form-group
-                                    class="carabina-text px-1 mb-4"
-                                    label="Endpoint"
-                                    label-class="mb-0"
-                                    label-for="method-url">
-                                <b-input-group id="method-url">
+                        <b-col cols="10" class="align-self-center px-1">
+                            <b-row no-gutters align-h="center">
+                                <b-col cols="3" class="align-self-center mt-2" style="text-align: right">
                                     <dropdown-selector
+                                            class="mt-3"
                                             :defaultSelection="{value: component.method}"
                                             @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
                                             :availableList="availableMethods"></dropdown-selector>
+                                </b-col>
+                                <b-col cols="9" class="align-self-center">
+                                    <label class="d-block carabina-text mb-3">Endpoint</label>
                                     <stacker-input placeholder="Endpoint" type="text"
-                                                  @input="(value) => $parent.updateAttribute('endpoint', value)"
-                                                  :value="component.endpoint"
-                                                  :state="component.endpoint.startsWith('/') ? null : false"
-                                                  class="text-input carabina-text px-1" trim>
+                                                   @input="(value) => $parent.updateAttribute('endpoint', value)"
+                                                   :value="component.endpoint"
+                                                   :highlightable-regex="/\\/:[^\\/]+/g"
+                                                   :state="component.endpoint.startsWith('/') ? null : false"
+                                                   class="text-input carabina-text px-1" trim>
                                     </stacker-input>
-                                </b-input-group>
-                            </b-form-group>
+                                </b-col>
+                            </b-row>
                         </b-col>
                     </b-row>
-                    <label class="pl-3 d-block carabina-text mb-0">Headers</label>
+                    <label class="pl-4 d-block carabina-text mb-0">Headers</label>
                     <key-value-table
                             @change="(headers) => $parent.updateAttribute('response', {...component.response, headers})"
                             :table="component.response.headers" class="mb-4"></key-value-table>
@@ -53,14 +49,14 @@ export default {
                                     label-class="mb-0"
                                     label-for="status">
                                 <stacker-input id="status" type="number"
-                                              @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
-                                              :state="(component.response.status >= 100 && component.response.status < 599) ? null : false"
-                                              :value="component.response.status"
-                                              class="text-input carabina-text" trim>
+                                               @input="(value) => $parent.updateAttribute('response', {...component.response, status: value})"
+                                               :state="(component.response.status >= 100 && component.response.status < 599) ? null : false"
+                                               :value="component.response.status"
+                                               class="text-input carabina-text" trim>
                                 </stacker-input>
                             </b-form-group>
                         </b-col>
-                        <b-col cols class="align-self-center px-1 mt-1" style="color: red">
+                        <b-col cols class="align-self-center pl-3 pr-1 mt-1" style="color: red">
                             <label class="carabina-text"
                                    style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
                         </b-col>

@@ -1,32 +1,47 @@
 <template>
     <b-container fluid id="assertion" class="px-1">
-        <b-input-group>
-            <template class="mx-2">
-                <dropdown-selector
-                        @select="value => assertionChanged(value)"
-                        :defaultSelection="selectedAssertion"
-                        :availableList="possibleAssertions">
-                </dropdown-selector>
-                <stacker-input placeholder="Actual value" type="text"
-                               @blur="(event) => updateActualValue(event.target.value)"
-                               :value="actualValue"
-                               class="text-input carabina-text" trim>
-                </stacker-input>
-            </template>
-            <template v-if="selectedAssertion.criteria.length > 0" class="mx-2">
-                <dropdown-selector class="ml-3"
-                                   :defaultSelection="selectedCriterium"
-                                   @select="value => criteriumChanged(value)"
-                                   :availableList="selectedAssertion.criteria"></dropdown-selector>
-                <stacker-input placeholder="Expected value" type="text"
-                               @blur="(event) => updateExpectedValue(event.target.value)"
-                               :value="expectedValue"
-                               class="text-input carabina-text" trim>
-                </stacker-input>
-            </template>
-            <i class="fas fa-times carabina-icon delete-icon p-0 mt-2 mx-1" @click="emitDeletion"
-               style="font-size: 14px"></i>
-        </b-input-group>
+        <b-row no-gutters class="mb-2">
+            <b-col :cols="selectedAssertion.criteria.length > 0 ? '6' : '11'">
+                <b-row no-gutters>
+                    <b-col cols="auto">
+                        <dropdown-selector
+                                @select="value => assertionChanged(value)"
+                                :defaultSelection="selectedAssertion"
+                                :availableList="possibleAssertions">
+                        </dropdown-selector>
+                    </b-col>
+                    <b-col cols="8" style="padding-top: 5px">
+                        <stacker-input placeholder="Actual value" type="text"
+                                       @input="(value) => updateActualValue(value)"
+                                       :value="actualValue"
+                                       class="text-input carabina-text" trim>
+                        </stacker-input>
+                    </b-col>
+                </b-row>
+            </b-col>
+            <b-col cols="5" v-if="selectedAssertion.criteria.length > 0" class="pl-1">
+                <b-row no-gutters>
+                    <b-col cols="auto">
+                        <dropdown-selector
+                                :defaultSelection="selectedCriterium"
+                                @select="value => criteriumChanged(value)"
+                                :availableList="selectedAssertion.criteria">
+                        </dropdown-selector>
+                    </b-col>
+                    <b-col cols="9" style="padding-top: 5px">
+                        <stacker-input placeholder="Expected value" type="text"
+                                       @input="(value) => updateExpectedValue(value)"
+                                       :value="expectedValue"
+                                       class="text-input carabina-text" trim>
+                        </stacker-input>
+                    </b-col>
+                </b-row>
+            </b-col>
+            <b-col cols="1" style="text-align: right">
+                <i class="fas fa-times carabina-icon delete-icon p-0 mt-2 mx-1" @click="emitDeletion"
+                   style="font-size: 14px"></i>
+            </b-col>
+        </b-row>
     </b-container>
 </template>
 <script>
@@ -82,7 +97,7 @@
                 return defaultValue;
             },
             assertionChanged: function (value) {
-                this.selectedAssertion = value;
+                // this.selectedAssertion = value;
                 this.emit();
             },
             criteriumChanged: function (value) {
@@ -90,11 +105,11 @@
                 this.emit();
             },
             updateActualValue: function (value) {
-                this.actualValue = value;
+                // this.actualValue = value;
                 this.emit();
             },
             updateExpectedValue: function (value) {
-                this.expectedValue = value;
+                // this.expectedValue = value;
                 this.emit();
             },
             emit: function () {

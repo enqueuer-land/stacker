@@ -4,27 +4,26 @@
             <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
-        <b-row class="px-2" style="width: 100%; height: 50%" no-gutters>
-            <b-col cols class="align-self-center px-1">
-                <b-input-group>
-                    <template v-if="component.carabinaMeta.componentName !== 'REQUISITION'" v-slot:prepend>
-                        <DropdownSelector
-                                :defaultSelection="{value: component.type}"
-                                @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
-                                :color="componentColor"
-                                :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
-                    </template>
-                    <!--https://github.com/SyedWasiHaider/vue-highlightable-input-->
-                    <stacker-input id="component-name" placeholder="Component name" type="text"
-                                   @input="(value) => $parent.updateAttribute('name', value)"
-                                   :state="component.name.length > 2 ? null : false"
-                                   :value="component.name"
-                                   trim
-                                   class="text-input carabina-text px-1">
-                    </stacker-input>
-                </b-input-group>
+        <b-row class="px-2" style="height: 50%" no-gutters>
+            <b-col cols="auto" class="align-self-center">
+                <DropdownSelector
+                        v-if="component.carabinaMeta.componentName !== 'REQUISITION'"
+                        :defaultSelection="{value: component.type}"
+                        @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
+                        :color="componentColor"
+                        :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
             </b-col>
-            <b-col cols="auto" class="align-self-center px-2 run-button-container">
+            <b-col cols="8" class="align-self-center mt-1 mr-auto">
+                <stacker-input id="component-name" placeholder="Component name" type="text"
+                               :fill-width="true"
+                               @input="(value) => $parent.updateAttribute('name', value)"
+                               :state="component.name.length > 2 ? null : false"
+                               :value="component.name"
+                               trim
+                               class="px-1">
+                </stacker-input>
+            </b-col>
+            <b-col cols="auto" class="align-self-center run-button-container">
                 <b-button class="run-button px-4" :style="runButtonStyle" @click="runComponent(component)">Run
                 </b-button>
             </b-col>

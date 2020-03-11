@@ -12,7 +12,7 @@
             </b-col>
         </b-row>
         <b-row class="m-0 px-2" no-gutters>
-            <b-col cols class="align-self-center">
+            <b-col cols="9" class="align-self-center mr-auto">
                 <stacker-input placeholder="Filter" type="text"
                                @input="filterTextChanged"
                                trim
