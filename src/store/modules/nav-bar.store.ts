@@ -10,7 +10,7 @@ const navBarRepository = new Store({name: 'nav-bar'});
 ipcRenderer.on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
 ipcRenderer.on('importPostmanEnvironment', () => EnvironmentLoader.importPostmanEnvironment());
 
-const noEnvironment = {name: 'No environment', role: 'none'};
+const noEnvironment = {name: 'No environment', role: 'none', store: {}};
 
 function persist(stage: any) {
     ipcRenderer.send('setEnqueuerStore', stage.selectedEnvironment.store);

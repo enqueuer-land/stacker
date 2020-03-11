@@ -9,6 +9,7 @@ import {
     LayoutPlugin,
     ButtonPlugin,
     SpinnerPlugin,
+    TooltipPlugin,
     CollapsePlugin,
     DropdownPlugin,
     FormGroupPlugin,
@@ -23,6 +24,7 @@ Vue.use(ModalPlugin);
 Vue.use(LayoutPlugin);
 Vue.use(ButtonPlugin);
 Vue.use(SpinnerPlugin);
+Vue.use(TooltipPlugin);
 Vue.use(DropdownPlugin);
 Vue.use(CollapsePlugin);
 Vue.use(FormInputPlugin);

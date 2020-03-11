@@ -1,10 +1,11 @@
 <template>
     <!--https://github.com/SyedWasiHaider/vue-highlightable-input-->
     <highlightable-input
+            v-b-tooltip.html.hover :title="tooltipContent"
             caseSensitive
-            :value="text.toString()"
+            id="id-highlightable-input"
+            :value="text"
             @input="onChange"
-
             :highlightDelay="100"
             :highlight="highlightRegex"
             :data-placeholder="placeholder"
@@ -16,6 +17,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import {mapGetters} from 'vuex';
     import HighlightableInput from 'vue-highlightable-input'
 
     export default Vue.extend({
@@ -38,21 +40,42 @@
                 });
             }
             return {
-                text: this.value,
+                text: this.value.toString(),
                 highlightRegex,
             }
+        },
+        watch: {
+            value: function () {
+                this.text = this.value.toString();
+            },
+            placeholder: function () {
+                this.text = this.placeholder;
+            }
+        },
+        computed: {
+            ...mapGetters('nav-bar', ['selectedEnvironment']),
+            tooltipContent: function () {
+                const variableRegex = this.highlightRegex[0].text;
+                const store = this.selectedEnvironment.store || {};
+                let flagReplacement = false;
+
+                const htmlTag = '<div style="color: var(--carabina-text-color);">' + this.text.replace(variableRegex, (item) => {
+                    const itemName = item.substr(2, item.length - 4);
+                    const storeElement = store[itemName];
+                    if (storeElement) {
+                        flagReplacement = true;
+                        return storeElement;
+                    }
+                    return item;
+                }) + '</div>';
+                return flagReplacement ? htmlTag : '';
+            },
         },
         methods: {
             onChange: function (value) {
                 this.text = value;
                 this.$emit('input', this.text);
             },
-            // onHover: function () {
-            //     const highlighted = this.$el.getElementsByTagName('span');
-            //     Array.from(highlighted).map(item => {
-            //         console.log(item.textContent);
-            //     });
-            // }
         },
     });
 </script>
