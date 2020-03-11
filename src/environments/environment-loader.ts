@@ -1,8 +1,8 @@
-import * as fs from "fs";
-import * as yaml from "yamljs";
-import {remote} from "electron";
-import {IdCreator} from "@/components/id-creator";
-import store from "@/store";
+import * as fs from 'fs';
+import store from '@/store';
+import * as yaml from 'yamljs';
+import {remote} from 'electron';
+import {IdCreator} from '@/components/id-creator';
 
 //TODO test it
 export class EnvironmentLoader {
@@ -28,11 +28,11 @@ export class EnvironmentLoader {
                 try {
                     return EnvironmentLoader.loadEnvironment(yaml.parse(fileContent));
                 } catch (e) {
-                    console.log(e);
+                    store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
                 }
             }
         } catch (e) {
-            console.log(e);
+            store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
         }
         return null;
     }
@@ -63,7 +63,7 @@ export class EnvironmentLoader {
             }, {});
             return EnvironmentLoader.loadEnvironment(raw);
         } catch (e) {
-            console.log(e);
+            store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
         }
         return null;
     }

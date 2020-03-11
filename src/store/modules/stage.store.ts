@@ -8,7 +8,7 @@ import {ComponentDecycler} from "@/components/component-decycler";
 import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
 import {ComponentParent} from "@/components/component-parent";
 
-ipcRenderer.on('loadPlugin', ((_, data) => store.commit('stage/loadPlugins', data)));
+ipcRenderer.on('loadPlugin', ((_, data) => store.dispatch('stage/loadPlugins', data)));
 ipcRenderer.on('enqueuerLog', ((_, data) => store.commit('stage/addEnqueuerLog', data)));
 ipcRenderer.on('addLog', ((_, data) => store.commit('stage/addLog', data)));
 ipcRenderer.on('runCurrentlySelectedComponent', ((_) => store.commit('stage/runCurrentlySelectedComponent')));

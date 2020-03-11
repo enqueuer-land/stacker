@@ -70,7 +70,6 @@
                 this.$emit('change', this.update())
             },
             onRowDeleted: function (index) {
-                console.log(index);
                 this.pairs = this.pairs.filter((pair, i) => i !== index);
                 this.$emit('change', this.update())
             }

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import store from '@/store';
 import * as yaml from 'yamljs';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
@@ -21,12 +22,12 @@ export class ComponentLoader {
                         try {
                             resolve(ComponentLoader.loadRequisition(yaml.parse(fileContent)));
                         } catch (e) {
-                            console.log(e);
+                            store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
                         }
                     }
                 });
             } catch (e) {
-                console.log(e);
+                store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
                 resolve(null);
             }
         });
@@ -37,6 +38,7 @@ export class ComponentLoader {
             try {
                 fs.readFile(file, (err, data) => {
                     if (err) {
+                        store.commit('stage/addLog', {message: `Error reading '${file}': ${err}`, level:  'ERROR'});
                         reject(err);
                         return;
                     }
@@ -45,7 +47,7 @@ export class ComponentLoader {
                     resolve(ComponentLoader.loadRequisition(converted));
                 });
             } catch (e) {
-                console.log(e);
+                store.commit('stage/addLog', {message: `Error reading '${file}': ${e}`, level:  'ERROR'});
                 resolve(null);
             }
         });

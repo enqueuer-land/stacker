@@ -43,7 +43,7 @@ export class PluginsLoader {
             this.pluginsString.push(fileContent);
             pluginsRepository.set('pluginsString', this.pluginsString);
         } catch (e) {
-            console.log(e);
+            store.commit('stage/addLog', {message: `Error reading '${filename}': ${e}`, level:  'ERROR'});
         }
     }
 
@@ -53,7 +53,7 @@ export class PluginsLoader {
             this.addPlugin(plugin);
             return plugin;
         } catch (e) {
-            console.log(e);
+            store.commit('stage/addLog', {message: `Error loading plugin: ${e}`, level:  'ERROR'});
         }
     }
 

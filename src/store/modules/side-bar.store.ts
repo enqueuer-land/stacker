@@ -17,13 +17,13 @@ ipcRenderer
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFile(file))
         .filter(async file => await file)
-        .forEach( async requisition => store.commit('side-bar/addRequisition', await requisition)));
+        .forEach(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
 ipcRenderer
     .on('importPostmanCollection', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFromPostman(file))
         .filter(async file => await file)
-        .forEach(async requisition => store.commit('side-bar/addRequisition', await requisition)));
+        .forEach(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
 
 function persist(stage: any) {
     sidebarRepository.set('selectedComponentId', stage.selectedComponent ? stage.selectedComponent.id : null);
