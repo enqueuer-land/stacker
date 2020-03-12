@@ -2,11 +2,13 @@
 'use strict';
 
 import path from 'path'
-import {EventEmitter} from 'events';
+import fixPath from 'fix-path';
 import EnqueuerRunner from '@/enqueuer-runner';
 import * as menuTemplate from '@/menu-template';
-import {app, protocol, BrowserWindow, Menu} from 'electron'
+import {app, BrowserWindow, Menu, protocol} from 'electron'
 import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
+
+fixPath();
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 

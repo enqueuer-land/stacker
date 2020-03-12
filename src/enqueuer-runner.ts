@@ -1,7 +1,7 @@
 import * as os from 'os';
-import {ChildProcess, spawn, exec} from 'child_process';
+import {ChildProcess, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
-import {ipcMain, ipcRenderer} from "electron";
+import {ipcMain} from "electron";
 
 type ResponseMap = {
     [id: string]: {
@@ -75,25 +75,14 @@ export default class EnqueuerRunner {
             this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logBuffer.length - this.maxBufferSize);
         });
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
-        this.enqueuerProcess.on('error', (error: any) => this.window!.webContents.send('addLog', {
-            message: `Child enqueuer errored: ${error}`,
-            level: 'ERROR'
-        }));
+        this.enqueuerProcess.on('error', (error: any) => {
+            this.window!.webContents.send('addLog', {
+                message: `Child enqueuer errored: ${error}`,
+                level: 'ERROR'
+            });
+        });
         this.enqueuerProcess.on("close", (code: number) => {
             this.window!.webContents.send('addLog', {message: `Child enqueuer closed: ${code}`, level: 'ERROR'});
-            exec('type enqueuer', ((error, stdout) => {
-                if (error) {
-                    this.window!.webContents.send('addLog', {
-                        message: `Type 'enqueuer' error: ${error}`,
-                        level: 'ERROR'
-                    });
-                } else {
-                    this.window!.webContents.send('addLog', {
-                        message: `Type 'enqueuer' error: ${stdout}`,
-                        level: 'DEBUG'
-                    });
-                }
-            }));
         });
         this.enqueuerProcess.on('message', (data: any) => this.onMessageReceived(data));
     }
