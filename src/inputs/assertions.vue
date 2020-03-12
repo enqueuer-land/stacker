@@ -1,7 +1,7 @@
 <template>
     <b-container fluid id="assertions">
         <assertion v-for="(assertion, index) in assertions" :assertion="assertion"
-                   :key="JSON.stringify(assertion) + index"
+                   :key="assertion.id"
                    @change="value => onAssertionsChange(index, value)"
                    @delete="onAssertionsDelete(index)"></assertion>
     </b-container>
@@ -9,6 +9,7 @@
 <script>
     import Vue from 'vue';
     import Assertion from '@/inputs/assertion'
+    import {IdCreator} from '@/components/id-creator';
 
     export default Vue.extend({
         name: 'Assertions',
@@ -17,44 +18,77 @@
             value: Array
         },
         data: function () {
-            const initial = [...this.value];
-            if (initial.length === 0 || initial
-                .every(assertion => Object.values(assertion)
-                    .every(value => value !== '') && Object.keys(assertion).length > 0)) {
-                initial.push({});
-            }
             return {
-                assertions: initial
+                assertions: this.initAssertions(this.value)
             }
         },
+        watch: {
+            // value: function (value) {
+            //     const initial = [...value];
+            //     if (initial.length === 0 || initial
+            //         .every(assertion => Object.values(assertion)
+            //             .every(value => value !== '') && Object.keys(assertion).length > 0)) {
+            //         initial.push({});
+            //     }
+            //     this.assertions.push({});
+            // }
+        },
         methods: {
-            emit: function () {
-                this.$emit('change', this.assertions.filter(assertion => Object.keys(assertion).length > 0));
-                this.needsToRemoveRow();
-            },
-            needsToRemoveRow: function () {
-                this.assertions = this.assertions
-                    .filter((assertion, index) => (Object.values(assertion).some(value => value !== '') &&
-                        Object.keys(assertion).length > 0) ||
-                        index === this.assertions.length - 1);
-                this.needsToAddRow();
-            },
-            needsToAddRow: function () {
-                if (this.assertions.every(assertion =>
-                    Object.values(assertion)
-                        .every(value => value !== '') && Object.keys(assertion).length > 0)) {
-                    this.assertions.push({});
+            shouldAddRow: function (value) {
+                const length = value.length;
+                if (length === 0) {
+                    return true;
+                } else {
+                    const lastItem = value[length - 1];
+                    const lastItemKeys = Object.keys(lastItem);
+                    if (lastItemKeys.length > 1 && lastItemKeys.every(key => key === 'id' || lastItem[key] !== '')) {
+                        return true;
+                    }
                 }
+                return false;
+            },
+            initAssertions: function (value) {
+                const initial = [];
+                if (value && value.length > 0) {
+                    value.forEach(item => {
+                        initial.push(Object.assign({}, item, {id: new IdCreator().create()}))
+                    });
+                }
+                if (this.shouldAddRow(value)) {
+                    initial.push({id: new IdCreator().create()});
+                }
+                return initial;
             },
             onAssertionsChange: function (index, value) {
-                console.log(value);
-                this.$set(this.assertions, index, value);
-                this.emit();
+                const toEmit = [...this.assertions];
+                toEmit[index] = value;
+                this.$emit('change', toEmit);
+                if (this.shouldAddRow(toEmit)) {
+                    console.log(toEmit);
+                    this.assertions.push({id: new IdCreator().create()});
+                }
+            },
+            needsToRemoveRow: function (assertions) {
+                let indexToRemove = -1;
+                assertions
+                    .forEach((assertion, index) => {
+                        if (Object.values(assertion).every(value => value === '') &&
+                            Object.keys(assertion).length > 0 &&
+                            index !== this.assertions.length - 1) {
+                            console.log(index);
+                            indexToRemove = index;
+                        }
+                    });
+                if (indexToRemove !== -1) {
+                    this.assertions.splice(indexToRemove, 1);
+                }
             },
             onAssertionsDelete: function (index) {
-                this.assertions = this.assertions
-                    .filter((_, i) => i !== index);
-                this.emit();
+                if (this.assertions.length > 1) {
+                    this.assertions = this.assertions
+                        .filter((_, i) => i !== index);
+                    this.$emit('change', this.assertions);
+                }
             },
 
         }

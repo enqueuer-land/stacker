@@ -10,7 +10,7 @@
                                 :availableList="possibleAssertions">
                         </dropdown-selector>
                     </b-col>
-                    <b-col cols="8" style="padding-top: 5px">
+                    <b-col cols="7" style="padding-top: 5px">
                         <stacker-input placeholder="Actual value" type="text"
                                        @input="(value) => updateActualValue(value)"
                                        :value="actualValue"
@@ -28,7 +28,7 @@
                                 :availableList="selectedAssertion.criteria">
                         </dropdown-selector>
                     </b-col>
-                    <b-col cols="9" style="padding-top: 5px">
+                    <b-col cols="8" style="padding-top: 5px">
                         <stacker-input placeholder="Expected value" type="text"
                                        @input="(value) => updateExpectedValue(value)"
                                        :value="expectedValue"
@@ -37,8 +37,8 @@
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col cols="1" style="text-align: right">
-                <i class="fas fa-times carabina-icon delete-icon p-0 mt-2 mx-1" @click="emitDeletion"
+            <b-col cols="1" style="text-align: right" class="mt-3">
+                <i class="fas fa-times carabina-icon delete-icon p-0mx-1" @click="emitDeletion"
                    style="font-size: 14px"></i>
             </b-col>
         </b-row>
@@ -97,7 +97,7 @@
                 return defaultValue;
             },
             assertionChanged: function (value) {
-                // this.selectedAssertion = value;
+                this.selectedAssertion = value;
                 this.emit();
             },
             criteriumChanged: function (value) {
@@ -105,11 +105,11 @@
                 this.emit();
             },
             updateActualValue: function (value) {
-                // this.actualValue = value;
+                this.actualValue = value;
                 this.emit();
             },
             updateExpectedValue: function (value) {
-                // this.expectedValue = value;
+                this.expectedValue = value;
                 this.emit();
             },
             emit: function () {
@@ -119,9 +119,7 @@
                 if (this.selectedAssertion.criteria.length > 0) {
                     toEmit[this.selectedCriterium.name] = this.expectedValue;
                 }
-                if (Object.values(toEmit).some(value => value.length > 0)) {
-                    this.$emit('change', toEmit);
-                }
+                this.$emit('change', toEmit);
             },
             emitDeletion: function () {
                 this.$emit('delete');
