@@ -65,4 +65,8 @@
     .bottom-line {
         border-bottom: 1px solid var(--carabina-header-background-lighter-color);
     }
+
+    label {
+        user-select: none;
+    }
 </style>

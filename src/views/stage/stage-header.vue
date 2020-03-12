@@ -1,6 +1,6 @@
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
-        <div class="p-2 pt-3 m-0" style="width: 100%; height: 40%">
+        <div class="px-1 pt-3 m-0" style="width: 100%; height: 35%">
             <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px"
                           :items="breadcrumbItems"></b-breadcrumb>
         </div>
@@ -13,7 +13,7 @@
                         :color="componentColor"
                         :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
             </b-col>
-            <b-col cols="8" class="align-self-center mt-1 mr-auto">
+            <b-col :cols="component.carabinaMeta.componentName !== 'REQUISITION' ? 8 : 10" class="align-self-center mt-1 mr-auto">
                 <stacker-input id="component-name" placeholder="Component name" type="text"
                                :fill-width="true"
                                @input="(value) => $parent.updateAttribute('name', value)"
