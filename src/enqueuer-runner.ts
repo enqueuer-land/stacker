@@ -1,4 +1,5 @@
 import * as os from 'os';
+import * as fs from 'fs';
 import {ChildProcess, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 import {ipcMain} from "electron";
@@ -28,14 +29,11 @@ export default class EnqueuerRunner {
 
     public run(): void {
         try {
-            spawn('mkdir', [os.homedir() + '/.nqr']);
+            this.createNqrFolder();
             this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
                 stdio: ['pipe', 'pipe', 'pipe', 'ipc']
             });
-            this.window!.webContents.send('addLog', {
-                message: `Enqueuer pid: ${this.enqueuerProcess.pid}`,
-                level: 'DEBUG'
-            });
+            this.sendLogToStacker(`Enqueuer pid: ${this.enqueuerProcess.pid}`, 'DEBUG');
 
             //Handshake purposes
             this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
@@ -60,12 +58,17 @@ export default class EnqueuerRunner {
                 this.window!.webContents.send('runEnqueuerReply', reply);
             });
         } catch (e) {
-            this.window!.webContents.send('addLog', {
-                message: `Error running enqueuer sub process: ${e}`,
-                level: 'ERROR'
-            });
+            this.sendLogToStacker(`Error running enqueuer sub process: ${e}`, 'ERROR');
             throw e;
         }
+    }
+
+    private createNqrFolder() {
+        fs.mkdir(os.homedir() + '/.nqr', {recursive: true}, (err) => {
+            if (err) {
+                this.sendLogToStacker(`Error creating .nqr folder: ${err}`, 'ERROR');
+            }
+        });
     }
 
     private registerChildListeners(): void {
@@ -75,15 +78,8 @@ export default class EnqueuerRunner {
             this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logBuffer.length - this.maxBufferSize);
         });
         this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
-        this.enqueuerProcess.on('error', (error: any) => {
-            this.window!.webContents.send('addLog', {
-                message: `Child enqueuer errored: ${error}`,
-                level: 'ERROR'
-            });
-        });
-        this.enqueuerProcess.on("close", (code: number) => {
-            this.window!.webContents.send('addLog', {message: `Child enqueuer closed: ${code}`, level: 'ERROR'});
-        });
+        this.enqueuerProcess.on('error', (error: any) => this.sendLogToStacker(`Child enqueuer errored: ${error}`, 'ERROR'));
+        this.enqueuerProcess.on("close", (code: number) => this.sendLogToStacker(`Child enqueuer closed: ${code}`, 'ERROR'));
         this.enqueuerProcess.on('message', (data: any) => this.onMessageReceived(data));
     }
 
@@ -112,5 +108,9 @@ export default class EnqueuerRunner {
                 }
             }
         }
+    }
+
+    private sendLogToStacker(message: string, level: string) {
+        this.window!.webContents.send('addLog', {message, level});
     }
 }
