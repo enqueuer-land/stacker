@@ -84,10 +84,16 @@ export default class EnqueuerRunner {
     }
 
     private sendRequisition(requisitionInput: InputRequisitionModel): Promise<OutputRequisitionModel[]> {
-        this.enqueuerProcess.send({event: 'CLEAN_STORE'});
-        this.enqueuerProcess.send({event: 'SET_STORE', value: this.enqueuerStore});
-        this.enqueuerProcess.send({event: 'RUN_REQUISITION', value: requisitionInput});
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
+            this.enqueuerProcess.send({event: 'CLEAN_STORE'});
+            this.enqueuerProcess.send({event: 'SET_STORE', value: this.enqueuerStore}, (error: Error | null) => {
+                if (error) {
+                    this.sendLogToStacker(`Error running: ${error}`, 'ERROR');
+                    reject(error);
+                } else {
+                    this.enqueuerProcess.send({event: 'RUN_REQUISITION', value: requisitionInput});
+                }
+            });
             this.responsesMap[requisitionInput.id.toString()] = {
                 promisesResolver: resolve,
                 responses: []
