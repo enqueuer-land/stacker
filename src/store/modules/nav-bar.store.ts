@@ -1,5 +1,5 @@
 import store from "@/store";
-import {ipcRenderer, remote} from "electron";
+import {ipcRenderer} from "electron";
 import Store from 'electron-store';
 import {IdCreator} from "@/components/id-creator";
 import {EnvironmentSaver} from "@/environments/environment-saver";

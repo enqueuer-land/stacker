@@ -29,7 +29,6 @@ const plugin = {
                 }
             },
             mounted: function() {
-                console.log('shell mounted', this.$state);
                 this.$parent.updateAttribute('options', this.options);
                 this.$parent.updateAttribute('command', this.command);
             },

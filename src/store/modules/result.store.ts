@@ -48,7 +48,6 @@ export default {
             stage.enqueuerRunningStartTime = new Date().getTime();
         },
         updateResponse: (stage: any, value: OutputRequisitionModel[]) => {
-            const elapsedTime = new Date().getTime() - stage.enqueuerRunningStartTime;
             store.commit('result/disableEnqueuerRunningModal');
 
             stage.responses = value;
