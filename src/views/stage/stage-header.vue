@@ -19,6 +19,7 @@
                                @input="(value) => $parent.updateAttribute('name', value)"
                                :state="component.name.length > 2 ? null : false"
                                :value="component.name"
+                               empty-value="Component Name"
                                trim
                                class="px-1">
                 </stacker-input>

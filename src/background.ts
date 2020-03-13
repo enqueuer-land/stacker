@@ -24,8 +24,8 @@ function createWindow() {
     win = new BrowserWindow({
         title: 'Stacker',
         fullscreen: true,
-        minWidth: 1600,
-        minHeight: 1000,
+        minWidth: 1200,
+        minHeight: 800,
         width: 2000,
         height: 1250,
         // @ts-ignore
