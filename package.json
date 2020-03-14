@@ -1,6 +1,6 @@
 {
   "name": "stacker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Polyglot flow GUI testing tool",
   "author": {
     "name": "Virgs",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/virgs/carabina"
+    "url": "git+https://github.com/virgs/stacker"
   },
   "private": true,
   "scripts": {
@@ -65,7 +65,9 @@
   },
   "eslintConfig": {
     "root": true,
-    "ignorePatterns": ["generate-html.js"],
+    "ignorePatterns": [
+      "generate-html.js"
+    ],
     "env": {
       "node": true
     },
