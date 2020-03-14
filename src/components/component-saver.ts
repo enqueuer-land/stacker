@@ -1,15 +1,15 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
-import {remote} from 'electron';
 import {IdCreator} from '@/components/id-creator';
+import {FileDialog} from '@/components/file-dialog';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from '@/components/component-decycler';
 
 //TODO test it
 export class ComponentSaver {
 
-    public save(item: any) {
-        const filename = ComponentSaver.pickDestination(item);
+    public async save(item: any) {
+        const filename = await FileDialog.showSaveDialog(item.name + '.nqr.yml');
         if (!filename) {
             return;
         }
@@ -38,13 +38,6 @@ export class ComponentSaver {
                 break;
         }
         ComponentSaver.saveRequisition(filename, componentToSave);
-    }
-
-    private static pickDestination(item: any): string | undefined {
-        return remote.dialog.showSaveDialogSync({
-            defaultPath: item.name + '.nqr.yml',
-            showsTagField: false,
-        });
     }
 
     private static saveRequisition(filename: string, item: any): void {

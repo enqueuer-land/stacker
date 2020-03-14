@@ -1,6 +1,7 @@
 import store from '@/store'
 import Store from 'electron-store';
-import {ipcRenderer, remote} from 'electron';
+import {remote} from 'electron';
+import {Logger} from '@/components/logger';
 import {InputRequisitionModel} from 'enqueuer';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
@@ -9,16 +10,17 @@ import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
+import {RendererMessageSender} from '@/components/renderer-message-sender';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
-ipcRenderer
+RendererMessageSender
     .on('openComponent', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFile(file))
         .filter(async file => await file)
         .forEach(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
-ipcRenderer
+RendererMessageSender
     .on('importPostmanCollection', () => (remote.dialog
         .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
         .map(async file => await ComponentLoader.importFromPostman(file))
@@ -97,7 +99,7 @@ export default {
             persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
-            new ComponentSaver().save(event.component);
+            new ComponentSaver().save(event.component).then(() => Logger.info(`Component '${event.component.name}' saved`));
         },
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
