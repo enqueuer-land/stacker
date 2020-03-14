@@ -4,7 +4,7 @@ import store from "@/store";
 import {remote} from 'electron';
 import Store from 'electron-store';
 import {exec} from 'child_process';
-import {logger} from '@/components/logger';
+import {Logger} from '@/components/logger';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
@@ -44,7 +44,7 @@ export class PluginsLoader {
             this.pluginsString.push(fileContent);
             pluginsRepository.set('pluginsString', this.pluginsString);
         } catch (e) {
-            logger({message: `Error reading '${filename}': ${e}`, level:  'ERROR'});
+            Logger.error(`Error reading '${filename}': ${e}`);
         }
     }
 
@@ -54,7 +54,7 @@ export class PluginsLoader {
             this.addPlugin(plugin);
             return plugin;
         } catch (e) {
-            logger({message: `Error loading plugin: ${e}`, level:  'ERROR'});
+            Logger.error(`Error loading plugin: ${e}`);
         }
     }
 
@@ -64,12 +64,12 @@ export class PluginsLoader {
             .filter(enqueuerPlugin => enqueuerPlugin)
             .forEach(enqueuerPlugin => {
                 store.commit('stage/addInstallingPluginModal');
-                logger({message: `Installing '${enqueuerPlugin}'`, level:  'INFO'});
+                Logger.info(`Installing '${enqueuerPlugin}'`);
                 exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
                     if (error) {
-                        logger({message: `'${enqueuerPlugin}' installation: ${error}`, level:  'ERROR'});
+                        Logger.error(`'${enqueuerPlugin}' installation: ${error}`);
                     } else {
-                        logger({message: `'${enqueuerPlugin}' installation: ${stdout}`, level:  'INFO'});
+                        Logger.info(`'${enqueuerPlugin}' installation: ${stdout}`);
                     }
                     store.commit('stage/removeInstallingPluginModal');
                 }));

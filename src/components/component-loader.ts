@@ -3,7 +3,7 @@ import * as yaml from 'yamljs';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
 import {PostmanCollectionConverter} from '@/postman/postman-collection-converter';
-import {logger} from '@/components/logger';
+import {Logger} from '@/components/logger';
 
 export class ComponentLoader {
 
@@ -22,12 +22,12 @@ export class ComponentLoader {
                         try {
                             resolve(ComponentLoader.loadRequisition(yaml.parse(fileContent)));
                         } catch (e) {
-                            logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                            Logger.error(`Error reading '${file}': ${e}`);
                         }
                     }
                 });
             } catch (e) {
-                logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                Logger.error(`Error reading '${file}': ${e}`);
                 resolve(null);
             }
         });
@@ -38,7 +38,7 @@ export class ComponentLoader {
             try {
                 fs.readFile(file, (err, data) => {
                     if (err) {
-                        logger({message: `Error reading '${file}': ${err}`, level: 'ERROR'});
+                        Logger.error(`Error reading '${file}': ${err}`);
                         reject(err);
                         return;
                     }
@@ -47,7 +47,7 @@ export class ComponentLoader {
                     resolve(ComponentLoader.loadRequisition(converted));
                 });
             } catch (e) {
-                logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                Logger.error(`Error reading '${file}': ${e}`);
                 resolve(null);
             }
         });
