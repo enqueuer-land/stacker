@@ -1,0 +1,24 @@
+/*https://coolors.co/9fb630-ffe8af-c4bcf2-d4f2db-cef7a0*/
+:root {
+    --carabina-scrollbar-color: #324D36;
+
+    --carabina-requisition-color: #FFC914;
+    --carabina-publisher-color: #E4572E;
+    --carabina-subscription-color: #17BEBB;
+
+    --carabina-ignored-test-color: #d5ba50;
+    --carabina-passing-test-color: #9FB630;
+    --carabina-failing-test-color: #a9524a;
+
+    --carabina-body-background-lighter-color: #424242;
+    --carabina-body-background-color: #353535;
+    --carabina-body-background-darker-color: #1f1f1f;
+    --carabina-header-background-lighter-color: #3f3d43;
+    --carabina-header-background-color: #252423;
+    --carabina-header-background-darker-color: #201f20;
+    --carabina-nav-bar-background-color: #1D1A1D;
+    --carabina-text-color: #F8FDFF;
+    --carabina-text-darker-color: #9CA0A3;
+
+    --carabina-theme-color: #9FB630;
+}

@@ -1,0 +1,132 @@
+:root {
+    --carabina-scrollbar-color: #324D36;
+
+    --carabina-requisition-color: #FFC914;
+    --carabina-publisher-color: #E4572E;
+    --carabina-subscription-color: #17BEBB;
+
+    --carabina-ignored-test-color: #d5ba50;
+    --carabina-passing-test-color: #9FB630;
+    --carabina-failing-test-color: #a9524a;
+
+    --carabina-body-background-lighter-color: #424242;
+    --carabina-body-background-color: #353535;
+    --carabina-body-background-darker-color: #1f1f1f;
+    --carabina-header-background-lighter-color: #3f3d43;
+    --carabina-header-background-color: #252423;
+    --carabina-header-background-darker-color: #201f20;
+    --carabina-nav-bar-background-color: #1D1A1D;
+    --carabina-text-color: #F8FDFF;
+    --carabina-text-darker-color: #9CA0A3;
+
+    --carabina-theme-color: #9FB630;
+}
+
+
+.jumbotron-header {
+    background-color: var(--carabina-header-background-darker-color);
+    margin-bottom: 0;
+}
+
+.title-header {
+    transform: scale(1, .7);
+    font-family: 'Nova Mono', monospace;
+    font-size: 6.5rem;
+    color: var(--carabina-text-color);
+    letter-spacing: -15px;
+}
+
+.jumbotron-summary {
+    color: var(--carabina-text-darker-color);
+    font-size: 25px;
+    text-align: center;
+}
+
+.jumbotron-header-button {
+    background-color: var(--carabina-text-darker-color);
+    color: var(--carabina-header-background-darker-color);
+}
+
+.img-binaries {
+    width: 50%;
+    height: auto;
+    background-color: var(--carabina-text-darker-color);
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.jumbotron-header-button:hover, .img-binaries:hover {
+    box-shadow: 0 0 20px var(--carabina-theme-color);
+}
+
+.github-icon-class {
+    height: 30px;
+    padding-right: 10px;
+}
+
+.powered-by {
+    color: var(--carabina-text-darker-color);
+    text-align: center;
+    font-size: 20px;
+}
+
+.stacker-link, .readme-container a {
+    color: var(--carabina-theme-color);
+    font-weight: bold;
+}
+
+.readme-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+h2, h3, h4, h5 {
+    color: var(--carabina-theme-color);
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+
+h2 {
+    font-size: 2.1rem;
+}
+
+.readme-container h3 {
+    font-size: 1.8rem;
+}
+
+.readme-container h5 {
+    font-size: 1.2rem;
+}
+
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}
+
+@media (max-width: 1100px) {
+    .binaries-container {
+        display: none;
+    }
+}
