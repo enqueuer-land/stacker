@@ -2,17 +2,21 @@ import store from '@/store'
 import {ipcRenderer} from 'electron';
 import {InputRequisitionModel} from 'enqueuer';
 import {IdCreator} from '@/components/id-creator';
-import {PluginsLoader} from "@/plugins/plugins-loader";
+import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
-import {ComponentDecycler} from "@/components/component-decycler";
-import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
-import {ComponentParent} from "@/components/component-parent";
+import {ComponentParent} from '@/components/component-parent';
+import {ComponentDecycler} from '@/components/component-decycler';
+import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 
-ipcRenderer.on('loadPlugin', ((_, data) => store.dispatch('stage/loadPlugins', data)));
-ipcRenderer.on('enqueuerLog', ((_, data) => store.commit('stage/addEnqueuerLog', data)));
-ipcRenderer.on('addLog', ((_, data) => store.commit('stage/addLog', data)));
-ipcRenderer.on('runCurrentlySelectedComponent', ((_) => store.commit('stage/runCurrentlySelectedComponent')));
-ipcRenderer.on('runHighestParentOfSelectedComponent', ((_) => store.commit('stage/runHighestParentOfSelectedComponent')));
+export function addLog(data: { message: string; level: string }) {
+    store.commit('stage/addLog', data);
+}
+
+ipcRenderer.on('addLog', ((event, data) => addLog(data)));
+ipcRenderer.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
+ipcRenderer.on('enqueuerLog', ((event, data) => store.commit('stage/addEnqueuerLog', data)));
+ipcRenderer.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
+ipcRenderer.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
 
 function prepareRequisition(msg: any) {
     const componentName = msg.carabinaMeta.componentName;
@@ -47,13 +51,15 @@ export default {
         runCurrentlySelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
             store.dispatch('stage/runComponent', selectedComponent)
-                .then(() => {/* do nothing */});
+                .then(() => {/* do nothing */
+                });
         },
         runHighestParentOfSelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
             const highestParent = new ComponentParent(selectedComponent).findHighestParent();
             store.dispatch('stage/runComponent', highestParent)
-                .then(() => {/* do nothing */});
+                .then(() => {/* do nothing */
+                });
         }
     },
     actions: {

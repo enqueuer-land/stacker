@@ -1,34 +1,34 @@
 <template>
     <b-container fluid id="assertion" class="px-1">
         <b-row no-gutters class="mb-2">
-            <b-col :cols="selectedAssertion.criteria.length > 0 ? '6' : '11'">
+            <b-col :cols="expectedList.length > 0 ? '6' : '11'">
                 <b-row no-gutters>
                     <b-col cols="auto">
                         <dropdown-selector
-                                @select="value => assertionChanged(value)"
+                                @select="value => assertionChanged(value.name)"
                                 :defaultSelection="selectedAssertion"
-                                :availableList="possibleAssertions">
+                                :availableList="availableAssertions">
                         </dropdown-selector>
                     </b-col>
                     <b-col cols="7" style="padding-top: 5px">
                         <stacker-input placeholder="Actual value" type="text"
-                                       @input="(value) => updateActualValue(value)"
-                                       :value="actualValue"
+                                       @input="(value) => updateAssertionValue(value)"
+                                       :value="assertionValue"
                                        class="text-input carabina-text" trim>
                         </stacker-input>
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col cols="5" v-if="selectedAssertion.criteria.length > 0" class="pl-1">
+            <b-col cols="5" v-if="expectedList.length > 0" class="pl-1">
                 <b-row no-gutters>
                     <b-col cols="auto">
                         <dropdown-selector
-                                :defaultSelection="selectedCriterium"
-                                @select="value => criteriumChanged(value)"
-                                :availableList="selectedAssertion.criteria">
+                                :defaultSelection="selectedExpected"
+                                @select="value => expectedChanged(value.name)"
+                                :availableList="expectedList">
                         </dropdown-selector>
                     </b-col>
-                    <b-col cols="8" style="padding-top: 5px">
+                    <b-col cols="7" style="padding-top: 5px">
                         <stacker-input placeholder="Expected value" type="text"
                                        @input="(value) => updateExpectedValue(value)"
                                        :value="expectedValue"
@@ -49,63 +49,59 @@
     import '@/styles/texts.css';
     import '@/styles/icons.css';
     import '@/styles/dropdown.css';
-    import {assertions} from '@/components/assertions';
+    import {availableAssertions} from '@/components/available-assertions';
+    import {Assertion} from '@/components/assertion';
 
     export default Vue.extend({
-        name: 'KeyValueTable',
+        name: 'Assertion',
         props: {
-            assertion: Object
+            value: Object
         },
         data: function () {
             const initial = this.getContent();
             return {
-                actualValue: initial.actualValue,
+                assertion: initial.assertion,
+                assertionValue: initial.assertionValue,
+                expected: initial.expected,
                 expectedValue: initial.expectedValue,
-                selectedAssertion: initial.selectedAssertion,
-                selectedCriterium: initial.selectedCriterium,
-                possibleAssertions: initial.possibleAssertions,
+
+                availableAssertions
+            }
+        },
+        computed: {
+            expectedList: function () {
+                return availableAssertions.find(item => item.name === this.assertion).expectedList;
+            },
+            selectedAssertion: function () {
+                return availableAssertions.find(item => item.name === this.assertion);
+            },
+            selectedExpected: function () {
+                return this.expectedList && this.expectedList.find(item => item.name === this.expected);
             }
         },
         methods: {
             getContent: function () {
-                const initialAssertion = assertions[0];
-                const defaultValue = {
-                    actualValue: '',
-                    expectedValue: '',
-                    selectedAssertion: initialAssertion,
-                    selectedCriterium: initialAssertion.criteria[0],
-                    possibleAssertions: assertions
+                const initialAssertion = new Assertion().parse(this.value);
+                if (initialAssertion) {
+                    return initialAssertion;
+                }
+                return {
+                    assertion: 'expect',
+                    assertionValue: '',
+                    expected: 'toBeEqualTo',
+                    expectedValue: ''
                 };
-
-                Object.keys(this.assertion)
-                    .forEach(key => {
-                        const assertion = defaultValue.possibleAssertions
-                            .find(possible => possible.name === key);
-                        if (assertion) {
-                            defaultValue.selectedAssertion = assertion;
-
-                            defaultValue.actualValue = this.assertion[key];
-                            const criteriumKey = Object.keys(this.assertion)
-                                .find(anotherKey => anotherKey !== key && anotherKey !== 'name');
-                            if (criteriumKey) {
-                                defaultValue.selectedCriterium = defaultValue.selectedAssertion.criteria
-                                    .find(criterium => criterium.name === criteriumKey);
-                                defaultValue.expectedValue = this.assertion[criteriumKey];
-                            }
-                        }
-                    });
-                return defaultValue;
             },
             assertionChanged: function (value) {
-                this.selectedAssertion = value;
+                this.assertion = value;
                 this.emit();
             },
-            criteriumChanged: function (value) {
-                this.selectedCriterium = value;
+            expectedChanged: function (value) {
+                this.expected = value;
                 this.emit();
             },
-            updateActualValue: function (value) {
-                this.actualValue = value;
+            updateAssertionValue: function (value) {
+                this.assertionValue = value;
                 this.emit();
             },
             updateExpectedValue: function (value) {
@@ -114,10 +110,12 @@
             },
             emit: function () {
                 const toEmit = {
-                    [this.selectedAssertion.name]: this.actualValue,
+                    assertion: this.assertion,
+                    assertionValue: this.assertionValue
                 };
-                if (this.selectedAssertion.criteria.length > 0) {
-                    toEmit[this.selectedCriterium.name] = this.expectedValue;
+                if (this.expectedList.length > 0) {
+                    toEmit.expected = this.expected;
+                    toEmit.expectedValue = this.expectedValue;
                 }
                 this.$emit('change', toEmit);
             },
