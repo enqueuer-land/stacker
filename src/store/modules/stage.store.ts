@@ -27,7 +27,7 @@ function prepareRequisition(msg: any) {
 export default {
     state: {
         plugins: new PluginsLoader().getPlugins(),
-        enqueuerLogParser: new EnqueuerLogParser().setPriorityFilter('INFO'),
+        enqueuerLogParser: new EnqueuerLogParser(50, 'INFO'),
         installingPluginModal: false,
     },
     mutations: {
@@ -56,7 +56,7 @@ export default {
                 .then(() => {/* do nothing */
                 });
         },
-        setPlugins:  (stage: any, data: any) => {
+        setPlugins: (stage: any, data: any) => {
             stage.plugins = data;
         },
 

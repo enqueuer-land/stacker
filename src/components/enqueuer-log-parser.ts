@@ -23,19 +23,29 @@ export class EnqueuerLogParser {
 
     private bufferSize: number;
     private logs: Log[] = [];
-    private priorityFilter = -1;
+    private priorityFilter: number;
 
-    constructor(bufferSize = 50) {
+    constructor(bufferSize = 50, priorityFilter = 'TRACE') {
         this.bufferSize = bufferSize;
+        this.priorityFilter = Math.max(logLevel.findIndex(item => item === priorityFilter), 0);
     }
 
     public getLogs(): Log[] {
         return this.logs.filter(log => log.priority >= this.priorityFilter);
     }
 
-    public setPriorityFilter(level: string): EnqueuerLogParser {
-        this.priorityFilter = logLevel.findIndex(item => item === level.toUpperCase());
+    public increasePriorityFilter(): EnqueuerLogParser {
+        this.priorityFilter = Math.min(this.priorityFilter + 1, logLevel.length - 1);
         return this;
+    }
+
+    public decreasePriorityFilter(): EnqueuerLogParser {
+        this.priorityFilter = Math.max(this.priorityFilter - 1, 0);
+        return this;
+    }
+
+    public getPriorityFilterName(): string {
+        return logLevel[this.priorityFilter];
     }
 
     public clearBuffer(): void {
