@@ -3,7 +3,7 @@ import store from '@/store';
 import * as yaml from 'yamljs';
 import {remote} from 'electron';
 import {IdCreator} from '@/components/id-creator';
-import {addLog} from '@/store/modules/stage.store';
+import {logger} from "@/components/logger";
 
 //TODO test it
 export class EnvironmentLoader {
@@ -29,11 +29,11 @@ export class EnvironmentLoader {
                 try {
                     return EnvironmentLoader.loadEnvironment(yaml.parse(fileContent));
                 } catch (e) {
-                    addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                    logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
                 }
             }
         } catch (e) {
-            addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+            logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
         }
         return null;
     }
@@ -64,7 +64,7 @@ export class EnvironmentLoader {
             }, {});
             return EnvironmentLoader.loadEnvironment(raw);
         } catch (e) {
-            addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+            logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
         }
         return null;
     }

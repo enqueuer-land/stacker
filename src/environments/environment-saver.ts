@@ -1,6 +1,6 @@
-import {remote} from "electron";
-import * as fs from "fs";
-import * as yaml from "yamljs";
+import {remote} from 'electron';
+import * as fs from 'fs';
+import * as yaml from 'yamljs';
 
 //TODO test it
 export class EnvironmentSaver {

@@ -4,10 +4,10 @@ import store from "@/store";
 import {remote} from 'electron';
 import Store from 'electron-store';
 import {exec} from 'child_process';
-import {addLog} from '@/store/modules/stage.store';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
+import {logger} from "@/components/logger";
 
 const pluginsRepository = new Store({name: 'plugins'});
 
@@ -44,7 +44,7 @@ export class PluginsLoader {
             this.pluginsString.push(fileContent);
             pluginsRepository.set('pluginsString', this.pluginsString);
         } catch (e) {
-            addLog({message: `Error reading '${filename}': ${e}`, level:  'ERROR'});
+            logger({message: `Error reading '${filename}': ${e}`, level:  'ERROR'});
         }
     }
 
@@ -54,7 +54,7 @@ export class PluginsLoader {
             this.addPlugin(plugin);
             return plugin;
         } catch (e) {
-            addLog({message: `Error loading plugin: ${e}`, level:  'ERROR'});
+            logger({message: `Error loading plugin: ${e}`, level:  'ERROR'});
         }
     }
 
@@ -64,12 +64,12 @@ export class PluginsLoader {
             .filter(enqueuerPlugin => enqueuerPlugin)
             .forEach(enqueuerPlugin => {
                 store.commit('stage/addInstallingPluginModal');
-                addLog({message: `Installing '${enqueuerPlugin}'`, level:  'INFO'});
+                logger({message: `Installing '${enqueuerPlugin}'`, level:  'INFO'});
                 exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
                     if (error) {
-                        addLog({message: `'${enqueuerPlugin}' installation: ${error}`, level:  'ERROR'});
+                        logger({message: `'${enqueuerPlugin}' installation: ${error}`, level:  'ERROR'});
                     } else {
-                        addLog({message: `'${enqueuerPlugin}' installation: ${stdout}`, level:  'INFO'});
+                        logger({message: `'${enqueuerPlugin}' installation: ${stdout}`, level:  'INFO'});
                     }
                     store.commit('stage/removeInstallingPluginModal');
                 }));

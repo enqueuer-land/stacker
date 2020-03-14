@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
-import {addLog} from '@/store/modules/stage.store';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
 import {PostmanCollectionConverter} from '@/postman/postman-collection-converter';
+import {logger} from '@/components/logger';
 
 export class ComponentLoader {
 
@@ -22,12 +22,12 @@ export class ComponentLoader {
                         try {
                             resolve(ComponentLoader.loadRequisition(yaml.parse(fileContent)));
                         } catch (e) {
-                            addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                            logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
                         }
                     }
                 });
             } catch (e) {
-                addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
                 resolve(null);
             }
         });
@@ -38,7 +38,7 @@ export class ComponentLoader {
             try {
                 fs.readFile(file, (err, data) => {
                     if (err) {
-                        addLog({message: `Error reading '${file}': ${err}`, level: 'ERROR'});
+                        logger({message: `Error reading '${file}': ${err}`, level: 'ERROR'});
                         reject(err);
                         return;
                     }
@@ -47,7 +47,7 @@ export class ComponentLoader {
                     resolve(ComponentLoader.loadRequisition(converted));
                 });
             } catch (e) {
-                addLog({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
+                logger({message: `Error reading '${file}': ${e}`, level: 'ERROR'});
                 resolve(null);
             }
         });
