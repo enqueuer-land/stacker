@@ -21,7 +21,8 @@
     "electron:serve": "node_modules/.bin/vue-cli-service electron:serve",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "updateHtml": "node generate-html"
   },
   "main": "background.js",
   "dependencies": {
@@ -56,6 +57,7 @@
     "electron-icon-builder": "^1.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "pagedown": "^1.1.0",
     "shebang-loader": "0.0.1",
     "typescript": "~3.7.5",
     "vue-cli-plugin-electron-builder": "^1.4.6",
