@@ -15,6 +15,13 @@ import {RendererMessageSender} from '@/components/renderer-message-sender';
 const sidebarRepository = new Store({name: 'side-bar'});
 
 RendererMessageSender
+    .on('newRequisition', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.REQUISITION}));
+RendererMessageSender
+    .on('newPublisher', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.PUBLISHER}));
+RendererMessageSender
+    .on('newSubscription', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.SUBSCRIPTION}));
+
+RendererMessageSender
     .on('openComponent', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFile(file))
         .filter(async file => await file)

@@ -1,7 +1,7 @@
 <template>
     <b-container fluid>
         <b-row v-for="(pair, index) in pairs" class="m-0 pl-3 py-0 mb-2"
-               :key="pair.id" id="key-value-table" style="height: 50%" no-gutters align-h="center">
+               :key="pair.id" id="key-value-table" no-gutters align-h="center">
             <b-col cols="11" class="align-self-center mr-auto">
                 <b-row no-gutters>
                     <b-col cols="6">
@@ -20,15 +20,11 @@
                                        @input="(value) => onValueChanged(value, index)"
                                        class="text-input carabina-text ml-2" trim>
                         </stacker-input>
-
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col cols="auto" class="align-self-center"
-                   style="webkit-box-flex: 0 !important;
-                                flex: 0 0 5% !important;
-                                max-width: 5% !important;">
-                <i class="fas fa-times carabina-icon delete-icon ml-2 mt-3" style="font-size: 14px"
+            <b-col cols="auto" class="align-self-center pb-2">
+                <i class="fas fa-times carabina-icon delete-icon" style="font-size: 14px"
                    @click="onRowDeleted(index)"></i>
             </b-col>
         </b-row>

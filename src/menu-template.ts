@@ -21,27 +21,29 @@ export default (window: Electron.BrowserWindow) => [
     {
         label: 'File',
         submenu: [
-            // {
-            //     label: 'New...',
-            //     accelerator: 'CommandOrControl+N',
-            //     submenu: [
-            //         {
-            //             label: 'Requisition',
-            //             // @ts-ignore
-            //             click: () => global.eventEmitter.emit('newRequisition'),
-            //         },
-            //         {
-            //             label: 'Publisher',
-            //             // @ts-ignore
-            //             click: () => global.eventEmitter.emit('newPublisher'),
-            //         },
-            //         {
-            //             label: 'Subscription',
-            //             // @ts-ignore
-            //             click: () => global.eventEmitter.emit('newSubscription'),
-            //         }
-            //     ]
-            // },
+            {
+                label: 'New...',
+                submenu: [
+                    {
+                        label: 'Requisition',
+                        accelerator: 'CommandOrControl+N',
+                        // @ts-ignore
+                        click: () => window.webContents.send('newRequisition'),
+                    },
+                    {
+                        label: 'Publisher',
+                        accelerator: 'CommandOrControl+P',
+                        // @ts-ignore
+                        click: () => window.webContents.send('newPublisher'),
+                    },
+                    {
+                        label: 'Subscription',
+                        accelerator: 'CommandOrControl+S',
+                        // @ts-ignore
+                        click: () => window.webContents.send('newSubscription'),
+                    }
+                ]
+            },
             {
                 label: 'Open component',
                 accelerator: 'CommandOrControl+O',
