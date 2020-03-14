@@ -1,4 +1,4 @@
-import {IdCreator} from "@/components/id-creator";
+import {IdCreator} from '@/components/id-creator';
 
 describe('IdCreator', () => {
 

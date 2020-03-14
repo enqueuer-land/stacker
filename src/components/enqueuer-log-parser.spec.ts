@@ -1,4 +1,4 @@
-import {EnqueuerLogParser} from "@/components/enqueuer-log-parser";
+import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 
 describe('EnqueuerLogParser', () => {
     it('should generate log', () => {

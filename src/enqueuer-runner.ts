@@ -1,8 +1,8 @@
 import * as os from 'os';
 import * as fs from 'fs';
+import {ipcMain} from 'electron';
 import {ChildProcess, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
-import {ipcMain} from "electron";
 
 type ResponseMap = {
     [id: string]: {

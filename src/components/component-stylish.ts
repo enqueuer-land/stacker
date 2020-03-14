@@ -1,4 +1,4 @@
-import {ComponentTypes} from "@/components/component-types";
+import {ComponentTypes} from '@/components/component-types';
 
 //TODO test it
 export class ComponentStylish {

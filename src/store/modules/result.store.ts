@@ -1,8 +1,8 @@
 import store from '@/store'
 import Store from 'electron-store';
-import {TestFlattener} from "@/components/test-flattener";
+import {TestFlattener} from '@/components/test-flattener';
 import {TestModel} from 'enqueuer/js/models/outputs/test-model';
-import {OutputRequisitionModel, OutputTestModel} from "enqueuer/js/enqueuer";
+import {OutputRequisitionModel, OutputTestModel} from 'enqueuer';
 
 const resultRepository = new Store({name: 'result'});
 

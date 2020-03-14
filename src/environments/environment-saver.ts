@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
-import {FileDialog} from "@/components/file-dialog";
+import {FileDialog} from '@/components/file-dialog';
 
 //TODO test it
 export class EnvironmentSaver {

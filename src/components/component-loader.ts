@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
+import {Logger} from '@/components/logger';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
 import {PostmanCollectionConverter} from '@/postman/postman-collection-converter';
-import {Logger} from '@/components/logger';
 
 export class ComponentLoader {
 

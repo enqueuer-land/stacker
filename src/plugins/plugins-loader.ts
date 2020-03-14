@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as os from 'os';
-import store from "@/store";
+import store from '@/store';
 import Store from 'electron-store';
 import {exec} from 'child_process';
 import {Logger} from '@/components/logger';

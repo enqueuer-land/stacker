@@ -1,6 +1,6 @@
+import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
-import {ComponentTypes} from "@/components/component-types";
 
 describe('ComponentDecycler', () => {
     const componentFactory = new ComponentFactory();
