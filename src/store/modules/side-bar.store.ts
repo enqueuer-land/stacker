@@ -11,6 +11,7 @@ import {ComponentLoader} from '@/components/component-loader';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {RendererMessageSender} from '@/components/renderer-message-sender';
+import * as requisitionsExample from '@/components/requisitions-example';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
@@ -37,7 +38,7 @@ function persist(stage: any) {
     sidebarRepository.set('requisitions', stage.requisitions.map((requisition: any) => new ComponentDecycler().decycle(requisition)));
 }
 
-const initialRequisitions = sidebarRepository.get('requisitions', [])
+const initialRequisitions = sidebarRepository.get('requisitions', requisitionsExample.default)
     .map((requisition: any) => ComponentLoader.loadRequisition(requisition));
 
 let initialSelectedComponent = null;
