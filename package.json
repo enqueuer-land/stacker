@@ -65,6 +65,7 @@
   },
   "eslintConfig": {
     "root": true,
+    "ignorePatterns": ["generate-html.js"],
     "env": {
       "node": true
     },
