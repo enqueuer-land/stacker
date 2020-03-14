@@ -42,6 +42,7 @@
         data: function () {
             return {
                 logLevelColorMap: {
+                    stdout: 'orange',
                     debug: 'var(--carabina-subscription-color)',
                     info: 'var(--carabina-theme-color)',
                     warn: 'var(--carabina-ignored-test-color)',
@@ -67,7 +68,7 @@
                 return (level) => {
                     return {
                         color: this.logLevelColorMap[level.toLowerCase()] || 'var(--carabina-text-color)',
-                        width: '50px',
+                        width: '60px',
                         display: 'inline-flex',
                     }
                 };

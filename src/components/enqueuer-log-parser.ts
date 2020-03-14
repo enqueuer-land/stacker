@@ -14,16 +14,15 @@ const logLevel = [
     'INFO',
     'WARN',
     'ERROR',
-    'FATAL'
+    'FATAL',
+    'STDOUT',
 ];
 
 export class EnqueuerLogParser {
-    private readonly regExp = /(\[[^\]]*\]).*(\[[^\]]*\]) - (.*)/;
+    private readonly enqueuerLogRegex = / (\[[^\]]*\]) - (.*)/;
 
     private bufferSize: number;
-
     private logs: Log[] = [];
-
     private priorityFilter = -1;
 
     constructor(bufferSize = 50) {
@@ -57,28 +56,30 @@ export class EnqueuerLogParser {
         this.addLogToBuffer(parsed);
     }
 
-    public addLogs(rawLog: string): void {
-        rawLog
-            .split(/\n/)
-            .forEach(line => {
-                const splitted = line.split(this.regExp);
-                splitted.shift();
+    public addLogs(rawLogs: string): void {
+        rawLogs.split('\n')
+            .forEach(rawLog => {
+                const splitted = rawLog.split(this.enqueuerLogRegex);
+                const firstElement = splitted.shift() as string;
                 if (splitted.length <= 0) {
+                    if (firstElement && firstElement != '') {
+                        this.addLogToBuffer(EnqueuerLogParser.generateLog(firstElement, 'STDOUT'));
+                    }
                     return;
                 }
-                const date = splitted.shift() as string;
-                const timestamp = new Date(date.substr(1, date.length - 2));
+                const timestamp = new Date(firstElement.substr(1, firstElement.length - 2));
                 const squareLevel = splitted.shift() as string;
                 const level = squareLevel.substr(1, squareLevel.length - 2).toUpperCase();
-                const log: Log = {
+                const structuredLog: Log = {
                     id: new IdCreator().create(),
                     timestamp: EnqueuerLogParser.formatDate(timestamp),
                     level,
                     priority: logLevel.findIndex(item => item.toUpperCase() === level.toUpperCase()),
                     message: splitted.shift() as string
                 };
-                this.addLogToBuffer(log);
+                this.addLogToBuffer(structuredLog);
             });
+
     }
 
     private addLogToBuffer(parsed: Log) {

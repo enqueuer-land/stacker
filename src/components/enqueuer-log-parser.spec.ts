@@ -99,5 +99,18 @@ describe('EnqueuerLogParser', () => {
         ]);
     });
 
+    it('should add raw stdout', () => {
+        const enqueuerLogParser = new EnqueuerLogParser();
+        enqueuerLogParser.addLogs(`Rocking and rolling`);
+
+        const logs = enqueuerLogParser.getLogs();
+
+        expect(logs.length).toBe(1);
+        expect(logs[0].id).toBeDefined();
+        expect(logs[0].priority).toBe(6);
+        expect(logs[0].level).toBe('STDOUT');
+        expect(logs[0].message).toBe('Rocking and rolling');
+        expect(logs[0].timestamp).toBeDefined();
+    });
 
 });
