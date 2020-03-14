@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as os from 'os';
 import store from "@/store";
-import {remote} from 'electron';
 import Store from 'electron-store';
 import {exec} from 'child_process';
 import {Logger} from '@/components/logger';
+import {FileDialog} from '@/components/file-dialog';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
@@ -30,22 +30,34 @@ export class PluginsLoader {
         return this.plugins;
     }
 
-    public loadPlugins(): object {
-        const pickedFiles = remote.dialog.showOpenDialogSync({properties: ['openFile', 'multiSelections']});
-        ((pickedFiles) || []).forEach(file => this.loadFileFromFileSystem(file));
+    public async loadPlugins(): Promise<object> {
+        const pickedFiles = await FileDialog.showOpenDialog();
+        await Promise
+            .all(pickedFiles
+                .map(async file => await this.loadFileFromFileSystem(file)));
         return this.plugins;
     }
 
-    private loadFileFromFileSystem(filename: string): void {
-        try {
-            const fileContent = fs.readFileSync(filename).toString();
-            const plugin = this.loadStringPlugin(fileContent);
-            this.installEnqueuerPlugins(plugin);
-            this.pluginsString.push(fileContent);
-            pluginsRepository.set('pluginsString', this.pluginsString);
-        } catch (e) {
-            Logger.error(`Error reading '${filename}': ${e}`);
-        }
+    private loadFileFromFileSystem(filename: string): Promise<void> {
+        return new Promise(resolve => {
+            try {
+                fs.readFile(filename, async (err, data) => {
+                    if (err) {
+                        Logger.error(`Error reading '${filename}': ${err}`);
+                    } else {
+                        const fileContent = data.toString();
+                        const plugin = this.loadStringPlugin(fileContent);
+                        await this.installEnqueuerPlugins(plugin);
+                        this.pluginsString.push(fileContent);
+                        pluginsRepository.set('pluginsString', this.pluginsString);
+                    }
+                    resolve();
+                });
+            } catch (e) {
+                Logger.error(`Error reading '${filename}': ${e}`);
+                resolve();
+            }
+        });
     }
 
     private loadStringPlugin(pluginString: string): any {
@@ -58,22 +70,27 @@ export class PluginsLoader {
         }
     }
 
-    private installEnqueuerPlugins(plugin: any): void {
+    private async installEnqueuerPlugins(plugin: any): Promise<void> {
         const enqueuerDependencies = PluginsLoader.getEnqueuerDependencies(plugin);
-        enqueuerDependencies
+        await Promise.all(enqueuerDependencies
             .filter(enqueuerPlugin => enqueuerPlugin)
-            .forEach(enqueuerPlugin => {
-                store.commit('stage/addInstallingPluginModal');
-                Logger.info(`Installing '${enqueuerPlugin}'`);
-                exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout) => {
-                    if (error) {
-                        Logger.error(`'${enqueuerPlugin}' installation: ${error}`);
-                    } else {
-                        Logger.info(`'${enqueuerPlugin}' installation: ${stdout}`);
-                    }
+            .map(async enqueuerPlugin => await this.install(enqueuerPlugin)));
+    }
+
+    private async install(enqueuerPlugin: string): Promise<void> {
+        return new Promise(resolve => {
+            store.commit('stage/addInstallingPluginModal');
+            Logger.info(`Installing '${enqueuerPlugin}'`);
+            exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout, stderr) => {
+                if (error) {
+                    Logger.error(`'${enqueuerPlugin}' installation: ${stderr}`);
+                } else {
                     store.commit('stage/removeInstallingPluginModal');
-                }));
-            });
+                    Logger.info(`'${enqueuerPlugin}' installation: ${stdout}`);
+                }
+                resolve();
+            }));
+        });
     }
 
     private addPlugin(plugin: any) {

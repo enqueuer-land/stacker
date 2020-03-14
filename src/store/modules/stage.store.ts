@@ -56,14 +56,18 @@ export default {
             store.dispatch('stage/runComponent', highestParent)
                 .then(() => {/* do nothing */
                 });
-        }
+        },
+        setPlugins:  (stage: any, data: any) => {
+            stage.plugins = data;
+        },
+
     },
     actions: {
-        loadPlugins: async ({state}: any) => {
-            state.plugins = new PluginsLoader().loadPlugins();
+        loadPlugins: async ({commit}: any) => {
+            commit('setPlugins', await new PluginsLoader().loadPlugins());
         },
-        runComponent: async (_: any, msg: InputRequisitionModel) => {
-            const decycled = prepareRequisition(msg);
+        runComponent: async (_: any, component: any) => {
+            const decycled = prepareRequisition(component);
             store.commit('result/runRequisition', decycled);
             RendererMessageSender.emit('runEnqueuer', decycled);
             RendererMessageSender.on('runEnqueuerReply', ((event, responses) => store.commit('result/updateResponse', responses)));

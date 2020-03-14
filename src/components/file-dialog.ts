@@ -1,7 +1,8 @@
 import {remote} from 'electron';
 
 export class FileDialog {
-    public static async open(properties: Array<'openFile' | 'openDirectory' | 'multiSelections' | 'showHiddenFiles' |
+
+    public static async showOpenDialog(properties: Array<'openFile' | 'openDirectory' | 'multiSelections' | 'showHiddenFiles' |
         'createDirectory' | 'promptToCreate' | 'noResolveAliases' | 'treatPackageAsDirectory'> = ['openFile', 'multiSelections']): Promise<string[]> {
         const dialogReturnValue = await remote.dialog.showOpenDialog({properties});
         return dialogReturnValue.filePaths || [];
