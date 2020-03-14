@@ -15,7 +15,7 @@
   "private": true,
   "scripts": {
     "test": "npm run lint && npm run test:unit",
-    "test:unit": "node_modules/.bin/vue-cli-service test:unit",
+    "test:unit": "NODE_ENV=test node_modules/.bin/vue-cli-service test:unit",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "electron:build": "node_modules/.bin/vue-cli-service electron:build",
     "electron:serve": "node_modules/.bin/vue-cli-service electron:serve",

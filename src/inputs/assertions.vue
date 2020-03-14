@@ -1,8 +1,8 @@
 <template>
     <b-container fluid id="assertions">
-        <assertion v-for="(assertion, index) in assertions" :assertion="assertion"
+        <assertion v-for="(assertion, index) in assertions" :value="assertion"
                    :key="assertion.id"
-                   @change="value => onAssertionsChange(index, value)"
+                   @change="value => onAssertionsChange(assertion, value)"
                    @delete="onAssertionsDelete(index)"></assertion>
     </b-container>
 </template>
@@ -22,66 +22,49 @@
                 assertions: this.initAssertions(this.value)
             }
         },
-        watch: {
-            // value: function (value) {
-            //     const initial = [...value];
-            //     if (initial.length === 0 || initial
-            //         .every(assertion => Object.values(assertion)
-            //             .every(value => value !== '') && Object.keys(assertion).length > 0)) {
-            //         initial.push({});
-            //     }
-            //     this.assertions.push({});
-            // }
-        },
         methods: {
+            itemHasValues: function (item) {
+                const itemKeys = Object.keys(item);
+                return itemKeys.length > 1 && itemKeys.every(key => item[key] !== '');
+            },
             shouldAddRow: function (value) {
                 const length = value.length;
                 if (length === 0) {
                     return true;
-                } else {
-                    const lastItem = value[length - 1];
-                    const lastItemKeys = Object.keys(lastItem);
-                    if (lastItemKeys.length > 1 && lastItemKeys.every(key => key === 'id' || lastItem[key] !== '')) {
-                        return true;
-                    }
                 }
-                return false;
+                return this.itemHasValues(value[length - 1]);
             },
             initAssertions: function (value) {
                 const initial = [];
                 if (value && value.length > 0) {
-                    value.forEach(item => {
-                        initial.push(Object.assign({}, item, {id: new IdCreator().create()}))
+                    value.forEach((item, index) => {
+                        if (this.itemHasValues(item)) {
+                            initial.push(Object.assign({}, item, {id: new IdCreator().create()}))
+                        }
                     });
                 }
                 if (this.shouldAddRow(value)) {
-                    initial.push({id: new IdCreator().create()});
+                    initial.push({id: new IdCreator().create(), expect: '', toBeEqualTo: ''});
                 }
                 return initial;
             },
-            onAssertionsChange: function (index, value) {
-                const toEmit = [...this.assertions];
-                toEmit[index] = value;
-                this.$emit('change', toEmit);
-                if (this.shouldAddRow(toEmit)) {
-                    console.log(toEmit);
-                    this.assertions.push({id: new IdCreator().create()});
-                }
-            },
-            needsToRemoveRow: function (assertions) {
-                let indexToRemove = -1;
-                assertions
-                    .forEach((assertion, index) => {
-                        if (Object.values(assertion).every(value => value === '') &&
-                            Object.keys(assertion).length > 0 &&
-                            index !== this.assertions.length - 1) {
-                            console.log(index);
-                            indexToRemove = index;
+            onAssertionsChange: function (assertion, value) {
+                Object.keys(assertion)
+                    .forEach(key => {
+                        if (key !== 'id') {
+                            assertion[key] = undefined;
                         }
                     });
-                if (indexToRemove !== -1) {
-                    this.assertions.splice(indexToRemove, 1);
+                assertion[value.assertion] = value.assertionValue;
+                if (value.expected) {
+                    assertion[value.expected] = value.expectedValue;
                 }
+                if (this.shouldAddRow(this.assertions)) {
+                    const newItem = {id: new IdCreator().create(), expect: '', toBeEqualTo: ''};
+                    this.assertions.push(newItem);
+                }
+
+                this.emit();
             },
             onAssertionsDelete: function (index) {
                 if (this.assertions.length > 1) {
@@ -90,7 +73,9 @@
                     this.$emit('change', this.assertions);
                 }
             },
-
+            emit: function () {
+                this.$emit('change', this.assertions.filter(item => this.itemHasValues(item)));
+            }
         }
     });
 </script>
