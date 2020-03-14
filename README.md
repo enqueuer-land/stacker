@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/lopidio/stacker/master/build/logo-small.png" width="50" height="auto">
+<img src="build/icons/48x48.png" width="48" height="auto">
 
 ### Concept
 Have you ever struggled with testing multi protocol flows?
@@ -9,10 +9,9 @@ Have you ever wondered how awesome it would be to have a GUI tool to save you fr
 
 ### Description
 Stacker is a ~~yet another~~ GUI client for [enqueuer](https://enqueuer-land.github.io/enqueuer/) to handle multi protocol tests.
-Written in [Vue.js](https://vuejs.org) and [Electron](https://electronjs.org).
 It aims to provide a clean, fun, and good looking interface for interacting with polyglot flows.  
 
-![screenshot-passing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/http-passing-test.png)
+![screenshot-1](docs/screenshot-1.png)
 
 ### Features
 This mankind magnificence provides the following capabilities:
@@ -23,7 +22,7 @@ This mankind magnificence provides the following capabilities:
 - Friendly for developers and non developers  
 - Built in assertion library to verify response data coming from/going to your services  
 - Built in CLI is easy to add to your team's existing CI pipelines powered by [enqueuer](https://enqueuer-land.github.io/enqueuer/)  
-- (WIP) Easily extensible behavior through third party plugins, including your own custom ones  
+- Easily extensible behavior through third party plugins, including your own custom ones. Check out [this example](plugins/shell-publisher.js)  
 
 ### Test driven
 Test are first class citizens, they are placed front and center here.
@@ -39,13 +38,22 @@ There's a work in progress task force to enable an amazing plugin architecture s
 In this meanwhile, you can have fun using one of the following:
 
 - HTTP
-- AMQP
-- MQTT
+- SHELL
+- AMQP (WIP)
+- MQTT (WIP)
+- Include here your own. Check out [this example](plugins/shell-publisher.js)
 
 
-![screenshot-failing](https://raw.githubusercontent.com/lopidio/stacker/master/docs/img/ignored-tests.png "Screenshot showing different protocols and tests results")
+![screenshot-2](docs/screenshot-2.png)
  
 ----
+
+###### Reviews
+- [Softpedia](https://www.softpedia.com/get/Programming/Other-Programming-Files/Stacker-lopidio.shtml)
+
+##### Feedback
+We'd love to hear your feedback!
+If you have any comments, suggestions, etc. you can reach us [here](mailto:guilherme.moraes@outlook.com).
 
 ##### Contribute
 Currently, there aren't any said rules for stacker just yet on committing and submitting pull requests.
@@ -55,9 +63,9 @@ If you want to aid the project in other ways, consider sending us a star.
 Stacker is still a beta version, so please excuse any small glitches that may occur here and there.
 They will all be gone soon. :)
 
-##### Feedback
-We'd love to hear your feedback!
-If you have any comments, suggestions, etc. you can reach us [here](mailto:guilherme.moraes@outlook.com).
+#### Project setup
 
-###### Reviews
-- [Softpedia](https://www.softpedia.com/get/Programming/Other-Programming-Files/Stacker-lopidio.shtml)
+    npm install             # installing
+    npm run electron:serve  # compiles and hot-reloads for development
+    npm run electron:build  # compiles and minifies for production
+    npm run test            # run your tests and lints files

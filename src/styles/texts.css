@@ -1,0 +1,24 @@
+.carabina-text {
+    font-size: 14px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: left;
+    color: var(--carabina-text-darker-color);
+}
+
+.text-input {
+    color: var(--carabina-text-darker-color) !important;
+    background-color: transparent !important;
+    border: none !important;;
+    border-bottom: 1px solid var(--carabina-body-background-lighter-color) !important;
+    box-shadow: none !important;
+    outline: none;
+}
+
+.text-label {
+    user-select: none;
+    font-size: 14px;
+    color: var(--carabina-text-darker-color) !important;
+    background-color: transparent !important;;
+}
