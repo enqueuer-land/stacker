@@ -1,4 +1,3 @@
-//TODO test it
 export class ComponentParent {
     private readonly component: any;
 

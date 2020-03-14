@@ -1,6 +1,6 @@
+import {IdCreator} from '@/components/id-creator';
 import {OutputRequisitionModel as RequisitionModel} from 'enqueuer';
 import {ReportModel} from 'enqueuer/js/models/outputs/report-model';
-import {IdCreator} from '@/components/id-creator';
 
 //TODO test it
 export type Hierarchy = {

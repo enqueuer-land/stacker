@@ -1,4 +1,3 @@
-//TODO test it
 export class ComponentFinder {
     private readonly requisitions: any[];
 

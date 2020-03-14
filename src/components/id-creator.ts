@@ -1,4 +1,3 @@
-//TODO test it
 export class IdCreator {
 
     private possible: string;
@@ -10,7 +9,7 @@ export class IdCreator {
     public create = (length = 30): string => {
         let text = 'ID';
 
-        for (let i = length; i > 0; --i) {
+        for (let i = length - text.length; i > 0; --i) {
             text += this.possible.charAt(Math.floor(Math.random() * this.possible.length));
         }
 
