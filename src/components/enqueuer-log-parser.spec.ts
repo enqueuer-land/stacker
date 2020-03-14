@@ -35,7 +35,7 @@ describe('EnqueuerLogParser', () => {
         expect(logs[0].priority).toBe(2);
         expect(logs[0].level).toBe('INFO');
         expect(logs[0].message).toBe('Rocking and rolling');
-        expect(logs[0].timestamp).toMatch('13:35:32.901');
+        expect(logs[0].timestamp).toBeDefined();
     });
 
     it('should be able to add two logs at the same time', () => {

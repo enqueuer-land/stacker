@@ -110,8 +110,9 @@
   "jest": {
     "verbose": true,
     "testMatch": [
-      "**/src/**/*.spec.ts"
+      "<rootDir>/src/**/*.spec.ts"
     ],
+    "modulePathIgnorePatterns": ["<rootDir>/dist_electron/"],
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
     "collectCoverage": true,
     "collectCoverageFrom": [
