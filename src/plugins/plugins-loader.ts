@@ -4,10 +4,10 @@ import store from "@/store";
 import {remote} from 'electron';
 import Store from 'electron-store';
 import {exec} from 'child_process';
+import {logger} from '@/components/logger';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
-import {logger} from "@/components/logger";
 
 const pluginsRepository = new Store({name: 'plugins'});
 

@@ -1,4 +1,5 @@
 import store from '@/store'
+import {logger} from '@/components/logger';
 import {InputRequisitionModel} from 'enqueuer';
 import {IdCreator} from '@/components/id-creator';
 import {PluginsLoader} from '@/plugins/plugins-loader';
@@ -7,7 +8,6 @@ import {ComponentParent} from '@/components/component-parent';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RendererMessageSender} from '@/components/renderer-message-sender';
-import {logger} from "@/components/logger";
 
 RendererMessageSender.on('addLog', ((event, data) => logger(data)));
 RendererMessageSender.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));

@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import store from '@/store';
 import * as yaml from 'yamljs';
 import {remote} from 'electron';
+import {logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
-import {logger} from "@/components/logger";
 
 //TODO test it
 export class EnvironmentLoader {
