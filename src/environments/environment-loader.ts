@@ -4,6 +4,7 @@ import * as yaml from 'yamljs';
 import {remote} from 'electron';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
+import {FileDialog} from '@/components/file-dialog';
 
 //TODO test it
 export class EnvironmentLoader {
@@ -14,10 +15,10 @@ export class EnvironmentLoader {
             .filter((file: any) => file);
     }
 
-    public static importPostmanEnvironment(): void {
-        (remote.dialog.showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
-            .map((file: string) => EnvironmentLoader.loadPostmanEnvironment(file))
-            .forEach(environment => store.commit('nav-bar/addEnvironment', environment));
+    public static async importPostmanEnvironment(): Promise<object[]> {
+        const files = await FileDialog.showOpenDialog();
+        return Promise.all(files
+            .map(async (file: string) => await EnvironmentLoader.loadPostmanEnvironment(file)));
     }
 
     private static loadFile(file: string): any {
@@ -53,19 +54,29 @@ export class EnvironmentLoader {
         return defaultEnvironment;
     }
 
-    private static loadPostmanEnvironment(file: string) {
-        try {
-            const raw = JSON.parse(fs.readFileSync(file).toString());
-            raw.store = (raw.values || []).reduce((acc: any, value: any) => {
-                if (value.enabled) {
-                    acc[value.key] = value.value
+    private static async loadPostmanEnvironment(file: string): Promise<object> {
+        return new Promise(resolve => {
+            fs.readFile(file, ((err, data) => {
+                if (err) {
+                    Logger.error(`Error reading '${file}': ${err}`);
+                } else {
+                    try {
+                        const raw = JSON.parse(data.toString());
+                        raw.store = (raw.values || [])
+                            .reduce((acc: any, value: any) => {
+                                if (value.enabled) {
+                                    acc[value.key] = value.value
+                                }
+                                return acc;
+                            }, {});
+                        resolve(EnvironmentLoader.loadEnvironment(raw));
+                        return;
+                    } catch (e) {
+                        Logger.error(`Error reading '${file}': ${e}`);
+                    }
                 }
-                return acc;
-            }, {});
-            return EnvironmentLoader.loadEnvironment(raw);
-        } catch (e) {
-            Logger.error(`Error reading '${file}': ${e}`);
-        }
-        return null;
+                resolve();
+            }));
+        });
     }
 }

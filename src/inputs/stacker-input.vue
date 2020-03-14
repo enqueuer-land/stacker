@@ -73,11 +73,13 @@
         },
         methods: {
             onChange: function (value) {
-                this.text = value;
-                if (value === '' && this.emptyValue) {
-                    this.text = this.emptyValue;
+                if (this.text !== value) {
+                    this.text = value;
+                    if (value === '' && this.emptyValue) {
+                        this.text = this.emptyValue;
+                    }
+                    this.$emit('input', this.text);
                 }
-                this.$emit('input', this.text);
             },
         },
     });

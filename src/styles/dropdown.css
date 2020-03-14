@@ -1,6 +1,7 @@
 .dropdown-menu {
     padding: 0;
     border: none;
+    font-size: 15px;
     box-shadow: 1px 1px 5px black;
     width: max-content;
     border-radius: 5px;
@@ -15,7 +16,8 @@
 
 .dropdown-item {
     width: auto;
-    padding: 15px 10px;
+    font-size: 15px;
+    padding: 10px 5px;
     margin-left: 15px;
     margin-right: 15px;
     font-weight: lighter;
