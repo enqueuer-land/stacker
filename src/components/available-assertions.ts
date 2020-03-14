@@ -13,7 +13,7 @@ export const availableAssertions: Asserter[] = [
         expectedList: [
             {
                 name: 'toBeEqualTo',
-                value: '=',
+                value: '==',
             },
             {
                 name: 'toBeGreaterThanOrEqualTo',

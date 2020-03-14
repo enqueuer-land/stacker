@@ -37,11 +37,15 @@ export class ComponentSaver {
                 componentToSave = decycled;
                 break;
         }
-        ComponentSaver.saveRequisition(filename, componentToSave);
+        await ComponentSaver.saveRequisition(filename, componentToSave);
     }
 
-    private static saveRequisition(filename: string, item: any): void {
-        fs.writeFileSync(filename, yaml.stringify(item, 100, 2));
+    private static saveRequisition(filename: string, item: any): Promise<void> {
+        return new Promise(resolve => {
+            fs.writeFile(filename, yaml.stringify(item, 100, 2), () => {
+                resolve();
+            });
+        });
     }
 
 }

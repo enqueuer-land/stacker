@@ -1,5 +1,4 @@
-import {ipcRenderer} from 'electron';
-import IpcRendererEvent = Electron.IpcRendererEvent;
+import {ipcRenderer, IpcRendererEvent} from 'electron';
 
 export class RendererMessageSender {
     public static on(event: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) {

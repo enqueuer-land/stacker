@@ -22,16 +22,17 @@ export class Assertion {
                     return;
                 }
                 const assertion = availableAssertions.find(possible => possible.name === key);
-                if (assertion) {
-                    result.assertion = assertion.name;
-                    result.assertionValue = value[key] || '';
-                    const expected = assertion.expectedList
-                        .find(item => value[item.name] !== undefined);
-                    if (expected) {
-                        result.expected = expected.name;
-                        result.expectedValue = value[expected.name] || '';
-                    }
+                if (!assertion) {
+                    return;
                 }
+                result.assertion = assertion.name;
+                result.assertionValue = value[key] || '';
+                const expected = assertion.expectedList.find(item => value[item.name] !== undefined);
+                if (!expected) {
+                    return;
+                }
+                result.expected = expected.name;
+                result.expectedValue = value[expected.name] || '';
             });
         if (Object.keys(result).length > 0) {
             return result;

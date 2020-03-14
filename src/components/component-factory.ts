@@ -1,5 +1,5 @@
-import {ComponentTypes} from '@/components/component-types';
 import {IdCreator} from '@/components/id-creator';
+import {ComponentTypes} from '@/components/component-types';
 
 //TODO test it
 export class ComponentFactory {
