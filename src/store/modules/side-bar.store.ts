@@ -99,7 +99,8 @@ export default {
             persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
-            new ComponentSaver().save(event.component).then(() => Logger.info(`Component '${event.component.name}' saved`));
+            new ComponentSaver().save(event.component)
+                .then(() => Logger.info(`Component '${event.component.name}' saved`));
         },
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);

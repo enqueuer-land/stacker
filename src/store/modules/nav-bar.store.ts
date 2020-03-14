@@ -1,5 +1,6 @@
 import store from '@/store';
 import Store from 'electron-store';
+import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
 import {EnvironmentSaver} from '@/environments/environment-saver';
 import {EnvironmentLoader} from '@/environments/environment-loader';
@@ -78,7 +79,8 @@ export default {
             persist(stage);
         },
         saveEnvironment: (stage: any, payload: any) => {
-            new EnvironmentSaver().save(payload.environment);
+            new EnvironmentSaver().save(payload.environment)
+                .then(() => Logger.info(`Environment '${payload.environment.name}' saved`));
         },
     },
     actions: {},

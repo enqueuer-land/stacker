@@ -1,22 +1,14 @@
-import {remote} from 'electron';
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
+import {FileDialog} from "@/components/file-dialog";
 
 //TODO test it
 export class EnvironmentSaver {
-    public save(environment: any): void {
-        const filename = EnvironmentSaver.pickDestination(environment);
+    public async save(environment: any): Promise<void> {
+        const filename = await FileDialog.showSaveDialog(environment.name + '.nqr.env.yml');
         if (!filename) {
             return;
         }
         fs.writeFileSync(filename, yaml.stringify(environment, 100, 2));
     }
-
-    private static pickDestination(item: any): string | undefined {
-        return remote.dialog.showSaveDialogSync({
-            defaultPath: item.name + '.nqr.env.yml',
-            showsTagField: false,
-        });
-    }
-
 }
