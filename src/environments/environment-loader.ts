@@ -1,7 +1,5 @@
 import * as fs from 'fs';
-import store from '@/store';
 import * as yaml from 'yamljs';
-import {remote} from 'electron';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
 import {FileDialog} from '@/components/file-dialog';
@@ -9,10 +7,10 @@ import {FileDialog} from '@/components/file-dialog';
 //TODO test it
 export class EnvironmentLoader {
 
-    public load(): any {
-        return (remote.dialog.showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
-            .map((file: string) => EnvironmentLoader.loadFile(file))
-            .filter((file: any) => file);
+    public static async importEnvironment(): Promise<object[]> {
+        const files = await FileDialog.showOpenDialog();
+        return Promise.all(files
+            .map(async (file: string) => await EnvironmentLoader.loadFile(file)));
     }
 
     public static async importPostmanEnvironment(): Promise<object[]> {
@@ -21,25 +19,29 @@ export class EnvironmentLoader {
             .map(async (file: string) => await EnvironmentLoader.loadPostmanEnvironment(file)));
     }
 
-    private static loadFile(file: string): any {
-        try {
-            const fileContent = fs.readFileSync(file).toString();
-            try {
-                return EnvironmentLoader.loadEnvironment(JSON.parse(fileContent));
-            } catch (e) {
-                try {
-                    return EnvironmentLoader.loadEnvironment(yaml.parse(fileContent));
-                } catch (e) {
-                    Logger.error(`Error reading '${file}': ${e}`);
+    private static loadFile(file: string): Promise<object> {
+        return new Promise(resolve => {
+            fs.readFile(file, (err, data) => {
+                if (err) {
+                    Logger.error(`Error reading '${file}': ${err}`);
+                } else {
+                    const fileContent = data.toString();
+                    try {
+                        return resolve(EnvironmentLoader.loadEnvironment(JSON.parse(fileContent)));
+                    } catch (e) {
+                        try {
+                            return resolve(EnvironmentLoader.loadEnvironment(yaml.parse(fileContent)));
+                        } catch (e) {
+                            Logger.error(`Error parsing '${file}': ${e}`);
+                        }
+                    }
                 }
-            }
-        } catch (e) {
-            Logger.error(`Error reading '${file}': ${e}`);
-        }
-        return null;
+                resolve();
+            });
+        });
     }
 
-    private static loadEnvironment(raw: any): any {
+    private static loadEnvironment(raw: any): object {
         const defaultEnvironment: any = {
             name: 'New Environment',
             id: new IdCreator().create(),

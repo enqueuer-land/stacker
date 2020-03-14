@@ -8,7 +8,16 @@ import {RendererMessageSender} from '@/components/renderer-message-sender';
 
 const navBarRepository = new Store({name: 'nav-bar'});
 
-RendererMessageSender.on('openEnvironment', () => store.commit('nav-bar/loadEnvironment'));
+RendererMessageSender.on('openEnvironment',
+    async () => {
+        const environments = await EnvironmentLoader.importEnvironment();
+        environments
+            .filter(item => item)
+            .forEach(environment => {
+                store.commit('nav-bar/addEnvironment', environment);
+            });
+    });
+
 RendererMessageSender.on('importPostmanEnvironment',
     async () => {
         const postmanEnvironments = await EnvironmentLoader.importPostmanEnvironment();
@@ -76,12 +85,6 @@ export default {
         },
         addEnvironment: (stage: any, payload: any) => {
             stage.environments.push(payload);
-            const lastEnvironment = stage.environments[stage.environments.length - 1];
-            stage.selectedEnvironment = {...lastEnvironment};
-            persist(stage);
-        },
-        loadEnvironment: (stage: any) => {
-            stage.environments = stage.environments.concat(new EnvironmentLoader().load());
             const lastEnvironment = stage.environments[stage.environments.length - 1];
             stage.selectedEnvironment = {...lastEnvironment};
             persist(stage);

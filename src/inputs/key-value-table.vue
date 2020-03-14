@@ -1,8 +1,8 @@
 <template>
     <b-container fluid>
         <b-row v-for="(pair, index) in pairs" class="m-0 pl-3 py-0 mb-2"
-               :key="pair.id" id="key-value-table" style="height: 50%" no-gutters>
-            <b-col cols class="align-self-center mr-auto">
+               :key="pair.id" id="key-value-table" style="height: 50%" no-gutters align-h="center">
+            <b-col cols="11" class="align-self-center mr-auto">
                 <b-row no-gutters>
                     <b-col cols="6">
                         <stacker-input placeholder="Key"
