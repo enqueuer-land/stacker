@@ -18,6 +18,10 @@
     "test:unit": "NODE_ENV=test node_modules/.bin/vue-cli-service test:unit",
     "lint": "node_modules/.bin/vue-cli-service lint",
     "electron:build": "node_modules/.bin/vue-cli-service electron:build",
+    "electron:build:mac": "node_modules/.bin/vue-cli-service electron:build --mac",
+    "electron:build:win": "node_modules/.bin/vue-cli-service electron:build --win",
+    "electron:build:linux": "node_modules/.bin/vue-cli-service electron:build --linux",
+    "electron:build:all": "node_modules/.bin/vue-cli-service electron:build -mwl",
     "electron:serve": "node_modules/.bin/vue-cli-service electron:serve",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
@@ -66,7 +70,8 @@
   "eslintConfig": {
     "root": true,
     "ignorePatterns": [
-      "generate-html.js"
+      "generate-html.js",
+      "dist_electron/*"
     ],
     "env": {
       "node": true
