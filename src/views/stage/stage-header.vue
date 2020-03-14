@@ -8,7 +8,7 @@
             <b-col cols="auto" class="align-self-center">
                 <DropdownSelector
                         v-if="component.carabinaMeta.componentName !== 'REQUISITION'"
-                        :defaultSelection="{value: component.type}"
+                        :defaultSelection="{value: component.type.toUpperCase()}"
                         @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                         :color="componentColor"
                         :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>

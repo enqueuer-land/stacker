@@ -1,8 +1,8 @@
 import store from '@/store'
 import Store from 'electron-store';
-import {remote} from 'electron';
 import {Logger} from '@/components/logger';
 import {InputRequisitionModel} from 'enqueuer';
+import {FileDialog} from '@/components/file-dialog';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFinder} from '@/components/component-finder';
@@ -15,17 +15,15 @@ import {RendererMessageSender} from '@/components/renderer-message-sender';
 const sidebarRepository = new Store({name: 'side-bar'});
 
 RendererMessageSender
-    .on('openComponent', () => (remote.dialog
-        .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
+    .on('openComponent', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFile(file))
         .filter(async file => await file)
-        .forEach(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
+        .map(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
 RendererMessageSender
-    .on('importPostmanCollection', () => (remote.dialog
-        .showOpenDialogSync({properties: ['openFile', 'multiSelections']}) || [])
+    .on('importPostmanCollection', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFromPostman(file))
         .filter(async file => await file)
-        .forEach(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
+        .map(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
 
 function persist(stage: any) {
     sidebarRepository.set('selectedComponentId', stage.selectedComponent ? stage.selectedComponent.id : null);
