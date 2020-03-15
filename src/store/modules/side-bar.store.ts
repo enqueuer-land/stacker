@@ -8,6 +8,7 @@ import {ComponentTypes} from '@/components/component-types';
 import {ComponentFinder} from '@/components/component-finder';
 import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
+import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {RendererMessageSender} from '@/components/renderer-message-sender';
@@ -103,6 +104,27 @@ export default {
         changeAttributeOfComponent: (stage: any, event: any) => {
             event.component[event.attributeName] = event.value;
             persist(stage);
+        },
+        duplicateComponent: (stage: any, event: any) => {
+            const parent = event.component.carabinaMeta.parent;
+            const componentName = event.component.carabinaMeta.componentName;
+            const component = new ComponentDecycler().decycle(event.component);
+            let clone;
+            switch (componentName) {
+                case ComponentTypes.REQUISITION:
+                    clone = ComponentCloner.cloneRequisition(component, parent);
+                    if (!parent) {
+                        stage.requisitions.push(clone);
+                    }
+                    break;
+                case ComponentTypes.PUBLISHER:
+                    clone = ComponentCloner.clonePublisher(component, parent);
+                    break;
+                case ComponentTypes.SUBSCRIPTION:
+                    clone = ComponentCloner.cloneSubscription(component, parent);
+                    break;
+            }
+            clone.carabinaMeta.selected = false;
         },
         saveComponent: (stage: any, event: any) => {
             new ComponentSaver().save(event.component)

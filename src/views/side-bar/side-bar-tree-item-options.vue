@@ -40,6 +40,16 @@
                         }
                     },
                     {
+                        name: () => 'Duplicate',
+                        iconClass: 'fas fa-clone',
+                        action: (event) => {
+                            event.stopPropagation();
+                            this.duplicateComponent({
+                                component: this.component
+                            });
+                        }
+                    },
+                    {
                         name: (component) => component.ignore ? 'Enable' : 'Disable',
                         iconClass: 'fas fa-ban',
                         action: (event) => {
@@ -65,7 +75,7 @@
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'deleteComponentById', 'saveComponent']),
+            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'deleteComponentById', 'saveComponent', 'duplicateComponent']),
         }
 
     });

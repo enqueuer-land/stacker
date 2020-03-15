@@ -1,0 +1,41 @@
+import {IdCreator} from '@/components/id-creator';
+import {ComponentTypes} from '@/components/component-types';
+import {ComponentFactory} from '@/components/component-factory';
+
+//TODO test it
+export class ComponentCloner {
+
+    public static cloneRequisition(rawRequisition: any, parent?: any): any {
+        let clone = new ComponentFactory().createRequisition(parent);
+        const carabinaMetaBkp = clone.carabinaMeta;
+        clone = Object.assign({}, clone, rawRequisition);
+        clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, rawRequisition.carabinaMeta);
+
+        clone.requisitions = (rawRequisition.requisitions || [])
+            .map((requisition: any) => ComponentCloner.cloneRequisition(requisition, clone));
+        clone.publishers = (rawRequisition.publishers || [])
+            .map((publisher: any) => ComponentCloner.clonePublisher(publisher, clone));
+        clone.subscriptions = (rawRequisition.subscriptions || [])
+            .map((subscription: any) => ComponentCloner.cloneSubscription(subscription, clone));
+        clone.id = new IdCreator().create();
+        return clone;
+    }
+
+    public static clonePublisher(component: any, parent: any) {
+        let clone = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
+        const carabinaMetaBkp = clone.carabinaMeta;
+        clone = Object.assign({}, clone, component);
+        clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
+        clone.id = new IdCreator().create();
+        return clone;
+    }
+
+    public static cloneSubscription(component: any, parent: any) {
+        let clone = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
+        const carabinaMetaBkp = clone.carabinaMeta;
+        clone = Object.assign({}, clone, component);
+        clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
+        clone.id = new IdCreator().create();
+        return clone;
+    }
+}
