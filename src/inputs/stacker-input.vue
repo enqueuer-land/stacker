@@ -84,7 +84,7 @@
         },
     });
 </script>
-<style type="text/css" scoped>
+<style type="text/css">
 
     [data-placeholder]:empty:before {
         content: attr(data-placeholder);
@@ -95,6 +95,10 @@
     .highlightable-input-class {
         white-space: nowrap;
         overflow: hidden;
+    }
+
+    .highlightable-input-class br {
+        display: none
     }
 
 </style>
