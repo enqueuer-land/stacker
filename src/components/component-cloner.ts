@@ -17,25 +17,27 @@ export class ComponentCloner {
             .map((publisher: any) => ComponentCloner.clonePublisher(publisher, clone));
         clone.subscriptions = (rawRequisition.subscriptions || [])
             .map((subscription: any) => ComponentCloner.cloneSubscription(subscription, clone));
+        clone.name += '(clone)';
         clone.id = new IdCreator().create();
         return clone;
     }
 
     public static clonePublisher(component: any, parent: any) {
-        let clone = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
-        const carabinaMetaBkp = clone.carabinaMeta;
-        clone = Object.assign({}, clone, component);
-        clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
-        clone.id = new IdCreator().create();
-        return clone;
+        const clone = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
+        return this.overwriteStuff(clone, component);
     }
 
     public static cloneSubscription(component: any, parent: any) {
-        let clone = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
+        const clone = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
+        return this.overwriteStuff(clone, component);
+    }
+
+    private static overwriteStuff(clone: any, component: any) {
         const carabinaMetaBkp = clone.carabinaMeta;
         clone = Object.assign({}, clone, component);
         clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
         clone.id = new IdCreator().create();
+        clone.name += '(clone)';
         return clone;
     }
 }

@@ -125,6 +125,14 @@ export default {
                     break;
             }
             clone.carabinaMeta.selected = false;
+            persist(stage);
+        },
+        reorderSameLevelRequisition: (stage: any, event: any) => {
+            console.log(event);
+            const draggingRequisition = stage.requisitions[event.oldIndex];
+            stage.requisitions.splice(event.oldIndex, 1);
+            stage.requisitions.splice(event.newIndex, 0, draggingRequisition);
+            persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
             new ComponentSaver().save(event.component)

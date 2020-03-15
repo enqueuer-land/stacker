@@ -29,7 +29,9 @@
 
     export default Vue.extend({
         name: 'SideBarTreeNode',
-        components: {SideBarTreeItem},
+        components: {
+            SideBarTreeItem
+        },
         props: {
             component: Object
         },
