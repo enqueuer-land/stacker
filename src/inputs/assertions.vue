@@ -52,7 +52,7 @@
                 Object.keys(assertion)
                     .forEach(key => {
                         if (key !== 'id') {
-                            assertion[key] = undefined;
+                            delete assertion[key];
                         }
                     });
                 assertion[value.assertion] = value.assertionValue;
@@ -74,7 +74,10 @@
                 }
             },
             emit: function () {
-                this.$emit('change', this.assertions.filter(item => this.itemHasValues(item)));
+                const toEmit = this.assertions
+                    .filter(item => this.itemHasValues(item))
+                    .map(item => ({...item, id: undefined}));
+                this.$emit('change', toEmit);
             }
         }
     });
