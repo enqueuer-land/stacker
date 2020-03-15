@@ -20,8 +20,8 @@ const logLevel = [
 
 export class EnqueuerLogParser {
     private readonly enqueuerLogRegex = / (\[[^\]]*\]) - (.*)/;
+    private readonly bufferSize: number;
 
-    private bufferSize: number;
     private logs: Log[] = [];
     private priorityFilter: number;
 
@@ -31,7 +31,8 @@ export class EnqueuerLogParser {
     }
 
     public getLogs(): Log[] {
-        return this.logs.filter(log => log.priority >= this.priorityFilter);
+        return this.logs
+            .filter(log => log.priority >= this.priorityFilter);
     }
 
     public increasePriorityFilter(): EnqueuerLogParser {
@@ -95,7 +96,7 @@ export class EnqueuerLogParser {
     private addLogToBuffer(parsed: Log) {
         this.logs.push(parsed);
         this.logs = this.logs
-            .filter((log, index) => index >= this.logs.length - 50);
+            .filter((log, index, vec) => index >= vec.length - this.bufferSize);
     }
 
     private static formatDate(timestamp: Date) {

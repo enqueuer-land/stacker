@@ -29,13 +29,12 @@ export default [{
         response: {
             headers: {'key': 'value'},
             status: 200,
-            payload: {
+            payload: JSON.stringify({
                 stacker: 'rocks'
-            }
+            }, null, 2)
         },
         name: 'Example subscription',
         onMessageReceived: {
-            script: 'console.log(body);',
             assertions: [{
                 expect: 'body',
                 toBeEqualTo: '`stacker`'
