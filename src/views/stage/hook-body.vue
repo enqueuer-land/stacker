@@ -1,5 +1,5 @@
 <template>
-    <div id="hook-body" class="carabina-text">
+    <div id="hook-body" class="carabina-text bottom-line">
         <label class="pl-3 d-block carabina-text mb-3">Script</label>
         <hook-script :code="script" @change="value => onScriptChange(value)"
                      class="px-3 mb-4"></hook-script>
@@ -63,7 +63,7 @@
 
 <style scoped>
     .bottom-line {
-        border-bottom: 1px solid var(--carabina-header-background-lighter-color);
+        border-bottom: 1px solid var(--carabina-theme-color);
     }
 
     label {
