@@ -9,7 +9,6 @@ type Log = {
 };
 
 const logLevel = [
-    'TRACE',
     'DEBUG',
     'INFO',
     'WARN',
@@ -25,7 +24,7 @@ export class EnqueuerLogParser {
     private logs: Log[] = [];
     private priorityFilter: number;
 
-    constructor(bufferSize = 50, priorityFilter = 'TRACE') {
+    constructor(bufferSize = 50, priorityFilter = 'DEBUG') {
         this.bufferSize = bufferSize;
         this.priorityFilter = Math.max(logLevel.findIndex(item => item === priorityFilter), 0);
     }
@@ -63,7 +62,7 @@ export class EnqueuerLogParser {
         }
     }
 
-    public addParsedLogs(parsed: Log) {
+    public addParsedLogs(parsed: Log): void {
         this.addLogToBuffer(parsed);
     }
 
@@ -93,13 +92,13 @@ export class EnqueuerLogParser {
 
     }
 
-    private addLogToBuffer(parsed: Log) {
+    private addLogToBuffer(parsed: Log): void {
         this.logs.push(parsed);
         this.logs = this.logs
             .filter((log, index, vec) => index >= vec.length - this.bufferSize);
     }
 
-    private static formatDate(timestamp: Date) {
+    private static formatDate(timestamp: Date): string {
         return `${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}:${timestamp
             .getSeconds().toString().padStart(2, '0')}.${timestamp.getMilliseconds().toString().padStart(3, '0')}`;
     }

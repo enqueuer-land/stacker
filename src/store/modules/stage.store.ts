@@ -37,6 +37,15 @@ export default {
         addLog: (stage: any, data: any) => {
             stage.enqueuerLogParser.addParsedLogs(EnqueuerLogParser.generateLog(data.message, data.level));
         },
+        clearLogs: (stage: any) => {
+            stage.enqueuerLogParser.clearBuffer();
+        },
+        increaseLogFilterLevel: (stage: any) => {
+            stage.enqueuerLogParser.increasePriorityFilter();
+        },
+        decreaseLogFilterLevel: (stage: any) => {
+            stage.enqueuerLogParser.decreasePriorityFilter();
+        },
         addInstallingPluginModal: (stage: any) => {
             stage.installingPluginModal = true;
         },
@@ -75,6 +84,7 @@ export default {
     getters: {
         plugins: (state: any) => state.plugins,
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
+        currentLogLevel: (state: any) => state.enqueuerLogParser.getPriorityFilterName(),
         installingPluginModal: (state: any) => state.installingPluginModal,
         environments: (state: any) => state.environments,
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {

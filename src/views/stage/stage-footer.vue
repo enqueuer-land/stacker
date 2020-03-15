@@ -9,17 +9,29 @@
         </b-row>
         <b-modal id="enqueuer-logs-modal" size="xl" scrollable
                  centered
-                 :cancel-disable="true"
-                 :ok-disabled="true"
-                 busy
                  no-fade
-                 title="Enqueuer logs"
                  header-bg-variant="nqr-logs-header"
                  header-text-variant="nqr-logs-header"
                  body-bg-variant="nqr-logs-body"
                  body-text-variant="nqr-logs-body"
                  footer-bg-variant="nqr-logs-footer"
                  footer-text-variant="nqr-logs-footer">
+            <template v-slot:modal-header>
+                <h5 class="modal-title">Logs</h5>
+                <div class="mx-auto">
+                    <b-button size="sm" variant="none" @click="decreaseLogFilterLevel">
+                        <i class="carabina-icon fas fa-minus" style="font-size: 14px;"></i>
+                    </b-button>
+                    <span class="modal-title px-4">{{currentLogLevel}}</span>
+                    <b-button size="sm" variant="none" @click="increaseLogFilterLevel">
+                        <i class="carabina-icon fas fa-plus" style="font-size: 14px;"></i>
+                    </b-button>
+                </div>
+                <b-button size="sm" variant="none" class="ml-5" @click="clearLogs">
+                    <i class="carabina-icon fas fa-ban" style="font-size: 14px;"></i>
+                </b-button>
+
+            </template>
             <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text">
                 <div :style="logLevelStyle(log.level)">
                     {{log.level}}
@@ -34,7 +46,7 @@
 </template>
 <script>
     import Vue from 'vue';
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapMutations} from 'vuex';
     import '@/styles/texts.css';
 
     export default Vue.extend({
@@ -59,8 +71,11 @@
                 }
             })
         },
+        methods: {
+            ...mapMutations('stage', ['decreaseLogFilterLevel', 'increaseLogFilterLevel', 'clearLogs'])
+        },
         computed: {
-            ...mapGetters('stage', ['enqueuerLogs', 'enqueuerErrors']),
+            ...mapGetters('stage', ['enqueuerLogs', 'enqueuerErrors', 'currentLogLevel']),
             lastLog: function () {
                 return this.enqueuerLogs[this.enqueuerLogs.length - 1] || {};
             },
@@ -97,5 +112,9 @@
         display: none;
     }
 
+    button:active, button:focus {
+        outline: none !important;
+        box-shadow: none !important;;
+    }
 
 </style>
