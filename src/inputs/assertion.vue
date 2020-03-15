@@ -1,7 +1,10 @@
 <template>
     <b-container fluid id="assertion" class="px-1">
         <b-row no-gutters class="mb-2">
-            <b-col :cols="expectedList.length > 0 ? '6' : '11'">
+            <b-col cols="auto" class="align-self-center carabina-text mr-3 mt-0 mr-1" style="font-size: 0.85em;">
+                #{{index}}
+            </b-col>
+            <b-col :cols="expectedList.length > 0 ? '5' : '10'">
                 <b-row no-gutters>
                     <b-col cols="auto">
                         <dropdown-selector
@@ -37,8 +40,8 @@
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col cols="1" style="text-align: right" class="mt-3">
-                <i class="fas fa-times carabina-icon delete-icon p-0mx-1" @click="emitDeletion"
+            <b-col cols style="text-align: right" class="mt-3 ml-1">
+                <i class="fas fa-times carabina-icon delete-icon p-0 mx-1" @click="emitDeletion"
                    style="font-size: 14px"></i>
             </b-col>
         </b-row>
@@ -55,7 +58,8 @@
     export default Vue.extend({
         name: 'Assertion',
         props: {
-            value: Object
+            value: Object,
+            index: Number
         },
         data: function () {
             const initial = this.getContent();

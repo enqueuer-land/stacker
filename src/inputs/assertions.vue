@@ -1,6 +1,7 @@
 <template>
     <b-container fluid id="assertions">
         <assertion v-for="(assertion, index) in assertions" :value="assertion"
+                   :index="index"
                    :key="assertion.id"
                    @change="value => onAssertionsChange(assertion, value)"
                    @delete="onAssertionsDelete(index)"></assertion>
