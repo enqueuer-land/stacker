@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as fs from 'fs';
 import {ipcMain} from 'electron';
-import {ChildProcess, spawn} from 'child_process';
+import {ChildProcess, exec, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
 
 type ResponseMap = {
@@ -11,6 +11,7 @@ type ResponseMap = {
     };
 };
 
+//TODO test it
 export default class EnqueuerRunner {
     private readonly window?: Electron.BrowserWindow;
 
@@ -22,45 +23,44 @@ export default class EnqueuerRunner {
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
 
-    private logBuffer: string[] = [];
-    private readonly maxBufferSize = 100;
+    private readonly logBuffer: string[] = [];
+    private readonly maxBufferSize = 800;
     private readonly logSendInterval = 100;
-    private readonly logsPerMessage = 30;
+    private readonly logsPerMessage = 50;
 
-    public run(): void {
-        try {
-            this.createNqrFolder();
-            this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
-                stdio: ['pipe', 'pipe', 'pipe', 'ipc']
-            });
-            this.sendLogToStacker(`Enqueuer pid: ${this.enqueuerProcess.pid}`, 'DEBUG');
+    public async run(): Promise<void> {
+        this.createNqrFolder();
+        await this.installEnqueuerIfNeeded();
+        this.executeEnqueuerAsChild();
+        this.sendLogToStacker(`Enqueuer pid: ${this.enqueuerProcess.pid}`, 'DEBUG');
+        this.registerChildListeners();
+        this.registerEnqueuerLogsSender();
+        this.registerRendererProcessListener();
+    }
 
-            //Handshake purposes
-            this.enqueuerProcess.send({event: 'GET_PROTOCOLS'});
+    private registerRendererProcessListener() {
+        ipcMain.on('setEnqueuerStore', (_, data: any) => this.enqueuerStore = data);
+        ipcMain.on('runEnqueuer', async (_, requisition: InputRequisitionModel) => {
+            const reply = await this.sendRequisition(requisition);
+            this.window!.webContents.send('runEnqueuerReply', reply);
+        });
+    }
 
-            this.registerChildListeners();
+    private registerEnqueuerLogsSender() {
+        setInterval(() => {
+            if (this.logBuffer.length > 0) {
+                const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
+                this.window!.webContents.send('enqueuerLog', logs);
 
-            if (this.window) {
-                setInterval(() => {
-                    if (this.logBuffer.length > 0) {
-                        // @ts-ignore
-                        const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
-                        this.window!.webContents.send('enqueuerLog', logs);
-
-                        this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logsPerMessage);
-                    }
-                }, this.logSendInterval);
+                this.logBuffer.splice(0, this.logsPerMessage);
             }
+        }, this.logSendInterval);
+    }
 
-            ipcMain.on('setEnqueuerStore', (_, data: any) => this.enqueuerStore = data);
-            ipcMain.on('runEnqueuer', async (_, requisition: InputRequisitionModel) => {
-                const reply = await this.sendRequisition(requisition);
-                this.window!.webContents.send('runEnqueuerReply', reply);
-            });
-        } catch (e) {
-            this.sendLogToStacker(`Error running enqueuer sub process: ${e}`, 'ERROR');
-            throw e;
-        }
+    private executeEnqueuerAsChild() {
+        this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
+            stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+        });
     }
 
     private createNqrFolder() {
@@ -72,14 +72,20 @@ export default class EnqueuerRunner {
     }
 
     private registerChildListeners(): void {
-        // @ts-ignore
         this.enqueuerProcess.stdout.on('data', (data: Buffer) => {
             this.logBuffer.push(data.toString());
-            this.logBuffer = this.logBuffer.filter((_, index) => index >= this.logBuffer.length - this.maxBufferSize);
+            const overLimitLogs = this.logBuffer.length - this.maxBufferSize;
+            if (overLimitLogs > 0) {
+                this.logBuffer.splice(0, overLimitLogs);
+            }
         });
-        this.enqueuerProcess.on('disconnect', (error: any) => console.log(`disconnect: ${error}`));
-        this.enqueuerProcess.on('error', (error: any) => this.sendLogToStacker(`Child enqueuer errored: ${error}`, 'ERROR'));
-        this.enqueuerProcess.on("close", (code: number) => this.sendLogToStacker(`Child enqueuer closed: ${code}`, 'ERROR'));
+        const enqueuerEventsListener = (eventName: string) => (data: any) => {
+            this.sendLogToStacker(`Child enqueuer '${eventName}': ${data}`, 'ERROR');
+        };
+        this.enqueuerProcess.on('exit', enqueuerEventsListener('exit'));
+        this.enqueuerProcess.on('error', enqueuerEventsListener('error'));
+        this.enqueuerProcess.on('close', enqueuerEventsListener('close'));
+        this.enqueuerProcess.on('disconnect', enqueuerEventsListener('disconnect'));
         this.enqueuerProcess.on('message', (data: any) => this.onMessageReceived(data));
     }
 
@@ -114,6 +120,27 @@ export default class EnqueuerRunner {
                 }
             }
         }
+    }
+
+    private async installEnqueuerIfNeeded() {
+        return new Promise(resolve => {
+            exec(`type -P "enqueuer" &> /dev/null`, error => {
+                if (error) {
+                    this.sendLogToStacker(`Enqueuer not detected. Installing it`, 'INFO');
+                    exec(`npm install -g enqueuer`, (error, stdout, stderr) => {
+                        if (error) {
+                            this.sendLogToStacker(`Enqueuer fail to install ${stderr}`, 'ERROR');
+                        } else {
+                            this.sendLogToStacker(`Enqueuer installed successfully: ${stdout}`, 'INFO');
+                        }
+                        resolve();
+                    });
+
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 
     private sendLogToStacker(message: string, level: string) {

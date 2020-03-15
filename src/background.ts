@@ -55,7 +55,7 @@ function createWindow() {
     Menu.setApplicationMenu(menu);
 
 
-    setTimeout(() => new EnqueuerRunner(win!).run(), 1000);
+    setTimeout(async () => await new EnqueuerRunner(win!).run(), 1000);
 }
 
 // Quit when all windows are closed.
