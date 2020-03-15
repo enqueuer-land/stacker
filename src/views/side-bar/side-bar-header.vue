@@ -1,8 +1,6 @@
 <template>
     <b-container fluid id="side-bar-header" class="p-1">
         <b-row class="m-0 pt-1" style="width: 100%; height: 40%" no-gutters>
-            <b-col cols>
-            </b-col>
             <b-col cols="auto" class="align-self-center mx-2">
                 <b-dropdown split @click="createNewComponent({componentType: 'REQUISITION'})" variant="creators"
                             right class="carabina-text">
