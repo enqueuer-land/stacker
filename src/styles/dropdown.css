@@ -45,6 +45,7 @@
 }
 
 .dropdown-divider {
+    border-top: 1px solid var(--carabina-text-darker-color) !important;
     height: 0;
     margin: .01rem 0;
     overflow: hidden;

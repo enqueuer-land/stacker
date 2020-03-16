@@ -1,39 +1,32 @@
 <template>
     <b-container fluid id="stage-footer" style="overflow-y: auto;" class="p-0 m-0">
-        <b-button size="sm" variant="none" style="position: absolute" class="pl-2">
-            <i class="carabina-icon fas fa-cog" style="font-size: 14px;"></i>
-        </b-button>
-        <!--            <b-button size="sm" variant="none" @click="decreaseLogFilterLevel">-->
-        <!--                <i class="carabina-icon fas fa-minus" style="font-size: 14px;"></i>-->
-        <!--            </b-button>-->
-        <!--            <b-button size="sm" variant="none" @click="increaseLogFilterLevel">-->
-        <!--                <i class="carabina-icon fas fa-plus" style="font-size: 14px;"></i>-->
-        <!--            </b-button>-->
-        <!--            &lt;!&ndash;                    <span class="px-2 carabina-text" style="user-select: none">{{currentLogLevel}}</span>&ndash;&gt;-->
-        <!--            <b-button size="sm" variant="none" class="ml-5">-->
-        <!--                <i class="carabina-icon fas fa-expand" style="font-size: 14px;"></i>-->
-        <!--            </b-button>-->
-        <!--            <b-button size="sm" variant="none" class="" @click="clearLogs">-->
-        <!--                <i class="carabina-icon fas fa-ban" style="font-size: 14px;"></i>-->
-        <!--            </b-button>-->
-        <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text" style="padding-left: 40px">
-            <div :style="logLevelStyle(log.level)">
-                {{log.level}}
+        <stage-footer-options @expandWindow="() => $emit('expandWindow')"
+                              @compressWindow="() => $emit('compressWindow')"></stage-footer-options>
+        <div  class="carabina-text" style="padding-left: 40px">
+            <div v-for="log in enqueuerLogs" :key="log.id">
+                <div :style="logLevelStyle(log.level)">
+                    {{log.level}}
+                </div>
+                <span class="px-2" style="color: var(--carabina-text-color)">
+                            {{log.timestamp}}
+                        </span>
+                {{log.message}}
             </div>
-            <span class="px-2" style="color: var(--carabina-text-color)">
-                        {{log.timestamp}}
-                    </span>
-            {{log.message}}
+
         </div>
     </b-container>
 </template>
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import {mapGetters, mapMutations} from 'vuex';
+    import StageFooterOptions from '@/views/stage/stage-footer-options';
+    import {mapGetters} from 'vuex';
 
     export default Vue.extend({
         name: 'StageFooter',
+        components: {
+            StageFooterOptions
+        },
         data: function () {
             return {
                 logLevelColorMap: {
@@ -52,11 +45,8 @@
                 modalBodyElement.scrollTop = modalBodyElement.scrollHeight;
             }
         },
-        methods: {
-            ...mapMutations('stage', ['decreaseLogFilterLevel', 'increaseLogFilterLevel', 'clearLogs'])
-        },
         computed: {
-            ...mapGetters('stage', ['enqueuerLogs', 'enqueuerErrors', 'currentLogLevel']),
+            ...mapGetters('stage', ['enqueuerLogs', 'enqueuerErrors']),
             logLevelStyle: function () {
                 return (level) => {
                     return {
@@ -80,10 +70,4 @@
         outline: none;
         box-shadow: none;
     }
-
-    button:active, button:focus {
-        outline: none !important;
-        box-shadow: none !important;;
-    }
-
 </style>

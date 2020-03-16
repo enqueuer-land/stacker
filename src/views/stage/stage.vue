@@ -24,7 +24,8 @@
                     </keep-alive>
                 </template>
             </div>
-            <StageFooter id="footer-container" style=""></StageFooter>
+            <StageFooter @expandWindow="expandLogWindow" @compressWindow="compressWindow" id="footer-container"
+                         style=""></StageFooter>
         </div>
     </div>
 </template>
@@ -57,22 +58,34 @@
         },
         data: function () {
             return {
-                footerHeightInPixels: 40
+                footerHeightInPixels: 40,
+                splitter: undefined
             }
         },
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
-            adjustStageLength: function () {
+            expandLogWindow: function () {
+                this.adjustStageLength(90);
+            },
+            compressWindow: function () {
+                this.adjustStageLength(1);
+            },
+            adjustStageLength: function (footerRelativeHeight) {
                 const wrapper = document.getElementById('stage-panel-container');
-                const gutterHeight = 4;
-                const footerRelativeHeight = (100 * this.footerHeightInPixels) / wrapper.offsetHeight;
+                const gutterHeight = 6;
+                if (!footerRelativeHeight) {
+                    footerRelativeHeight = (100 * this.footerHeightInPixels) / wrapper.offsetHeight;
+                }
                 const bodyRelativeHeight = 100 - footerRelativeHeight;
+                if (this.splitter) {
+                    this.splitter.destroy();
+                }
 
-                split(['#body-container', '#footer-container'], {
+                this.splitter = split(['#body-container', '#footer-container'], {
                     gutterSize: gutterHeight,
                     direction: 'vertical',
                     sizes: [bodyRelativeHeight, footerRelativeHeight],
-                    minSize: [100, 38],
+                    minSize: [100 - gutterHeight / 2, 40 - gutterHeight / 2],
                     gutterStyle: () => ({
                         position: 'relative',
                         height: '2px',
