@@ -1,5 +1,7 @@
 import * as os from 'os';
 import * as fs from 'fs';
+//TODO benchmark with https://www.npmjs.com/package/lzutf8
+import LZString from 'lz-string';
 import {ipcMain} from 'electron';
 import {ChildProcess, exec, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
@@ -19,14 +21,14 @@ export default class EnqueuerRunner {
         this.window = window;
     }
 
-    private enqueuerProcess?: ChildProcess | any;
+    private enqueuerProcess: ChildProcess | any;
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
 
     private readonly logBuffer: string[] = [];
-    private readonly maxBufferSize = 800;
+    private readonly maxBufferSize = 200;
     private readonly logSendInterval = 100;
-    private readonly logsPerMessage = 50;
+    private readonly logsPerMessage = 20;
 
     public async run(): Promise<void> {
         this.createNqrFolder();
@@ -42,7 +44,8 @@ export default class EnqueuerRunner {
         ipcMain.on('setEnqueuerStore', (_, data: any) => this.enqueuerStore = data);
         ipcMain.on('runEnqueuer', async (_, requisition: InputRequisitionModel) => {
             const reply = await this.sendRequisition(requisition);
-            this.window!.webContents.send('runEnqueuerReply', reply);
+            const compressed = LZString.compressToUTF16(JSON.stringify(reply));
+            this.window!.webContents.send('runEnqueuerReply', compressed);
         });
     }
 
@@ -50,7 +53,9 @@ export default class EnqueuerRunner {
         setInterval(() => {
             if (this.logBuffer.length > 0) {
                 const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
-                this.window!.webContents.send('enqueuerLog', logs);
+                const compressed = LZString.compressToUTF16(logs);
+                // console.log(compressed.length / 1024);
+                this.window!.webContents.send('enqueuerLog', compressed);
 
                 this.logBuffer.splice(0, this.logsPerMessage);
             }
@@ -76,6 +81,7 @@ export default class EnqueuerRunner {
             this.logBuffer.push(data.toString());
             const overLimitLogs = this.logBuffer.length - this.maxBufferSize;
             if (overLimitLogs > 0) {
+                // console.log(`Discarding: ` + this.logBuffer.filter((_, index) => index <= overLimitLogs).join('\n').length / 1024);
                 this.logBuffer.splice(0, overLimitLogs);
             }
         });

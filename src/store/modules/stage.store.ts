@@ -1,4 +1,5 @@
 import store from '@/store'
+import LZString from 'lz-string';
 import {IdCreator} from '@/components/id-creator';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
@@ -9,7 +10,10 @@ import {RendererMessageSender} from '@/components/renderer-message-sender';
 
 RendererMessageSender.on('addLog', ((event, data) => store.commit('stage/addLog', data)));
 RendererMessageSender.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
-RendererMessageSender.on('enqueuerLog', ((event, data) => store.commit('stage/addEnqueuerLog', data)));
+RendererMessageSender.on('enqueuerLog', ((event, data) => {
+    const decompress = LZString.decompressFromUTF16(data);
+    store.commit('stage/addEnqueuerLog', decompress);
+}));
 RendererMessageSender.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
 RendererMessageSender.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
 
@@ -27,7 +31,7 @@ function prepareRequisition(msg: any) {
 export default {
     state: {
         plugins: new PluginsLoader().getPlugins(),
-        enqueuerLogParser: new EnqueuerLogParser(400, 'INFO'),
+        enqueuerLogParser: new EnqueuerLogParser(600, 'INFO'),
         installingPluginModal: false,
     },
     mutations: {
@@ -78,7 +82,10 @@ export default {
             const decycled = prepareRequisition(component);
             store.commit('result/runRequisition', decycled);
             RendererMessageSender.emit('runEnqueuer', decycled);
-            RendererMessageSender.on('runEnqueuerReply', ((event, responses) => store.commit('result/updateResponse', responses)));
+            RendererMessageSender.on('runEnqueuerReply', ((event, responses) => {
+                const decompress = JSON.parse(LZString.decompressFromUTF16(responses));
+                store.commit('result/updateResponse', decompress);
+            }));
         },
     },
     getters: {
