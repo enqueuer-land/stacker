@@ -1,23 +1,22 @@
 <template>
-    <b-container fluid id="stage-footer" style="overflow-y: auto;">
-        <!--        <div class="" style="position: absolute;">-->
-        <!--            <span style="text-align:right; margin:0px auto 0px auto;"/>-->
-
+    <b-container fluid id="stage-footer" style="overflow-y: auto;" class="p-0 m-0">
+        <b-button size="sm" variant="none" style="position: absolute" class="pl-2">
+            <i class="carabina-icon fas fa-cog" style="font-size: 14px;"></i>
+        </b-button>
         <!--            <b-button size="sm" variant="none" @click="decreaseLogFilterLevel">-->
         <!--                <i class="carabina-icon fas fa-minus" style="font-size: 14px;"></i>-->
         <!--            </b-button>-->
         <!--            <b-button size="sm" variant="none" @click="increaseLogFilterLevel">-->
         <!--                <i class="carabina-icon fas fa-plus" style="font-size: 14px;"></i>-->
         <!--            </b-button>-->
-        <!--            <span class="px-2 carabina-text" style="user-select: none">{{currentLogLevel}}</span>-->
+        <!--            &lt;!&ndash;                    <span class="px-2 carabina-text" style="user-select: none">{{currentLogLevel}}</span>&ndash;&gt;-->
         <!--            <b-button size="sm" variant="none" class="ml-5">-->
         <!--                <i class="carabina-icon fas fa-expand" style="font-size: 14px;"></i>-->
         <!--            </b-button>-->
         <!--            <b-button size="sm" variant="none" class="" @click="clearLogs">-->
         <!--                <i class="carabina-icon fas fa-ban" style="font-size: 14px;"></i>-->
         <!--            </b-button>-->
-        <!--        </div>-->
-        <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text">
+        <div v-for="log in enqueuerLogs" :key="log.id" class="carabina-text" style="padding-left: 40px">
             <div :style="logLevelStyle(log.level)">
                 {{log.level}}
             </div>
@@ -82,9 +81,9 @@
         box-shadow: none;
     }
 
-    /*button:active, button:focus {*/
-    /*    outline: none !important;*/
-    /*    box-shadow: none !important;;*/
-    /*}*/
+    button:active, button:focus {
+        outline: none !important;
+        box-shadow: none !important;;
+    }
 
 </style>

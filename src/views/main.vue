@@ -35,7 +35,7 @@
         mounted() {
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
                 gutterSize: 2,
-                sizes: [24, 38, 38],
+                sizes: [25, 40, 35],
                 minSize: [400, 400, 400],
                 gutterStyle: () => ({
                     position: 'relative',
