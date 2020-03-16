@@ -37,7 +37,7 @@ export class ComponentCloner {
         clone = Object.assign({}, clone, component);
         clone.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
         clone.id = new IdCreator().create();
-        clone.name += '(clone)';
+        clone.name += ' (clone)';
         return clone;
     }
 }

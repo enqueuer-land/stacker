@@ -7,7 +7,7 @@
         <b-dropdown-item v-for="(item, index) in actions" :key="index">
             <b-row class="pl-2" @click="item.action">
                 <b-col cols="auto" class="align-self-center px-1">
-                    <i :class="['carabina-icon option-item-class', item.iconClass]" style="font-size: 14px"></i>
+                    <i :class="['carabina-icon option-item-class', item.iconClass(component)]" style="font-size: 14px"></i>
                 </b-col>
                 <b-col cols class="align-self-center">
                     {{item.name(component)}}
@@ -31,7 +31,7 @@
                 actions: [
                     {
                         name: () => 'Save',
-                        iconClass: 'fas fa-save',
+                        iconClass: () => 'fas fa-save',
                         action: (event) => {
                             event.stopPropagation();
                             this.saveComponent({
@@ -41,7 +41,7 @@
                     },
                     {
                         name: () => 'Duplicate',
-                        iconClass: 'fas fa-clone',
+                        iconClass: () => 'fas fa-clone',
                         action: (event) => {
                             event.stopPropagation();
                             this.duplicateComponent({
@@ -51,7 +51,7 @@
                     },
                     {
                         name: (component) => component.ignore ? 'Enable' : 'Disable',
-                        iconClass: 'fas fa-ban',
+                        iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
                         action: (event) => {
                             event.stopPropagation();
                             this.changeAttributeOfComponent({
@@ -63,7 +63,7 @@
                     },
                     {
                         name: () => 'Delete',
-                        iconClass: 'fas fa-trash',
+                        iconClass: () => 'fas fa-trash',
                         action: (event) => {
                             event.stopPropagation();
                             this.deleteComponentById({
