@@ -144,6 +144,8 @@ export default class EnqueuerRunner {
     }
 
     private sendLogToStacker(message: string, level: string) {
-        this.window!.webContents.send('addLog', {message, level});
+        if (this.window) {
+            this.window.webContents.send('addLog', {message, level});
+        }
     }
 }

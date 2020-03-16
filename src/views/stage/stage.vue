@@ -8,10 +8,12 @@
                 </b-col>
             </b-row>
         </b-container>
-        <template v-if="selectedComponent">
-            <StageHeader :component="selectedComponent"
-                         style="height: var(--carabina-header-size);"></StageHeader>
-            <div class="pt-3" id="body-container">
+        <div style="height: var(--carabina-header-size);">
+            <StageHeader v-if="selectedComponent" :component="selectedComponent"></StageHeader>
+        </div>
+        <div id="stage-panel-container" class="wrapper"
+             style="height: calc(100% - var(--carabina-header-size)) !important;">
+            <div id="body-container" class="pt-3" style="height: var(--carabina-body-size);">
                 <template v-if="selectedComponent && selectedComponent.carabinaMeta">
                     <Hooks class="mb-4" :component="selectedComponent" :hooks="hooks"></Hooks>
                     <keep-alive>
@@ -22,15 +24,16 @@
                     </keep-alive>
                 </template>
             </div>
-        </template>
-        <div v-else style="height: calc(var(--carabina-header-size) + var(--carabina-body-size))"></div>
-        <StageFooter id="stage-footer"></StageFooter>
+            <StageFooter id="footer-container" style=""></StageFooter>
+        </div>
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
+    import split from 'split.js';
     import '@/styles/scrollbar.css';
+    import '@/styles/color-palette.css';
     import Hooks from '@/views/stage/hooks'
     import {mapGetters, mapMutations} from 'vuex';
     import StageFooter from '@/views/stage/stage-footer'
@@ -46,9 +49,43 @@
             StageBodyRequisition,
             StageFooter
         },
+        mounted: function () {
+            this.adjustStageLength();
+            document.addEventListener('resize', () => {
+                this.adjustStageLength();
+            });
+        },
+        data: function () {
+            return {
+                footerHeightInPixels: 40
+            }
+        },
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
-            async updateAttribute(attributeName, value) {
+            adjustStageLength: function () {
+                const wrapper = document.getElementById('stage-panel-container');
+                const gutterHeight = 4;
+                const footerRelativeHeight = (100 * this.footerHeightInPixels) / wrapper.offsetHeight;
+                const bodyRelativeHeight = 100 - footerRelativeHeight;
+
+                split(['#body-container', '#footer-container'], {
+                    gutterSize: gutterHeight,
+                    direction: 'vertical',
+                    sizes: [bodyRelativeHeight, footerRelativeHeight],
+                    minSize: [100, 38],
+                    gutterStyle: () => ({
+                        position: 'relative',
+                        height: '2px',
+                        'background-color': 'var(--carabina-body-background-color)'
+                    }),
+                    onDragEnd: (data) => {
+                        this.footerHeightInPixels = (data[1] * wrapper.offsetHeight / 100);
+                        console.log(this.footerHeightInPixels);
+                    }
+                });
+
+            },
+            updateAttribute: async function (attributeName, value) {
                 this.currentSelectedComponentChanged({attributeName, value});
             }
         },
@@ -88,10 +125,6 @@
         height: var(--carabina-body-size);
     }
 
-    #stage-footer {
-        height: var(--carabina-footer-size);
-    }
-
     #installing-plugin-modal {
         position: fixed;
         top: 0;
@@ -100,5 +133,10 @@
         height: 100vh;
         z-index: 1;
         background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    #footer-container:active, #footer-container:focus {
+        box-shadow: none !important;
+        outline: none !important;
     }
 </style>
