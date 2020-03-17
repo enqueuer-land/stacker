@@ -33,8 +33,7 @@
                 {
                     name: () => 'Save',
                     iconClass: () => 'fas fa-save',
-                    action: (event) => {
-                        // event.stopPropagation();
+                    action: () => {
                         this.saveComponent({
                             component: this.component
                         });
@@ -43,8 +42,7 @@
                 {
                     name: () => 'Duplicate',
                     iconClass: () => 'fas fa-clone',
-                    action: (event) => {
-                        // event.stopPropagation();
+                    action: () => {
                         this.duplicateComponent({
                             component: this.component
                         });
@@ -53,8 +51,7 @@
                 {
                     name: (component) => component.ignore ? 'Enable' : 'Disable',
                     iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
-                    action: (event) => {
-                        // event.stopPropagation();
+                    action: () => {
                         this.changeAttributeOfComponent({
                             component: this.component,
                             attributeName: 'ignore',
@@ -65,8 +62,7 @@
                 {
                     name: () => 'Delete',
                     iconClass: () => 'fas fa-trash',
-                    action: (event) => {
-                        // event.stopPropagation();
+                    action: () => {
                         this.deleteComponentById({
                             component: this.component
                         });
@@ -78,8 +74,7 @@
                     {
                         name: () => 'Insert new requisition',
                         iconClass: () => 'fas fa-plus',
-                        action: (event) => {
-                            // event.stopPropagation();
+                        action: () => {
                             this.createNewComponent({
                                 componentType: ComponentTypes.REQUISITION,
                                 parent: this.component
@@ -89,16 +84,14 @@
                     {
                         name: () => 'Insert new publisher',
                         iconClass: () => 'fas fa-plus',
-                        action: (event) => {
-                            // event.stopPropagation();
+                        action: () => {
                             this.createNewComponent({componentType: ComponentTypes.PUBLISHER, parent: this.component});
                         }
                     },
                     {
                         name: () => 'Insert new subscription',
                         iconClass: () => 'fas fa-plus',
-                        action: (event) => {
-                            // event.stopPropagation();
+                        action: () => {
                             this.createNewComponent({
                                 componentType: ComponentTypes.SUBSCRIPTION,
                                 parent: this.component
