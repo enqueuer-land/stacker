@@ -17,7 +17,7 @@ RendererMessageSender.on('enqueuerLog', ((event, data) => {
 RendererMessageSender.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
 RendererMessageSender.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
 
-function prepareRequisition(msg: any) {
+const prepareRequisition = (msg: any) => {
     const componentName = msg.carabinaMeta.componentName;
     let decycled = new ComponentDecycler().decycle(msg);
     if (componentName === ComponentTypes.PUBLISHER) {
@@ -26,7 +26,7 @@ function prepareRequisition(msg: any) {
         decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
     }
     return decycled;
-}
+};
 
 export default {
     state: {

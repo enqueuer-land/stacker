@@ -150,7 +150,7 @@ export default class EnqueuerRunner {
     }
 
     private sendLogToStacker(message: string, level: string) {
-        if (this.window) {
+        if (this.window && !this.window.isDestroyed()) {
             this.window.webContents.send('addLog', {message, level});
         }
     }

@@ -16,8 +16,8 @@ export default [{
                 expect: 'statusCode',
                 toBeEqualTo: '200'
             }, {
-                expect: 'headers.key',
-                toBeEqualTo: '`value`'
+                expect: 'headers["x-header-key"]',
+                toBeEqualTo: '`headerValue`'
             }]
         }
     }],
@@ -27,7 +27,7 @@ export default [{
         endpoint: '/stacker/:id',
         method: 'POST',
         response: {
-            headers: {'key': 'value'},
+            headers: {'x-header-key': 'headerValue'},
             status: 200,
             payload: JSON.stringify({
                 stacker: 'rocks'

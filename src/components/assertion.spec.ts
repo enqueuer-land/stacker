@@ -1,6 +1,6 @@
 import {Assertion} from '@/components/assertion';
 
-describe('assertion', () => {
+describe('Assertion', () => {
     it('should not parse unknown', () => {
         expect(new Assertion().parse({bla: 123})).toBeUndefined();
     });
