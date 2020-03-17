@@ -81,7 +81,7 @@
     });
 </script>
 <style type="text/css" scoped>
-    #side-bar-tree-item:hover .option-icon {
+    .side-bar-tree-item:hover .option-icon {
         color: var(--carabina-text-darker-color);
     }
 

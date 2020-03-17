@@ -16,7 +16,7 @@
 <style type="text/css" scoped>
     #side-bar-body {
         background-color: var(--carabina-body-background-darker-color);
-        overflow-y: scroll;
+        overflow-y: auto;
         width: 100%;
         height: 100%;
     }

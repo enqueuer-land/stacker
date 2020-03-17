@@ -5,32 +5,45 @@
                       :class="['accordion-button requisition-tree-indicator', !collapsed && 'expanded']">
                 <i class="fas fa-caret-right"></i>
             </b-button>
-            <SideBarTreeItem :component="component" @dblclick="collapsed = !collapsed"/>
-            <b-collapse :id="component.id" :class="['ml-4 py-0 px-0']" :visible="!collapsed"
+            <SideBarTreeItem :component="component" @dblclick.native="collapsed = !collapsed"/>
+            <b-collapse :id="'collapsible' + component.id" :class="['ml-4 py-0 px-0']" :visible="!collapsed"
                         class="collapse-body"
                         v-if="componentStylish.getChildrenLength() > 0 && !collapsed">
-                <SideBarTreeNode v-for="requisition in component.requisitions" :key="requisition.id"
-                                 :component="requisition"></SideBarTreeNode>
-                <SideBarTreeItem v-for="publisher in component.publishers" :key="publisher.id"
-                                 :component="publisher"></SideBarTreeItem>
-                <SideBarTreeItem v-for="subscription in component.subscriptions" :key="subscription.id"
-                                 :component="subscription"></SideBarTreeItem>
+                <draggable :value="component.requisitions" group="component"
+                           v-for="requisition in component.requisitions" :key="requisition.id"
+                           :id="requisition.id"
+                           @end="drag => reorderComponent({drag, component: requisition})">
+                    <SideBarTreeNode :component="requisition"></SideBarTreeNode>
+                </draggable>
+                <draggable :value="component.publishers" group="component"
+                           v-for="publisher in component.publishers" :key="publisher.id"
+                           :id="publisher.id"
+                           @end="drag => reorderComponent({drag, component: publisher})">
+                    <SideBarTreeItem :component="publisher"></SideBarTreeItem>
+                </draggable>
+                <draggable :value="component.subscriptions" group="component"
+                           v-for="subscription in component.subscriptions" :key="subscription.id"
+                           :id="subscription.id"
+                           @end="drag => reorderComponent({drag, component: subscription})">
+                    <SideBarTreeItem :component="subscription"></SideBarTreeItem>
+                </draggable>
             </b-collapse>
         </b-card>
     </div>
 </template>
 <script>
     import Vue from 'vue';
-    import {mapMutations} from 'vuex';
     import '@/styles/dimensions.css';
+    import {mapMutations} from 'vuex';
     import '@/styles/component-tree.css';
+    import draggable from 'vuedraggable';
     import {ComponentStylish} from '@/components/component-stylish';
     import SideBarTreeItem from '@/views/side-bar/side-bar-tree-item';
 
     export default Vue.extend({
         name: 'SideBarTreeNode',
         components: {
-            SideBarTreeItem
+            SideBarTreeItem, draggable
         },
         props: {
             component: Object
@@ -43,7 +56,7 @@
         },
         watch: {
             collapsed() {
-                const carabinaMeta = this.component.carabinaMeta;
+                const carabinaMeta = {...this.component.carabinaMeta};
                 carabinaMeta.collapsed = this.collapsed;
                 this.changeAttributeOfComponent({
                     component: this.component,
@@ -53,7 +66,7 @@
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeOfComponent']),
+            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'reorderComponent']),
         }
     });
 </script>

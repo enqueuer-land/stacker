@@ -1,5 +1,5 @@
 <template>
-    <div id="side-bar-tree-item" :style="componentStyle" @click="componentSelected(component)">
+    <div class="side-bar-tree-item" :style="componentStyle" @click="componentSelected(component)">
         <b-container fluid class="pl-2 pr-0 carabina-text">
             <b-row no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
@@ -12,8 +12,8 @@
                 <b-col cols="auto" class="align-self-center"
                        v-if="componentStylish.isRequisition() && componentStylish.getChildrenLength() > 0">
                     <small class="item-name-tag items-num">
-                        {{componentStylish.getChildrenLength()}} {{componentStylish.getChildrenLength() > 1? 'items':
-                        'item'}}
+                        {{componentStylish.getChildrenLength()}}
+                        {{componentStylish.getChildrenLength() > 1? 'items': 'item'}}
                     </small>
                 </b-col>
                 <b-col cols="auto" class="align-self-center">
@@ -48,9 +48,9 @@
             }
         },
         watch: {
-          'component.type': function () {
-              this.componentStylish = new ComponentStylish(this.component);
-          },
+            'component.type': function () {
+                this.componentStylish = new ComponentStylish(this.component);
+            },
         },
         computed: {
             ...mapGetters('side-bar', []),
@@ -71,12 +71,12 @@
     });
 </script>
 <style type="text/css" scoped>
-    #side-bar-tree-item {
+    .side-bar-tree-item {
         height: 100%;
         transition: all ease 200ms;
     }
 
-    #side-bar-tree-item:hover .item-name {
+    .side-bar-tree-item:hover .item-name {
         color: var(--carabina-text-color);
     }
 

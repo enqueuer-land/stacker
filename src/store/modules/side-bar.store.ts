@@ -48,6 +48,30 @@ if (initialSelectedComponentId) {
     initialSelectedComponent = new ComponentFinder(initialRequisitions).findItem(initialSelectedComponentId);
 }
 
+//TODO Move to another class
+const moveComponent = (draggedComponent: any, draggedComponentParent: any, target: any) => {
+    switch (draggedComponent.carabinaMeta.componentName) {
+        case ComponentTypes.REQUISITION:
+            draggedComponentParent.requisitions = draggedComponentParent.requisitions
+                .filter((item: any) => item.id !== draggedComponent.id);
+
+            target.requisitions.push(draggedComponent);
+            break;
+        case ComponentTypes.PUBLISHER:
+            draggedComponentParent.publishers = draggedComponentParent.publishers
+                .filter((item: any) => item.id !== draggedComponent.id);
+
+            target.publishers.push(draggedComponent);
+            break;
+        case ComponentTypes.SUBSCRIPTION:
+            draggedComponentParent.subscriptions = draggedComponentParent.subscriptions
+                .filter((item: any) => item.id !== draggedComponent.id);
+
+            target.subscriptions.push(draggedComponent);
+            break;
+    }
+}
+
 export default {
     state: {
         textFilter: '',
@@ -71,6 +95,7 @@ export default {
             stage.requisitions.push(component);
             persist(stage);
         },
+        //TODO Move to another class
         createNewComponent: (stage: any, payload: any) => {
             if (payload.componentType === ComponentTypes.REQUISITION) {
                 const component = new ComponentFactory().createRequisition(payload.parent);
@@ -127,17 +152,40 @@ export default {
             clone.carabinaMeta.selected = false;
             persist(stage);
         },
-        reorderSameLevelRequisition: (stage: any, event: any) => {
-            console.log(event);
-            const draggingRequisition = stage.requisitions[event.oldIndex];
-            stage.requisitions.splice(event.oldIndex, 1);
-            stage.requisitions.splice(event.newIndex, 0, draggingRequisition);
+        //TODO Move to another class
+        reorderComponent: (stage: any, event: any) => {
+            let target = new ComponentFinder(stage.requisitions).findItem(event.drag.to.id);
+            const draggedComponent = event.component;
+            const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
+            if (!target) {
+                console.log(draggedComponentParent.name);
+                if (draggedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+                    draggedComponentParent.requisitions = draggedComponentParent.requisitions
+                        .filter((item: any) => item.id !== draggedComponent.id);
+
+                    delete draggedComponent.carabinaMeta.parent;
+                    stage.requisitions.push(draggedComponent);
+                }
+            } else {
+                if (new ComponentParent(target).isGrandChildOf(draggedComponent) ||
+                    target.id === draggedComponent.id) {
+                    return;
+                }
+                if (target.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+                    moveComponent(draggedComponent, draggedComponentParent, target);
+                } else {
+                    target = target.carabinaMeta.parent;
+                    moveComponent(draggedComponent, draggedComponentParent, target);
+                }
+                draggedComponent.carabinaMeta.parent = target;
+            }
             persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
             new ComponentSaver().save(event.component)
                 .then(() => Logger.info(`Component '${event.component.name}' saved`));
         },
+        //TODO Move to another class
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
             if (stage.selectedComponent) {
