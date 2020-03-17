@@ -2,7 +2,6 @@ import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFactory} from '@/components/component-factory';
 
-//TODO test it
 export class ComponentCloner {
 
     public static cloneRequisition(rawRequisition: any, parent?: any): any {

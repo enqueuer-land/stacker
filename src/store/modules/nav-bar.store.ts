@@ -2,6 +2,7 @@ import store from '@/store';
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
+import {FileDialog} from '@/components/file-dialog';
 import {EnvironmentSaver} from '@/environments/environment-saver';
 import {EnvironmentLoader} from '@/environments/environment-loader';
 import {RendererMessageSender} from '@/components/renderer-message-sender';
@@ -90,8 +91,15 @@ export default {
             persist(stage);
         },
         saveEnvironment: (stage: any, payload: any) => {
-            new EnvironmentSaver().save(payload.environment)
-                .then(() => Logger.info(`Environment '${payload.environment.name}' saved`));
+            FileDialog
+                .showSaveDialog(payload.environment.name + '.nqr.env.yml')
+                .then(filename => {
+                    if (filename) {
+                        new EnvironmentSaver()
+                            .save(filename, payload.environment)
+                            .then(() => Logger.info(`Environment '${payload.environment.name}' saved as '${filename}`));
+                    }
+                });
         },
     },
     actions: {},

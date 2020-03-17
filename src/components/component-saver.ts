@@ -4,7 +4,6 @@ import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from '@/components/component-decycler';
 
-//TODO test it
 export class ComponentSaver {
 
     public async save(item: any, filename: string) {
