@@ -22,7 +22,7 @@
 </template>
 <script>
     import Vue from 'vue';
-    import {mapGetters, mapMutations} from 'vuex';
+    import {mapGetters} from 'vuex';
     import ResultHeader from '@/views/result/result-header'
     import ResultFlattenTestsBody from '@/views/result/result-flatten-tests-body'
     import ResultFooter from '@/views/result/result-footer'
@@ -39,9 +39,6 @@
             ...mapGetters('result', ['responses', 'filteredFlattenTests',
                 'responseIsValid', 'responseName', 'totalTime', 'ignoredTests', 'summary', 'enqueuerRunningShowModal']),
         },
-        methods: {
-            ...mapMutations('result', ['updateResponse'])
-        }
     });
 </script>
 <style type="text/css" scoped>

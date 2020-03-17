@@ -11,8 +11,8 @@ import {ComponentLoader} from '@/components/component-loader';
 import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
-import {RendererMessageSender} from '@/components/renderer-message-sender';
 import * as requisitionsExample from '@/components/requisitions-example';
+import {RendererMessageSender} from '@/components/renderer-message-sender';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
@@ -80,15 +80,18 @@ export default {
         selectedComponent: initialSelectedComponent,
     },
     mutations: {
-        componentSelected: (stage: any, component: {}) => {
+        componentSelected: (stage: any, component: any) => {
             if (stage.selectedComponent) {
                 const foundItem = new ComponentFinder(stage.requisitions).findItem(stage.selectedComponent.id);
                 if (foundItem) {
                     foundItem.carabinaMeta.selected = false;
                 }
             }
-            stage.selectedComponent = component;
-            stage.selectedComponent.carabinaMeta.selected = true;
+            const selected = new ComponentFinder(stage.requisitions).findItem(component.id);
+            if (selected) {
+                stage.selectedComponent = component;
+                stage.selectedComponent.carabinaMeta.selected = true;
+            }
             persist(stage);
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
@@ -155,7 +158,6 @@ export default {
         },
         //TODO Move to another class
         componentDragAndDrop: (stage: any, event: any) => {
-            console.log(event.drag);
             let target = new ComponentFinder(stage.requisitions).findItem(event.drag.to.id);
             const draggedComponent = event.component;
             if (!target) {
@@ -216,7 +218,8 @@ export default {
         selectedComponent: (state: any) => state.selectedComponent,
         textFilter: (state: any) => state.textFilter,
         filteredRequisitions: (state: any) => state.requisitions
-            .filter((requisition: InputRequisitionModel) => requisition.name.includes(state.textFilter)),
+            .filter((requisition: InputRequisitionModel) => JSON.stringify(Object.values(new ComponentDecycler().decycle(requisition))).toLowerCase()
+                .includes(state.textFilter.toLowerCase())),
         breadcrumbItems: (state: any): any[] => {
             const result = [];
             let parent = state.selectedComponent;

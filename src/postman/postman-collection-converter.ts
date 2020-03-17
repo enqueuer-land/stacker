@@ -2,6 +2,7 @@ import {Collection, Folder, Header, Item, Request, Response} from './postman-typ
 import {PostmanEventExtractor} from './postman-event-extractor';
 import {Event, InputPublisherModel, InputRequisitionModel, InputSubscriptionModel} from 'enqueuer';
 
+//TODO test it
 export class PostmanCollectionConverter {
     public convert(postmanCollection: Collection): InputRequisitionModel {
         return this.createRequisition(postmanCollection.item, postmanCollection.info.name);

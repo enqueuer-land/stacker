@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown no-caret lazy variant="carabina" class="carabina-text">
+    <b-dropdown no-caret lazy dropright variant="carabina" class="carabina-text">
         <template v-slot:button-content>
             <i class="fas fa-ellipsis-v px-0 carabina-icon option-icon"
                style="font-size: 14px"></i>
@@ -7,7 +7,8 @@
         <b-dropdown-item v-for="(item, index) in actions" :key="index">
             <b-row class="pl-2" @click="item.action">
                 <b-col cols="auto" class="align-self-center px-1">
-                    <i :class="['carabina-icon option-item-class', item.iconClass(component)]" style="font-size: 14px"></i>
+                    <i :class="['carabina-icon option-item-class', item.iconClass(component)]"
+                       style="font-size: 14px"></i>
                 </b-col>
                 <b-col cols class="align-self-center">
                     {{item.name(component)}}
@@ -20,6 +21,7 @@
     import Vue from 'vue';
     import '@/styles/icons.css';
     import {mapMutations} from 'vuex';
+    import {ComponentTypes} from '@/components/component-types';
 
     export default Vue.extend({
         name: 'SideBarTreeItemOptions',
@@ -27,55 +29,90 @@
             component: Object
         },
         data: function () {
+            let actions = [
+                {
+                    name: () => 'Save',
+                    iconClass: () => 'fas fa-save',
+                    action: (event) => {
+                        // event.stopPropagation();
+                        this.saveComponent({
+                            component: this.component
+                        });
+                    }
+                },
+                {
+                    name: () => 'Duplicate',
+                    iconClass: () => 'fas fa-clone',
+                    action: (event) => {
+                        // event.stopPropagation();
+                        this.duplicateComponent({
+                            component: this.component
+                        });
+                    }
+                },
+                {
+                    name: (component) => component.ignore ? 'Enable' : 'Disable',
+                    iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
+                    action: (event) => {
+                        // event.stopPropagation();
+                        this.changeAttributeOfComponent({
+                            component: this.component,
+                            attributeName: 'ignore',
+                            value: !this.component.ignore
+                        });
+                    }
+                },
+                {
+                    name: () => 'Delete',
+                    iconClass: () => 'fas fa-trash',
+                    action: (event) => {
+                        // event.stopPropagation();
+                        this.deleteComponentById({
+                            component: this.component
+                        });
+                    }
+                },
+            ];
+            if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+                actions = actions.concat(
+                    {
+                        name: () => 'Insert new requisition',
+                        iconClass: () => 'fas fa-plus',
+                        action: (event) => {
+                            // event.stopPropagation();
+                            this.createNewComponent({
+                                componentType: ComponentTypes.REQUISITION,
+                                parent: this.component
+                            });
+                        }
+                    },
+                    {
+                        name: () => 'Insert new publisher',
+                        iconClass: () => 'fas fa-plus',
+                        action: (event) => {
+                            // event.stopPropagation();
+                            this.createNewComponent({componentType: ComponentTypes.PUBLISHER, parent: this.component});
+                        }
+                    },
+                    {
+                        name: () => 'Insert new subscription',
+                        iconClass: () => 'fas fa-plus',
+                        action: (event) => {
+                            // event.stopPropagation();
+                            this.createNewComponent({
+                                componentType: ComponentTypes.SUBSCRIPTION,
+                                parent: this.component
+                            });
+                        }
+                    })
+            }
             return {
-                actions: [
-                    {
-                        name: () => 'Save',
-                        iconClass: () => 'fas fa-save',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.saveComponent({
-                                component: this.component
-                            });
-                        }
-                    },
-                    {
-                        name: () => 'Duplicate',
-                        iconClass: () => 'fas fa-clone',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.duplicateComponent({
-                                component: this.component
-                            });
-                        }
-                    },
-                    {
-                        name: (component) => component.ignore ? 'Enable' : 'Disable',
-                        iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.changeAttributeOfComponent({
-                                component: this.component,
-                                attributeName: 'ignore',
-                                value: !this.component.ignore
-                            });
-                        }
-                    },
-                    {
-                        name: () => 'Delete',
-                        iconClass: () => 'fas fa-trash',
-                        action: (event) => {
-                            event.stopPropagation();
-                            this.deleteComponentById({
-                                component: this.component
-                            });
-                        }
-                    },
-                ]
+                actions: actions
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'deleteComponentById', 'saveComponent', 'duplicateComponent']),
+            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'deleteComponentById',
+                'saveComponent', 'duplicateComponent', 'createNewComponent']),
         }
 
     });
