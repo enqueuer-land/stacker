@@ -12,19 +12,19 @@
                 <draggable :value="component.requisitions" group="component"
                            v-for="requisition in component.requisitions" :key="requisition.id"
                            :id="requisition.id"
-                           @end="drag => reorderComponent({drag, component: requisition})">
+                           @end="drag => componentDragAndDrop({drag, component: requisition})">
                     <SideBarTreeNode :component="requisition"></SideBarTreeNode>
                 </draggable>
                 <draggable :value="component.publishers" group="component"
                            v-for="publisher in component.publishers" :key="publisher.id"
                            :id="publisher.id"
-                           @end="drag => reorderComponent({drag, component: publisher})">
+                           @end="drag => componentDragAndDrop({drag, component: publisher})">
                     <SideBarTreeItem :component="publisher"></SideBarTreeItem>
                 </draggable>
                 <draggable :value="component.subscriptions" group="component"
                            v-for="subscription in component.subscriptions" :key="subscription.id"
                            :id="subscription.id"
-                           @end="drag => reorderComponent({drag, component: subscription})">
+                           @end="drag => componentDragAndDrop({drag, component: subscription})">
                     <SideBarTreeItem :component="subscription"></SideBarTreeItem>
                 </draggable>
             </b-collapse>
@@ -66,7 +66,7 @@
             }
         },
         methods: {
-            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'reorderComponent']),
+            ...mapMutations('side-bar', ['changeAttributeOfComponent', 'componentDragAndDrop']),
         }
     });
 </script>

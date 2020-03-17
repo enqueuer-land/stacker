@@ -49,7 +49,8 @@ if (initialSelectedComponentId) {
 }
 
 //TODO Move to another class
-const moveComponent = (draggedComponent: any, draggedComponentParent: any, target: any) => {
+const moveComponent = (draggedComponent: any, target: any) => {
+    const draggedComponentParent = draggedComponent.carabinaMeta.parent;
     switch (draggedComponent.carabinaMeta.componentName) {
         case ComponentTypes.REQUISITION:
             draggedComponentParent.requisitions = draggedComponentParent.requisitions
@@ -70,7 +71,7 @@ const moveComponent = (draggedComponent: any, draggedComponentParent: any, targe
             target.subscriptions.push(draggedComponent);
             break;
     }
-}
+};
 
 export default {
     state: {
@@ -153,12 +154,12 @@ export default {
             persist(stage);
         },
         //TODO Move to another class
-        reorderComponent: (stage: any, event: any) => {
+        componentDragAndDrop: (stage: any, event: any) => {
+            console.log(event.drag);
             let target = new ComponentFinder(stage.requisitions).findItem(event.drag.to.id);
             const draggedComponent = event.component;
-            const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
             if (!target) {
-                console.log(draggedComponentParent.name);
+                const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
                 if (draggedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
                     draggedComponentParent.requisitions = draggedComponentParent.requisitions
                         .filter((item: any) => item.id !== draggedComponent.id);
@@ -172,10 +173,10 @@ export default {
                     return;
                 }
                 if (target.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
-                    moveComponent(draggedComponent, draggedComponentParent, target);
+                    moveComponent(draggedComponent, target);
                 } else {
                     target = target.carabinaMeta.parent;
-                    moveComponent(draggedComponent, draggedComponentParent, target);
+                    moveComponent(draggedComponent, target);
                 }
                 draggedComponent.carabinaMeta.parent = target;
             }

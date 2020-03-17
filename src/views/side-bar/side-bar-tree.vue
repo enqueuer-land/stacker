@@ -4,7 +4,7 @@
             <draggable :value="filteredRequisitions" group="component"
                        v-for="requisition in filteredRequisitions" :key="requisition.id"
                        :id="requisition.id"
-                       @end="drag => reorderComponent({drag, component: requisition})">
+                       @end="drag => componentDragAndDrop({drag, component: requisition})">
                 <SideBarTreeNode :component="requisition"></SideBarTreeNode>
             </draggable>
         </draggable>
@@ -21,7 +21,7 @@
         name: 'SideBarTree',
         components: {SideBarTreeNode, draggable},
         methods: {
-            ...mapMutations('side-bar', ['createNewComponent', 'reorderComponent'])
+            ...mapMutations('side-bar', ['createNewComponent', 'componentDragAndDrop'])
         },
         computed: {
             ...mapGetters('side-bar', ['filteredRequisitions'])
