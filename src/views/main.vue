@@ -23,6 +23,9 @@
     import Stage from '@/views/stage/stage';
     import Result from "@/views/result/result";
     import SideBar from "@/views/side-bar/side-bar";
+    import Store from 'electron-store';
+
+    const dimensionsRepository = new Store({name: 'dimensions'});
 
     export default Vue.extend({
         name: 'Main',
@@ -35,14 +38,18 @@
         mounted() {
             split(['#splitter-side-bar', '#splitter-stage', '#splitter-result'], {
                 gutterSize: 2,
-                sizes: [25, 40, 35],
-                minSize: [400, 400, 400],
+                sizes: dimensionsRepository.get('relativeDimensions', [25, 40, 35]),
+                minSize: [300, 400, 400],
                 gutterStyle: () => ({
                     position: 'relative',
                     width: '3px',
                     cursor: 'col-resize',
                     'background-color': 'var(--carabina-body-background-color)'
-                })
+                }),
+                onDragEnd: (data) => {
+                    dimensionsRepository.set('relativeDimensions', data);
+                }
+
             });
         }
     });
