@@ -1,4 +1,3 @@
-import store from '@/store'
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
 import {InputRequisitionModel} from 'enqueuer';
@@ -12,36 +11,8 @@ import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import * as requisitionsExample from '@/components/requisitions-example';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
 const sidebarRepository = new Store({name: 'side-bar'});
-
-RendererMessageCommunicator
-    .on('newRequisition', () => store.commit('side-bar/createNewComponent', {
-        componentType: ComponentTypes.REQUISITION,
-        startSelected: true
-    }));
-RendererMessageCommunicator
-    .on('newPublisher', () => store.commit('side-bar/createNewComponent', {
-        componentType: ComponentTypes.PUBLISHER,
-        startSelected: true
-    }));
-RendererMessageCommunicator
-    .on('newSubscription', () => store.commit('side-bar/createNewComponent', {
-        componentType: ComponentTypes.SUBSCRIPTION,
-        startSelected: true
-    }));
-
-RendererMessageCommunicator
-    .on('openComponent', async () => (await FileDialog.showOpenDialog())
-        .map(async file => await ComponentLoader.importFile(file))
-        .filter(async file => await file)
-        .map(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
-RendererMessageCommunicator
-    .on('importPostmanCollection', async () => (await FileDialog.showOpenDialog())
-        .map(async file => await ComponentLoader.importFromPostman(file))
-        .filter(async file => await file)
-        .map(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
 
 function persist(stage: any) {
     sidebarRepository.set('selectedComponentId', stage.selectedComponent ? stage.selectedComponent.id : null);

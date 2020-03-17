@@ -1,33 +1,11 @@
-import store from '@/store';
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
 import {FileDialog} from '@/components/file-dialog';
 import {EnvironmentSaver} from '@/environments/environment-saver';
-import {EnvironmentLoader} from '@/environments/environment-loader';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
 const navBarRepository = new Store({name: 'nav-bar'});
-
-RendererMessageCommunicator.on('openEnvironment',
-    async () => {
-        const environments = await EnvironmentLoader.importEnvironment();
-        environments
-            .filter(item => item)
-            .forEach(environment => {
-                store.commit('nav-bar/addEnvironment', environment);
-            });
-    });
-
-RendererMessageCommunicator.on('importPostmanEnvironment',
-    async () => {
-        const postmanEnvironments = await EnvironmentLoader.importPostmanEnvironment();
-        postmanEnvironments
-            .filter(item => item)
-            .forEach(postmanEnvironment => {
-                store.commit('nav-bar/addEnvironment', postmanEnvironment);
-            });
-    });
 
 const noEnvironment = {name: 'No environment', role: 'none', store: {}};
 

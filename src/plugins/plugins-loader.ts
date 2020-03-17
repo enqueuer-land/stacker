@@ -8,7 +8,6 @@ import {FileDialog} from '@/components/file-dialog';
 import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
-import {RendererMessageCommunicator} from "@/components/renderer-message-communicator";
 
 const pluginsRepository = new Store({name: 'plugins'});
 
@@ -36,7 +35,7 @@ export class PluginsLoader {
         await Promise
             .all(pickedFiles
                 .map(async file => await this.loadFileFromFileSystem(file)));
-        RendererMessageCommunicator.emit('restartEnqueuer');
+        // RendererMessageCommunicator.emit('restartEnqueuer');
         return this.plugins;
     }
 

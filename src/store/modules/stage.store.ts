@@ -8,15 +8,6 @@ import {ComponentDecycler} from '@/components/component-decycler';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
-RendererMessageCommunicator.on('addLog', ((event, data) => store.commit('stage/addLog', data)));
-RendererMessageCommunicator.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
-RendererMessageCommunicator.on('enqueuerLog', ((event, data) => {
-    const decompress = LZString.decompressFromUTF16(data);
-    store.commit('stage/addEnqueuerLog', decompress);
-}));
-RendererMessageCommunicator.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
-RendererMessageCommunicator.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
-
 const prepareRequisition = (msg: any) => {
     const type = msg.carabinaMeta.type;
     let decycled = new ComponentDecycler().decycle(msg);
