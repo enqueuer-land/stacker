@@ -51,7 +51,7 @@ RendererMessageCommunicator
                     Logger.info(`Component '${requisition.name}' loaded`);
                 }
             } catch (e) {
-                Logger.error(`Error loading '${e}'`);
+                Logger.error(`Error loading component '${e}'`);
             }
         }));
 
@@ -63,10 +63,10 @@ RendererMessageCommunicator
                 if (requisitionPromise) {
                     const requisition = await requisitionPromise;
                     store.commit('side-bar/addRequisition', requisition);
-                    Logger.info(`Postman collection '${requisition.name}' loaded`);
+                    Logger.info(`Postman collection '${requisition.name}' imported`);
                 }
             } catch (e) {
-                Logger.error(`Error loading '${e}'`);
+                Logger.error(`Error importing postman collection '${e}'`);
             }
         }));
 

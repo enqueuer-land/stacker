@@ -76,6 +76,11 @@ export default {
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
         addRequisition: (stage: any, component: any) => {
             stage.requisitions.push(component);
+            component.carabinaMeta.selected = true;
+            if (stage.selectedComponent) {
+                stage.selectedComponent.carabinaMeta.selected = false;
+            }
+            stage.selectedComponent = component;
             persist(stage);
         },
         //TODO Move to another class
