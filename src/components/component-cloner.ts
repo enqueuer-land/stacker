@@ -17,7 +17,7 @@ export class ComponentCloner {
             .map((publisher: any) => ComponentCloner.clonePublisher(publisher, clone));
         clone.subscriptions = (rawRequisition.subscriptions || [])
             .map((subscription: any) => ComponentCloner.cloneSubscription(subscription, clone));
-        clone.name += '(clone)';
+        clone.name += ' (clone)';
         clone.id = new IdCreator().create();
         return clone;
     }
