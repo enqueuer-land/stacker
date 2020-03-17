@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown no-caret lazy dropup variant="carabina" class="carabina-text" style="position: absolute">
+    <b-dropdown no-caret lazy dropup variant="carabina-footer-options" class="carabina-text" style="position: absolute">
         <template v-slot:button-content>
             <i class="fas fa-cog carabina-icon option-icon"
                style="font-size: 14px; color: var(--carabina-text-darker-color)"></i>
@@ -86,7 +86,11 @@
 <style type="text/css">
     button:active, button:focus {
         outline: none !important;
-        box-shadow: none !important;;
+        box-shadow: none !important;
+    }
+
+    .btn-carabina-footer-options {
+        padding-left: 8px;
     }
 
     .dropdown-item:hover .option-item-class {
