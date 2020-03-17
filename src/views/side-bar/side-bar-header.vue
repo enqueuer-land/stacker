@@ -2,17 +2,17 @@
     <b-container fluid id="side-bar-header" class="p-1">
         <b-row class="m-0 pt-1" style="width: 100%; height: 40%" no-gutters>
             <b-col cols="auto" class="align-self-center mx-3">
-                <b-dropdown split @click="createNewComponent({componentType: 'REQUISITION'})" variant="creators"
+                <b-dropdown split @click="createNewComponent({componentType: 'REQUISITION', startSelected: true})" variant="creators"
                             right class="carabina-text">
                     <template v-slot:button-content>
                         <i id="new-requisition-button" class="fas fa-plus carabina-icon mr-1"></i>
                         Requisition
                     </template>
-                    <b-dropdown-item @click="createNewComponent({componentType: 'PUBLISHER'})" class="carabina-text">
+                    <b-dropdown-item @click="createNewComponent({componentType: 'PUBLISHER', startSelected: true})" class="carabina-text">
                         <i id="new-publisher-button" class="fas fa-plus carabina-icon mr-2"></i>
                         Requisition / publisher
                     </b-dropdown-item>
-                    <b-dropdown-item @click="createNewComponent({componentType: 'SUBSCRIPTION'})" class="carabina-text">
+                    <b-dropdown-item @click="createNewComponent({componentType: 'SUBSCRIPTION', startSelected: true})" class="carabina-text">
                         <i id="new-subscription-button" class="fas fa-plus carabina-icon mr-2"></i>
                         Requisition / subscription
                     </b-dropdown-item>

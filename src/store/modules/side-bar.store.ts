@@ -17,11 +17,20 @@ import {RendererMessageSender} from '@/components/renderer-message-sender';
 const sidebarRepository = new Store({name: 'side-bar'});
 
 RendererMessageSender
-    .on('newRequisition', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.REQUISITION}));
+    .on('newRequisition', () => store.commit('side-bar/createNewComponent', {
+        componentType: ComponentTypes.REQUISITION,
+        startSelected: true
+    }));
 RendererMessageSender
-    .on('newPublisher', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.PUBLISHER}));
+    .on('newPublisher', () => store.commit('side-bar/createNewComponent', {
+        componentType: ComponentTypes.PUBLISHER,
+        startSelected: true
+    }));
 RendererMessageSender
-    .on('newSubscription', () => store.commit('side-bar/createNewComponent', {componentType: ComponentTypes.SUBSCRIPTION}));
+    .on('newSubscription', () => store.commit('side-bar/createNewComponent', {
+        componentType: ComponentTypes.SUBSCRIPTION,
+        startSelected: true
+    }));
 
 RendererMessageSender
     .on('openComponent', async () => (await FileDialog.showOpenDialog())
@@ -49,8 +58,7 @@ if (initialSelectedComponentId) {
 }
 
 //TODO Move to another class
-const moveComponent = (draggedComponent: any, target: any) => {
-    const draggedComponentParent = draggedComponent.carabinaMeta.parent;
+const moveComponent = (draggedComponent: any, target: any, draggedComponentParent: any) => {
     switch (draggedComponent.carabinaMeta.type) {
         case ComponentTypes.REQUISITION:
             draggedComponentParent.requisitions = draggedComponentParent.requisitions
@@ -101,28 +109,28 @@ export default {
         },
         //TODO Move to another class
         createNewComponent: (stage: any, payload: any) => {
+            let createdComponent;
             if (payload.componentType === ComponentTypes.REQUISITION) {
-                const component = new ComponentFactory().createRequisition(payload.parent);
+                createdComponent = new ComponentFactory().createRequisition(payload.parent);
                 if (!payload.parent) {
-                    stage.requisitions.push(component);
+                    stage.requisitions.push(createdComponent);
                 }
-                persist(stage);
-                return component;
             } else {
                 const parentRequisition = payload.parent || new ComponentFactory().createRequisition();
-                const component = new ComponentFactory().createComponent(payload.componentType, parentRequisition);
-                if (payload.startSelected) {
-                    component.carabinaMeta.selected = true;
-                    stage.selectedComponent = component;
-                    parentRequisition.carabinaMeta.selected = false;
-                }
+                createdComponent = new ComponentFactory().createComponent(payload.componentType, parentRequisition);
                 if (!payload.parent) {
                     stage.requisitions.push(parentRequisition);
                 }
                 parentRequisition.carabinaMeta.collapsed = false;
-                persist(stage);
-                return component;
             }
+            if (payload.startSelected) {
+                createdComponent.carabinaMeta.selected = true;
+                if (stage.selectedComponent) {
+                    stage.selectedComponent.carabinaMeta.selected = false;
+                }
+                stage.selectedComponent = createdComponent;
+            }
+            persist(stage);
         },
         currentSelectedComponentChanged: (stage: any, event: any) => {
             if (stage.selectedComponent) {
@@ -174,19 +182,28 @@ export default {
                     target.id === draggedComponent.id) {
                     return;
                 }
+                const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
                 if (target.carabinaMeta.type === ComponentTypes.REQUISITION) {
-                    moveComponent(draggedComponent, target);
+                    moveComponent(draggedComponent, target, draggedComponentParent);
                 } else {
                     target = target.carabinaMeta.parent;
-                    moveComponent(draggedComponent, target);
+                    moveComponent(draggedComponent, target, draggedComponentParent);
                 }
                 draggedComponent.carabinaMeta.parent = target;
             }
             persist(stage);
         },
         saveComponent: (stage: any, event: any) => {
-            new ComponentSaver().save(event.component)
-                .then(() => Logger.info(`Component '${event.component.name}' saved`));
+            const item = event.component;
+            FileDialog
+                .showSaveDialog(item.name + '.nqr.yml')
+                .then(filename => {
+                    if (filename) {
+                        new ComponentSaver()
+                            .save(item, filename)
+                            .then(() => Logger.info(`Component '${item.name}' saved as '${filename}'`));
+                    }
+                })
         },
         //TODO Move to another class
         deleteComponentById: (stage: any, event: any) => {

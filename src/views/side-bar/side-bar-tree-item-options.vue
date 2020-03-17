@@ -54,7 +54,8 @@
                         action: () => {
                             this.createNewComponent({
                                 componentType: ComponentTypes.REQUISITION,
-                                parent: this.component
+                                parent: this.component,
+                                startSelected: true
                             });
                         }
                     },
@@ -62,7 +63,11 @@
                         name: () => 'Insert new publisher',
                         iconClass: () => 'fas fa-plus',
                         action: () => {
-                            this.createNewComponent({componentType: ComponentTypes.PUBLISHER, parent: this.component});
+                            this.createNewComponent({
+                                componentType: ComponentTypes.PUBLISHER,
+                                parent: this.component,
+                                startSelected: true
+                            });
                         }
                     },
                     {
@@ -71,7 +76,8 @@
                         action: () => {
                             this.createNewComponent({
                                 componentType: ComponentTypes.SUBSCRIPTION,
-                                parent: this.component
+                                parent: this.component,
+                                startSelected: true
                             });
                         }
                     })
