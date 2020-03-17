@@ -51,7 +51,7 @@ if (initialSelectedComponentId) {
 //TODO Move to another class
 const moveComponent = (draggedComponent: any, target: any) => {
     const draggedComponentParent = draggedComponent.carabinaMeta.parent;
-    switch (draggedComponent.carabinaMeta.componentName) {
+    switch (draggedComponent.carabinaMeta.type) {
         case ComponentTypes.REQUISITION:
             draggedComponentParent.requisitions = draggedComponentParent.requisitions
                 .filter((item: any) => item.id !== draggedComponent.id);
@@ -136,10 +136,10 @@ export default {
         },
         duplicateComponent: (stage: any, event: any) => {
             const parent = event.component.carabinaMeta.parent;
-            const componentName = event.component.carabinaMeta.componentName;
+            const type = event.component.carabinaMeta.type;
             const component = new ComponentDecycler().decycle(event.component);
             let clone;
-            switch (componentName) {
+            switch (type) {
                 case ComponentTypes.REQUISITION:
                     clone = ComponentCloner.cloneRequisition(component, parent);
                     if (!parent) {
@@ -162,7 +162,7 @@ export default {
             const draggedComponent = event.component;
             if (!target) {
                 const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
-                if (draggedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+                if (draggedComponent.carabinaMeta.type === ComponentTypes.REQUISITION) {
                     draggedComponentParent.requisitions = draggedComponentParent.requisitions
                         .filter((item: any) => item.id !== draggedComponent.id);
 
@@ -174,7 +174,7 @@ export default {
                     target.id === draggedComponent.id) {
                     return;
                 }
-                if (target.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+                if (target.carabinaMeta.type === ComponentTypes.REQUISITION) {
                     moveComponent(draggedComponent, target);
                 } else {
                     target = target.carabinaMeta.parent;

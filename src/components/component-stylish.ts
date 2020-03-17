@@ -9,11 +9,11 @@ export class ComponentStylish {
     }
 
     public isRequisition = (): boolean => {
-        return this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION;
+        return this.component.carabinaMeta.type === ComponentTypes.REQUISITION;
     };
 
     public getType = (): string => {
-        if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+        if (this.component.carabinaMeta.type === ComponentTypes.REQUISITION) {
             return '';
         }
         return this.component.type.substr(0, 7).toUpperCase();
@@ -25,7 +25,7 @@ export class ComponentStylish {
             this.component.subscriptions.length;
     };
 
-    public componentNameTagStyle = (): any => {
+    public typeTagStyle = (): any => {
         const style: any = {
             'user-select': 'none',
             color: this.getComponentColor()
@@ -38,12 +38,12 @@ export class ComponentStylish {
     };
 
     public getComponentColor = (): any => {
-        const componentName = this.component.carabinaMeta.componentName;
-        if (componentName === ComponentTypes.REQUISITION) {
+        const type = this.component.carabinaMeta.type;
+        if (type === ComponentTypes.REQUISITION) {
             return 'var(--carabina-requisition-color)'
-        } else if (componentName === ComponentTypes.PUBLISHER) {
+        } else if (type === ComponentTypes.PUBLISHER) {
             return 'var(--carabina-publisher-color)'
-        } else if (componentName === ComponentTypes.SUBSCRIPTION) {
+        } else if (type === ComponentTypes.SUBSCRIPTION) {
             return 'var(--carabina-subscription-color)'
         }
     };

@@ -18,11 +18,11 @@ RendererMessageSender.on('runCurrentlySelectedComponent', (() => store.commit('s
 RendererMessageSender.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
 
 const prepareRequisition = (msg: any) => {
-    const componentName = msg.carabinaMeta.componentName;
+    const type = msg.carabinaMeta.type;
     let decycled = new ComponentDecycler().decycle(msg);
-    if (componentName === ComponentTypes.PUBLISHER) {
+    if (type === ComponentTypes.PUBLISHER) {
         decycled = {publishers: [decycled], name: decycled.name, id: new IdCreator().create()};
-    } else if (componentName === ComponentTypes.SUBSCRIPTION) {
+    } else if (type === ComponentTypes.SUBSCRIPTION) {
         decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
     }
     return decycled;

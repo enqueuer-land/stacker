@@ -43,7 +43,7 @@
                     }
                 },
             ];
-            if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
+            if (this.component.carabinaMeta.type === ComponentTypes.REQUISITION) {
                 actions = actions.concat(
                     {
                         divider: true

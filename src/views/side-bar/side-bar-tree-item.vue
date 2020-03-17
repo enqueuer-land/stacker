@@ -4,7 +4,7 @@
             <b-row no-gutters class="m-0 p-0 pl-1 tree-item">
                 <b-col cols="auto" class="align-self-center" style="width: 80px">
                     <span v-if="!componentStylish.isRequisition()" class="item-name-tag"
-                          :style="componentNameTagStyle">{{componentStylish.getType()}}</span>
+                          :style="typeTagStyle">{{componentStylish.getType()}}</span>
                 </b-col>
                 <b-col cols class="align-self-center item-name mr-1" :style="componentNameStyle">
                     {{component.name}}
@@ -54,8 +54,8 @@
         },
         computed: {
             ...mapGetters('side-bar', []),
-            componentNameTagStyle: function () {
-                return this.componentStylish.componentNameTagStyle();
+            typeTagStyle: function () {
+                return this.componentStylish.typeTagStyle();
             },
             componentStyle: function () {
                 return this.componentStylish.componentStyle();

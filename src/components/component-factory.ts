@@ -31,7 +31,7 @@ export class ComponentFactory {
                 parent,
                 selected: false,
                 collapsed: false,
-                componentName: ComponentTypes.REQUISITION
+                type: ComponentTypes.REQUISITION
             }
         };
         if (parent) {
@@ -54,7 +54,7 @@ export class ComponentFactory {
             carabinaMeta: {
                 parent,
                 selected: false,
-                componentName: ComponentTypes.PUBLISHER
+                type: ComponentTypes.PUBLISHER
             }
         };
         parent.publishers.push(publisher);
@@ -80,7 +80,7 @@ export class ComponentFactory {
             carabinaMeta: {
                 parent,
                 selected: false,
-                componentName: ComponentTypes.SUBSCRIPTION
+                type: ComponentTypes.SUBSCRIPTION
             }
         };
         parent.subscriptions.push(subscription);

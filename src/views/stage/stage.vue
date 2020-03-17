@@ -106,13 +106,13 @@
             ...mapGetters('stage', ['plugins', 'installingPluginModal']),
             ...mapGetters('side-bar', ['selectedComponent']),
             componentIsRequisition: function () {
-                return this.selectedComponent.carabinaMeta.componentName === ComponentTypes.REQUISITION;
+                return this.selectedComponent.carabinaMeta.type === ComponentTypes.REQUISITION;
             },
             componentBody: function () {
                 if (this.selectedComponent && this.selectedComponent.carabinaMeta) {
-                    if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.PUBLISHER) {
+                    if (this.selectedComponent.carabinaMeta.type === ComponentTypes.PUBLISHER) {
                         return this.plugins.publishers[this.selectedComponent.type.toLowerCase()];
-                    } else if (this.selectedComponent.carabinaMeta.componentName === ComponentTypes.SUBSCRIPTION) {
+                    } else if (this.selectedComponent.carabinaMeta.type === ComponentTypes.SUBSCRIPTION) {
                         return this.plugins.subscriptions[this.selectedComponent.type.toLowerCase()];
                     }
                 }

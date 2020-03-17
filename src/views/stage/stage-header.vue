@@ -7,13 +7,13 @@
         <b-row class="px-2" style="height: 50%" no-gutters>
             <b-col cols="auto" class="align-self-center">
                 <DropdownSelector
-                        v-if="component.carabinaMeta.componentName !== 'REQUISITION'"
+                        v-if="component.carabinaMeta.type !== 'REQUISITION'"
                         :defaultSelection="{value: component.type.toUpperCase()}"
                         @select="(protocol) => $parent.updateAttribute('type', protocol.value)"
                         :color="componentColor"
-                        :availableList="protocolsOfComponentList(component.carabinaMeta.componentName)"></DropdownSelector>
+                        :availableList="protocolsOfComponentList(component.carabinaMeta.type)"></DropdownSelector>
             </b-col>
-            <b-col :cols="component.carabinaMeta.componentName !== 'REQUISITION' ? 8 : 10" class="align-self-center mt-1 mr-auto">
+            <b-col :cols="component.carabinaMeta.type !== 'REQUISITION' ? 8 : 10" class="align-self-center mt-1 mr-auto">
                 <stacker-input id="component-name" placeholder="Component name" type="text"
                                :fill-width="true"
                                @input="(value) => $parent.updateAttribute('name', value)"

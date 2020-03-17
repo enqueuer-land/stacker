@@ -8,7 +8,7 @@ describe('ComponentFactory', () => {
 
         expect(requisition.carabinaMeta.collapsed).toBeFalsy();
         expect(requisition.carabinaMeta.selected).toBeFalsy();
-        expect(requisition.carabinaMeta.componentName).toBe(ComponentTypes.REQUISITION);
+        expect(requisition.carabinaMeta.type).toBe(ComponentTypes.REQUISITION);
         expect(requisition.carabinaMeta.parent).toBeUndefined();
 
         expect(requisition.id).toBeDefined();
@@ -24,7 +24,7 @@ describe('ComponentFactory', () => {
 
         expect(requisition.carabinaMeta.collapsed).toBeFalsy();
         expect(requisition.carabinaMeta.selected).toBeFalsy();
-        expect(requisition.carabinaMeta.componentName).toBe(ComponentTypes.REQUISITION);
+        expect(requisition.carabinaMeta.type).toBe(ComponentTypes.REQUISITION);
         expect(requisition.carabinaMeta.parent).toEqual(parent);
 
         expect(requisition.id).toBeDefined();
@@ -42,7 +42,7 @@ describe('ComponentFactory', () => {
 
         expect(requisition.carabinaMeta.collapsed).toBeFalsy();
         expect(requisition.carabinaMeta.selected).toBeFalsy();
-        expect(requisition.carabinaMeta.componentName).toBe(ComponentTypes.REQUISITION);
+        expect(requisition.carabinaMeta.type).toBe(ComponentTypes.REQUISITION);
         expect(requisition.carabinaMeta.parent).toEqual(parent);
 
         expect(requisition.id).toBeDefined();
@@ -59,7 +59,7 @@ describe('ComponentFactory', () => {
         const publisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
 
         expect(publisher.carabinaMeta.selected).toBeFalsy();
-        expect(publisher.carabinaMeta.componentName).toBe(ComponentTypes.PUBLISHER);
+        expect(publisher.carabinaMeta.type).toBe(ComponentTypes.PUBLISHER);
         expect(publisher.carabinaMeta.parent).toEqual(parent);
 
         expect(publisher.id).toBeDefined();
@@ -73,7 +73,7 @@ describe('ComponentFactory', () => {
         const subscription = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
 
         expect(subscription.carabinaMeta.selected).toBeFalsy();
-        expect(subscription.carabinaMeta.componentName).toBe(ComponentTypes.SUBSCRIPTION);
+        expect(subscription.carabinaMeta.type).toBe(ComponentTypes.SUBSCRIPTION);
         expect(subscription.carabinaMeta.parent).toEqual(parent);
 
         expect(subscription.id).toBeDefined();

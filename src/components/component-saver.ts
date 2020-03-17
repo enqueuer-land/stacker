@@ -13,11 +13,11 @@ export class ComponentSaver {
         if (!filename) {
             return;
         }
-        const componentName = item.carabinaMeta.componentName;
+        const type = item.carabinaMeta.type;
         const decycled = new ComponentDecycler().decycle(item);
 
         let componentToSave;
-        switch (componentName) {
+        switch (type) {
             case ComponentTypes.PUBLISHER:
                 componentToSave = {
                     publishers: [decycled],
