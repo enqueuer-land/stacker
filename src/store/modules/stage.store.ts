@@ -6,16 +6,16 @@ import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
-import {RendererMessageSender} from '@/components/renderer-message-sender';
+import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
-RendererMessageSender.on('addLog', ((event, data) => store.commit('stage/addLog', data)));
-RendererMessageSender.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
-RendererMessageSender.on('enqueuerLog', ((event, data) => {
+RendererMessageCommunicator.on('addLog', ((event, data) => store.commit('stage/addLog', data)));
+RendererMessageCommunicator.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
+RendererMessageCommunicator.on('enqueuerLog', ((event, data) => {
     const decompress = LZString.decompressFromUTF16(data);
     store.commit('stage/addEnqueuerLog', decompress);
 }));
-RendererMessageSender.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
-RendererMessageSender.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
+RendererMessageCommunicator.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
+RendererMessageCommunicator.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
 
 const prepareRequisition = (msg: any) => {
     const type = msg.carabinaMeta.type;
@@ -81,8 +81,8 @@ export default {
         runComponent: async (_: any, component: any) => {
             const decycled = prepareRequisition(component);
             store.commit('result/runRequisition', decycled);
-            RendererMessageSender.emit('runEnqueuer', decycled);
-            RendererMessageSender.on('runEnqueuerReply', ((event, responses) => {
+            RendererMessageCommunicator.emit('runEnqueuer', decycled);
+            RendererMessageCommunicator.on('runEnqueuerReply', ((event, responses) => {
                 const decompress = JSON.parse(LZString.decompressFromUTF16(responses));
                 store.commit('result/updateResponse', decompress);
             }));

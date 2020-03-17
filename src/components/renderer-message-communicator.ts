@@ -1,6 +1,6 @@
 import {ipcRenderer, IpcRendererEvent} from 'electron';
 
-export class RendererMessageSender {
+export class RendererMessageCommunicator {
     public static on(event: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) {
         ipcRenderer.on(event, listener);
     }

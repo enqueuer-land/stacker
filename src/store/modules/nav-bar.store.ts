@@ -5,11 +5,11 @@ import {IdCreator} from '@/components/id-creator';
 import {FileDialog} from '@/components/file-dialog';
 import {EnvironmentSaver} from '@/environments/environment-saver';
 import {EnvironmentLoader} from '@/environments/environment-loader';
-import {RendererMessageSender} from '@/components/renderer-message-sender';
+import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
 const navBarRepository = new Store({name: 'nav-bar'});
 
-RendererMessageSender.on('openEnvironment',
+RendererMessageCommunicator.on('openEnvironment',
     async () => {
         const environments = await EnvironmentLoader.importEnvironment();
         environments
@@ -19,7 +19,7 @@ RendererMessageSender.on('openEnvironment',
             });
     });
 
-RendererMessageSender.on('importPostmanEnvironment',
+RendererMessageCommunicator.on('importPostmanEnvironment',
     async () => {
         const postmanEnvironments = await EnvironmentLoader.importPostmanEnvironment();
         postmanEnvironments
@@ -32,13 +32,13 @@ RendererMessageSender.on('importPostmanEnvironment',
 const noEnvironment = {name: 'No environment', role: 'none', store: {}};
 
 function persist(stage: any) {
-    RendererMessageSender.emit('setEnqueuerStore', stage.selectedEnvironment.store);
+    RendererMessageCommunicator.emit('setEnqueuerStore', stage.selectedEnvironment.store);
     navBarRepository.set('environments', stage.environments);
     navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
 }
 
 const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
-RendererMessageSender.emit('setEnqueuerStore', selectedEnvironment.store);
+RendererMessageCommunicator.emit('setEnqueuerStore', selectedEnvironment.store);
 
 export default {
     state: {

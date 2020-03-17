@@ -12,32 +12,32 @@ import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import * as requisitionsExample from '@/components/requisitions-example';
-import {RendererMessageSender} from '@/components/renderer-message-sender';
+import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
-RendererMessageSender
+RendererMessageCommunicator
     .on('newRequisition', () => store.commit('side-bar/createNewComponent', {
         componentType: ComponentTypes.REQUISITION,
         startSelected: true
     }));
-RendererMessageSender
+RendererMessageCommunicator
     .on('newPublisher', () => store.commit('side-bar/createNewComponent', {
         componentType: ComponentTypes.PUBLISHER,
         startSelected: true
     }));
-RendererMessageSender
+RendererMessageCommunicator
     .on('newSubscription', () => store.commit('side-bar/createNewComponent', {
         componentType: ComponentTypes.SUBSCRIPTION,
         startSelected: true
     }));
 
-RendererMessageSender
+RendererMessageCommunicator
     .on('openComponent', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFile(file))
         .filter(async file => await file)
         .map(async requisition => requisition && store.commit('side-bar/addRequisition', await requisition)));
-RendererMessageSender
+RendererMessageCommunicator
     .on('importPostmanCollection', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFromPostman(file))
         .filter(async file => await file)
