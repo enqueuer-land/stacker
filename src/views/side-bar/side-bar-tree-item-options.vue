@@ -4,17 +4,20 @@
             <i class="fas fa-ellipsis-v px-0 carabina-icon option-icon"
                style="font-size: 14px"></i>
         </template>
-        <b-dropdown-item v-for="(item, index) in actions" :key="index">
-            <b-row class="pl-2" @click="item.action">
-                <b-col cols="auto" class="align-self-center px-1">
-                    <i :class="['carabina-icon option-item-class', item.iconClass(component)]"
-                       style="font-size: 14px"></i>
-                </b-col>
-                <b-col cols class="align-self-center">
-                    {{item.name(component)}}
-                </b-col>
-            </b-row>
-        </b-dropdown-item>
+        <div v-for="(item, index) in actions" :key="index">
+            <b-dropdown-divider v-if="item.divider"></b-dropdown-divider>
+            <b-dropdown-item v-else>
+                <b-row class="pl-2" @click="item.action">
+                    <b-col cols="auto" class="align-self-center px-1">
+                        <i :class="['carabina-icon option-item-class', item.iconClass(component)]"
+                           style="font-size: 14px"></i>
+                    </b-col>
+                    <b-col cols class="align-self-center">
+                        {{item.name(component)}}
+                    </b-col>
+                </b-row>
+            </b-dropdown-item>
+        </div>
     </b-dropdown>
 </template>
 <script>
@@ -39,38 +42,12 @@
                         });
                     }
                 },
-                {
-                    name: () => 'Duplicate',
-                    iconClass: () => 'fas fa-clone',
-                    action: () => {
-                        this.duplicateComponent({
-                            component: this.component
-                        });
-                    }
-                },
-                {
-                    name: (component) => component.ignore ? 'Enable' : 'Disable',
-                    iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
-                    action: () => {
-                        this.changeAttributeOfComponent({
-                            component: this.component,
-                            attributeName: 'ignore',
-                            value: !this.component.ignore
-                        });
-                    }
-                },
-                {
-                    name: () => 'Delete',
-                    iconClass: () => 'fas fa-trash',
-                    action: () => {
-                        this.deleteComponentById({
-                            component: this.component
-                        });
-                    }
-                },
             ];
             if (this.component.carabinaMeta.componentName === ComponentTypes.REQUISITION) {
                 actions = actions.concat(
+                    {
+                        divider: true
+                    },
                     {
                         name: () => 'Insert new requisition',
                         iconClass: () => 'fas fa-plus',
@@ -99,6 +76,43 @@
                         }
                     })
             }
+            actions = actions.concat([
+                {
+                    divider: true
+                },
+                {
+                    name: () => 'Duplicate',
+                    iconClass: () => 'fas fa-clone',
+                    action: () => {
+                        this.duplicateComponent({
+                            component: this.component
+                        });
+                    }
+                },
+                {
+                    name: (component) => component.ignore ? 'Enable' : 'Disable',
+                    iconClass: (component) => component.ignore ? 'fas fa-check' : 'fas fa-ban',
+                    action: () => {
+                        this.changeAttributeOfComponent({
+                            component: this.component,
+                            attributeName: 'ignore',
+                            value: !this.component.ignore
+                        });
+                    }
+                },
+                {
+                    divider: true
+                },
+                {
+                    name: () => 'Delete',
+                    iconClass: () => 'fas fa-trash',
+                    action: () => {
+                        this.deleteComponentById({
+                            component: this.component
+                        });
+                    }
+                }
+            ]);
             return {
                 actions: actions
             }
