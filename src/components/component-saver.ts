@@ -1,18 +1,13 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
 import {IdCreator} from '@/components/id-creator';
-import {FileDialog} from '@/components/file-dialog';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from '@/components/component-decycler';
 
 //TODO test it
 export class ComponentSaver {
 
-    public async save(item: any) {
-        const filename = await FileDialog.showSaveDialog(item.name + '.nqr.yml');
-        if (!filename) {
-            return;
-        }
+    public async save(item: any, filename: string) {
         const type = item.carabinaMeta.type;
         const decycled = new ComponentDecycler().decycle(item);
 
@@ -42,9 +37,7 @@ export class ComponentSaver {
 
     private static saveRequisition(filename: string, item: any): Promise<void> {
         return new Promise(resolve => {
-            fs.writeFile(filename, yaml.stringify(item, 100, 2), () => {
-                resolve();
-            });
+            fs.writeFile(filename, yaml.stringify(item, 100, 2), () => resolve());
         });
     }
 
