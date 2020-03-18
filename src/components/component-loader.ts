@@ -57,7 +57,7 @@ export class ComponentLoader {
     private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any) {
         if (Array.isArray(parsed)) {
             return ComponentLoader.loadRequisition({
-                name: path.basename(file),
+                name: path.parse(file).name,
                 requisitions: parsed
             });
         }

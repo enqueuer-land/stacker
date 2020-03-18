@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import {ComponentLoader} from '@/components/component-loader';
-import {Logger} from '@/components/logger';
 
 jest.mock('fs');
 jest.mock('@/components/logger');
@@ -77,7 +76,8 @@ describe('ComponentLoader', () => {
         // @ts-ignore
         fs.readFile.mockImplementationOnce((filename, cb) => cb(null, buffered));
 
-        const requisition = await ComponentLoader.importFile('filename');
+        const filePath = '/home/user/dir/file.txt';
+        const requisition = await ComponentLoader.importFile(filePath);
 
         expect(requisition)
             .toEqual({
@@ -90,7 +90,7 @@ describe('ComponentLoader', () => {
                 "id": expect.any(String),
                 "ignore": false,
                 "iterations": 1,
-                "name": "filename",
+                "name": 'file',
                 "parallel": false,
                 "publishers": [],
                 "requisitions": [
