@@ -14,7 +14,7 @@
                         :availableList="environments.map(item => ({ ...item, value: item.name}))"></dropdown-selector>
             </b-col>
             <b-col cols="auto" class="px-4 align-self-center env-button" v-b-modal.view-environments-modal>
-                <i class="fas fa-pen carabina-icon" :style="editStyle"></i>
+                <i class="fas fa-eye carabina-icon" :style="editStyle"></i>
             </b-col>
             <b-col cols="auto" class="pr-4 align-self-center env-button" @click="addNewEnvironment"
                    v-b-modal.view-environments-modal>

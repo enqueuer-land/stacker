@@ -51,7 +51,8 @@ RendererMessageCommunicator
                     Logger.info(`Component '${requisition.name}' loaded`);
                 }
             } catch (e) {
-                Logger.error(`Error loading component '${e}'`);
+                console.log(e);
+                Logger.error(`Error loading component`);
             }
         }));
 
@@ -66,27 +67,44 @@ RendererMessageCommunicator
                     Logger.info(`Postman collection '${requisition.name}' imported`);
                 }
             } catch (e) {
-                Logger.error(`Error importing postman collection '${e}'`);
+                console.log(e);
+                Logger.error(`Error importing postman collection`);
             }
         }));
 
 // nav-bar
 RendererMessageCommunicator.on('openEnvironment',
     async () => {
-        const environments = await EnvironmentLoader.importEnvironment();
-        environments
-            .filter(item => item)
-            .forEach(environment => {
-                store.commit('nav-bar/addEnvironment', environment);
+        const files = await FileDialog.showOpenDialog();
+        files
+            .map(async file => await EnvironmentLoader.loadFile(file))
+            .map(async environmentPromise => {
+                try {
+                    if (environmentPromise) {
+                        const environment =  await environmentPromise;
+                        store.commit('nav-bar/addEnvironment', environment);
+                    }
+                } catch (e) {
+                    console.log(e);
+                    Logger.error(`Error opening environment`);
+                }
             });
     });
 
 RendererMessageCommunicator.on('importPostmanEnvironment',
     async () => {
-        const postmanEnvironments = await EnvironmentLoader.importPostmanEnvironment();
-        postmanEnvironments
-            .filter(item => item)
-            .forEach(postmanEnvironment => {
-                store.commit('nav-bar/addEnvironment', postmanEnvironment);
+        const files = await FileDialog.showOpenDialog();
+        files
+            .map(async file => await EnvironmentLoader.loadPostmanEnvironment(file))
+            .map(async environmentPromise => {
+                try {
+                    if (environmentPromise) {
+                        const environment =  await environmentPromise;
+                        store.commit('nav-bar/addEnvironment', environment);
+                    }
+                } catch (e) {
+                    console.log(e);
+                    Logger.error(`Error importing postman environment`);
+                }
             });
     });

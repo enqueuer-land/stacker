@@ -2,7 +2,7 @@
     <b-container fluid id="stage-footer" style="overflow-y: auto;" class="p-0 m-0">
         <stage-footer-options @expandWindow="() => $emit('expandWindow')"
                               @compressWindow="() => $emit('compressWindow')"></stage-footer-options>
-        <div class="carabina-text pt-1" style="padding-left: 40px">
+        <div class="carabina-text" style="padding-left: 40px">
             <div v-for="log in enqueuerLogs" :key="log.id">
                 <div :style="logLevelStyle(log.level)">
                     {{log.level}}
