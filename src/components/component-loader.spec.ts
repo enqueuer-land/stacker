@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as yaml from 'yamljs';
 import {ComponentLoader} from '@/components/component-loader';
 
 jest.mock('fs');
@@ -58,6 +59,41 @@ describe('ComponentLoader', () => {
         expect(requisition.subscriptions[0].carabinaMeta.parent.id).toBe(requisition.id);
         expect(requisition.subscriptions[0].id).toBeDefined();
         expect(requisition.subscriptions[0].name).toBe('subscription');
+    });
+
+    it('should read yml file', async () => {
+        const fileContent = {
+            name: 'grandRequisition',
+            carabinaMeta: {
+                collapsed: true,
+                selected: true
+            }
+        };
+        const buffered = Buffer.from(yaml.stringify(fileContent, 100, 2));
+        // @ts-ignore
+        fs.readFile.mockImplementationOnce((filename, cb) => cb(null, buffered));
+
+        const requisition = await ComponentLoader.importFile('filename');
+
+        expect(requisition)
+            .toEqual({
+                carabinaMeta: {
+                    collapsed: true,
+                    selected: true,
+                    type: 'REQUISITION'
+                },
+                delay: 0,
+                id: expect.any(String),
+                ignore: false,
+                iterations: 1,
+                name: 'grandRequisition',
+                parallel: false,
+                publishers: [],
+                requisitions: [],
+                subscriptions: [],
+                timeout: 5000
+            });
+
     });
 
     it('should be able to read array requisitions', async () => {

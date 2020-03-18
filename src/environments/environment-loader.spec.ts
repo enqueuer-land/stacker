@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as yaml from 'yamljs';
 import {EnvironmentLoader} from '@/environments/environment-loader';
 
 jest.mock('fs');
@@ -31,6 +32,30 @@ describe('EnvironmentLoader', () => {
             }
         };
         const buffered = Buffer.from(JSON.stringify(fileContent));
+        // @ts-ignore
+        fs.readFile.mockImplementationOnce((filename, cb) => cb(null, buffered));
+
+        const env = await EnvironmentLoader.loadFile('filename');
+
+        expect(env).toEqual({
+            id: expect.any(String),
+            name: 'grandRequisition',
+            store: {
+                anotherKey: '2',
+                key: '1'
+            }
+        })
+    });
+
+    it('should load yml files', async () => {
+        const fileContent = {
+            name: 'grandRequisition',
+            store: {
+                key: '1',
+                anotherKey: '2',
+            }
+        };
+        const buffered = Buffer.from(yaml.stringify(fileContent, 100, 2));
         // @ts-ignore
         fs.readFile.mockImplementationOnce((filename, cb) => cb(null, buffered));
 
