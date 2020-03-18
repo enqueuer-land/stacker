@@ -1,3 +1,4 @@
+import path from 'path'
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
 import {Logger} from '@/components/logger';
@@ -17,10 +18,10 @@ export class ComponentLoader {
                     }
                     const fileContent = data.toString();
                     try {
-                        resolve(ComponentLoader.loadRequisition(JSON.parse(fileContent)));
+                        resolve(ComponentLoader.loadRequisitionAsAnArrayOrObject(file, JSON.parse(fileContent)));
                     } catch (e) {
                         try {
-                            resolve(ComponentLoader.loadRequisition(yaml.parse(fileContent)));
+                            resolve(ComponentLoader.loadRequisitionAsAnArrayOrObject(file, yaml.parse(fileContent)));
                         } catch (e) {
                             Logger.error(`Error reading '${file}': ${e}`);
                         }
@@ -53,6 +54,17 @@ export class ComponentLoader {
         });
     }
 
+    private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any) {
+        if (Array.isArray(parsed)) {
+            return ComponentLoader.loadRequisition({
+                name: path.basename(file),
+                requisitions: parsed
+            });
+        }
+        return ComponentLoader.loadRequisition(parsed);
+    }
+
+
     public static loadRequisition(rawRequisition: any, parent?: any): any {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
@@ -83,4 +95,5 @@ export class ComponentLoader {
         defaultSubscription.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
         return defaultSubscription;
     }
+
 }
