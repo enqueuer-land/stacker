@@ -1,6 +1,8 @@
 import store from '@/store'
 import LZString from 'lz-string';
+import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
+import {FileDialog} from '@/components/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
@@ -67,7 +69,21 @@ export default {
     },
     actions: {
         loadPlugins: async ({commit}: any) => {
-            commit('setPlugins', await new PluginsLoader().loadPlugins());
+            const pickedFiles = await FileDialog.showOpenDialog();
+            if (pickedFiles.length > 0) {
+                store.commit('stage/addInstallingPluginModal');
+                const pluginsLoader = new PluginsLoader();
+                try {
+                    await Promise
+                        .all(pickedFiles
+                            .map(async file => await pluginsLoader.loadFileFromFileSystem(file)));
+                } catch (e) {
+                    Logger.error(e);
+                }
+                RendererMessageCommunicator.emit('restartEnqueuer');
+                store.commit('stage/removeInstallingPluginModal');
+                commit('setPlugins', pluginsLoader.getPlugins());
+            }
         },
         runComponent: async (_: any, component: any) => {
             const decycled = prepareRequisition(component);
