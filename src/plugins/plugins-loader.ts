@@ -7,19 +7,20 @@ import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
 
-const pluginsRepository = new Store({name: 'plugins'});
 
 //TODO test it
 export class PluginsLoader {
+    private readonly pluginsRepository: any;
     private readonly plugins: any;
     private readonly pluginsString: string[];
 
     constructor() {
+        this.pluginsRepository = new Store({name: 'plugins'});
         this.plugins = {
             publishers: {http: httpPublisher.default.publishers.http},
             subscriptions: {http: httpSubscription.default.subscriptions.http}
         };
-        this.pluginsString = pluginsRepository.get('pluginsString', []);
+        this.pluginsString = this.pluginsRepository.get('pluginsString', []);
         this.pluginsString
             .forEach((pluginString: string) => this.loadStringPlugin(pluginString));
     }
@@ -30,26 +31,21 @@ export class PluginsLoader {
 
     public loadFileFromFileSystem(filename: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            try {
-                fs.readFile(filename, async (err, data) => {
-                    try {
-                        if (!err) {
-                            const fileContent = data.toString();
-                            const plugin = this.loadStringPlugin(fileContent);
-                            await this.installEnqueuerPlugins(plugin);
-                            this.pluginsString.push(fileContent);
-                            pluginsRepository.set('pluginsString', this.pluginsString);
-                            resolve();
-                            return;
-                        }
-                    } catch (e) {
-                        reject(`Error loading plugin '${filename}': ${e}`);
+            fs.readFile(filename, async (err, data) => {
+                try {
+                    if (!err) {
+                        const fileContent = data.toString();
+                        const plugin = this.loadStringPlugin(fileContent);
+                        await this.installEnqueuerPlugins(plugin);
+                        this.pluginsString.push(fileContent);
+                        this.pluginsRepository.set('pluginsString', this.pluginsString);
+                        resolve();
+                        return;
                     }
-                    reject(`Error loading plugin '${filename}'`);
-                });
-            } catch (err) {
-                reject(`Error loading plugin '${filename}': ${err}`);
-            }
+                } catch (e) {
+                }
+                reject(`Error loading plugin '${filename}'`);
+            });
         });
     }
 
@@ -101,7 +97,7 @@ export class PluginsLoader {
             .map(key => plugin.publishers[key].enqueuerPlugin);
         const subscriptionPlugins = Object
             .keys(plugin.subscriptions || {})
-            .map(key => plugin.publishers[key].enqueuerPlugin);
+            .map(key => plugin.subscriptions[key].enqueuerPlugin);
         return publisherPlugins
             .concat(subscriptionPlugins)
             .filter(name => name);

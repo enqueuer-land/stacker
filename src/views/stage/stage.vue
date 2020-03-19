@@ -122,7 +122,7 @@
                 let hooks = ['onInit'];
                 const plugin = this.componentBody;
                 if (plugin) {
-                    hooks = hooks.concat(plugin.hooks)
+                    hooks = hooks.concat(plugin.hooks || [])
                 }
                 hooks.push('onFinish');
                 return hooks;
