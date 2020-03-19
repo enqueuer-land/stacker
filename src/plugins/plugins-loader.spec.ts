@@ -105,7 +105,10 @@ describe('PluginsLoader', () => {
 
         const pluginsLoader = new PluginsLoader();
         await pluginsLoader.loadFileFromFileSystem('plugins/shell-publisher.js');
+        const npmInstallCommand = execMock.mock.calls[0][0];
 
-        expect(execMock).toHaveBeenCalledWith('npm install --prefix /Users/guilherme.moraes/.nqr enqueuer-plugin-shell', expect.any(Function));
+        expect(execMock).toHaveBeenCalledWith(expect.any(String), expect.any(Function));
+        expect(npmInstallCommand).toContain('npm install');
+        expect(npmInstallCommand).toContain('enqueuer-plugin-shell');
     });
 });
