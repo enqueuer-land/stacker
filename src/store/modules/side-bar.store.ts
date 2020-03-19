@@ -52,6 +52,7 @@ const moveComponent = (draggedComponent: any, target: any, draggedComponentParen
     }
 };
 
+//TODO test it
 export default {
     state: {
         textFilter: '',

@@ -18,6 +18,7 @@ function persist(stage: any) {
 const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
 RendererMessageCommunicator.emit('setEnqueuerStore', selectedEnvironment.store);
 
+//TODO test it
 export default {
     state: {
         environments: navBarRepository.get('environments', [noEnvironment]),

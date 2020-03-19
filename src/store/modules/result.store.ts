@@ -11,6 +11,7 @@ function persist(stage: any) {
     resultRepository.set('flattenTests', stage.flattenTests);
 }
 
+//TODO test it
 export default {
     state: {
         responses: resultRepository.get('responses', [] as OutputRequisitionModel[]),

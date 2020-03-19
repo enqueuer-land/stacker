@@ -21,6 +21,7 @@ const prepareRequisition = (msg: any) => {
     return decycled;
 };
 
+//TODO test it
 export default {
     state: {
         plugins: new PluginsLoader().getPlugins(),

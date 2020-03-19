@@ -1,4 +1,5 @@
 const modules: any = {};
+//TODO test it
 if (process.env.NODE_ENV !== 'test') {
     const requireModule = require.context('.', false, /\.store\.ts$/);
     const moduleNames: string[] = [];
