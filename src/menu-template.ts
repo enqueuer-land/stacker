@@ -27,19 +27,16 @@ export default (window: Electron.BrowserWindow) => [
                     {
                         label: 'Requisition',
                         accelerator: 'CommandOrControl+N',
-                        // @ts-ignore
                         click: () => window.webContents.send('newRequisition'),
                     },
                     {
                         label: 'Publisher',
                         accelerator: 'CommandOrControl+P',
-                        // @ts-ignore
                         click: () => window.webContents.send('newPublisher'),
                     },
                     {
                         label: 'Subscription',
                         accelerator: 'CommandOrControl+S',
-                        // @ts-ignore
                         click: () => window.webContents.send('newSubscription'),
                     }
                 ]
@@ -55,7 +52,6 @@ export default (window: Electron.BrowserWindow) => [
             },
             {
                 label: 'Load plugin',
-                // @ts-ignore
                 click: () => window.webContents.send('loadPlugin'),
             },
             {type: 'separator'},
@@ -80,7 +76,7 @@ export default (window: Electron.BrowserWindow) => [
             // {type: 'separator'},
             // {label: 'Save All'},
             {type: 'separator'},
-            {role: 'quit'},
+            // {role: 'quit'},
             isMac ? {role: 'close'} : {role: 'quit'}
         ]
     },
@@ -106,7 +102,13 @@ export default (window: Electron.BrowserWindow) => [
         role: 'help',
         submenu: [
             {
-                label: 'Learn More',
+                label: 'Learn more about stacker',
+                click: async () => {
+                    await shell.openExternal('https://virgs.github.io/stacker')
+                }
+            },
+            {
+                label: 'Learn more about enqueuer',
                 click: async () => {
                     await shell.openExternal('https://enqueuer.com/docs')
                 }
