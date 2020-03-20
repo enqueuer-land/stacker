@@ -27,7 +27,7 @@ export type Header = {
     disabled?: boolean;
 };
 
-type Request = {
+export type Request = {
     url: {
         raw?: string;
         protocol: string;
@@ -58,7 +58,7 @@ type Request = {
     body?: any;
 };
 
-type Response = {
+export type Response = {
     name: string;
     id: string;
     originalRequest: Request;

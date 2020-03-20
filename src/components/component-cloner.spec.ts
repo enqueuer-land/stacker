@@ -3,7 +3,7 @@ import {ComponentCloner} from '@/components/component-cloner';
 describe('ComponentCloner', () => {
 
     it('should clone root requisition', () => {
-        const requisition = {
+        const requisition: any = {
             id: 'id',
             name: 'name',
             requisitions: [],
@@ -15,7 +15,7 @@ describe('ComponentCloner', () => {
             }
         };
 
-        const clone = ComponentCloner.cloneRequisition(requisition);
+        const clone: any = ComponentCloner.cloneRequisition(requisition);
 
         expect(clone.name).toBe(requisition.name + ' - (copy)');
         expect(clone.id).not.toBe(requisition.id);
@@ -24,7 +24,7 @@ describe('ComponentCloner', () => {
     });
 
     it('should clone requisition with parent', () => {
-        const parent = {
+        const parent: any = {
             id: 'id',
             name: 'parent',
             requisitions: [] as any,
@@ -34,7 +34,7 @@ describe('ComponentCloner', () => {
                 property: true
             }
         };
-        const requisition = {
+        const requisition: any = {
             id: 'id',
             name: 'name',
             requisitions: [],
@@ -56,7 +56,7 @@ describe('ComponentCloner', () => {
     });
 
     it('should clone publisher', () => {
-        const parent = {
+        const parent: any = {
             id: 'id',
             name: 'parent',
             requisitions: [],
@@ -66,7 +66,7 @@ describe('ComponentCloner', () => {
                 property: true
             }
         };
-        const publisher = {
+        const publisher: any = {
             id: 'id',
             name: 'name',
             carabinaMeta: {
@@ -85,7 +85,7 @@ describe('ComponentCloner', () => {
     });
 
     it('should clone subscription', () => {
-        const parent = {
+        const parent: any = {
             id: 'id',
             name: 'parent',
             requisitions: [],
@@ -95,7 +95,7 @@ describe('ComponentCloner', () => {
                 property: true
             }
         };
-        const subscription = {
+        const subscription: any = {
             id: 'id',
             name: 'name',
             carabinaMeta: {
@@ -114,7 +114,7 @@ describe('ComponentCloner', () => {
     });
 
     it('should prettify clone requisition name', () => {
-        const parent = {
+        const parent: any = {
             id: 'id',
             name: 'parent',
             requisitions: [],
@@ -125,7 +125,7 @@ describe('ComponentCloner', () => {
             }
         };
 
-        const requisition = {
+        const requisition: any = {
             id: 'id',
             name: 'name',
             requisitions: [],
@@ -152,7 +152,7 @@ describe('ComponentCloner', () => {
 
 
     it('should prettify publisher/subscription clone name', () => {
-        const parent = {
+        const parent: any = {
             id: 'id',
             name: 'parent',
             requisitions: [],
@@ -160,13 +160,13 @@ describe('ComponentCloner', () => {
             subscriptions: [],
         };
 
-        const publisher = {
+        const publisher: any = {
             name: 'name',
             carabinaMeta: {
                 parent
             }
         };
-        const subscription = {
+        const subscription: any = {
             name: 'name',
             carabinaMeta: {
                 parent

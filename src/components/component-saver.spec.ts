@@ -35,7 +35,7 @@ describe('ComponentSaver', () => {
     });
 
     it('should save requisition as is', async () => {
-        const item = {
+        const item: any = {
             name: 'requisition',
             carabinaMeta: {
                 type: ComponentTypes.REQUISITION
@@ -51,7 +51,7 @@ describe('ComponentSaver', () => {
     });
 
     it('should create requisition wrapper to save publisher', async () => {
-        const item = {
+        const item: any = {
             name: 'publisher',
             carabinaMeta: {
                 type: ComponentTypes.PUBLISHER
@@ -75,7 +75,7 @@ describe('ComponentSaver', () => {
 
 
     it('should create requisition wrapper to save subscription', async () => {
-        const item = {
+        const item: any = {
             name: 'subscription',
             carabinaMeta: {
                 type: ComponentTypes.SUBSCRIPTION

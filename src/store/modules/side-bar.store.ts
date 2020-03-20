@@ -134,7 +134,8 @@ export default {
                 case ComponentTypes.PUBLISHER:
                     clone = ComponentCloner.clonePublisher(component, parent);
                     break;
-                case ComponentTypes.SUBSCRIPTION:
+                // case ComponentTypes.SUBSCRIPTION:
+                default:
                     clone = ComponentCloner.cloneSubscription(component, parent);
                     break;
             }
