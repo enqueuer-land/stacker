@@ -10,7 +10,7 @@ import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {ComponentDecycler} from '@/components/component-decycler';
-import * as requisitionsExample from '@/components/requisitions-example';
+import requisitionsExample from '@/components/requisitions-example.json';
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
@@ -19,7 +19,7 @@ function persist(stage: any) {
     sidebarRepository.set('requisitions', stage.requisitions.map((requisition: any) => new ComponentDecycler().decycle(requisition)));
 }
 
-const initialRequisitions = sidebarRepository.get('requisitions', requisitionsExample.default)
+const initialRequisitions = sidebarRepository.get('requisitions', requisitionsExample)
     .map((requisition: any) => ComponentLoader.loadRequisition(requisition));
 
 let initialSelectedComponent = null;

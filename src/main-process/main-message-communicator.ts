@@ -1,6 +1,5 @@
 import {BrowserWindow, ipcMain} from 'electron';
 
-//TODO test it
 export class MainMessageCommunicator {
     private readonly window: BrowserWindow;
 
@@ -13,14 +12,13 @@ export class MainMessageCommunicator {
     }
 
     public send(event: string, ...args: any[]) {
-        this.window.webContents.send(event, ...args)
-    }
-
-    public addLog(message: string, level: 'DEBUG' | 'INFO' | 'ERROR') {
         if (!this.window.isDestroyed()) {
-            this.send('addLog', {message, level});
+            this.window.webContents.send(event, ...args)
         }
     }
 
+    public addLog(message: string, level: 'DEBUG' | 'INFO' | 'ERROR') {
+        this.send('addLog', {message, level});
+    }
 
 }
