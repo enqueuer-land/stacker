@@ -1,7 +1,7 @@
 <template>
     <div id="side-bar-tree-node" class="tree-node">
         <b-card no-body class="accordion-container" style="border: none">
-            <b-button v-if="componentStylish.getChildrenLength() > 0" @click="collapsed = !collapsed"
+            <b-button v-if="componentStylish.getChildrenLength() > 0 || true" @click="collapsed = !collapsed"
                       :class="['accordion-button requisition-tree-indicator', !collapsed && 'expanded']">
                 <i class="fas fa-caret-right"></i>
             </b-button>

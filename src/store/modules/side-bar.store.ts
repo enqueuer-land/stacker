@@ -1,6 +1,5 @@
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
-import {InputRequisitionModel} from 'enqueuer';
 import {FileDialog} from '@/components/file-dialog';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
@@ -9,6 +8,7 @@ import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentCloner} from '@/components/component-cloner';
 import {ComponentFactory} from '@/components/component-factory';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {ComponentDecycler} from '@/components/component-decycler';
 import * as requisitionsExample from '@/components/requisitions-example';
 
@@ -213,7 +213,7 @@ export default {
         selectedComponent: (state: any) => state.selectedComponent,
         textFilter: (state: any) => state.textFilter,
         filteredRequisitions: (state: any) => state.requisitions
-            .filter((requisition: InputRequisitionModel) => JSON.stringify(Object.values(new ComponentDecycler().decycle(requisition))).toLowerCase()
+            .filter((requisition: CarabinaRequisition) => JSON.stringify(Object.values(new ComponentDecycler().decycle(requisition))).toLowerCase()
                 .includes(state.textFilter.toLowerCase())),
         breadcrumbItems: (state: any): any[] => {
             const result = [];

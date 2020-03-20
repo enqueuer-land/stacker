@@ -18,29 +18,29 @@ describe('ComponentParent', () => {
     });
 
     it('should not be grand child of an unrelated component', () => {
-        const component = {id: new IdCreator().create(), carabinaMeta: {}};
-        expect(new ComponentParent(component).isGrandChildOf({id: 'unrelated', carabinaMeta: {}})).toBeFalsy();
+        const component: any = {id: new IdCreator().create(), carabinaMeta: {}};
+        expect(new ComponentParent(component).isGrandChildOf({id: 'unrelated', carabinaMeta: {}} as any)).toBeFalsy();
     });
 
     it('should not be grand child of itself', () => {
-        const component = {id: new IdCreator().create(), carabinaMeta: {}};
+        const component: any = {id: new IdCreator().create(), carabinaMeta: {}};
         expect(new ComponentParent(component).isGrandChildOf(component)).toBeFalsy();
     });
 
     it('should not be grand child of itself', () => {
-        const component = {id: new IdCreator().create(), carabinaMeta: {}};
+        const component: any = {id: new IdCreator().create(), carabinaMeta: {}};
         expect(new ComponentParent(component).isGrandChildOf(component)).toBeFalsy();
     });
 
     it('should be grand child of its parent', () => {
-        const parent = {id: new IdCreator().create(), carabinaMeta: {}};
+        const parent: any = {id: new IdCreator().create(), carabinaMeta: {}};
         const component = {id: new IdCreator().create(), carabinaMeta: {parent}};
 
         expect(new ComponentParent(component).isGrandChildOf(parent)).toBeTruthy();
     });
 
     it('should be grand child of its grandparent', () => {
-        const grandparent = {id: new IdCreator().create(), carabinaMeta: {}};
+        const grandparent: any = {id: new IdCreator().create(), carabinaMeta: {}};
         const parent = {id: new IdCreator().create(), carabinaMeta: {parent: grandparent}};
         const component = {id: new IdCreator().create(), carabinaMeta: {parent}};
 

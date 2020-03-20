@@ -69,6 +69,7 @@
     "shebang-loader": "0.0.1",
     "typescript": "~3.7.5",
     "vue-cli-plugin-electron-builder": "^1.4.6",
+    "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -121,9 +122,14 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/dist_electron/"
     ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest",
+      ".*\\.(vue)$": "vue-jest"
+    },
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
     "collectCoverageFrom": [
       "src/**/*.ts",
+      "!src/**/*.d.ts",
       "!node_modules/**"
     ],
     "moduleFileExtensions": [
@@ -140,6 +146,8 @@
         "lines": 40
       }
     },
-    "coverageReporters": ["text"]
+    "coverageReporters": [
+      "text"
+    ]
   }
 }

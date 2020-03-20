@@ -68,7 +68,7 @@ export class ComponentLoader {
     }
 
 
-    public static loadRequisition(rawRequisition: any, parent?: any): CarabinaRequisition {
+    public static loadRequisition(rawRequisition: any, parent?: CarabinaRequisition): CarabinaRequisition {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
         defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);
@@ -83,7 +83,7 @@ export class ComponentLoader {
         return defaultRequisition;
     }
 
-    private static loadPublisher(component: any, parent: any): CarabinaPublisher {
+    private static loadPublisher(component: any, parent: CarabinaRequisition): CarabinaPublisher {
         let defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
         const carabinaMetaBkp = defaultPublisher.carabinaMeta;
         defaultPublisher = Object.assign({}, defaultPublisher, component);
@@ -91,7 +91,7 @@ export class ComponentLoader {
         return defaultPublisher;
     }
 
-    private static loadSubscription(component: any, parent: any): CarabinaSubscription {
+    private static loadSubscription(component: any, parent: CarabinaRequisition): CarabinaSubscription {
         let defaultSubscription = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
         const carabinaMetaBkp = defaultSubscription.carabinaMeta;
         defaultSubscription = Object.assign({}, defaultSubscription, component);

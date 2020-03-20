@@ -1,10 +1,14 @@
+import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
+
 export class ComponentDecycler {
 
-    public decycle(component: any) {
+    public decycle(component: CarabinaRequisition) {
         return ComponentDecycler.removeMetadataFromRequisition(component);
     }
 
-    private static removeMetadataFromRequisition(item: any) {
+    private static removeMetadataFromRequisition(item: CarabinaRequisition) {
         const clone = ComponentDecycler.removeCarabinaMeta(item);
         if (clone.publishers) {
             clone.publishers = item.publishers.map((publisher: any) => ComponentDecycler.removeCarabinaMeta(publisher));
@@ -18,7 +22,7 @@ export class ComponentDecycler {
         return clone;
     }
 
-    private static removeCarabinaMeta(item: any): any {
+    private static removeCarabinaMeta(item: CarabinaRequisition | CarabinaPublisher | CarabinaSubscription): any {
         const clone = Object.assign({}, item);
         if (item) {
             clone.carabinaMeta = Object.assign({}, item.carabinaMeta);

@@ -1,7 +1,11 @@
-export class ComponentFinder {
-    private readonly requisitions: any[];
+import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 
-    public constructor(requisitions: any[]) {
+export class ComponentFinder {
+    private readonly requisitions: CarabinaRequisition[];
+
+    public constructor(requisitions: CarabinaRequisition[]) {
         this.requisitions = requisitions || [];
     }
 
@@ -11,16 +15,16 @@ export class ComponentFinder {
             .filter(component => !!component)[0];
     }
 
-    private findIdInRequisition(id: string, requisition: any) {
+    private findIdInRequisition(id: string, requisition: CarabinaRequisition): CarabinaRequisition | CarabinaPublisher | CarabinaSubscription | undefined {
         if (requisition.id === id) {
             return requisition;
         }
 
-        const foundPublisher = (requisition.publishers || []).filter((publisher: any) => publisher.id === id)[0];
+        const foundPublisher = (requisition.publishers || []).filter(publisher => publisher.id === id)[0];
         if (foundPublisher) {
             return foundPublisher;
         }
-        const foundSubscription = (requisition.subscriptions || []).filter((subscription: any) => subscription.id === id)[0];
+        const foundSubscription = (requisition.subscriptions || []).filter(subscription => subscription.id === id)[0];
         if (foundSubscription) {
             return foundSubscription;
         }

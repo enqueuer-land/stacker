@@ -1,3 +1,7 @@
+import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
+
 export class ComponentParent {
     private readonly component: any;
 
@@ -5,7 +9,7 @@ export class ComponentParent {
         this.component = component;
     }
 
-    public findHighestParent(): any {
+    public findHighestParent(): CarabinaRequisition | CarabinaPublisher | CarabinaSubscription | undefined {
         const parent = this.component.carabinaMeta.parent;
         if (parent) {
             return new ComponentParent(parent).findHighestParent();
@@ -13,7 +17,7 @@ export class ComponentParent {
         return this.component;
     }
 
-    public isGrandChildOf(parentComponent: any): boolean {
+    public isGrandChildOf(parentComponent: CarabinaRequisition): boolean {
         const parent = this.component.carabinaMeta.parent;
         if (parent) {
             if (parent.id === parentComponent.id) {
