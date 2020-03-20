@@ -2,10 +2,11 @@ import * as fs from 'fs';
 import * as yaml from 'yamljs';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
+import {CarabinaEnvironment} from '@/models/carabina-environment';
 
 export class EnvironmentLoader {
 
-    public static loadFile(file: string): Promise<object> {
+    public static loadFile(file: string): Promise<CarabinaEnvironment> {
         return new Promise((resolve, reject) => {
             fs.readFile(file, async (err, data) => {
                 if (err) {
@@ -27,21 +28,23 @@ export class EnvironmentLoader {
         });
     }
 
-    public static loadPostmanEnvironment(file: string): Promise<object> {
+    public static loadPostmanEnvironment(file: string): Promise<CarabinaEnvironment> {
         return new Promise((resolve, reject) => {
             fs.readFile(file, ((err, data) => {
                 if (!err) {
                     try {
                         const raw = JSON.parse(data.toString());
-                        raw.store = raw.values
-                            .reduce((acc: any, value: any) => {
-                                if (value.enabled) {
-                                    acc[value.key] = value.value
-                                }
-                                return acc;
-                            }, {});
-                        resolve(EnvironmentLoader.loadEnvironment(raw));
-                        return;
+                        if (raw.values) {
+                            raw.store = raw.values
+                                .reduce((acc: any, value: any) => {
+                                    if (value.enabled) {
+                                        acc[value.key] = value.value
+                                    }
+                                    return acc;
+                                }, {});
+                            resolve(EnvironmentLoader.loadEnvironment(raw));
+                            return;
+                        }
                     } catch (e) {
                         console.log(e);
                     }
@@ -51,7 +54,7 @@ export class EnvironmentLoader {
         });
     }
 
-    private static async loadEnvironment(raw: any): Promise<object> {
+    private static async loadEnvironment(raw: any): Promise<CarabinaEnvironment> {
         if (!raw.store) {
             throw `Invalid environment: no 'store' attribute found`;
         }

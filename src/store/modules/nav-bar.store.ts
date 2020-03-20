@@ -3,11 +3,12 @@ import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
 import {FileDialog} from '@/components/file-dialog';
 import {EnvironmentSaver} from '@/environments/environment-saver';
+import {CarabinaEnvironment} from '@/models/carabina-environment';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
 const navBarRepository = new Store({name: 'nav-bar'});
 
-const noEnvironment = {name: 'No environment', role: 'none', store: {}};
+const noEnvironment: CarabinaEnvironment = {name: 'No environment', role: 'none', store: {}};
 
 function persist(stage: any) {
     RendererMessageCommunicator.emit('setEnqueuerStore', stage.selectedEnvironment.store);

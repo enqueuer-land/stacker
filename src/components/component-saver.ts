@@ -2,11 +2,14 @@ import * as fs from 'fs';
 import * as yaml from 'yamljs';
 import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
+import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {ComponentDecycler} from '@/components/component-decycler';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 
 export class ComponentSaver {
 
-    public async save(item: any, filename: string) {
+    public async save(item: CarabinaRequisition | CarabinaPublisher | CarabinaSubscription, filename: string) {
         const type = item.carabinaMeta.type;
         const decycled = new ComponentDecycler().decycle(item);
 
@@ -34,7 +37,7 @@ export class ComponentSaver {
         await ComponentSaver.saveRequisition(filename, componentToSave);
     }
 
-    private static saveRequisition(filename: string, item: any): Promise<void> {
+    private static saveRequisition(filename: string, item: CarabinaRequisition): Promise<void> {
         return new Promise(resolve => {
             fs.writeFile(filename, yaml.stringify(item, 100, 2), () => resolve());
         });

@@ -1,5 +1,8 @@
 import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
+import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 
 //TODO test it
 export class ComponentFactory {
@@ -15,8 +18,8 @@ export class ComponentFactory {
         }
     };
 
-    public createRequisition = (parent?: any): any => {
-        const requisition = {
+    public createRequisition = (parent?: any): CarabinaRequisition => {
+        const requisition: CarabinaRequisition = {
             id: new IdCreator().create(),
             name: 'New requisition',
             iterations: 1,
@@ -41,8 +44,8 @@ export class ComponentFactory {
         return requisition;
     };
 
-    private createPublisher = (parent: any): any => {
-        const publisher = {
+    private createPublisher = (parent: any): CarabinaPublisher => {
+        const publisher: CarabinaPublisher = {
             type: 'HTTP',
             id: new IdCreator().create(),
             name: 'New publisher ' + parent.publishers.length,
@@ -61,8 +64,8 @@ export class ComponentFactory {
         return publisher;
     };
 
-    private createSubscription = (parent: any): any => {
-        const subscription = {
+    private createSubscription = (parent: any): CarabinaSubscription => {
+        const subscription: CarabinaSubscription = {
             type: 'HTTP',
             timeout: 3000,
             port: 80,

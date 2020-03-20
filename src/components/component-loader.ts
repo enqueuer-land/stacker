@@ -3,12 +3,15 @@ import * as fs from 'fs';
 import * as yaml from 'yamljs';
 import {Logger} from '@/components/logger';
 import {ComponentTypes} from '@/components/component-types';
+import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {ComponentFactory} from '@/components/component-factory';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 import {PostmanCollectionConverter} from '@/postman/postman-collection-converter';
 
 export class ComponentLoader {
 
-    public static async importFile(file: string): Promise<any> {
+    public static async importFile(file: string): Promise<CarabinaRequisition> {
         return new Promise((resolve, reject) => {
             try {
                 fs.readFile(file, (err, data) => {
@@ -29,12 +32,12 @@ export class ComponentLoader {
                 });
             } catch (e) {
                 Logger.error(`Error reading '${file}': ${e}`);
-                resolve(null);
+                reject(`Error reading '${file}': ${e}`);
             }
         });
     }
 
-    public static async importFromPostman(file: string): Promise<any> {
+    public static async importFromPostman(file: string): Promise<CarabinaRequisition> {
         return new Promise((resolve, reject) => {
             try {
                 fs.readFile(file, (err, data) => {
@@ -49,12 +52,12 @@ export class ComponentLoader {
                 });
             } catch (e) {
                 Logger.error(`Error reading '${file}': ${e}`);
-                resolve(null);
+                reject(`Error reading '${file}': ${e}`);
             }
         });
     }
 
-    private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any) {
+    private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any): CarabinaRequisition {
         if (Array.isArray(parsed)) {
             return ComponentLoader.loadRequisition({
                 name: path.parse(file).name,
@@ -65,7 +68,7 @@ export class ComponentLoader {
     }
 
 
-    public static loadRequisition(rawRequisition: any, parent?: any): any {
+    public static loadRequisition(rawRequisition: any, parent?: any): CarabinaRequisition {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
         defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);
@@ -80,7 +83,7 @@ export class ComponentLoader {
         return defaultRequisition;
     }
 
-    private static loadPublisher(component: any, parent: any) {
+    private static loadPublisher(component: any, parent: any): CarabinaPublisher {
         let defaultPublisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
         const carabinaMetaBkp = defaultPublisher.carabinaMeta;
         defaultPublisher = Object.assign({}, defaultPublisher, component);
@@ -88,7 +91,7 @@ export class ComponentLoader {
         return defaultPublisher;
     }
 
-    private static loadSubscription(component: any, parent: any) {
+    private static loadSubscription(component: any, parent: any): CarabinaSubscription {
         let defaultSubscription = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
         const carabinaMetaBkp = defaultSubscription.carabinaMeta;
         defaultSubscription = Object.assign({}, defaultSubscription, component);
