@@ -7,8 +7,6 @@ import requireFromString from 'require-from-string';
 import * as httpPublisher from '@/plugins/http-publisher';
 import * as httpSubscription from '@/plugins/http-subscription';
 
-
-//TODO test it
 export class PluginsLoader {
     private readonly pluginsRepository: any;
     private readonly plugins: any;
