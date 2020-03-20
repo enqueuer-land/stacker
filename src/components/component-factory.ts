@@ -1,5 +1,6 @@
 import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
+import {CarabinaComponent} from '@/models/carabina-component';
 import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {CarabinaSubscription} from '@/models/carabina-subscription';
@@ -7,18 +8,18 @@ import {CarabinaSubscription} from '@/models/carabina-subscription';
 //TODO test it
 export class ComponentFactory {
 
-    public createComponent = (componentType: ComponentTypes, parent?: any): any => {
+    public createComponent = (componentType: ComponentTypes, parent?: CarabinaRequisition): CarabinaComponent => {
         switch (componentType) {
             case ComponentTypes.REQUISITION:
                 return this.createRequisition(parent);
             case ComponentTypes.PUBLISHER:
-                return this.createPublisher(parent);
+                return this.createPublisher(parent!);
             case ComponentTypes.SUBSCRIPTION:
-                return this.createSubscription(parent);
+                return this.createSubscription(parent!);
         }
     };
 
-    public createRequisition = (parent?: any): CarabinaRequisition => {
+    public createRequisition = (parent?: CarabinaRequisition): CarabinaRequisition => {
         const requisition: CarabinaRequisition = {
             id: new IdCreator().create(),
             name: 'New requisition',
@@ -44,7 +45,7 @@ export class ComponentFactory {
         return requisition;
     };
 
-    private createPublisher = (parent: any): CarabinaPublisher => {
+    private createPublisher = (parent: CarabinaRequisition): CarabinaPublisher => {
         const publisher: CarabinaPublisher = {
             type: 'HTTP',
             id: new IdCreator().create(),
@@ -64,7 +65,7 @@ export class ComponentFactory {
         return publisher;
     };
 
-    private createSubscription = (parent: any): CarabinaSubscription => {
+    private createSubscription = (parent: CarabinaRequisition): CarabinaSubscription => {
         const subscription: CarabinaSubscription = {
             type: 'HTTP',
             timeout: 3000,

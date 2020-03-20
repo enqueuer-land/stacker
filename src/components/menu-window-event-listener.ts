@@ -48,7 +48,6 @@ RendererMessageCommunicator
                 if (requisitionPromise) {
                     const requisition = await requisitionPromise;
                     store.commit('side-bar/addRequisition', requisition);
-                    Logger.info(`Component '${requisition.name}' loaded`);
                 }
             } catch (e) {
                 console.log(e);

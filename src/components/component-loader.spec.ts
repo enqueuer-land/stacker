@@ -43,7 +43,7 @@ describe('ComponentLoader', () => {
         expect(requisition.publishers.length).toBe(1);
 
         expect(requisition.requisitions[0].carabinaMeta.type).toBe('REQUISITION');
-        expect(requisition.requisitions[0].carabinaMeta.parent.id).toBe(requisition.id);
+        expect(requisition.requisitions[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.requisitions[0].name).toBe('requisition');
         expect(requisition.requisitions[0].id).toBeDefined();
         expect(requisition.requisitions[0].requisitions.length).toBe(0);
@@ -51,12 +51,12 @@ describe('ComponentLoader', () => {
         expect(requisition.requisitions[0].subscriptions.length).toBe(0);
 
         expect(requisition.publishers[0].carabinaMeta.type).toBe('PUBLISHER');
-        expect(requisition.publishers[0].carabinaMeta.parent.id).toBe(requisition.id);
+        expect(requisition.publishers[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.publishers[0].id).toBeDefined();
         expect(requisition.publishers[0].name).toBe('publisher');
 
         expect(requisition.subscriptions[0].carabinaMeta.type).toBe('SUBSCRIPTION');
-        expect(requisition.subscriptions[0].carabinaMeta.parent.id).toBe(requisition.id);
+        expect(requisition.subscriptions[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.subscriptions[0].id).toBeDefined();
         expect(requisition.subscriptions[0].name).toBe('subscription');
     });

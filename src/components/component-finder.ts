@@ -1,6 +1,5 @@
-import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaComponent} from '@/models/carabina-component';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
-import {CarabinaSubscription} from '@/models/carabina-subscription';
 
 export class ComponentFinder {
     private readonly requisitions: CarabinaRequisition[];
@@ -15,7 +14,7 @@ export class ComponentFinder {
             .filter(component => !!component)[0];
     }
 
-    private findIdInRequisition(id: string, requisition: CarabinaRequisition): CarabinaRequisition | CarabinaPublisher | CarabinaSubscription | undefined {
+    private findIdInRequisition(id: string, requisition: CarabinaRequisition): CarabinaComponent | undefined {
         if (requisition.id === id) {
             return requisition;
         }

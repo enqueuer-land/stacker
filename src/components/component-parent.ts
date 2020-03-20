@@ -1,6 +1,5 @@
-import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaComponent} from '@/models/carabina-component';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
-import {CarabinaSubscription} from '@/models/carabina-subscription';
 
 export class ComponentParent {
     private readonly component: any;
@@ -9,7 +8,7 @@ export class ComponentParent {
         this.component = component;
     }
 
-    public findHighestParent(): CarabinaRequisition | CarabinaPublisher | CarabinaSubscription | undefined {
+    public findHighestParent(): CarabinaComponent | undefined {
         const parent = this.component.carabinaMeta.parent;
         if (parent) {
             return new ComponentParent(parent).findHighestParent();

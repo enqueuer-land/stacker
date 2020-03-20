@@ -1,11 +1,9 @@
 import {ComponentTypes} from '@/components/component-types';
-import {CarabinaSubscription} from '@/models/carabina-subscription';
-import {CarabinaRequisition} from '@/models/carabina-requisition';
-import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {CarabinaComponent} from '@/models/carabina-component';
 
 //TODO test it
 export class ComponentStylish {
-    private readonly component: CarabinaSubscription | CarabinaRequisition | CarabinaPublisher;
+    private readonly component: CarabinaComponent;
 
     constructor(component: any) {
         this.component = component;

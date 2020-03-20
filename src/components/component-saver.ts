@@ -4,10 +4,11 @@ import {IdCreator} from '@/components/id-creator';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaComponent} from "@/models/carabina-component";
 
 export class ComponentSaver {
 
-    public async save(item: CarabinaRequisition, filename: string) {
+    public async save(item: CarabinaComponent, filename: string) {
         const type = item.carabinaMeta.type;
         const decycled = new ComponentDecycler().decycle(item);
 

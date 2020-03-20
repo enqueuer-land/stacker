@@ -75,13 +75,18 @@ export default {
             persist(stage);
         },
         filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
-        addRequisition: (stage: any, component: any) => {
-            stage.requisitions.push(component);
-            component.carabinaMeta.selected = true;
-            if (stage.selectedComponent) {
-                stage.selectedComponent.carabinaMeta.selected = false;
+        addRequisition: (stage: any, requisition: CarabinaRequisition) => {
+            if (!new ComponentFinder(stage.requisitions).findItem(requisition.id)) {
+                stage.requisitions.push(requisition);
+                requisition.carabinaMeta.selected = true;
+                if (stage.selectedComponent) {
+                    stage.selectedComponent.carabinaMeta.selected = false;
+                }
+                stage.selectedComponent = requisition;
+                Logger.info(`Component '${requisition.name}' loaded`);
+            } else {
+                Logger.info(`Component ${requisition.name} is already opened`);
             }
-            stage.selectedComponent = component;
             persist(stage);
         },
         //TODO Move to another class
@@ -171,15 +176,14 @@ export default {
             }
             persist(stage);
         },
-        saveComponent: (stage: any, event: any) => {
-            const item = event.component;
+        saveComponent: (stage: any, {component}: any) => {
             FileDialog
-                .showSaveDialog(item.name + '.nqr.yml')
+                .showSaveDialog(component.name + '.nqr.yml')
                 .then(filename => {
                     if (filename) {
                         new ComponentSaver()
-                            .save(item, filename)
-                            .then(() => Logger.info(`Component '${item.name}' saved as '${filename}'`));
+                            .save(component, filename)
+                            .then(() => Logger.info(`Component '${component.name}' saved as '${filename}'`));
                     }
                 })
         },

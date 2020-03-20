@@ -1,13 +1,7 @@
-import {CarabinaMeta} from '@/models/carabina-meta';
+import {CarabinaComponent} from '@/models/carabina-component';
 
-export interface CarabinaSubscription {
-    id: string;
+export interface CarabinaSubscription extends CarabinaComponent {
     type: string;
-    name: string;
     timeout: number;
-    ignore: boolean;
     avoidable: boolean;
-
-    carabinaMeta: CarabinaMeta;
-    [propname: string]: any;
 }

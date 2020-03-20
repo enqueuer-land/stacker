@@ -19,7 +19,7 @@ describe('ComponentFactory', () => {
     });
 
     it('should createRequisition with parent', () => {
-        const parent = {id: 'parent', requisitions: []};
+        const parent: any = {id: 'parent', requisitions: []};
         const requisition = new ComponentFactory().createRequisition(parent);
 
         expect(requisition.carabinaMeta.collapsed).toBeFalsy();
@@ -37,7 +37,7 @@ describe('ComponentFactory', () => {
     });
 
     it('should create requisition from createComponent', () => {
-        const parent = {id: 'parent', requisitions: []};
+        const parent: any = {id: 'parent', requisitions: []};
         const requisition = new ComponentFactory().createComponent(ComponentTypes.REQUISITION, parent);
 
         expect(requisition.carabinaMeta.collapsed).toBeFalsy();
@@ -55,7 +55,7 @@ describe('ComponentFactory', () => {
     });
 
     it('should create publisher from createComponent', () => {
-        const parent = {id: 'parent', publishers: []};
+        const parent: any = {id: 'parent', publishers: []};
         const publisher = new ComponentFactory().createComponent(ComponentTypes.PUBLISHER, parent);
 
         expect(publisher.carabinaMeta.selected).toBeFalsy();
@@ -69,7 +69,7 @@ describe('ComponentFactory', () => {
     });
 
     it('should create subscription from createComponent', () => {
-        const parent = {id: 'parent', subscriptions: []};
+        const parent: any = {id: 'parent', subscriptions: []};
         const subscription = new ComponentFactory().createComponent(ComponentTypes.SUBSCRIPTION, parent);
 
         expect(subscription.carabinaMeta.selected).toBeFalsy();
