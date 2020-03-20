@@ -1,4 +1,4 @@
-import * as menuTemplate from '@/menu-template';
+import * as menuTemplate from '@/main-process/menu-template';
 
 const sendMock = jest.fn();
 const window: any = {webContents: {send: sendMock}};

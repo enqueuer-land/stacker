@@ -5,7 +5,6 @@ import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {CarabinaSubscription} from '@/models/carabina-subscription';
 
-//TODO test it
 export class ComponentFactory {
 
     public createComponent = (componentType: ComponentTypes, parent?: CarabinaRequisition): CarabinaComponent => {

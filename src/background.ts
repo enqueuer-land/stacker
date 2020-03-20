@@ -3,8 +3,8 @@
 
 import path from 'path'
 import fixPath from 'fix-path';
-import EnqueuerRunner from '@/enqueuer-runner';
-import * as menuTemplate from '@/menu-template';
+import EnqueuerRunner from '@/main-process/enqueuer-runner';
+import * as menuTemplate from '@/main-process/menu-template';
 import {app, BrowserWindow, Menu, protocol} from 'electron'
 import {createProtocol, installVueDevtools} from 'vue-cli-plugin-electron-builder/lib'
 

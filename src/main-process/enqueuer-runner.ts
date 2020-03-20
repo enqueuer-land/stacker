@@ -2,9 +2,9 @@ import * as os from 'os';
 import * as fs from 'fs';
 //TODO benchmark with https://www.npmjs.com/package/lzutf8
 import LZString from 'lz-string';
-import {ipcMain} from 'electron';
 import {ChildProcess, exec, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
+import {MainMessageCommunicator} from '@/main-process/main-message-communicator';
 
 type ResponseMap = {
     [id: string]: {
@@ -15,16 +15,17 @@ type ResponseMap = {
 
 //TODO test it
 export default class EnqueuerRunner {
-    private readonly window?: Electron.BrowserWindow;
+    private readonly mainMessageCommunicator: MainMessageCommunicator;
 
     constructor(window?: Electron.BrowserWindow) {
-        this.window = window;
+        this.mainMessageCommunicator = new MainMessageCommunicator(window!);
     }
 
     private enqueuerProcess: ChildProcess | any;
     private responsesMap: ResponseMap = {};
     private enqueuerStore: any = {};
 
+    //TODO extract class EnqueuerLogExtractor
     private readonly logBuffer: string[] = [];
     private readonly maxBufferSize = 200;
     private readonly logSendInterval = 100;
@@ -34,18 +35,17 @@ export default class EnqueuerRunner {
         this.createNqrFolder();
         await this.installEnqueuerIfNeeded();
         this.executeEnqueuerAsChild();
-        this.sendLogToStacker(`Enqueuer pid: ${this.enqueuerProcess.pid}`, 'DEBUG');
         this.registerChildListeners();
         this.registerEnqueuerLogsSender();
         this.registerRendererProcessListener();
     }
 
     private registerRendererProcessListener() {
-        ipcMain.on('setEnqueuerStore', (_, data: any) => this.enqueuerStore = data);
-        ipcMain.on('runEnqueuer', async (_, requisition: InputRequisitionModel) => {
+        this.mainMessageCommunicator.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
+        this.mainMessageCommunicator.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
             const reply = await this.sendRequisition(requisition);
             const compressed = LZString.compressToUTF16(JSON.stringify(reply));
-            this.window!.webContents.send('runEnqueuerReply', compressed);
+            this.mainMessageCommunicator.send('runEnqueuerReply', compressed);
         });
     }
 
@@ -55,7 +55,7 @@ export default class EnqueuerRunner {
                 const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
                 const compressed = LZString.compressToUTF16(logs);
                 // console.log(compressed.length / 1024);
-                this.window!.webContents.send('enqueuerLog', compressed);
+                this.mainMessageCommunicator.send('enqueuerLog', compressed);
 
                 this.logBuffer.splice(0, this.logsPerMessage);
             }
@@ -71,7 +71,7 @@ export default class EnqueuerRunner {
     private createNqrFolder() {
         fs.mkdir(os.homedir() + '/.nqr', {recursive: true}, (err) => {
             if (err) {
-                this.sendLogToStacker(`Error creating .nqr folder: ${err}`, 'ERROR');
+                this.mainMessageCommunicator.addLog(`Error creating .nqr folder: ${err}`, 'ERROR');
             }
         });
     }
@@ -86,7 +86,7 @@ export default class EnqueuerRunner {
             }
         });
         const enqueuerEventsListener = (eventName: string) => (data: any) => {
-            this.sendLogToStacker(`Child enqueuer '${eventName}': ${data}`, 'ERROR');
+            this.mainMessageCommunicator.addLog(`Child enqueuer '${eventName}': ${data}`, 'ERROR');
         };
         this.enqueuerProcess.on('exit', enqueuerEventsListener('exit'));
         this.enqueuerProcess.on('error', enqueuerEventsListener('error'));
@@ -100,7 +100,7 @@ export default class EnqueuerRunner {
             this.enqueuerProcess.send({event: 'CLEAN_STORE'});
             this.enqueuerProcess.send({event: 'SET_STORE', value: this.enqueuerStore}, (error: Error | null) => {
                 if (error) {
-                    this.sendLogToStacker(`Error running: ${error}`, 'ERROR');
+                    this.mainMessageCommunicator.addLog(`Error running: ${error}`, 'ERROR');
                     reject(error);
                 } else {
                     this.enqueuerProcess.send({event: 'RUN_REQUISITION', value: requisitionInput});
@@ -132,12 +132,12 @@ export default class EnqueuerRunner {
         return new Promise(resolve => {
             exec(`type -P "enqueuer" &> /dev/null`, error => {
                 if (error) {
-                    this.sendLogToStacker(`Enqueuer not detected. Installing it`, 'INFO');
+                    this.mainMessageCommunicator.addLog(`Enqueuer not detected. Installing it`, 'INFO');
                     exec(`npm install -g enqueuer`, (error, stdout, stderr) => {
                         if (error) {
-                            this.sendLogToStacker(`Enqueuer fail to install ${stderr}`, 'ERROR');
+                            this.mainMessageCommunicator.addLog(`Enqueuer fail to install ${stderr}`, 'ERROR');
                         } else {
-                            this.sendLogToStacker(`Enqueuer installed successfully: ${stdout}`, 'INFO');
+                            this.mainMessageCommunicator.addLog(`Enqueuer installed successfully: ${stdout}`, 'INFO');
                         }
                         resolve();
                     });
@@ -147,11 +147,5 @@ export default class EnqueuerRunner {
                 }
             });
         });
-    }
-
-    private sendLogToStacker(message: string, level: string) {
-        if (this.window && !this.window.isDestroyed()) {
-            this.window.webContents.send('addLog', {message, level});
-        }
     }
 }
