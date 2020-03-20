@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import LZString from 'lz-string';
 import {ChildProcess, exec, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';
+import {EnqueuerLogExtractor} from '@/main-process/enqueuer-log-extractor';
 import {MainMessageCommunicator} from '@/main-process/main-message-communicator';
 
 type ResponseMap = {
@@ -16,27 +17,23 @@ type ResponseMap = {
 //TODO test it
 export default class EnqueuerRunner {
     private readonly mainMessageCommunicator: MainMessageCommunicator;
+    private readonly enqueuerLogExtractor: EnqueuerLogExtractor;
+    private readonly responsesMap: ResponseMap = {};
+
+    private enqueuerProcess: ChildProcess | any;
+    private enqueuerStore: any = {};
 
     constructor(window?: Electron.BrowserWindow) {
         this.mainMessageCommunicator = new MainMessageCommunicator(window!);
+        this.enqueuerLogExtractor = new EnqueuerLogExtractor(this.mainMessageCommunicator);
     }
-
-    private enqueuerProcess: ChildProcess | any;
-    private responsesMap: ResponseMap = {};
-    private enqueuerStore: any = {};
-
-    //TODO extract class EnqueuerLogExtractor
-    private readonly logBuffer: string[] = [];
-    private readonly maxBufferSize = 200;
-    private readonly logSendInterval = 100;
-    private readonly logsPerMessage = 20;
 
     public async run(): Promise<void> {
         this.createNqrFolder();
         await this.installEnqueuerIfNeeded();
         this.executeEnqueuerAsChild();
         this.registerChildListeners();
-        this.registerEnqueuerLogsSender();
+        this.enqueuerLogExtractor.start();
         this.registerRendererProcessListener();
     }
 
@@ -47,19 +44,6 @@ export default class EnqueuerRunner {
             const compressed = LZString.compressToUTF16(JSON.stringify(reply));
             this.mainMessageCommunicator.send('runEnqueuerReply', compressed);
         });
-    }
-
-    private registerEnqueuerLogsSender() {
-        setInterval(() => {
-            if (this.logBuffer.length > 0) {
-                const logs = this.logBuffer.filter((_, index) => index < this.logsPerMessage).join('\n');
-                const compressed = LZString.compressToUTF16(logs);
-                // console.log(compressed.length / 1024);
-                this.mainMessageCommunicator.send('enqueuerLog', compressed);
-
-                this.logBuffer.splice(0, this.logsPerMessage);
-            }
-        }, this.logSendInterval);
     }
 
     private executeEnqueuerAsChild() {
@@ -77,14 +61,7 @@ export default class EnqueuerRunner {
     }
 
     private registerChildListeners(): void {
-        this.enqueuerProcess.stdout.on('data', (data: Buffer) => {
-            this.logBuffer.push(data.toString());
-            const overLimitLogs = this.logBuffer.length - this.maxBufferSize;
-            if (overLimitLogs > 0) {
-                // console.log(`Discarding: ` + this.logBuffer.filter((_, index) => index <= overLimitLogs).join('\n').length / 1024);
-                this.logBuffer.splice(0, overLimitLogs);
-            }
-        });
+        this.enqueuerProcess.stdout.on('data', (data: Buffer) => this.enqueuerLogExtractor.addLog(data.toString()));
         const enqueuerEventsListener = (eventName: string) => (data: any) => {
             this.mainMessageCommunicator.addLog(`Child enqueuer '${eventName}': ${data}`, 'ERROR');
         };
