@@ -124,6 +124,7 @@
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
     "collectCoverageFrom": [
       "src/**/*.ts",
+      "!src/**/built-in/**/*.ts",
       "!node_modules/**"
     ],
     "moduleFileExtensions": [

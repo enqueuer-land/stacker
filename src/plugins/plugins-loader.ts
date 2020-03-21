@@ -4,8 +4,8 @@ import Store from 'electron-store';
 import {exec} from 'child_process';
 import {Logger} from '@/components/logger';
 import requireFromString from 'require-from-string';
-import * as httpPublisher from '@/plugins/http-publisher';
-import * as httpSubscription from '@/plugins/http-subscription';
+import * as httpPublisher from '@/plugins/built-in/http-publisher';
+import * as httpSubscription from '@/plugins/built-in/http-subscription';
 
 export class PluginsLoader {
     private readonly pluginsRepository: any;
