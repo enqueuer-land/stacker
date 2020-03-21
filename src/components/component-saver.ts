@@ -1,38 +1,13 @@
 import * as fs from 'fs';
 import * as yaml from 'yamljs';
-import {IdCreator} from '@/components/id-creator';
-import {ComponentTypes} from '@/components/component-types';
-import {ComponentDecycler} from '@/components/component-decycler';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
-import {CarabinaComponent} from "@/models/carabina-component";
+import {CarabinaComponent} from '@/models/carabina-component';
+import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
 
 export class ComponentSaver {
 
     public async save(item: CarabinaComponent, filename: string) {
-        const type = item.carabinaMeta.type;
-        const decycled = new ComponentDecycler().decycle(item);
-
-        let componentToSave;
-        switch (type) {
-            case ComponentTypes.PUBLISHER:
-                componentToSave = {
-                    publishers: [decycled],
-                    name: decycled.name,
-                    id: new IdCreator().create()
-                };
-                break;
-            case ComponentTypes.SUBSCRIPTION:
-                componentToSave = {
-                    timeout: -1,
-                    subscriptions: [decycled],
-                    name: decycled.name,
-                    id: new IdCreator().create()
-                };
-                break;
-            default:
-                componentToSave = decycled;
-                break;
-        }
+        const componentToSave = new RequisitionWrapperCreator(item).create();
         await ComponentSaver.saveRequisition(filename, componentToSave);
     }
 

@@ -1,27 +1,15 @@
 import store from '@/store'
 import LZString from 'lz-string';
 import {Logger} from '@/components/logger';
-import {IdCreator} from '@/components/id-creator';
 import {FileDialog} from '@/components/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
 import {CarabinaComponent} from '@/models/carabina-component';
-import {ComponentDecycler} from '@/components/component-decycler';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
+import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
-
-//TODO extract to new class
-export const prepareComponentToBeRan = (msg: CarabinaComponent) => {
-    const type = msg.carabinaMeta.type;
-    let decycled = new ComponentDecycler().decycle(msg);
-    if (type === ComponentTypes.PUBLISHER) {
-        decycled = {publishers: [decycled], name: decycled.name, id: new IdCreator().create()};
-    } else if (type === ComponentTypes.SUBSCRIPTION) {
-        decycled = {timeout: -1, subscriptions: [decycled], name: decycled.name, id: new IdCreator().create()};
-    }
-    return decycled;
-};
 
 //TODO test it
 export default () => ({
@@ -68,7 +56,6 @@ export default () => ({
         setPlugins: (stage: any, data: any) => {
             stage.plugins = data;
         },
-
     },
     actions: {
         loadPlugins: async ({commit}: any) => {
@@ -89,12 +76,12 @@ export default () => ({
             }
         },
         runComponent: async (_: any, component: CarabinaComponent) => {
-            const decycled = prepareComponentToBeRan(component);
+            const decycled: CarabinaRequisition = new RequisitionWrapperCreator(component).create();
             store.commit('result/runRequisition', decycled);
             RendererMessageCommunicator.emit('runEnqueuer', decycled);
             RendererMessageCommunicator.on('runEnqueuerReply', ((event, responses) => {
                 const decompress = JSON.parse(LZString.decompressFromUTF16(responses));
-                store.commit('result/updateResponse', decompress);
+                store.commit('result/responseReceived', decompress);
             }));
         },
     },

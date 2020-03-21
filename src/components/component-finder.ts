@@ -19,17 +19,17 @@ export class ComponentFinder {
             return requisition;
         }
 
-        const foundPublisher = (requisition.publishers || []).filter(publisher => publisher.id === id)[0];
+        const foundPublisher = (requisition.publishers || []).find(publisher => publisher.id === id);
         if (foundPublisher) {
             return foundPublisher;
         }
-        const foundSubscription = (requisition.subscriptions || []).filter(subscription => subscription.id === id)[0];
+        const foundSubscription = (requisition.subscriptions || []).find(subscription => subscription.id === id);
         if (foundSubscription) {
             return foundSubscription;
         }
 
         return (requisition.requisitions || [])
             .map((requisition: any) => this.findIdInRequisition(id, requisition))
-            .filter((component: any) => !!component)[0];
+            .find((component: any) => !!component);
     }
 }

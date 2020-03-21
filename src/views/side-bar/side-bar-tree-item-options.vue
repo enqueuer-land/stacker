@@ -112,7 +112,8 @@
                 {
                     name: () => 'Delete',
                     iconClass: () => 'fas fa-trash',
-                    action: () => {
+                    action: (event) => {
+                        event.stopPropagation();
                         this.deleteComponentById({
                             component: this.component
                         });

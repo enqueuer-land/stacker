@@ -2,11 +2,11 @@ import {CarabinaComponent} from '@/models/carabina-component';
 
 export class ComponentDecycler {
 
-    public decycle(component: CarabinaComponent) {
+    public decycle(component: CarabinaComponent): CarabinaComponent {
         return ComponentDecycler.removeMetadataFromRequisition(component);
     }
 
-    private static removeMetadataFromRequisition(item: CarabinaComponent) {
+    private static removeMetadataFromRequisition(item: CarabinaComponent): CarabinaComponent {
         const clone = ComponentDecycler.removeCarabinaMeta(item);
         if (clone.publishers) {
             clone.publishers = item.publishers.map((publisher: any) => ComponentDecycler.removeCarabinaMeta(publisher));
@@ -20,7 +20,7 @@ export class ComponentDecycler {
         return clone;
     }
 
-    private static removeCarabinaMeta(item: CarabinaComponent): any {
+    private static removeCarabinaMeta(item: CarabinaComponent): CarabinaComponent {
         const clone = Object.assign({}, item);
         if (item) {
             clone.carabinaMeta = Object.assign({}, item.carabinaMeta);

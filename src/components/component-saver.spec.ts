@@ -68,7 +68,20 @@ describe('ComponentSaver', () => {
         expect(itemSaved).toEqual({
             publishers: [item],
             name: item.name,
-            id: expect.any(String)
+            id: expect.any(String),
+            carabinaMeta: {
+                collapsed: false,
+                parent: null,
+                selected: false,
+                type: 'REQUISITION'
+            },
+            delay: 0,
+            ignore: false,
+            iterations: 1,
+            parallel: false,
+            requisitions: [],
+            subscriptions: [],
+            timeout: -1
         });
         expect(mockCall[2]).toEqual(expect.any(Function));
     });
@@ -93,7 +106,19 @@ describe('ComponentSaver', () => {
             timeout: -1,
             subscriptions: [item],
             name: item.name,
-            id: expect.any(String)
+            id: expect.any(String),
+            carabinaMeta: {
+                collapsed: false,
+                parent: null,
+                selected: false,
+                type: 'REQUISITION'
+            },
+            delay: 0,
+            ignore: false,
+            iterations: 1,
+            parallel: false,
+            publishers: [],
+            requisitions: [],
         });
         expect(mockCall[2]).toEqual(expect.any(Function));
     });

@@ -8,9 +8,11 @@ import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentCloner} from '@/components/component-cloner';
 import {CarabinaComponent} from '@/models/carabina-component';
+import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 import requisitionsExample from '@/components/requisitions-example.json';
 
 const sidebarRepository = new Store({name: 'side-bar'});
@@ -53,6 +55,18 @@ const moveComponent = (draggedComponent: any, target: any, draggedComponentParen
     }
 };
 
+//TODO fix bug. It's not working
+function unselectSelectedComponent(stage: any) {
+    if (stage.selectedComponent) {
+        console.log(stage.selectedComponent.name)
+        const foundItem = new ComponentFinder(stage.requisitions).findItem(stage.selectedComponent.id);
+        if (foundItem) {
+            console.log(foundItem.id)
+            foundItem.carabinaMeta.selected = false;
+        }
+    }
+}
+
 //TODO test it
 export default () => ({
     state: {
@@ -62,12 +76,7 @@ export default () => ({
     },
     mutations: {
         componentSelected: (stage: any, component: any) => {
-            if (stage.selectedComponent) {
-                const foundItem = new ComponentFinder(stage.requisitions).findItem(stage.selectedComponent.id);
-                if (foundItem) {
-                    foundItem.carabinaMeta.selected = false;
-                }
-            }
+            unselectSelectedComponent(stage);
             const selected = new ComponentFinder(stage.requisitions).findItem(component.id);
             if (selected) {
                 stage.selectedComponent = component;
@@ -79,10 +88,7 @@ export default () => ({
         addRequisition: (stage: any, requisition: CarabinaRequisition) => {
             if (!new ComponentFinder(stage.requisitions).findItem(requisition.id)) {
                 stage.requisitions.push(requisition);
-                requisition.carabinaMeta.selected = true;
-                if (stage.selectedComponent) {
-                    stage.selectedComponent.carabinaMeta.selected = false;
-                }
+                unselectSelectedComponent(stage);
                 stage.selectedComponent = requisition;
                 Logger.info(`Component '${requisition.name}' loaded`);
             } else {
@@ -132,17 +138,17 @@ export default () => ({
             let clone;
             switch (type) {
                 case ComponentTypes.REQUISITION:
-                    clone = ComponentCloner.cloneRequisition(component, parent);
+                    clone = ComponentCloner.cloneRequisition(component as CarabinaRequisition, parent);
                     if (!parent) {
                         stage.requisitions.push(clone);
                     }
                     break;
                 case ComponentTypes.PUBLISHER:
-                    clone = ComponentCloner.clonePublisher(component, parent);
+                    clone = ComponentCloner.clonePublisher(component as CarabinaPublisher, parent);
                     break;
                 // case ComponentTypes.SUBSCRIPTION:
                 default:
-                    clone = ComponentCloner.cloneSubscription(component, parent);
+                    clone = ComponentCloner.cloneSubscription(component as CarabinaSubscription, parent);
                     break;
             }
             clone.carabinaMeta.selected = false;

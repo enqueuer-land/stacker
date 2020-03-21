@@ -48,7 +48,7 @@ export default () => ({
             stage.enqueuerRunningShowModal = true;
             stage.enqueuerRunningStartTime = new Date().getTime();
         },
-        updateResponse: (stage: any, value: OutputRequisitionModel[]) => {
+        responseReceived: (stage: any, value: OutputRequisitionModel[]) => {
             store.commit('result/disableEnqueuerRunningModal');
 
             stage.responses = value;
