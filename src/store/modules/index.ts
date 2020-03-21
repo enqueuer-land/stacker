@@ -7,11 +7,11 @@ if (process.env.NODE_ENV !== 'test') {
         .forEach(filename => {
 
             // create the module name from fileName
-            // remove the store.js extension and capitalize
+            // remove the store.js extension
             const moduleName: string = filename
                 .replace(/(\.\/|\.store\.ts)/g, '');
 
-            modules[moduleName] = requireModule(filename).default || requireModule(filename);
+            modules[moduleName] = requireModule(filename).default();
             moduleNames.push(moduleName);
         });
 

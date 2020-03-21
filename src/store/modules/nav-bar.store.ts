@@ -20,7 +20,7 @@ const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnviro
 RendererMessageCommunicator.emit('setEnqueuerStore', selectedEnvironment.store);
 
 //TODO test it
-export default {
+export default () => ({
     state: {
         environments: navBarRepository.get('environments', [noEnvironment]),
         selectedEnvironment: selectedEnvironment,
@@ -88,4 +88,4 @@ export default {
         selectedEnvironment: (state: any) => state.selectedEnvironment,
     },
     namespaced: true
-}
+})

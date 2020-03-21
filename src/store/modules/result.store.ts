@@ -12,7 +12,7 @@ function persist(stage: any) {
 }
 
 //TODO test it
-export default {
+export default () => ({
     state: {
         responses: resultRepository.get('responses', [] as OutputRequisitionModel[]),
         flattenTests: resultRepository.get('flattenTests', [] as any[]),
@@ -108,4 +108,4 @@ export default {
         },
     },
     namespaced: true
-}
+})

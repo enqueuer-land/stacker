@@ -6,11 +6,13 @@ import {FileDialog} from '@/components/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
+import {CarabinaComponent} from '@/models/carabina-component';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
-const prepareRequisition = (msg: any) => {
+//TODO extract to new class
+export const prepareComponentToBeRan = (msg: CarabinaComponent) => {
     const type = msg.carabinaMeta.type;
     let decycled = new ComponentDecycler().decycle(msg);
     if (type === ComponentTypes.PUBLISHER) {
@@ -22,7 +24,7 @@ const prepareRequisition = (msg: any) => {
 };
 
 //TODO test it
-export default {
+export default () => ({
     state: {
         plugins: new PluginsLoader().getPlugins(),
         enqueuerLogParser: new EnqueuerLogParser(600, 'INFO'),
@@ -86,8 +88,8 @@ export default {
                 commit('setPlugins', pluginsLoader.getPlugins());
             }
         },
-        runComponent: async (_: any, component: any) => {
-            const decycled = prepareRequisition(component);
+        runComponent: async (_: any, component: CarabinaComponent) => {
+            const decycled = prepareComponentToBeRan(component);
             store.commit('result/runRequisition', decycled);
             RendererMessageCommunicator.emit('runEnqueuer', decycled);
             RendererMessageCommunicator.on('runEnqueuerReply', ((event, responses) => {
@@ -113,4 +115,4 @@ export default {
         },
     },
     namespaced: true
-};
+});

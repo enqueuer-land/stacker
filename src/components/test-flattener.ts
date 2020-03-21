@@ -10,11 +10,11 @@ export type Hierarchy = {
 };
 
 export class TestFlattener {
-    flatten(requisitionModel: RequisitionModel): Hierarchy[] {
+    public flatten(requisitionModel: RequisitionModel): Hierarchy[] {
         return this.goDeep(requisitionModel);
     }
 
-    goDeep(report: ReportModel, hierarchy: Hierarchy[] = []): Hierarchy[] {
+    private goDeep(report: ReportModel, hierarchy: Hierarchy[] = []): Hierarchy[] {
         const tests = Object
             .keys(report.hooks || {})
             .reduce((acc: Hierarchy[], hookName) => {

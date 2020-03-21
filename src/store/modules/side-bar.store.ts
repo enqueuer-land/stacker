@@ -7,9 +7,10 @@ import {ComponentFinder} from '@/components/component-finder';
 import {ComponentParent} from '@/components/component-parent';
 import {ComponentLoader} from '@/components/component-loader';
 import {ComponentCloner} from '@/components/component-cloner';
+import {CarabinaComponent} from '@/models/carabina-component';
 import {ComponentFactory} from '@/components/component-factory';
-import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {ComponentDecycler} from '@/components/component-decycler';
+import {CarabinaRequisition} from '@/models/carabina-requisition';
 import requisitionsExample from '@/components/requisitions-example.json';
 
 const sidebarRepository = new Store({name: 'side-bar'});
@@ -22,7 +23,7 @@ function persist(stage: any) {
 const initialRequisitions = sidebarRepository.get('requisitions', requisitionsExample)
     .map((requisition: any) => ComponentLoader.loadRequisition(requisition));
 
-let initialSelectedComponent = null;
+let initialSelectedComponent: CarabinaComponent | undefined;
 const initialSelectedComponentId = sidebarRepository.get('selectedComponentId', null);
 if (initialSelectedComponentId) {
     initialSelectedComponent = new ComponentFinder(initialRequisitions).findItem(initialSelectedComponentId);
@@ -53,7 +54,7 @@ const moveComponent = (draggedComponent: any, target: any, draggedComponentParen
 };
 
 //TODO test it
-export default {
+export default () => ({
     state: {
         textFilter: '',
         requisitions: initialRequisitions,
@@ -230,4 +231,4 @@ export default {
         }
     },
     namespaced: true
-}
+});
