@@ -55,13 +55,10 @@ const moveComponent = (draggedComponent: any, target: any, draggedComponentParen
     }
 };
 
-//TODO fix bug. It's not working
 function unselectSelectedComponent(stage: any) {
     if (stage.selectedComponent) {
-        console.log(stage.selectedComponent.name)
         const foundItem = new ComponentFinder(stage.requisitions).findItem(stage.selectedComponent.id);
         if (foundItem) {
-            console.log(foundItem.id)
             foundItem.carabinaMeta.selected = false;
         }
     }
@@ -90,6 +87,7 @@ export default () => ({
                 stage.requisitions.push(requisition);
                 unselectSelectedComponent(stage);
                 stage.selectedComponent = requisition;
+                requisition.carabinaMeta.selected = true;
                 Logger.info(`Component '${requisition.name}' loaded`);
             } else {
                 Logger.info(`Component ${requisition.name} is already opened`);

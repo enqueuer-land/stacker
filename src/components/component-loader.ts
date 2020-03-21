@@ -73,6 +73,7 @@ export class ComponentLoader {
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
         defaultRequisition = Object.assign({}, defaultRequisition, rawRequisition);
         defaultRequisition.carabinaMeta = Object.assign({}, carabinaMetaBkp, rawRequisition.carabinaMeta);
+        defaultRequisition.carabinaMeta.selected = false;
 
         defaultRequisition.requisitions = (rawRequisition.requisitions || [])
             .map((requisition: any) => ComponentLoader.loadRequisition(requisition, defaultRequisition));
@@ -88,6 +89,7 @@ export class ComponentLoader {
         const carabinaMetaBkp = defaultPublisher.carabinaMeta;
         defaultPublisher = Object.assign({}, defaultPublisher, component);
         defaultPublisher.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
+        defaultPublisher.carabinaMeta.selected = false;
         return defaultPublisher;
     }
 
@@ -96,6 +98,7 @@ export class ComponentLoader {
         const carabinaMetaBkp = defaultSubscription.carabinaMeta;
         defaultSubscription = Object.assign({}, defaultSubscription, component);
         defaultSubscription.carabinaMeta = Object.assign({}, carabinaMetaBkp, component.carabinaMeta);
+        defaultSubscription.carabinaMeta.selected = false;
         return defaultSubscription;
     }
 

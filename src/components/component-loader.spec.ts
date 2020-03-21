@@ -33,16 +33,18 @@ describe('ComponentLoader', () => {
             .toEqual({
                 collapsed: true,
                 type: 'REQUISITION',
-                selected: true,
+                selected: false,
                 parent: undefined
             });
         expect(requisition.delay).toBe(0);
         expect(requisition.id).toBeDefined();
         expect(requisition.name).toBe('grandRequisition');
+        expect(requisition.carabinaMeta.selected).toBeFalsy();
         expect(requisition.requisitions.length).toBe(1);
         expect(requisition.publishers.length).toBe(1);
 
         expect(requisition.requisitions[0].carabinaMeta.type).toBe('REQUISITION');
+        expect(requisition.requisitions[0].carabinaMeta.selected).toBeFalsy();
         expect(requisition.requisitions[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.requisitions[0].name).toBe('requisition');
         expect(requisition.requisitions[0].id).toBeDefined();
@@ -51,11 +53,13 @@ describe('ComponentLoader', () => {
         expect(requisition.requisitions[0].subscriptions.length).toBe(0);
 
         expect(requisition.publishers[0].carabinaMeta.type).toBe('PUBLISHER');
+        expect(requisition.publishers[0].carabinaMeta.selected).toBeFalsy();
         expect(requisition.publishers[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.publishers[0].id).toBeDefined();
         expect(requisition.publishers[0].name).toBe('publisher');
 
         expect(requisition.subscriptions[0].carabinaMeta.type).toBe('SUBSCRIPTION');
+        expect(requisition.subscriptions[0].carabinaMeta.selected).toBeFalsy();
         expect(requisition.subscriptions[0].carabinaMeta.parent!.id).toBe(requisition.id);
         expect(requisition.subscriptions[0].id).toBeDefined();
         expect(requisition.subscriptions[0].name).toBe('subscription');
@@ -79,7 +83,7 @@ describe('ComponentLoader', () => {
             .toEqual({
                 carabinaMeta: {
                     collapsed: true,
-                    selected: true,
+                    selected: false,
                     type: 'REQUISITION'
                 },
                 delay: 0,
