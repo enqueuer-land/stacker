@@ -40,6 +40,9 @@ export default () => ({
         removeInstallingPluginModal: (stage: any) => {
             stage.installingPluginModal = false;
         },
+        setPlugins: (stage: any, data: any) => {
+            stage.plugins = data;
+        },
         runCurrentlySelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
             store.dispatch('stage/runComponent', selectedComponent)
@@ -52,9 +55,6 @@ export default () => ({
             store.dispatch('stage/runComponent', highestParent)
                 .then(() => {/* do nothing */
                 });
-        },
-        setPlugins: (stage: any, data: any) => {
-            stage.plugins = data;
         },
     },
     actions: {
@@ -90,7 +90,6 @@ export default () => ({
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
         currentLogLevel: (state: any) => state.enqueuerLogParser.getPriorityFilterName(),
         installingPluginModal: (state: any) => state.installingPluginModal,
-        environments: (state: any) => state.environments,
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {
             switch (componentType) {
                 case ComponentTypes.PUBLISHER:
