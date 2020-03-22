@@ -25,54 +25,13 @@
     import '@/styles/icons.css';
     import '@/styles/texts.css';
     import {mapGetters, mapMutations} from 'vuex';
+    import stageFooterOptionIcons from '@/icons/stage-footer-option-actions';
 
     export default Vue.extend({
         name: 'StageFooterOptions',
         data: function () {
             return {
-                actions: [
-                    {
-                        name: 'Decrease log level filter',
-                        iconClass: 'fas fa-minus',
-                        action: () => {
-                            this.decreaseLogFilterLevel();
-                        }
-                    },
-                    {
-                        name: 'Increase log level filter',
-                        iconClass: 'fas fa-plus',
-                        action: () => {
-                            this.increaseLogFilterLevel();
-                        }
-                    },
-                    {
-                        divider: true
-                    },
-                    {
-                        name: 'Expand log window',
-                        iconClass: 'fas fa-expand',
-                        action: () => {
-                            this.$emit('expandWindow');
-                        }
-                    },
-                    {
-                        name: 'Collapse log window',
-                        iconClass: 'fas fa-compress',
-                        action: () => {
-                            this.$emit('compressWindow');
-                        }
-                    },
-                    {
-                        divider: true
-                    },
-                    {
-                        name: 'Clear logs',
-                        iconClass: 'fas fa-ban',
-                        action: () => {
-                            this.clearLogs();
-                        }
-                    },
-                ]
+                actions: stageFooterOptionIcons(this)
             }
         },
         methods: {

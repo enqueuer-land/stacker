@@ -26,9 +26,16 @@ const initialRequisitions = sidebarRepository.get('requisitions', requisitionsEx
     .map((requisition: any) => ComponentLoader.loadRequisition(requisition));
 
 let initialSelectedComponent: CarabinaComponent | undefined;
-const initialSelectedComponentId = sidebarRepository.get('selectedComponentId', null);
+let initialSelectedComponentId = sidebarRepository.get('selectedComponentId', null);
 if (initialSelectedComponentId) {
     initialSelectedComponent = new ComponentFinder(initialRequisitions).findItem(initialSelectedComponentId);
+    if (initialSelectedComponent) {
+        initialSelectedComponent.carabinaMeta.selected = true;
+    }
+} else if (initialRequisitions[0]) {
+    initialSelectedComponent = initialRequisitions[0];
+    initialSelectedComponentId = initialSelectedComponent!.id;
+    initialSelectedComponent!.carabinaMeta.selected = true;
 }
 
 //TODO Move to another class

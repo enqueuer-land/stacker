@@ -41,7 +41,7 @@
             "x-header-key": "headerValue"
           },
           "status": 200,
-          "payload": "{\"stacker\": \"rocks\"}"
+          "payload": "{\n\t\"stacker\": \"rocks\"\n}"
         },
         "name": "Example subscription",
         "onMessageReceived": {
