@@ -1,4 +1,3 @@
-//TODO test it
 const stageFooterOptionIcons = (stageFooterOptions: any) => [
     {
         name: 'Decrease log level filter',

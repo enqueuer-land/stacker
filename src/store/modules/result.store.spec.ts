@@ -188,6 +188,24 @@ describe('StageStore', () => {
             .toEqual([]);
     });
 
+    it('should get filteredFlattenTests with active iconFilters', () => {
+        const state: any = {
+            textFilter: 'textFilter',
+            iconFilters: [{active: true, filter: () => true}],
+            flattenTests: [{name: 'textFilter'}]
+        };
+
+        expect(resultStore.default().getters.filteredFlattenTests(state))
+            .toEqual([
+                {
+                    carabinaMeta: {
+                        flattenIndex: 0
+                    },
+                    name: 'textFilter'
+                }
+            ]);
+    });
+
     it('should get summary', () => {
         const state: any = {
             flattenTests: [{ignored: true}, {valid: true}, {valid: false}]
