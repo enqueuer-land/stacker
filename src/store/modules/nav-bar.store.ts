@@ -6,8 +6,7 @@ import {EnvironmentSaver} from '@/environments/environment-saver';
 import {CarabinaEnvironment} from '@/models/carabina-environment';
 import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
 
-const navBarRepository = new Store({name: 'nav-bar'});
-
+let navBarRepository: any;
 const noEnvironment: CarabinaEnvironment = {name: 'No environment', role: 'none', store: {}};
 
 function persist(stage: any) {
@@ -16,76 +15,81 @@ function persist(stage: any) {
     navBarRepository.set('selectedEnvironment', stage.selectedEnvironment);
 }
 
-const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
-RendererMessageCommunicator.emit('setEnqueuerStore', selectedEnvironment.store);
+function initialize() {
+    navBarRepository = new Store({name: 'nav-bar'});
+    const selectedEnvironment = navBarRepository.get('selectedEnvironment', noEnvironment);
+    RendererMessageCommunicator.emit('setEnqueuerStore', selectedEnvironment.store);
+    return selectedEnvironment;
+}
 
-//TODO test it
-export default () => ({
-    state: {
-        environments: navBarRepository.get('environments', [noEnvironment]),
-        selectedEnvironment: selectedEnvironment,
-    },
-    mutations: {
-        environmentSelected: (stage: any, environment: any) => {
-            stage.selectedEnvironment = {...environment};
-            persist(stage);
+export default () => {
+    initialize();
+    return {
+        state: {
+            environments: navBarRepository.get('environments', [noEnvironment]),
+            selectedEnvironment: initialize(),
         },
-        changeSelectedEnvironmentStore: (stage: any, payload: any) => {
-            const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
-            environment.store = payload.store;
-            stage.selectedEnvironment = {...environment};
-            persist(stage);
+        mutations: {
+            environmentSelected: (stage: any, environment: any) => {
+                stage.selectedEnvironment = {...environment};
+                persist(stage);
+            },
+            changeSelectedEnvironmentStore: (stage: any, payload: any) => {
+                const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
+                environment.store = payload.store;
+                stage.selectedEnvironment = {...environment};
+                persist(stage);
+            },
+            changeSelectedEnvironmentName: (stage: any, payload: any) => {
+                const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
+                environment.name = payload.name;
+                stage.selectedEnvironment = {...environment};
+                persist(stage);
+            },
+            deleteEnvironment: (stage: any, payload: any) => {
+                stage.environments = stage.environments.filter((item: any) => item.id !== payload.environment.id);
+                if (stage.selectedEnvironment.id === payload.environment.id) {
+                    stage.selectedEnvironment = {...noEnvironment};
+                }
+                persist(stage);
+            },
+            cloneEnvironment: (stage: any, payload: any) => {
+                const clone = {...payload.environment, id: new IdCreator().create()};
+                stage.environments.push(clone);
+                persist(stage);
+            },
+            addNewEnvironment: (stage: any) => {
+                const environment = {
+                    name: `New Environment ${stage.environments.length}`,
+                    id: new IdCreator().create(),
+                    store: {}
+                };
+                stage.environments.push(environment);
+                stage.selectedEnvironment = {...environment};
+                persist(stage);
+            },
+            addEnvironment: (stage: any, payload: any) => {
+                stage.environments.push(payload);
+                const lastEnvironment = stage.environments[stage.environments.length - 1];
+                stage.selectedEnvironment = {...lastEnvironment};
+                persist(stage);
+            },
+            saveEnvironment: (stage: any, payload: any) => {
+                FileDialog
+                    .showSaveDialog(payload.environment.name + '.nqr.env.yml')
+                    .then(filename => {
+                        if (filename) {
+                            new EnvironmentSaver()
+                                .save(filename, payload.environment)
+                                .then(() => Logger.info(`Environment '${payload.environment.name}' saved as '${filename}`));
+                        }
+                    });
+            },
         },
-        changeSelectedEnvironmentName: (stage: any, payload: any) => {
-            const environment = stage.environments.find((item: any) => item.id === payload.environment.id);
-            environment.name = payload.name;
-            stage.selectedEnvironment = {...environment};
-            persist(stage);
+        getters: {
+            environments: (state: any) => state.environments,
+            selectedEnvironment: (state: any) => state.selectedEnvironment,
         },
-        deleteEnvironment: (stage: any, payload: any) => {
-            stage.environments = stage.environments.filter((item: any) => item.id !== payload.environment.id);
-            if (stage.selectedEnvironment.id === payload.environment.id) {
-                stage.selectedEnvironment = {...noEnvironment};
-            }
-            persist(stage);
-        },
-        cloneEnvironment: (stage: any, payload: any) => {
-            const clone = {...payload.environment, id: new IdCreator().create()};
-            stage.environments.push(clone);
-            persist(stage);
-        },
-        addNewEnvironment: (stage: any) => {
-            const environment = {
-                name: `New Environment ${stage.environments.length}`,
-                id: new IdCreator().create(),
-                store: {}
-            };
-            stage.environments.push(environment);
-            stage.selectedEnvironment = {...environment};
-            persist(stage);
-        },
-        addEnvironment: (stage: any, payload: any) => {
-            stage.environments.push(payload);
-            const lastEnvironment = stage.environments[stage.environments.length - 1];
-            stage.selectedEnvironment = {...lastEnvironment};
-            persist(stage);
-        },
-        saveEnvironment: (stage: any, payload: any) => {
-            FileDialog
-                .showSaveDialog(payload.environment.name + '.nqr.env.yml')
-                .then(filename => {
-                    if (filename) {
-                        new EnvironmentSaver()
-                            .save(filename, payload.environment)
-                            .then(() => Logger.info(`Environment '${payload.environment.name}' saved as '${filename}`));
-                    }
-                });
-        },
-    },
-    actions: {},
-    getters: {
-        environments: (state: any) => state.environments,
-        selectedEnvironment: (state: any) => state.selectedEnvironment,
-    },
-    namespaced: true
-})
+        namespaced: true
+    }
+};

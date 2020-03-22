@@ -137,8 +137,8 @@
       "global": {
         "statements": 55,
         "branches": 45,
-        "functions": 50,
-        "lines": 55
+        "functions": 55,
+        "lines": 60
       }
     },
     "coverageReporters": ["text"]
