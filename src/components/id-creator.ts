@@ -6,7 +6,7 @@ export class IdCreator {
         this.possible = possible;
     }
 
-    public create = (length = 30): string => {
+    public create(length = 30): string {
         let text = 'ID';
 
         for (let i = length - text.length; i > 0; --i) {

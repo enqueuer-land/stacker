@@ -1,6 +1,6 @@
 import * as os from 'os';
 import * as fs from 'fs';
-//TODO benchmark with https://www.npmjs.com/package/lzutf8
+// benchmark with https://www.npmjs.com/package/lzutf8
 import LZString from 'lz-string';
 import {ChildProcess, exec, spawn} from 'child_process';
 import {InputRequisitionModel, OutputRequisitionModel} from 'enqueuer';

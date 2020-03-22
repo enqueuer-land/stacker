@@ -15,6 +15,7 @@ import {ComponentDecycler} from '@/components/component-decycler';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {CarabinaSubscription} from '@/models/carabina-subscription';
 import requisitionsExample from '@/components/requisitions-example.json';
+import {ComponentDragger} from "@/components/component-dragger";
 
 const sidebarRepository = new Store({name: 'side-bar'});
 
@@ -38,30 +39,6 @@ if (initialSelectedComponentId) {
     initialSelectedComponentId = initialSelectedComponent!.id;
     initialSelectedComponent!.carabinaMeta.selected = true;
 }
-
-//TODO Move to another class
-const moveComponent = (draggedComponent: any, target: any, draggedComponentParent: any) => {
-    switch (draggedComponent.carabinaMeta.type) {
-        case ComponentTypes.REQUISITION:
-            draggedComponentParent.requisitions = draggedComponentParent.requisitions
-                .filter((item: any) => item.id !== draggedComponent.id);
-
-            target.requisitions.push(draggedComponent);
-            break;
-        case ComponentTypes.PUBLISHER:
-            draggedComponentParent.publishers = draggedComponentParent.publishers
-                .filter((item: any) => item.id !== draggedComponent.id);
-
-            target.publishers.push(draggedComponent);
-            break;
-        case ComponentTypes.SUBSCRIPTION:
-            draggedComponentParent.subscriptions = draggedComponentParent.subscriptions
-                .filter((item: any) => item.id !== draggedComponent.id);
-
-            target.subscriptions.push(draggedComponent);
-            break;
-    }
-};
 
 function unselectSelectedComponent(stage: any) {
     if (stage.selectedComponent) {
@@ -160,32 +137,20 @@ export default () => ({
             clone.carabinaMeta.selected = false;
             persist(stage);
         },
-        //TODO Move to another class
         componentDragAndDrop: (stage: any, event: any) => {
             let target = new ComponentFinder(stage.requisitions).findItem(event.drag.to.id);
             const draggedComponent = event.component;
+            const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
+            const componentDragger = new ComponentDragger(draggedComponent, draggedComponentParent);
             if (!target) {
-                const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
-                if (draggedComponent.carabinaMeta.type === ComponentTypes.REQUISITION) {
-                    draggedComponentParent.requisitions = draggedComponentParent.requisitions
-                        .filter((item: any) => item.id !== draggedComponent.id);
-
-                    delete draggedComponent.carabinaMeta.parent;
+                if (componentDragger.moveToRoot()) {
                     stage.requisitions.push(draggedComponent);
                 }
             } else {
-                if (new ComponentParent(target).isGrandChildOf(draggedComponent) ||
-                    target.id === draggedComponent.id) {
-                    return;
-                }
-                const draggedComponentParent = draggedComponent.carabinaMeta.parent || stage;
-                if (target.carabinaMeta.type === ComponentTypes.REQUISITION) {
-                    moveComponent(draggedComponent, target, draggedComponentParent);
-                } else {
+                if (target.carabinaMeta.type !== ComponentTypes.REQUISITION) {
                     target = target.carabinaMeta.parent;
-                    moveComponent(draggedComponent, target, draggedComponentParent);
                 }
-                draggedComponent.carabinaMeta.parent = target;
+                componentDragger.moveToComponent(target as CarabinaRequisition);
             }
             persist(stage);
         },
