@@ -64,9 +64,9 @@ export default () => {
         mutations: {
             filterTextChanged: (stage: any, value: string) => stage.textFilter = value,
             selectComponentById: (stage: any, id: string) => {
-                unselectSelectedComponent(stage);
                 const selected = new ComponentFinder(stage.requisitions).findItem(id);
                 if (selected) {
+                    unselectSelectedComponent(stage);
                     stage.selectedComponent = selected;
                     stage.selectedComponent.carabinaMeta.selected = true;
                 }

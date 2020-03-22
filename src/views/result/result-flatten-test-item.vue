@@ -9,8 +9,13 @@
                 <i v-else class="fas fa-times  carabina-icon" style="color: var(--carabina-failing-test-color)"></i>
             </b-col>
             <b-col cols="10" class="align-self-center mx-1">
-                <b-breadcrumb class="m-0 p-1 carabina-text" :style="breadcrumbStyle"
-                              :items="test.hierarchy.map(hierarchy => hierarchy.name).filter((name, index, vec) => !collapsed ? true : (vec.length - index <= 2 ))">
+                <b-breadcrumb class="m-0 p-1 carabina-text" :style="breadcrumbStyle">
+                    <b-breadcrumb-item
+                            v-for="item in test.hierarchy.map(hierarchy => hierarchy).filter((name, index, vec) => !collapsed ? true : (vec.length - index <= 2 ))"
+                            :style="breadcrumbItemStyle(item)"
+                            :key="item.id" @click="selectComponentById(item.id)">
+                        {{item.name}}
+                    </b-breadcrumb-item>
                 </b-breadcrumb>
                 <div class="pl-1 pt-1 carabina-text" :style="textStyle" @dblclick="collapsed = !collapsed">
                     {{test.name || "Skipped"}}
@@ -43,7 +48,8 @@
     import Vue from 'vue';
     import '@/styles/texts.css'
     import '@/styles/icons.css'
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapMutations} from 'vuex';
+    import {ComponentTypes} from "@/components/component-types";
 
     export default Vue.extend({
         name: 'ResultFlattenTestItem',
@@ -72,6 +78,22 @@
                 }
                 return style;
             },
+            breadcrumbItemStyle: function () {
+                return function (item) {
+                    const style = {};
+                    console.log(item.type);
+                    if (item.type === ComponentTypes.REQUISITION) {
+                        style.color = 'var(--carabina-requisition-color) !important';
+                    } else if (item.type === ComponentTypes.PUBLISHER) {
+                        style.color = 'var(--carabina-publisher-color) !important';
+                    } else if (item.type === ComponentTypes.SUBSCRIPTION) {
+                        style.color = 'var(--carabina-subscription-color) !important';
+                    } else {
+                        style.color = 'var(--carabina-text-darker-color) !important';
+                    }
+                    return style;
+                }
+            },
             textStyle: function () {
                 const style = {
                     color: 'var(--carabina-text-color)'
@@ -83,6 +105,7 @@
             }
         },
         methods: {
+            ...mapMutations('side-bar', ['selectComponentById']),
             syntaxHighlight: function (value) {
                 let json = value;
                 if (typeof json != 'string') {
@@ -126,7 +149,7 @@
     }
 
     .breadcrumb-item a {
-        color: var(--carabina-requisition-color);
+        color: unset;
         text-decoration: none;
     }
 

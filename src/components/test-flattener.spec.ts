@@ -1,9 +1,11 @@
 import {TestFlattener} from '@/components/test-flattener';
+import {ComponentTypes} from '@/components/component-types';
 
 describe('TestFlattener', () => {
     it('Flattens requisitions', () => {
         const requisition: any = {
             name: 'requisition',
+            id: 'requisition',
             valid: true,
             hooks: {
                 onHook: {
@@ -87,8 +89,10 @@ describe('TestFlattener', () => {
         const requisition: any = {
             name: 'requisition',
             valid: true,
+            id: 'requisition',
             publishers: [{
                 name: 'publisher',
+                id: 'publisher',
                 hooks: {
                     onHook: {
                         valid: true,
@@ -108,7 +112,9 @@ describe('TestFlattener', () => {
                 description: 'description',
                 hierarchy: [
                     {
-                        name: 'publisher'
+                        id: 'publisher',
+                        name: 'publisher',
+                        type: ComponentTypes.PUBLISHER
                     },
                     {
                         id: expect.any(String),
@@ -147,7 +153,8 @@ describe('TestFlattener', () => {
                 description: 'description',
                 hierarchy: [
                     {
-                        name: 'subscription'
+                        name: 'subscription',
+                        type: ComponentTypes.SUBSCRIPTION
                     },
                     {
                         id: expect.any(String),
@@ -188,7 +195,8 @@ describe('TestFlattener', () => {
                 description: 'description',
                 hierarchy: [
                     {
-                        name: 'requisition [3]'
+                        name: 'requisition [3]',
+                        type: ComponentTypes.REQUISITION
                     },
                     {
                         id: expect.any(String),

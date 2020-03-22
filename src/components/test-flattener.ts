@@ -1,4 +1,5 @@
 import {IdCreator} from '@/components/id-creator';
+import {ComponentTypes} from '@/components/component-types';
 import {OutputRequisitionModel as RequisitionModel} from 'enqueuer';
 import {ReportModel} from 'enqueuer/js/models/outputs/report-model';
 
@@ -36,15 +37,22 @@ export class TestFlattener {
     }
 
     private getNestedTests(report: ReportModel, hierarchy: Hierarchy[]): Hierarchy[] {
-        const subComponents: ReportModel[] = (report.subscriptions || [])
-            .concat(report.publishers || [])
-            .concat(report.requisitions || []);
+        const subscriptions: ReportModel[] = (report.subscriptions || []);
+        const publishers: ReportModel[] = (report.publishers || []);
+        const requisitions: ReportModel[] = (report.requisitions || []);
 
-        return subComponents
+        return this.getSubComponentHierarchies(subscriptions, hierarchy, ComponentTypes.SUBSCRIPTION)
+            .concat(this.getSubComponentHierarchies(publishers, hierarchy, ComponentTypes.PUBLISHER))
+            .concat(this.getSubComponentHierarchies(requisitions, hierarchy, ComponentTypes.REQUISITION));
+    }
+
+    private getSubComponentHierarchies(tests: ReportModel[], hierarchy: Hierarchy[], type: ComponentTypes) {
+        return tests
             .reduce((acc: Hierarchy[], component: ReportModel) => {
                 const iterationCounter = (component.totalIterations > 1) ? ` [${component.iteration}]` : '';
                 return acc.concat(this.goDeep(component, hierarchy
                     .concat({
+                        type,
                         id: component.id,
                         name: component.name + iterationCounter,
                     })));
