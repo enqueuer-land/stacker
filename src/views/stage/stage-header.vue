@@ -1,8 +1,11 @@
 <template>
     <b-container fluid id="stage-header" style="padding: 0 !important;">
         <div class="px-1 pt-3 m-0" style="width: 100%; height: 35%">
-            <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px"
-                          :items="breadcrumbItems"></b-breadcrumb>
+            <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px">
+                <b-breadcrumb-item v-for="item in breadcrumbItems" :key="item.id" @click="item.click()">
+                    {{item.text}}
+                </b-breadcrumb-item>
+            </b-breadcrumb>
         </div>
         <b-row class="px-2" style="height: 50%" no-gutters>
             <b-col cols="auto" class="align-self-center">
@@ -13,7 +16,8 @@
                         :color="componentColor"
                         :availableList="protocolsOfComponentList(component.carabinaMeta.type)"></DropdownSelector>
             </b-col>
-            <b-col :cols="component.carabinaMeta.type !== 'REQUISITION' ? 8 : 10" class="align-self-center mt-1 mr-auto">
+            <b-col :cols="component.carabinaMeta.type !== 'REQUISITION' ? 8 : 10"
+                   class="align-self-center mt-1 mr-auto">
                 <stacker-input id="component-name" placeholder="Component name" type="text"
                                :fill-width="true"
                                @input="(value) => $parent.updateAttribute('name', value)"
@@ -45,7 +49,10 @@
             component: Object
         },
         methods: {
-            ...mapActions('stage', ['runComponent'])
+            ...mapActions('stage', ['runComponent']),
+            breadcrumbClick: function (event) {
+                console.log(event);
+            }
         },
         computed: {
             ...mapGetters('side-bar', ['breadcrumbItems']),

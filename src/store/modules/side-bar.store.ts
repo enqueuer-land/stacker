@@ -1,3 +1,4 @@
+import store from '@/store';
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
 import {FileDialog} from '@/renderer/file-dialog';
@@ -187,7 +188,13 @@ export default () => {
                 let parent = state.selectedComponent;
                 while (parent.carabinaMeta && parent.carabinaMeta.parent) {
                     parent = parent.carabinaMeta.parent;
-                    result.push({text: parent.name, href: '#', id: parent.id});
+                    result.push({
+                        text: parent.name,
+                        id: parent.id,
+                        click: function () {
+                            store.commit('side-bar/selectComponentById', this.id)
+                        }
+                    });
                 }
                 return result.reverse();
             }

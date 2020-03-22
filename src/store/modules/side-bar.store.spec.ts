@@ -92,12 +92,12 @@ describe('SideBarStore', () => {
         const items = sideBarStore.default().getters.breadcrumbItems(stage);
         expect(items).toEqual([
             {
-                href: '#',
+                click: expect.any(Function),
                 id: '3',
                 text: '3'
             },
             {
-                href: '#',
+                click: expect.any(Function),
                 id: '2',
                 text: '2'
             }
