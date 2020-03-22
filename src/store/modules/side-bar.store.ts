@@ -9,6 +9,7 @@ import {ComponentLoader} from '@/components/component-loader';
 import {ComponentCloner} from '@/components/component-cloner';
 import {CarabinaComponent} from '@/models/carabina-component';
 import {CarabinaPublisher} from '@/models/carabina-publisher';
+import {ComponentDeleter} from '@/components/component-deleter';
 import {ComponentFactory} from '@/components/component-factory';
 import {ComponentDecycler} from '@/components/component-decycler';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
@@ -199,7 +200,6 @@ export default () => ({
                     }
                 })
         },
-        //TODO Move to another class
         deleteComponentById: (stage: any, event: any) => {
             stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
             if (stage.selectedComponent) {
@@ -207,21 +207,7 @@ export default () => ({
                     stage.selectedComponent = null;
                 }
             }
-            const parent = event.component.carabinaMeta.parent;
-            if (parent) {
-                parent.requisitions = parent.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
-                parent.publishers = parent.publishers.filter((publisher: any) => publisher.id !== event.component.id);
-                parent.subscriptions = parent.subscriptions.filter((subscription: any) => subscription.id !== event.component.id);
-            }
-            if (event.component.subscriptions) {
-                event.component.subscriptions = event.component.subscriptions.filter((subscription: any) => subscription.id !== event.component.id);
-            }
-            if (event.component.publishers) {
-                event.component.publishers = event.component.publishers.filter((publisher: any) => publisher.id !== event.component.id);
-            }
-            if (event.component.requisitions) {
-                event.component.requisitions = event.component.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
-            }
+            new ComponentDeleter(event.component).delete();
             persist(stage);
         },
     },
