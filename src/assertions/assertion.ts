@@ -1,4 +1,4 @@
-import {availableAssertions} from '@/components/available-assertions';
+import {availableAssertions} from '@/assertions/available-assertions';
 
 type AssertionType = {
     //expect

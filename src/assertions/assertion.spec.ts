@@ -1,4 +1,4 @@
-import {Assertion} from '@/components/assertion';
+import {Assertion} from '@/assertions/assertion';
 
 describe('Assertion', () => {
     it('should not parse unknown', () => {

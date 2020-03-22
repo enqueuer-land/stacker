@@ -52,8 +52,8 @@
     import '@/styles/texts.css';
     import '@/styles/icons.css';
     import '@/styles/dropdown.css';
-    import {availableAssertions} from '@/components/available-assertions';
-    import {Assertion} from '@/components/assertion';
+    import {availableAssertions} from '@/assertions/available-assertions';
+    import {Assertion} from '@/assertions/assertion';
 
     export default Vue.extend({
         name: 'Assertion',
