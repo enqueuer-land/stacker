@@ -1,6 +1,5 @@
 import {OutputTestModel} from 'enqueuer';
 
-//TODO test it
 const resultIconFilters = [
     {
         active: true,
