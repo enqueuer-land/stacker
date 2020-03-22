@@ -12,6 +12,7 @@ describe('MenuTemplate', () => {
         const menu = menuTemplate.default(window);
         const file = menu[1];
         const fileNew = file.submenu![0];
+
         // @ts-ignore
         const newRequisition = fileNew.submenu[0];
         newRequisition.click();
@@ -24,7 +25,7 @@ describe('MenuTemplate', () => {
             label: 'New...',
             submenu: expect.any(Array)
         });
-        // @ts-ignore
+
         expect(newRequisition).toEqual({
             accelerator: 'CommandOrControl+N',
             click: expect.any(Function),
@@ -35,11 +36,12 @@ describe('MenuTemplate', () => {
 
     it('should render file -> new -> publisher', () => {
         const menu = menuTemplate.default(window);
+
         // @ts-ignore
         const newPublisher = menu[1].submenu![0].submenu[1];
         newPublisher.click();
 
-        // @ts-ignore
+
         expect(newPublisher).toEqual({
             accelerator: 'CommandOrControl+P',
             click: expect.any(Function),
@@ -50,11 +52,12 @@ describe('MenuTemplate', () => {
 
     it('should render file -> new -> subscription', () => {
         const menu = menuTemplate.default(window);
+
         // @ts-ignore
         const newSubscription = menu[1].submenu![0].submenu[2];
         newSubscription.click();
 
-        // @ts-ignore
+
         expect(newSubscription).toEqual({
             accelerator: 'CommandOrControl+S',
             click: expect.any(Function),
@@ -66,8 +69,8 @@ describe('MenuTemplate', () => {
     it('should render file -> open component', () => {
         const menu = menuTemplate.default(window);
         const openComponent = menu[1].submenu![1];
-        // @ts-ignore
-        openComponent.click();
+
+        openComponent.click!();
 
         expect(openComponent).toEqual({
             accelerator: 'CommandOrControl+O',
@@ -80,8 +83,8 @@ describe('MenuTemplate', () => {
     it('should render file -> open environment', () => {
         const menu = menuTemplate.default(window);
         const openEnvironment = menu[1].submenu![2];
-        // @ts-ignore
-        openEnvironment.click();
+
+        openEnvironment.click!();
 
         expect(openEnvironment).toEqual({
             click: expect.any(Function),
@@ -90,26 +93,14 @@ describe('MenuTemplate', () => {
         expect(sendMock).toHaveBeenCalledWith('openEnvironment');
     });
 
-    it('should render file -> load plugin', () => {
-        const menu = menuTemplate.default(window);
-        const loadPlugin = menu[1].submenu![3];
-        // @ts-ignore
-        loadPlugin.click();
-
-        expect(loadPlugin).toEqual({
-            click: expect.any(Function),
-            label: 'Load plugin'
-        });
-        expect(sendMock).toHaveBeenCalledWith('loadPlugin');
-    });
-
     it('should render file -> import -> postman -> collection', () => {
         const menu = menuTemplate.default(window);
-        // @ts-ignore
-        const postmanCollection = menu[1].submenu![5].submenu![0].submenu![0];
-        postmanCollection.click();
 
         // @ts-ignore
+        const postmanCollection = menu[1].submenu[4].submenu[0].submenu[0];
+        postmanCollection.click();
+
+
         expect(postmanCollection).toEqual({
             click: expect.any(Function),
             label: 'Collection'
@@ -119,11 +110,11 @@ describe('MenuTemplate', () => {
 
     it('should render file -> import -> postman -> environment', () => {
         const menu = menuTemplate.default(window);
-        // @ts-ignore
-        const postmanEnvironment = menu[1].submenu![5].submenu![0].submenu![1];
-        postmanEnvironment.click();
 
         // @ts-ignore
+        const postmanEnvironment = menu[1].submenu[4].submenu[0].submenu[1];
+        postmanEnvironment.click();
+
         expect(postmanEnvironment).toEqual({
             click: expect.any(Function),
             label: 'Environment'
@@ -135,7 +126,7 @@ describe('MenuTemplate', () => {
         const menu = menuTemplate.default(window);
         const editMenu = menu[2];
 
-        // @ts-ignore
+
         expect(editMenu).toEqual({
             role: 'editMenu',
         });
@@ -145,7 +136,7 @@ describe('MenuTemplate', () => {
         const menu = menuTemplate.default(window);
         const viewMenu = menu[3];
 
-        // @ts-ignore
+
         expect(viewMenu).toEqual({
             role: 'viewMenu',
         });
@@ -154,10 +145,9 @@ describe('MenuTemplate', () => {
     it('should render run -> Run component', () => {
         const menu = menuTemplate.default(window);
         const runComponent = menu[4].submenu![0];
-        // @ts-ignore
-        runComponent.click();
 
-        // @ts-ignore
+        runComponent.click!();
+
         expect(runComponent).toEqual({
             accelerator: 'CmdOrCtrl+Return',
             click: expect.any(Function),
@@ -169,10 +159,9 @@ describe('MenuTemplate', () => {
     it('should render run -> Run highest parent component', () => {
         const menu = menuTemplate.default(window);
         const runHighestComponent = menu[4].submenu![1];
-        // @ts-ignore
-        runHighestComponent.click();
 
-        // @ts-ignore
+        runHighestComponent.click!();
+
         expect(runHighestComponent).toEqual({
             accelerator: 'CmdOrCtrl+Shift+Return',
             click: expect.any(Function),
@@ -185,17 +174,31 @@ describe('MenuTemplate', () => {
         const menu = menuTemplate.default(window);
         const windowMenu = menu[5];
 
-        // @ts-ignore
         expect(windowMenu).toEqual({
             role: 'windowMenu',
         });
     });
 
+    it('should render plugins -> load plugin', () => {
+        const menu = menuTemplate.default(window);
+        const plugin = menu[6];
+        const loadPlugin = plugin.submenu![0];
+
+        loadPlugin.click!();
+
+        expect(plugin.label).toEqual('Plugins');
+        expect(loadPlugin).toEqual({
+            click: expect.any(Function),
+            label: 'Load from file'
+        });
+        expect(sendMock).toHaveBeenCalledWith('loadPlugin');
+    });
+
     it('should render help', () => {
         const menu = menuTemplate.default(window);
-        const help = menu[6];
+        const help = menu[7];
 
-        // @ts-ignore
+
         expect(help).toEqual({
             role: 'help',
             submenu: expect.any(Array)
@@ -204,12 +207,10 @@ describe('MenuTemplate', () => {
 
     it('should render help -> stacker', () => {
         const menu = menuTemplate.default(window);
-        // @ts-ignore
-        const stacker = menu[6].submenu[0];
-        // @ts-ignore
-        stacker.click();
+        const stacker = menu[7].submenu![0];
 
-        // @ts-ignore
+        stacker.click!();
+
         expect(stacker).toEqual({
             label: 'Learn more about stacker',
             click: expect.any(Function)
@@ -218,12 +219,10 @@ describe('MenuTemplate', () => {
 
     it('should render help -> enqueuer', () => {
         const menu = menuTemplate.default(window);
-        // @ts-ignore
-        const enqueuer = menu[6].submenu[1];
-        // @ts-ignore
-        enqueuer.click();
+        const enqueuer = menu[7].submenu![1];
 
-        // @ts-ignore
+        enqueuer.click!();
+
         expect(enqueuer).toEqual({
             label: 'Learn more about enqueuer',
             click: expect.any(Function)

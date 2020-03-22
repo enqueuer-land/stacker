@@ -50,10 +50,6 @@ export default (window: Electron.BrowserWindow) => [
                 label: 'Open environment',
                 click: () => window.webContents.send('openEnvironment'),
             },
-            {
-                label: 'Load plugin',
-                click: () => window.webContents.send('loadPlugin'),
-            },
             {type: 'separator'},
             {
                 label: 'Import from',
@@ -98,6 +94,13 @@ export default (window: Electron.BrowserWindow) => [
         ]
     },
     {role: 'windowMenu'},
+    {
+        label: 'Plugins',
+        submenu: [{
+            label: 'Load from file',
+            click: () => window.webContents.send('loadPlugin')
+        }]
+    },
     {
         role: 'help',
         submenu: [
