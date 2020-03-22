@@ -81,7 +81,6 @@
             breadcrumbItemStyle: function () {
                 return function (item) {
                     const style = {};
-                    console.log(item.type);
                     if (item.type === ComponentTypes.REQUISITION) {
                         style.color = 'var(--carabina-requisition-color) !important';
                     } else if (item.type === ComponentTypes.PUBLISHER) {
