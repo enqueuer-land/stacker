@@ -35,6 +35,7 @@ Vue.use(ButtonGroupPlugin);
 
 Vue.config.productionTip = false;
 
+//TODO try to test it
 new Vue({
     store,
     render: h => h(App)

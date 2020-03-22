@@ -125,7 +125,8 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/*.d.ts",
-      "!src/**/built-in/**/*.ts",
+      "!src/**/plugins/built-in/**/*.ts",
+      "!src/**/renderer/**/*.ts",
       "!node_modules/**"
     ],
     "moduleFileExtensions": [
@@ -136,10 +137,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 65,
-        "branches": 50,
-        "functions": 70,
-        "lines": 65
+        "statements": 70,
+        "branches": 60,
+        "functions": 75,
+        "lines": 70
       }
     },
     "coverageReporters": ["text"]

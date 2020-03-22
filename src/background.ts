@@ -28,6 +28,7 @@ function createWindow() {
         minHeight: 800,
         width: 2000,
         height: 1250,
+        show: false,
         // @ts-ignore
         icon: path.join(__static, 'icon.png'),
         backgroundColor: '#201f20',
@@ -48,6 +49,10 @@ function createWindow() {
 
     win.on('closed', () => {
         win = null
+    });
+
+    win.once('ready-to-show', () => {
+        win!.show()
     });
 
     // @ts-ignore

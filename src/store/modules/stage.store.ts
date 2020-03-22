@@ -11,7 +11,6 @@ import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
 import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
-//TODO test it
 export default () => ({
     state: {
         plugins: new PluginsLoader().getPlugins(),
