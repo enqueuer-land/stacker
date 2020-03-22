@@ -1,6 +1,6 @@
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import {ComponentSaver} from '@/components/component-saver';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentFinder} from '@/components/component-finder';

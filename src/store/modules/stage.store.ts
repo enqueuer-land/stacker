@@ -1,7 +1,7 @@
 import store from '@/store'
 import LZString from 'lz-string';
 import {Logger} from '@/components/logger';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
@@ -9,7 +9,7 @@ import {CarabinaComponent} from '@/models/carabina-component';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
+import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 //TODO test it
 export default () => ({

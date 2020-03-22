@@ -1,17 +1,17 @@
 import store from '@/store'
 import LZString from 'lz-string';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import * as stageStore from '@/store/modules/stage.store';
 import {ComponentTypes} from '@/components/component-types';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
+import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 jest.mock('@/store');
-jest.mock('@/components/file-dialog');
+jest.mock('@/renderer/file-dialog');
 jest.mock('@/plugins/plugins-loader');
 jest.mock('@/components/enqueuer-log-parser');
-jest.mock('@/components/renderer-message-communicator');
+jest.mock('@/renderer/renderer-message-communicator');
 
 describe('StageStore', () => {
     const getPluginsMock = jest.fn(() => ['plugin1']);

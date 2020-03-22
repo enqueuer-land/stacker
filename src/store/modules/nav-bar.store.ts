@@ -1,10 +1,10 @@
 import Store from 'electron-store';
 import {Logger} from '@/components/logger';
 import {IdCreator} from '@/components/id-creator';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import {EnvironmentSaver} from '@/environments/environment-saver';
 import {CarabinaEnvironment} from '@/models/carabina-environment';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
+import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 let navBarRepository: any;
 const noEnvironment: CarabinaEnvironment = {name: 'No environment', role: 'none', store: {}};

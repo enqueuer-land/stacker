@@ -1,11 +1,11 @@
 import store from '@/store'
 import LZString from 'lz-string';
 import {Logger} from '@/components/logger';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentLoader} from '@/components/component-loader';
 import {EnvironmentLoader} from '@/environments/environment-loader';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
+import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 // stage
 RendererMessageCommunicator.on('addLog', ((event, data) => store.commit('stage/addLog', data)));

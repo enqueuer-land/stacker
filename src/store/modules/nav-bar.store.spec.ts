@@ -1,14 +1,14 @@
 import Store from 'electron-store';
-import {FileDialog} from '@/components/file-dialog';
+import {FileDialog} from '@/renderer/file-dialog';
 import * as navBarStore from '@/store/modules/nav-bar.store';
 import {EnvironmentSaver} from '@/environments/environment-saver';
-import {RendererMessageCommunicator} from '@/components/renderer-message-communicator';
+import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 jest.mock('@/store');
 jest.mock('electron-store');
-jest.mock('@/components/file-dialog');
+jest.mock('@/renderer/file-dialog');
 jest.mock('@/environments/environment-saver');
-jest.mock('@/components/renderer-message-communicator');
+jest.mock('@/renderer/renderer-message-communicator');
 
 const noEnvironmentDefault = {
     name: 'No environment',
