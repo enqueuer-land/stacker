@@ -34,14 +34,8 @@ Through assertions check whether each flowing by message matches what is expecte
 
 ### Polyglot
 Have you seen how many protocols it supports? Out of the box, just one click away from each other.
-There's a work in progress task force to enable an amazing plugin architecture so you'll be free to write your one or download the ones that pleased you most.
-In this meanwhile, you can have fun using one of the following:
-
-- HTTP
-- SHELL
-- AMQP (WIP)
-- MQTT (WIP)
-- Include here your own. Check out [this example](plugins/shell-publisher.js)
+Write as many protocols plugins as you want your one or download the ones that pleased you most.
+Check out [this example](plugins/shell-publisher.js) of how to write a plugin.
 
 
 ![screenshot-2](docs/screenshot-2.png)

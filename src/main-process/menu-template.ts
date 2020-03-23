@@ -107,7 +107,7 @@ export default (window: Electron.BrowserWindow) => [
             {
                 label: 'Learn more about stacker',
                 click: async () => {
-                    await shell.openExternal('https://virgs.github.io/stacker')
+                    await shell.openExternal('https://enqueuer-land.github.io/stacker')
                 }
             },
             {

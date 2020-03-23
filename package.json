@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/virgs/stacker"
+    "url": "git+https://github.com/enqueuer-land/stacker"
   },
   "private": true,
   "scripts": {
@@ -144,6 +144,8 @@
         "lines": 83
       }
     },
-    "coverageReporters": ["text"]
+    "coverageReporters": [
+      "text"
+    ]
   }
 }
