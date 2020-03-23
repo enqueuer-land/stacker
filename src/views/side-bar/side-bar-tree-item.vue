@@ -24,6 +24,10 @@
                     <SideBarTreeItemOptions :component="component">
                     </SideBarTreeItemOptions>
                 </b-col>
+                <b-col cols="auto" class="align-self-center mr-2 mb-1">
+                    <i class="fas fa-circle"
+                       :style="changeAfterSavingStyle"></i>
+                </b-col>
             </b-row>
         </b-container>
     </div>
@@ -66,6 +70,9 @@
             },
             componentNameStyle: function () {
                 return this.componentStylish.componentNameStyle();
+            },
+            changeAfterSavingStyle: function () {
+                return this.componentStylish.changeAfterSavingStyle();
             }
         },
         methods: {

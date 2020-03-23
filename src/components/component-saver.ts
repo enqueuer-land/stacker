@@ -6,10 +6,12 @@ import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creato
 
 export class ComponentSaver {
 
-    public async save(item: CarabinaComponent, filename: string) {
+    public async save(item: CarabinaComponent, filename: string): Promise<void> {
         item.carabinaMeta.filename = filename;
+        item.carabinaMeta.changedAfterSaving = false;
         const componentToSave = new RequisitionWrapperCreator(item).create();
         componentToSave.carabinaMeta.filename = filename;
+        componentToSave.carabinaMeta.changedAfterSaving = false;
         await ComponentSaver.saveRequisition(filename, componentToSave);
     }
 

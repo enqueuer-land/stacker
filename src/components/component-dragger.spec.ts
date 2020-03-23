@@ -85,4 +85,15 @@ describe('ComponentDragger', () => {
         expect(target.subscriptions).toEqual([dragged]);
         expect(draggedParent.subscriptions).toEqual([]);
     });
+
+    it('should change target changedAfterSaving flag', () => {
+        const draggedParent: any = {carabinaMeta: {}};
+        const dragged: any = {id: 'dragged', carabinaMeta: {type: ComponentTypes.SUBSCRIPTION, parent: draggedParent}};
+        draggedParent.subscriptions = [dragged];
+        const target: any = {id: 'target', carabinaMeta: {type: ComponentTypes.REQUISITION, filename: 'filename'}, subscriptions: []};
+
+        new ComponentDragger(dragged, draggedParent).moveToComponent(target);
+
+        expect(target.carabinaMeta.changedAfterSaving).toBeTruthy();
+    });
 });

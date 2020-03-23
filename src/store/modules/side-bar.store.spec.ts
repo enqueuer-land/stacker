@@ -233,7 +233,7 @@ describe('SideBarStore', () => {
     it('should change currently selected component', () => {
         const stage: any = {
             requisitions: [],
-            selectedComponent: {}
+            selectedComponent: {carabinaMeta: {}}
         };
 
         sideBarStore.default().mutations.currentSelectedComponentChanged(stage, {
@@ -241,15 +241,14 @@ describe('SideBarStore', () => {
             value: {object: true}
         });
 
-        expect(stage.selectedComponent).toEqual({attr: {object: true}});
+        expect(stage.selectedComponent).toEqual({attr: {object: true}, carabinaMeta: {}});
     });
 
     it('should change AttributeOfComponent', () => {
         const stage: any = {
             requisitions: [],
-            selectedComponent: {}
         };
-        const component = {};
+        const component = {carabinaMeta: {}};
 
         sideBarStore.default().mutations.changeAttributeOfComponent(stage, {
             component,
@@ -257,6 +256,6 @@ describe('SideBarStore', () => {
             value: {object: true}
         });
 
-        expect(component).toEqual({attr: {object: true}});
+        expect(component).toEqual({attr: {object: true}, carabinaMeta: {}});
     });
 });

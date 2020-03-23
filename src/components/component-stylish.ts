@@ -36,6 +36,18 @@ export class ComponentStylish {
         return style;
     }
 
+    //TODO test it
+    public changeAfterSavingStyle(): any {
+        const style: any = {
+            'font-size': '8px',
+            color: 'transparent'
+        };
+        if (this.component.carabinaMeta.changedAfterSaving) {
+            style.color = this.getComponentColor();
+        }
+        return style;
+    }
+
     public getComponentColor(): string {
         switch (this.component.carabinaMeta.type) {
             case ComponentTypes.REQUISITION:

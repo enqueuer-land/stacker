@@ -51,5 +51,15 @@ export class ComponentDragger {
                 break;
         }
         this.draggedComponent.carabinaMeta.parent = target;
+        this.notifyChangesToParents(target);
+    }
+
+    private notifyChangesToParents(target: CarabinaRequisition): void {
+        if (target.carabinaMeta.filename) {
+            target.carabinaMeta.changedAfterSaving = true;
+        }
+        if (target.carabinaMeta.parent) {
+            this.notifyChangesToParents(target.carabinaMeta.parent);
+        }
     }
 }

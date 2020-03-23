@@ -2,10 +2,11 @@ import {ComponentTypes} from '@/components/component-types';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 
 export type CarabinaMeta = {
+    parent?: CarabinaRequisition;
     filename?: string;
     collapsed?: boolean;
-    parent?: CarabinaRequisition;
-    selected: boolean;
+    changedAfterSaving?: boolean;
     type: ComponentTypes;
+    selected: boolean;
 };
 

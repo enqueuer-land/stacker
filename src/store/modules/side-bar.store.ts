@@ -36,6 +36,17 @@ function unselectSelectedComponent(stage: any) {
     }
 }
 
+function notifyChangesToParents(target: CarabinaRequisition): void {
+    if (target) {
+        if (target.carabinaMeta.filename) {
+            target.carabinaMeta.changedAfterSaving = true;
+        }
+        if (target.carabinaMeta.parent) {
+            notifyChangesToParents(target.carabinaMeta.parent);
+        }
+    }
+}
+
 function initialize() {
     sidebarRepository = new Store({name: 'side-bar'});
     initialRequisitions = sidebarRepository.get('requisitions', requisitionsExample)
@@ -111,10 +122,18 @@ export default () => {
             currentSelectedComponentChanged: (stage: any, event: { attributeName: string; value: any }) => {
                 if (stage.selectedComponent) {
                     stage.selectedComponent[event.attributeName] = event.value;
+                    if (stage.selectedComponent.carabinaMeta.filename) {
+                        stage.selectedComponent.carabinaMeta.changedAfterSaving = true;
+                        notifyChangesToParents(stage.selectedComponent.carabinaMeta.parent);
+                    }
                     persist(stage);
                 }
             },
             changeAttributeOfComponent: (stage: any, event: { component: any; attributeName: string; value: any }) => {
+                if (event.component.carabinaMeta.filename) {
+                    event.component.carabinaMeta.changedAfterSaving = true;
+                    notifyChangesToParents(stage.selectedComponent.carabinaMeta.parent);
+                }
                 event.component[event.attributeName] = event.value;
                 persist(stage);
             },
@@ -137,6 +156,8 @@ export default () => {
                         clone = ComponentCloner.cloneSubscription(component as CarabinaSubscription, parent);
                         break;
                 }
+                delete clone.carabinaMeta.filename;
+                delete clone.carabinaMeta.changedAfterSaving;
                 clone.carabinaMeta.selected = false;
                 persist(stage);
             },
@@ -157,14 +178,17 @@ export default () => {
                 }
                 persist(stage);
             },
-            saveComponent: (stage: any, {component}: any) => {
+            saveComponent: (stage: any, {component}: { component: CarabinaComponent }) => {
                 FileDialog
                     .showSaveDialog(component.name + '.nqr.yml')
                     .then(filename => {
                         if (filename) {
                             new ComponentSaver()
                                 .save(component, filename)
-                                .then(() => Logger.info(`Component '${component.name}' saved as '${filename}'`));
+                                .then(() => {
+                                    stage.selectedComponent.carabinaMeta.changedAfterSaving = false;
+                                    Logger.info(`Component '${component.name}' saved as '${filename}'`);
+                                });
                         }
                     })
             },
@@ -174,21 +198,18 @@ export default () => {
                     if (filename) {
                         new ComponentSaver()
                             .save(stage.selectedComponent, filename)
-                            .then(() => Logger.info(`Component '${stage.selectedComponent.name}' saved as '${filename}'`));
+                            .then(() => {
+                                stage.selectedComponent.carabinaMeta.changedAfterSaving = false;
+                                Logger.info(`Component '${stage.selectedComponent.name}' saved as '${filename}'`);
+                            });
+                    } else {
+                        store.commit('side-bar/saveComponent', {component: stage.selectedComponent});
                     }
                 }
             },
             saveCurrentlySelectedComponentAs: (stage: any) => {
                 if (stage.selectedComponent) {
-                    FileDialog
-                        .showSaveDialog(stage.selectedComponent.name + '.nqr.yml')
-                        .then(filename => {
-                            if (filename) {
-                                new ComponentSaver()
-                                    .save(stage.selectedComponent, filename)
-                                    .then(() => Logger.info(`Component '${stage.selectedComponent.name}' saved as '${filename}'`));
-                            }
-                        });
+                    store.commit('side-bar/saveComponent', {component: stage.selectedComponent});
                 }
             },
             deleteComponentById: (stage: any, event: any) => {

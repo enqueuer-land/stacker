@@ -40,14 +40,17 @@ describe('ComponentSaver', () => {
             name: 'requisition',
             carabinaMeta: {
                 type: ComponentTypes.REQUISITION,
-                filename
+                filename,
+                changedAfterSaving: true,
             }
         };
 
-        const yamlizedItem = yaml.stringify(item, 100, 2);
 
         await new ComponentSaver().save(item, filename);
 
+        expect(item.carabinaMeta.changedAfterSaving).toBeFalsy();
+        item.carabinaMeta.changedAfterSaving = false;
+        const yamlizedItem = yaml.stringify(item, 100, 2);
         expect(writeFileMock).toHaveBeenCalledWith(filename, yamlizedItem, expect.any(Function));
     });
 
@@ -75,6 +78,7 @@ describe('ComponentSaver', () => {
                 collapsed: false,
                 parent: null,
                 selected: false,
+                changedAfterSaving: false,
                 type: 'REQUISITION',
                 filename
             },
@@ -114,6 +118,7 @@ describe('ComponentSaver', () => {
                 collapsed: false,
                 parent: null,
                 selected: false,
+                changedAfterSaving: false,
                 type: 'REQUISITION',
                 filename
             },
