@@ -168,6 +168,29 @@ export default () => {
                         }
                     })
             },
+            saveCurrentlySelectedComponent: (stage: any) => {
+                if (stage.selectedComponent) {
+                    const filename = stage.selectedComponent.carabinaMeta.filename;
+                    if (filename) {
+                        new ComponentSaver()
+                            .save(stage.selectedComponent, filename)
+                            .then(() => Logger.info(`Component '${stage.selectedComponent.name}' saved as '${filename}'`));
+                    }
+                }
+            },
+            saveCurrentlySelectedComponentAs: (stage: any) => {
+                if (stage.selectedComponent) {
+                    FileDialog
+                        .showSaveDialog(stage.selectedComponent.name + '.nqr.yml')
+                        .then(filename => {
+                            if (filename) {
+                                new ComponentSaver()
+                                    .save(stage.selectedComponent, filename)
+                                    .then(() => Logger.info(`Component '${stage.selectedComponent.name}' saved as '${filename}'`));
+                            }
+                        });
+                }
+            },
             deleteComponentById: (stage: any, event: any) => {
                 stage.requisitions = stage.requisitions.filter((requisition: any) => requisition.id !== event.component.id);
                 if (stage.selectedComponent) {

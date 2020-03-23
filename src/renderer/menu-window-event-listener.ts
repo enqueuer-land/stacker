@@ -41,6 +41,12 @@ RendererMessageCommunicator
     }));
 
 RendererMessageCommunicator
+    .on('saveCurrentlySelectedComponent', () => store.commit('side-bar/saveCurrentlySelectedComponent'));
+
+RendererMessageCommunicator
+    .on('saveCurrentlySelectedComponentAs', () => store.commit('side-bar/saveCurrentlySelectedComponentAs'));
+
+RendererMessageCommunicator
     .on('openComponent', async () => (await FileDialog.showOpenDialog())
         .map(async file => await ComponentLoader.importFile(file))
         .map(async (requisitionPromise: any) => {
