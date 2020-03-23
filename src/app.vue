@@ -11,11 +11,13 @@
     import StackerInput from '@/inputs/stacker-input'
     import KeyValueTable from '@/inputs/key-value-table'
     import DropdownSelector from "@/inputs/dropdown-selector";
+    import SubscriptionCommons from '@/inputs/subscription-commons'
 
     Vue.component('Payload', Payload);
     Vue.component('StackerInput', StackerInput);
     Vue.component('KeyValueTable', KeyValueTable);
     Vue.component('DropdownSelector', DropdownSelector);
+    Vue.component('SubscriptionCommons', SubscriptionCommons);
 
     export default {
         components: {Main},

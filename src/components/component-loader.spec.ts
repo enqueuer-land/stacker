@@ -187,7 +187,7 @@ describe('ComponentLoader', () => {
                         "requisitions": [],
                         "subscriptions": [
                             {
-                                "avoidable": false,
+                                "avoid": false,
                                 "carabinaMeta": {
                                     "parent": expect.anything(),
                                     "selected": false,

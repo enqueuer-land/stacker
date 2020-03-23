@@ -71,7 +71,7 @@ export class ComponentFactory {
             port: 80,
             endpoint: '/',
             method: 'GET',
-            avoidable: false,
+            avoid: false,
             response: {
                 headers: {'content-type': 'json/application'},
                 status: 200,

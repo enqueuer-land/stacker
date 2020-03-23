@@ -36,6 +36,7 @@
         "port": 80,
         "endpoint": "/stacker/:id",
         "method": "POST",
+        "avoid": "false",
         "response": {
           "headers": {
             "x-header-key": "headerValue"

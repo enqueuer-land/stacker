@@ -36,11 +36,14 @@ export default {
                             </b-row>
                         </b-col>
                     </b-row>
-                    <label class="pl-4 d-block carabina-text mb-0">Headers</label>
+                    <subscription-commons :component="component"
+                                          @timeoutChanged="(value) => $parent.updateAttribute('timeout', value)"
+                                          @avoidChanged="(value) => $parent.updateAttribute('avoid', value)"
+                    ></subscription-commons>
+                    <label class="pl-4 d-block carabina-text mb-0 mt-4">Headers</label>
                     <key-value-table
                             @change="(headers) => $parent.updateAttribute('response', {...component.response, headers})"
                             :table="component.response.headers" class="mb-4"></key-value-table>
-
                     <b-row no-gutters align-h="between">
                         <b-col cols="2" class="align-self-center px-1">
                             <b-form-group
@@ -61,10 +64,10 @@ export default {
                                    style="color: var(--carabina-subscription-color)">{{statusMap[component.response.status.toString()] || 'Unknown Status'}}</label>
                         </b-col>
                     </b-row>
-                    <label class="pl-3 d-block carabina-text mb-2">Payload</label>
+                    <label class="pl-4 d-block carabina-text mb-2">Payload</label>
                     <payload :code="component.response.payload"
                              @change="(value) => $parent.updateAttribute('response', {...component.response, payload: value})"
-                             class="px-3"></payload>
+                             class="px-4"></payload>
                 </b-container>
             `,
             props: {
