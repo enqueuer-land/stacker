@@ -1,7 +1,6 @@
 import Store from 'electron-store';
 import {ComponentTypes} from '@/components/component-types';
 import * as sideBarStore from '@/store/modules/side-bar.store';
-import {ComponentLoader} from '@/components/component-loader';
 // @ts-ignore
 import requisitionsExample from '@/components/requisitions-example.json';
 

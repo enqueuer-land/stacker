@@ -9,11 +9,15 @@
                 <b-col cols class="align-self-center item-name mr-1" :style="componentNameStyle">
                     {{component.name}}
                 </b-col>
-                <b-col cols="auto" class="align-self-center"
-                       v-if="componentStylish.isRequisition() && componentStylish.getChildrenLength() > 0">
-                    <small class="item-name-tag items-num">
-                        {{componentStylish.getChildrenLength()}}
-                        {{componentStylish.getChildrenLength() > 1? 'items': 'item'}}
+                <b-col cols="auto" class="align-self-center">
+                    <template v-if="componentStylish.isRequisition()">
+                        <small v-if="componentStylish.getChildrenLength() > 0" class="item-name-tag items-num">
+                            {{componentStylish.getChildrenLength()}}
+                            {{componentStylish.getChildrenLength() > 1? 'items': 'item'}}
+                        </small>
+                    </template>
+                    <small v-else class="item-name-tag items-num">
+                        {{component.carabinaMeta.type.toUpperCase().substr(0, 3)}}
                     </small>
                 </b-col>
                 <b-col cols="auto" class="align-self-center">

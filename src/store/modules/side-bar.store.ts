@@ -69,6 +69,8 @@ export default () => {
                     unselectSelectedComponent(stage);
                     stage.selectedComponent = selected;
                     stage.selectedComponent.carabinaMeta.selected = true;
+                } else {
+                    Logger.error(`Couldn't find component in tree`);
                 }
                 persist(stage);
             },

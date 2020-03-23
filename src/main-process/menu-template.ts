@@ -36,23 +36,34 @@ export default (window: Electron.BrowserWindow) => [
                     },
                     {
                         label: 'Subscription',
-                        accelerator: 'CommandOrControl+S',
+                        accelerator: 'CommandOrControl+U',
                         click: () => window.webContents.send('newSubscription'),
                     }
                 ]
             },
             {
-                label: 'Open component',
+                label: 'Save',
+                accelerator: 'CommandOrControl+S',
+                click: () => window.webContents.send('saveCurrentlySelectedComponent'),
+            },
+            {
+                label: 'Save as',
+                accelerator: 'CommandOrControl+Shift+S',
+                click: () => window.webContents.send('saveCurrentlySelectedComponentAs'),
+            },
+            {
+                label: 'Open',
                 accelerator: 'CommandOrControl+O',
                 click: () => window.webContents.send('openComponent'),
             },
             {
                 label: 'Open environment',
+                accelerator: 'CommandOrControl+Shift+O',
                 click: () => window.webContents.send('openEnvironment'),
             },
             {type: 'separator'},
             {
-                label: 'Import from',
+                label: 'Import from...',
                 submenu: [
                     {
                         label: 'Postman...',
@@ -100,6 +111,11 @@ export default (window: Electron.BrowserWindow) => [
             label: 'Load from file',
             click: () => window.webContents.send('loadPlugin')
         }]
+    },
+    {
+        label: 'Logs',
+        //TODO add log options
+        submenu: []
     },
     {
         role: 'help',
