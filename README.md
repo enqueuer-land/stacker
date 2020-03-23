@@ -37,7 +37,6 @@ Have you seen how many protocols it supports? Out of the box, just one click awa
 Write as many protocols plugins as you want your one or download the ones that pleased you most.
 Check out [this example](plugins/shell-publisher.js) of how to write a plugin.
 
-
 ![screenshot-2](docs/screenshot-2.png)
  
 ----
