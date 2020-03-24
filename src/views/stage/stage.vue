@@ -25,7 +25,7 @@
                 </template>
             </div>
             <StageFooter @expandWindow="expandLogWindow" @compressWindow="compressWindow" id="footer-container"
-                         style="background-color: var(--carabina-nav-bar-background-color)" class="pt-2"></StageFooter>
+                         style="background-color: var(--carabina-nav-bar-background-color)"></StageFooter>
         </div>
     </div>
 </template>
