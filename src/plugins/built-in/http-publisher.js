@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     publishers: {
         http: {
             hooks: ['onResponseReceived'],
@@ -8,26 +8,25 @@ export default {
                     <b-row class="px-3 mb-4" no-gutters>
                         <b-col cols="auto" class="align-self-center">
                             <dropdown-selector
-                                    :defaultSelection="{value: component.method}"
-                                    @select="(protocol) => $parent.updateAttribute('method', protocol.value)"
+                                    :defaultSelection="{value: method}"
+                                    @select="(method) => $parent.updateAttribute('method', method.value)"
                                     :availableList="availableMethods"></dropdown-selector>
                         </b-col>
                         <b-col cols="10" class="align-self-center mt-1">
                             <stacker-input placeholder="Url" type="text"
                                            :highlightableRegex="/\\A?(\\w+=[^&]+)/g"
-                                           :state="component.url.length > 0 ? null : false"
                                            @input="(value) => $parent.updateAttribute('url', value)"
-                                           :value="component.url"
+                                           :value="url"
                                            class="text-input carabina-text px-1" trim>
                             </stacker-input>
                         </b-col>
                     </b-row>
                     <label class="pl-3 d-block carabina-text mb-0">Headers</label>
                     <key-value-table @change="(headers) => $parent.updateAttribute('headers', headers)"
-                                     :table="component.headers" class="mb-4"></key-value-table>
+                                     :table="headers" class="mb-4"></key-value-table>
 
                     <label class="pl-3 d-block carabina-text mb-2">Payload</label>
-                    <payload :code="component.payload"
+                    <payload :code="payload"
                              @change="(value) => $parent.updateAttribute('payload', value)"
                              class="px-3"></payload>
                 </b-container>`,
@@ -36,6 +35,10 @@ export default {
                     url: {
                         type: String,
                         default: 'http://'
+                    },
+                    method: {
+                        type: String,
+                        default: 'GET'
                     },
                     payload: {
                         type: String,
@@ -49,6 +52,10 @@ export default {
             },
             data: function () {
                 return {
+                    url: (this.component && this.component.url) || 'http://localhost:80',
+                    method: (this.component && this.component.method) || 'GET',
+                    payload: (this.component && this.component.payload) || '',
+                    headers: (this.component && this.component.headers) || {'content-type': 'json/application'},
                     availableMethods: [{value: 'GET'},
                         {value: 'POST'},
                         {value: 'PUT'},
@@ -60,7 +67,12 @@ export default {
                         {value: 'DELETE'}]
                 }
             },
-            methods: {}
+            mounted: function () {
+                this.$parent.updateAttribute('url', this.url);
+                this.$parent.updateAttribute('method', this.method);
+                this.$parent.updateAttribute('payload', this.payload);
+                this.$parent.updateAttribute('headers', this.headers);
+            }
         }
     }
 };

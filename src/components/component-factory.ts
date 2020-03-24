@@ -50,10 +50,6 @@ export class ComponentFactory {
             id: new IdCreator().create(),
             name: 'New publisher ' + parent.publishers.length,
             ignore: false,
-            url: 'http://localhost:80/',
-            method: 'GET',
-            headers: {'content-type': 'json/application'},
-            payload: '',
             carabinaMeta: {
                 parent,
                 selected: false,
@@ -68,15 +64,7 @@ export class ComponentFactory {
         const subscription: CarabinaSubscription = {
             type: 'HTTP',
             timeout: 3000,
-            port: 80,
-            endpoint: '/',
-            method: 'GET',
             avoid: false,
-            response: {
-                headers: {'content-type': 'json/application'},
-                status: 200,
-                payload: ''
-            },
             id: new IdCreator().create(),
             name: 'New subscription ' + parent.subscriptions.length,
             ignore: false,

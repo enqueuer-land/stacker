@@ -121,100 +121,84 @@ describe('ComponentLoader', () => {
 
         expect(requisition)
             .toEqual({
-                "carabinaMeta": {
-                    "collapsed": false,
-                    "selected": false,
-                    "type": "REQUISITION"
+                carabinaMeta: {
+                    collapsed: false,
+                    selected: false,
+                    type: 'REQUISITION'
                 },
-                "delay": 0,
-                "id": expect.any(String),
-                "ignore": false,
-                "iterations": 1,
-                "name": 'file',
-                "parallel": false,
-                "publishers": [],
-                "requisitions": [
+                delay: 0,
+                id: expect.any(String),
+                ignore: false,
+                iterations: 1,
+                name: 'file',
+                parallel: false,
+                publishers: [],
+                requisitions: [
                     {
-                        "carabinaMeta": {
-                            "collapsed": false,
-                            "parent": expect.anything(),
-                            "selected": false,
-                            "type": "REQUISITION"
+                        carabinaMeta: {
+                            collapsed: false,
+                            parent: expect.anything(),
+                            selected: false,
+                            type: 'REQUISITION'
                         },
-                        "delay": 0,
-                        "id": expect.any(String),
-                        "ignore": false,
-                        "iterations": 1,
-                        "name": "1",
-                        "parallel": false,
-                        "publishers": [
+                        delay: 0,
+                        id: expect.any(String),
+                        ignore: false,
+                        iterations: 1,
+                        name: '1',
+                        parallel: false,
+                        publishers: [
                             {
-                                "carabinaMeta": {
-                                    "parent": expect.anything(),
-                                    "selected": false,
-                                    "type": "PUBLISHER"
+                                carabinaMeta: {
+                                    parent: expect.anything(),
+                                    selected: false,
+                                    type: 'PUBLISHER'
                                 },
-                                "headers": {
-                                    "content-type": "json/application"
-                                },
-                                "id": expect.any(String),
-                                "ignore": false,
-                                "method": "GET",
-                                "name": "publisher",
-                                "payload": "",
-                                "type": "HTTP",
-                                "url": "http://localhost:80/"
+                                id: expect.any(String),
+                                ignore: false,
+                                name: 'publisher',
+                                type: 'HTTP',
                             }
                         ],
-                        "requisitions": [],
-                        "subscriptions": [],
-                        "timeout": 5000
+                        requisitions: [],
+                        subscriptions: [],
+                        timeout: 5000
                     },
                     {
-                        "carabinaMeta": {
-                            "collapsed": false,
-                            "parent": expect.anything(),
-                            "selected": false,
-                            "type": "REQUISITION"
+                        carabinaMeta: {
+                            collapsed: false,
+                            parent: expect.anything(),
+                            selected: false,
+                            type: 'REQUISITION'
                         },
-                        "delay": 0,
-                        "id": expect.any(String),
-                        "ignore": false,
-                        "iterations": 1,
-                        "name": "2",
-                        "parallel": false,
-                        "publishers": [],
-                        "requisitions": [],
-                        "subscriptions": [
+                        delay: 0,
+                        id: expect.any(String),
+                        ignore: false,
+                        iterations: 1,
+                        name: '2',
+                        parallel: false,
+                        publishers: [],
+                        requisitions: [],
+                        subscriptions: [
                             {
-                                "avoid": false,
-                                "carabinaMeta": {
-                                    "parent": expect.anything(),
-                                    "selected": false,
-                                    "type": "SUBSCRIPTION"
+                                avoid: false,
+                                carabinaMeta: {
+                                    parent: expect.anything(),
+                                    selected: false,
+                                    type: 'SUBSCRIPTION'
                                 },
-                                "endpoint": "/",
-                                "id": expect.any(String),
-                                "ignore": false,
-                                "method": "GET",
-                                "name": "subscription",
-                                "port": 80,
-                                "response": {
-                                    "headers": {
-                                        "content-type": "json/application"
-                                    },
-                                    "payload": "",
-                                    "status": 200
-                                },
-                                "timeout": 3000,
-                                "type": "HTTP"
+                                id: expect.any(String),
+                                ignore: false,
+                                name: 'subscription',
+                                timeout: 3000,
+                                type: 'HTTP'
                             }
                         ],
-                        "timeout": 5000
+                        timeout: 5000
                     }
                 ],
-                "subscriptions": [],
-                "timeout": 5000
+                subscriptions: [],
+                timeout: 5000
             });
     });
 });

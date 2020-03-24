@@ -4,7 +4,7 @@ import Store from 'electron-store';
 import {exec} from 'child_process';
 import {Logger} from '@/components/logger';
 import requireFromString from 'require-from-string';
-import * as httpPublisher from '@/plugins/built-in/http-publisher';
+import httpPublisher from '@/plugins/built-in/http-publisher';
 import * as httpSubscription from '@/plugins/built-in/http-subscription';
 
 export class PluginsLoader {
@@ -15,8 +15,8 @@ export class PluginsLoader {
     constructor() {
         this.pluginsRepository = new Store({name: 'plugins'});
         this.plugins = {
-            publishers: {http: httpPublisher.default.publishers.http},
-            subscriptions: {http: httpSubscription.default.subscriptions.http}
+            publishers: {http: httpPublisher.publishers.http},
+            subscriptions: {http: httpSubscription.subscriptions.http}
         };
         this.pluginsString = this.pluginsRepository.get('pluginsString', []);
         this.pluginsString
