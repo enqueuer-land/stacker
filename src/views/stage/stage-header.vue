@@ -16,7 +16,7 @@
                         :color="componentColor"
                         :availableList="protocolsOfComponentList(component.carabinaMeta.type)"></DropdownSelector>
             </b-col>
-            <b-col :cols="component.carabinaMeta.type !== 'REQUISITION' ? 8 : 10"
+            <b-col :cols="component.carabinaMeta.type !== 'REQUISITION' ? 6 : 8"
                    class="align-self-center mt-1 mr-auto">
                 <stacker-input id="component-name" placeholder="Component name" type="text"
                                :fill-width="true"

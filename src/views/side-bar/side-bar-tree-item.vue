@@ -17,7 +17,7 @@
                         </small>
                     </template>
                     <small v-else class="item-name-tag items-num">
-                        {{component.carabinaMeta.type.toUpperCase().substr(0, 3)}}
+                        {{component.carabinaMeta.type.toLowerCase().substr(0, 3)}}
                     </small>
                 </b-col>
                 <b-col cols="auto" class="align-self-center">

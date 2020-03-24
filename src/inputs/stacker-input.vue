@@ -4,7 +4,7 @@
             v-b-tooltip.html.hover :title="tooltipContent"
             caseSensitive
             id="id-highlightable-input"
-            :value="text"
+            :value="textValue"
             @input="onChange"
             :highlightDelay="100"
             :highlight="highlightRegex"
@@ -25,7 +25,7 @@
         components: {
             HighlightableInput
         },
-        props: ['highlightableRegex', 'value', 'placeholder', 'emptyValue'],
+        props: ['highlightableRegex', 'value', 'placeholder', 'emptyValue', 'password'],
         data() {
             const highlightRegex = [
                 {
@@ -54,6 +54,12 @@
         },
         computed: {
             ...mapGetters('nav-bar', ['selectedEnvironment']),
+            textValue: function () {
+                if (this.password) {
+                    return this.text.replace(/./g, '*');
+                }
+                return this.text
+            },
             tooltipContent: function () {
                 const variableRegex = this.highlightRegex[0].text;
                 const store = this.selectedEnvironment.store || {};
