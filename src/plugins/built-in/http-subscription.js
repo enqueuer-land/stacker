@@ -160,9 +160,9 @@ module.exports = {
                     endpoint: (this.component && this.component.endpoint) || '/',
                     method: (this.component && this.component.method) || 'GET',
                     response: {
-                        headers: (this.component && this.component.response && this.component.headers) || {'content-type': 'json/application'},
-                        status: (this.component && this.component.response && this.component.status) || 200,
-                        payload: (this.component && this.component.response && this.component.payload) || '',
+                        headers: (this.component && this.component.response && this.component.response.headers) || {'content-type': 'json/application'},
+                        status: (this.component && this.component.response && this.component.response.status) || 200,
+                        payload: (this.component && this.component.response && this.component.response.payload) || '',
                     },
                     availableMethods: [{value: 'GET'},
                         {value: 'POST'},
