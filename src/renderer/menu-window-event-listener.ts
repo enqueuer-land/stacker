@@ -18,8 +18,8 @@ RendererMessageCommunicator.on('enqueuerLog', ((event, data) => {
 }));
 
 RendererMessageCommunicator.on('runCurrentlySelectedComponent', (() => store.commit('stage/runCurrentlySelectedComponent')));
-
 RendererMessageCommunicator.on('runHighestParentOfSelectedComponent', (() => store.commit('stage/runHighestParentOfSelectedComponent')));
+RendererMessageCommunicator.on('clearLogWindow', (() => store.commit('stage/clearLogs')));
 
 // side-bar
 RendererMessageCommunicator

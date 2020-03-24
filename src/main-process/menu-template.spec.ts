@@ -205,18 +205,9 @@ describe('MenuTemplate', () => {
         expect(sendMock).toHaveBeenCalledWith('runHighestParentOfSelectedComponent');
     });
 
-    it('should render windowMenu', () => {
-        const menu = menuTemplate.default(window);
-        const windowMenu = menu[5];
-
-        expect(windowMenu).toEqual({
-            role: 'windowMenu',
-        });
-    });
-
     it('should render plugins -> load plugin', () => {
         const menu = menuTemplate.default(window);
-        const plugin = menu[6];
+        const plugin = menu[5];
         const loadPlugin = plugin.submenu![0];
 
         // @ts-ignore
@@ -232,7 +223,7 @@ describe('MenuTemplate', () => {
 
     it('should render plugins -> logs', () => {
         const menu = menuTemplate.default(window);
-        const log = menu[7];
+        const log = menu[6];
 
 
         expect(log.label).toEqual('Logs');
@@ -240,7 +231,7 @@ describe('MenuTemplate', () => {
 
     it('should render help', () => {
         const menu = menuTemplate.default(window);
-        const help = menu[8];
+        const help = menu[7];
 
 
         expect(help).toEqual({
@@ -251,7 +242,7 @@ describe('MenuTemplate', () => {
 
     it('should render help -> stacker', () => {
         const menu = menuTemplate.default(window);
-        const stacker = menu[8].submenu![0];
+        const stacker = menu[7].submenu![0];
 
         // @ts-ignore
         stacker.click();
@@ -264,7 +255,7 @@ describe('MenuTemplate', () => {
 
     it('should render help -> enqueuer', () => {
         const menu = menuTemplate.default(window);
-        const enqueuer = menu[8].submenu![1];
+        const enqueuer = menu[7].submenu![1];
 
         // @ts-ignore
         enqueuer.click();

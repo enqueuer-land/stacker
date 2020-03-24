@@ -12,7 +12,6 @@
                         </span>
                 {{log.message}}
             </div>
-
         </div>
     </b-container>
 </template>

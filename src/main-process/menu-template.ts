@@ -104,7 +104,7 @@ export default (window: Electron.BrowserWindow) => [
             },
         ]
     },
-    {role: 'windowMenu'},
+    // {role: 'windowMenu'},
     {
         label: 'Plugins',
         submenu: [{
@@ -114,8 +114,23 @@ export default (window: Electron.BrowserWindow) => [
     },
     {
         label: 'Logs',
-        //TODO add log options
-        submenu: []
+        submenu: [
+            {
+                label: 'Expand log window',
+                accelerator: 'CmdOrCtrl+M',
+                click: () => window.webContents.send('expandLogWindow'),
+            },
+            {
+                label: 'Collapse log window',
+                accelerator: 'CmdOrCtrl+Shift+M',
+                click: () => window.webContents.send('collapseLogWindow'),
+            },
+            {
+                label: 'Clear logs',
+                accelerator: 'CmdOrCtrl+K',
+                click: () => window.webContents.send('clearLogWindow'),
+            }
+        ]
     },
     {
         role: 'help',

@@ -25,7 +25,7 @@
                 </template>
             </div>
             <StageFooter @expandWindow="expandLogWindow" @compressWindow="compressWindow" id="footer-container"
-                         style=""></StageFooter>
+                         style="background-color: var(--carabina-nav-bar-background-color)"></StageFooter>
         </div>
     </div>
 </template>
@@ -41,6 +41,7 @@
     import StageHeader from '@/views/stage/stage-header'
     import {ComponentTypes} from '@/components/component-types';
     import StageBodyRequisition from '@/views/stage/stage-body-requisition'
+    import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
     export default Vue.extend({
         name: 'Stage',
@@ -51,6 +52,8 @@
             StageFooter
         },
         mounted: function () {
+            RendererMessageCommunicator.on('expandLogWindow', () => this.expandLogWindow());
+            RendererMessageCommunicator.on('collapseLogWindow', () => this.compressWindow());
             this.adjustStageLength();
             document.addEventListener('resize', () => {
                 this.adjustStageLength();
