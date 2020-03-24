@@ -1,7 +1,7 @@
 const plugin = {
     publishers: {
         exec: {
-            enqueuerPlugin: 'enqueuer-plugin-shell',
+            dependencies: ['enqueuer-plugin-shell'],
             hooks: ['onCommandExecuted'],
             template: `
                 <b-container fluid class="p-0 m-0">

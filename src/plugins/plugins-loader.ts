@@ -5,7 +5,7 @@ import {exec} from 'child_process';
 import {Logger} from '@/components/logger';
 import requireFromString from 'require-from-string';
 import httpPublisher from '@/plugins/built-in/http-publisher';
-import * as httpSubscription from '@/plugins/built-in/http-subscription';
+import httpSubscription from '@/plugins/built-in/http-subscription';
 
 export class PluginsLoader {
     private readonly pluginsRepository: any;
@@ -34,7 +34,7 @@ export class PluginsLoader {
                     if (!err) {
                         const fileContent = data.toString();
                         const plugin = this.loadStringPlugin(fileContent);
-                        await this.installEnqueuerPlugins(plugin);
+                        await this.installDependencies(plugin);
                         this.pluginsString.push(fileContent);
                         this.pluginsRepository.set('pluginsString', this.pluginsString);
                         resolve();
@@ -57,21 +57,15 @@ export class PluginsLoader {
         }
     }
 
-    private async installEnqueuerPlugins(plugin: any): Promise<void> {
-        const enqueuerDependencies = PluginsLoader.getEnqueuerDependencies(plugin);
-        await Promise.all(enqueuerDependencies
-            .filter(enqueuerPlugin => enqueuerPlugin)
-            .map(async enqueuerPlugin => await this.install(enqueuerPlugin)));
-    }
-
-    private async install(enqueuerPlugin: string): Promise<void> {
+    private async installDependencies(plugin: any): Promise<void> {
+        const dependencies = PluginsLoader.getDependencies(plugin);
         return new Promise(resolve => {
-            Logger.info(`Installing '${enqueuerPlugin}'`);
-            exec(`npm install --prefix ${os.homedir()}/.nqr ${enqueuerPlugin}`, ((error, stdout, stderr) => {
+            Logger.info(`Installing [${dependencies.join(', ')}]`);
+            exec(`npm install --prefix ${os.homedir()}/.nqr ${dependencies.join(' ')}`, ((error, stdout, stderr) => {
                 if (error) {
-                    Logger.error(`'${enqueuerPlugin}' installation: ${stderr}`);
+                    Logger.error(`[${dependencies.join(', ')}] installation: ${stderr}`);
                 } else {
-                    Logger.info(`'${enqueuerPlugin}' installation: ${stdout}`);
+                    Logger.info(`[${dependencies.join(', ')}] installation: ${stdout}`);
                 }
                 resolve();
             }));
@@ -89,15 +83,15 @@ export class PluginsLoader {
         };
     }
 
-    private static getEnqueuerDependencies(plugin: any) {
-        const publisherPlugins = Object
+    private static getDependencies(plugin: any): string[] {
+        const publisherDependencies = Object
             .keys(plugin.publishers || {})
-            .map(key => plugin.publishers[key].enqueuerPlugin);
-        const subscriptionPlugins = Object
+            .reduce((acc, key) => acc.concat(plugin.publishers[key].dependencies || []), []);
+        const subscriptionDependencies = Object
             .keys(plugin.subscriptions || {})
-            .map(key => plugin.subscriptions[key].enqueuerPlugin);
-        return publisherPlugins
-            .concat(subscriptionPlugins)
+            .reduce((acc, key) => acc.concat(plugin.subscriptions[key].dependencies || []), []);
+        return publisherDependencies
+            .concat(subscriptionDependencies)
             .filter(name => name);
     }
 }
