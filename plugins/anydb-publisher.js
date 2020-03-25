@@ -1,7 +1,7 @@
 module.exports = {
     publishers: {
         anydb: {
-            dependencies: ['enqueuer-plugin-anydb', 'enqueuer-plugin-amqp', 'enqueuer-plugin-mqtt'],
+            dependencies: ['enqueuer-plugin-anydb'],
             hooks: ['onQueryCompleted'],
             template: `
                 <b-container fluid class="p-0 m-0">

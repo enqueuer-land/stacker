@@ -72,7 +72,7 @@ export class PluginsLoader {
         });
     }
 
-    private addPlugin(plugin: any) {
+    private addPlugin(plugin: any): void {
         this.plugins.publishers = {
             ...this.plugins.publishers,
             ...plugin.publishers
