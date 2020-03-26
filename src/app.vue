@@ -23,14 +23,5 @@
 
     export default {
         components: {Main},
-        mounted() {
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    console.log('document is hidden');
-                } else {
-                    console.log('document is being shown');
-                }
-            })
-        }
     };
 </script>

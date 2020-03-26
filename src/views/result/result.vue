@@ -8,12 +8,12 @@
             </b-row>
         </b-container>
         <template v-else-if="responses.length > 0">
-            <ResultHeader style="height: var(--carabina-header-size)" :valid="responseIsValid" :name="responseName">
+            <ResultHeader style="height: var(--carabina-header-size); user-select: none" :valid="responseIsValid" :name="responseName">
             </ResultHeader>
             <ResultFlattenTestsBody class="pt-3" style="height: var(--carabina-body-size)"
                                     :tests="filteredFlattenTests">
             </ResultFlattenTestsBody>
-            <ResultFooter style="height: var(--carabina-footer-size)" :valid="responseIsValid"
+            <ResultFooter style="height: var(--carabina-footer-size); user-select: none" :valid="responseIsValid"
                           :total-time="totalTime"
                           :summary="summary" :ignored-tests="ignoredTests">
             </ResultFooter>

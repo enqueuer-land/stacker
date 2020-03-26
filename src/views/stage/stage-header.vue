@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid id="stage-header" style="padding: 0 !important;">
+    <b-container fluid id="stage-header" style="padding: 0 !important; user-select: none">
         <div class="px-1 pt-3 m-0" style="width: 100%; height: 35%">
             <b-breadcrumb class="m-0 p-0 pt-1 pl-3 px-2 breadcrumb carabina-text" style="font-size: 14px">
                 <b-breadcrumb-item v-for="item in breadcrumbItems" :key="item.id" @click="item.click()">

@@ -5,21 +5,28 @@
             caseSensitive
             id="id-highlightable-input"
             :value="text"
+            fireOn="input"
             @input="onChange"
             :highlightDelay="100"
             :highlight="highlightRegex"
             :data-placeholder="placeholder"
             class="text-input carabina-text mt-2 px-1 highlightable-input-class"
             highlight-style="color: var(--carabina-theme-color); font-style: italic;"
-            trim
-    />
+            trim>
+    </highlightable-input>
 </template>
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
     import {mapGetters} from 'vuex';
     import HighlightableInput from 'vue-highlightable-input'
-
+// input.addEventListener('focus', onFocus)
+//     input.addEventListener('keydown', keyDown)
+//     input.addEventListener('keypress', keyPress)
+//     input.addEventListener('input', onInput)
+//     input.addEventListener('keyup', keyUp)
+//     input.addEventListener('change', onChange)
+//     input.addEventListener('blur', onBlur)
     export default Vue.extend({
         name: 'StackerHighlightableInput',
         components: {

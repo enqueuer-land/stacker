@@ -19,7 +19,7 @@
                     <keep-alive>
                         <StageBodyRequisition v-if="componentIsRequisition"
                                               :component="selectedComponent"></StageBodyRequisition>
-                        <component v-else-if="componentBody" :is="componentBody"
+                        <component v-else-if="componentBody" :is="componentBody" style="user-select: none"
                                    v-bind="{component: selectedComponent}"></component>
                     </keep-alive>
                 </template>
@@ -35,21 +35,21 @@
     import split from 'split.js';
     import '@/styles/scrollbar.css';
     import '@/styles/color-palette.css';
-    import Hooks from '@/views/stage/hooks'
+    import Hooks from '@/views/stage/hooks';
     import {mapGetters, mapMutations} from 'vuex';
-    import StageFooter from '@/views/stage/stage-footer'
-    import StageHeader from '@/views/stage/stage-header'
+    import StageFooter from '@/views/stage/stage-footer';
+    import StageHeader from '@/views/stage/stage-header';
     import {ComponentTypes} from '@/components/component-types';
-    import StageBodyRequisition from '@/views/stage/stage-body-requisition'
+    import StageBodyRequisition from '@/views/stage/stage-body-requisition';
     import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
     export default Vue.extend({
         name: 'Stage',
         components: {
-            StageHeader,
             Hooks,
-            StageBodyRequisition,
-            StageFooter
+            StageHeader,
+            StageFooter,
+            StageBodyRequisition
         },
         mounted: function () {
             RendererMessageCommunicator.on('expandLogWindow', () => this.expandLogWindow());

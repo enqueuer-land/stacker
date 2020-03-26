@@ -1,7 +1,7 @@
 <template>
     <b-container fluid id="assertion" class="px-1">
         <b-row no-gutters class="mb-2">
-            <b-col cols="auto" class="align-self-center carabina-text mr-3 mt-0 mr-1" style="font-size: 0.85em;">
+            <b-col cols="auto" class="align-self-center carabina-text mr-3 mt-0 mr-1" style="font-size: 0.85em; user-select: none">
                 #{{index}}
             </b-col>
             <b-col :cols="expectedList.length > 0 ? '5' : '10'">
