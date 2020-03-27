@@ -1,14 +1,14 @@
 <template>
-    <b-row class="pb-1 carabina-text p-2 plugin-manager-item" :style="itemStyle">
-        <b-col col style="font-weight: bold; color: var(--carabina-text-color);">
+    <b-row class="pb-1 carabina-text p-2 plugin-manager-item" :style="itemStyle" no-gutters>
+        <b-col col class="px-2" style="font-weight: bold; color: var(--carabina-text-color);">
             {{item.name}}
         </b-col>
-        <b-col cols="auto">
+        <b-col cols="auto"  class="px-2">
             <small>
                 {{item.version}}
             </small>
         </b-col>
-        <b-col cols="auto" class="align-self-center">
+        <b-col cols="auto" class="align-self-center px-2">
             <i v-if="isInstalled" class="fas fa-check carabina-icon"></i>
         </b-col>
         <span class="pl-3 pt-3">
