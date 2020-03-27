@@ -1,13 +1,5 @@
 <template>
     <div id="stage" style="height: 100%; background-color: var(--carabina-body-background-darker-color)">
-        <b-container v-if="installingPluginModal" id="installing-plugin-modal" fluid="">
-            <b-row style="height: 100%" align-h="center" align-v="center">
-                <b-col cols="auto">
-                    <b-spinner style="width: 10rem; height: 10rem; color: var(--carabina-theme-color)"
-                               label="Loading plugin"></b-spinner>
-                </b-col>
-            </b-row>
-        </b-container>
         <div style="height: var(--carabina-header-size);">
             <StageHeader v-if="selectedComponent" :component="selectedComponent"></StageHeader>
         </div>
@@ -106,7 +98,7 @@
             }
         },
         computed: {
-            ...mapGetters('stage', ['plugins', 'installingPluginModal']),
+            ...mapGetters('stage', ['plugins']),
             ...mapGetters('side-bar', ['selectedComponent']),
             componentIsRequisition: function () {
                 return this.selectedComponent.carabinaMeta.type === ComponentTypes.REQUISITION;
@@ -139,16 +131,6 @@
         overflow-y: scroll;
         background-color: var(--carabina-header-background-darker-color);
         height: var(--carabina-body-size);
-    }
-
-    #installing-plugin-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        background-color: rgba(0, 0, 0, 0.5);
     }
 
     #footer-container:active, #footer-container:focus {

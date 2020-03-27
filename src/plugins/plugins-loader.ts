@@ -8,11 +8,12 @@ import httpPublisher from '@/plugins/built-in/http-publisher';
 import httpSubscription from '@/plugins/built-in/http-subscription';
 
 export class PluginsLoader {
+    private static instance: PluginsLoader;
     private readonly pluginsRepository: any;
     private readonly plugins: any;
     private readonly pluginsString: string[];
 
-    constructor() {
+    private constructor() {
         this.pluginsRepository = new Store({name: 'plugins'});
         this.plugins = {
             publishers: {http: httpPublisher.publishers.http},
@@ -21,6 +22,13 @@ export class PluginsLoader {
         this.pluginsString = this.pluginsRepository.get('pluginsString', []);
         this.pluginsString
             .forEach((pluginString: string) => this.loadStringPlugin(pluginString));
+    }
+
+    public static getInstance(): PluginsLoader {
+        if (!PluginsLoader.instance) {
+            PluginsLoader.instance = new PluginsLoader();
+        }
+        return PluginsLoader.instance;
     }
 
     public getPlugins(): object {
@@ -33,18 +41,21 @@ export class PluginsLoader {
                 try {
                     if (!err) {
                         const fileContent = data.toString();
-                        const plugin = this.loadStringPlugin(fileContent);
-                        await this.installDependencies(plugin);
-                        this.pluginsString.push(fileContent);
-                        this.pluginsRepository.set('pluginsString', this.pluginsString);
+                        await this.loadPlugin(fileContent);
                         resolve();
-                        return;
                     }
                 } catch (e) {
                 }
                 reject(`Error loading plugin '${filename}'`);
             });
         });
+    }
+
+    public async loadPlugin(fileContent: string): Promise<void> {
+        const plugin = this.loadStringPlugin(fileContent);
+        await this.installDependencies(plugin);
+        this.pluginsString.push(fileContent);
+        this.pluginsRepository.set('pluginsString', this.pluginsString);
     }
 
     private loadStringPlugin(pluginString: string): any {

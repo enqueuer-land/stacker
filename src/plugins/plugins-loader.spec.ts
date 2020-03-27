@@ -6,6 +6,10 @@ jest.mock('electron-store');
 jest.mock('child_process');
 
 describe('PluginsLoader', () => {
+    beforeEach(() => {
+        // @ts-ignore
+        delete PluginsLoader.instance;
+    });
 
     it('should begin with http pub and sub', () => {
         // @ts-ignore
@@ -15,7 +19,7 @@ describe('PluginsLoader', () => {
             }
         });
 
-        const plugins = new PluginsLoader().getPlugins();
+        const plugins = PluginsLoader.getInstance().getPlugins();
 
         expect(plugins).toEqual({
             publishers: {
@@ -40,7 +44,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         cp.exec.mockImplementationOnce((command, cb) => cb());
 
-        const pluginsLoader = new PluginsLoader();
+        const pluginsLoader = PluginsLoader.getInstance();
         await pluginsLoader.loadFileFromFileSystem('plugins/shell-publisher.js');
 
         expect(pluginsLoader.getPlugins()).toEqual({
@@ -69,7 +73,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         cp.exec.mockImplementationOnce(execMock);
 
-        const pluginsLoader = new PluginsLoader();
+        const pluginsLoader = PluginsLoader.getInstance();
         await pluginsLoader.loadFileFromFileSystem('plugins/shell-publisher.js');
         const npmInstallCommand = execMock.mock.calls[0][0];
 

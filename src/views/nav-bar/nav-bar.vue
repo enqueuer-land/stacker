@@ -27,6 +27,8 @@
         <b-modal v-if="selectedEnvironment && selectedEnvironment.role !== 'none'" id="view-environments-modal"
                  no-fade
                  centered
+                 hide-footer
+                 hide-header-close
                  size="xl" scrollable
                  :title="selectedEnvironment.name"
                  header-bg-variant="header"
@@ -43,6 +45,8 @@
         <b-modal id="manage-environments-modal" size="lg" scrollable
                  no-fade
                  centered
+                 hide-footer
+                 hide-header-close
                  title="Manage environments"
                  header-bg-variant="header"
                  header-text-variant="header"
@@ -110,14 +114,6 @@
     .bg-body, .bg-header, .modal-content {
         padding: 8px;
         background-color: var(--carabina-header-background-darker-color);
-    }
-
-    .bg-footer, button .close {
-        display: none;
-    }
-
-    button.close {
-        display: none;
     }
 
     .btn-env-mgmt-button {

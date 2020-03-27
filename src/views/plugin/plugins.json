@@ -1,0 +1,321 @@
+[
+  {
+    "description": "Stacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "name": "enqueuer-plugin-shell",
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Enqueuer",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "Stacker",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/stacker",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker pluginndle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commandsStacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  },
+  {
+    "description": "Stacker plugin to handle shell commands",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/shell-publisher.js",
+    "keywords": [
+      "shell",
+      "bash",
+      "exec",
+      "spawn"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-shell",
+    "publishers": [
+      "shell"
+    ],
+    "repositoryUrl": "https://github.com/enqueuer-land/enqueuer-plugin-shell",
+    "subscriptions": [],
+    "website": "enqueuer.com"
+  },
+  {
+    "description": "Stacker plugin to handle database manipulations",
+    "javascriptUrl": "https://raw.githubusercontent.com/enqueuer-land/stacker/master/plugins/anydb-publisher.js",
+    "keywords": [
+      "database",
+      "db",
+      "dbms",
+      "postgres",
+      "mysql",
+      "mssql",
+      "sqlite"
+    ],
+    "license": "MIT",
+    "name": "enqueuer-plugin-anydb",
+    "publishers": [
+      "anydb"
+    ],
+    "repositoryUrl": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb",
+    "subscriptions": [],
+    "website": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb"
+  }
+]

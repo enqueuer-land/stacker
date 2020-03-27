@@ -155,6 +155,22 @@ describe('MenuTemplate', () => {
         expect(sendMock).toHaveBeenCalledWith('importPostmanEnvironment');
     });
 
+    it('should render plugins -> load plugin', () => {
+        const menu = menuTemplate.default(window);
+
+        const plugins = menu[1].submenu![8];
+
+        // @ts-ignore
+        plugins.click();
+
+        expect(plugins).toEqual({
+            click: expect.any(Function),
+            accelerator: 'CommandOrControl+L',
+            label: 'Install plugins'
+        });
+        expect(sendMock).toHaveBeenCalledWith('openPluginManager');
+    });
+
     it('should render editMenu', () => {
         const menu = menuTemplate.default(window);
         const editMenu = menu[2];
@@ -205,25 +221,10 @@ describe('MenuTemplate', () => {
         expect(sendMock).toHaveBeenCalledWith('runHighestParentOfSelectedComponent');
     });
 
-    it('should render plugins -> load plugin', () => {
+
+    it('should render logs', () => {
         const menu = menuTemplate.default(window);
-        const plugin = menu[5];
-        const loadPlugin = plugin.submenu![0];
-
-        // @ts-ignore
-        loadPlugin.click();
-
-        expect(plugin.label).toEqual('Plugins');
-        expect(loadPlugin).toEqual({
-            click: expect.any(Function),
-            label: 'Load from file'
-        });
-        expect(sendMock).toHaveBeenCalledWith('loadPlugin');
-    });
-
-    it('should render plugins -> logs', () => {
-        const menu = menuTemplate.default(window);
-        const log = menu[6];
+        const log = menu[5];
 
 
         expect(log.label).toEqual('Logs');
@@ -231,7 +232,7 @@ describe('MenuTemplate', () => {
 
     it('should render help', () => {
         const menu = menuTemplate.default(window);
-        const help = menu[7];
+        const help = menu[6];
 
 
         expect(help).toEqual({
@@ -242,7 +243,7 @@ describe('MenuTemplate', () => {
 
     it('should render help -> stacker', () => {
         const menu = menuTemplate.default(window);
-        const stacker = menu[7].submenu![0];
+        const stacker = menu[6].submenu![0];
 
         // @ts-ignore
         stacker.click();
@@ -255,7 +256,7 @@ describe('MenuTemplate', () => {
 
     it('should render help -> enqueuer', () => {
         const menu = menuTemplate.default(window);
-        const enqueuer = menu[7].submenu![1];
+        const enqueuer = menu[6].submenu![1];
 
         // @ts-ignore
         enqueuer.click();

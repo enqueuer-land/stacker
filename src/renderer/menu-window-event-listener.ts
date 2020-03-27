@@ -10,7 +10,7 @@ import {RendererMessageCommunicator} from '@/renderer/renderer-message-communica
 // stage
 RendererMessageCommunicator.on('addLog', ((event, data) => store.commit('stage/addLog', data)));
 
-RendererMessageCommunicator.on('loadPlugin', ((event, data) => store.dispatch('stage/loadPlugins', data)));
+RendererMessageCommunicator.on('openPluginManager', () => store.commit('stage/setPluginManagerModalVisibility', true));
 
 RendererMessageCommunicator.on('enqueuerLog', ((event, data) => {
     const decompress = LZString.decompressFromUTF16(data);
@@ -86,7 +86,7 @@ RendererMessageCommunicator.on('openEnvironment',
             .map(async environmentPromise => {
                 try {
                     if (environmentPromise) {
-                        const environment =  await environmentPromise;
+                        const environment = await environmentPromise;
                         store.commit('nav-bar/addEnvironment', environment);
                     }
                 } catch (e) {
@@ -104,7 +104,7 @@ RendererMessageCommunicator.on('importPostmanEnvironment',
             .map(async environmentPromise => {
                 try {
                     if (environmentPromise) {
-                        const environment =  await environmentPromise;
+                        const environment = await environmentPromise;
                         store.commit('nav-bar/addEnvironment', environment);
                     }
                 } catch (e) {

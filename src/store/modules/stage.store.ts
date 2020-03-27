@@ -1,7 +1,5 @@
 import store from '@/store'
 import LZString from 'lz-string';
-import {Logger} from '@/components/logger';
-import {FileDialog} from '@/renderer/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
@@ -13,9 +11,9 @@ import {RendererMessageCommunicator} from '@/renderer/renderer-message-communica
 
 export default () => ({
     state: {
-        plugins: new PluginsLoader().getPlugins(),
+        plugins: PluginsLoader.getInstance().getPlugins(),
         enqueuerLogParser: new EnqueuerLogParser(600, 'INFO'),
-        installingPluginModal: false,
+        pluginManagerModal: false,
     },
     mutations: {
         addEnqueuerLog: (stage: any, data: any) => {
@@ -33,11 +31,8 @@ export default () => ({
         decreaseLogFilterLevel: (stage: any) => {
             stage.enqueuerLogParser.decreasePriorityFilter();
         },
-        addInstallingPluginModal: (stage: any) => {
-            stage.installingPluginModal = true;
-        },
-        removeInstallingPluginModal: (stage: any) => {
-            stage.installingPluginModal = false;
+        setPluginManagerModalVisibility: (stage: any, visibility: boolean) => {
+            stage.pluginManagerModal = visibility;
         },
         setPlugins: (stage: any, data: any) => {
             stage.plugins = data;
@@ -54,25 +49,13 @@ export default () => ({
             store.dispatch('stage/runComponent', highestParent)
                 .then(() => {/* do nothing */
                 });
-        },
+        }
     },
     actions: {
-        loadPlugins: async ({commit}: any) => {
-            const pickedFiles = await FileDialog.showOpenDialog();
-            if (pickedFiles.length > 0) {
-                store.commit('stage/addInstallingPluginModal');
-                const pluginsLoader = new PluginsLoader();
-                try {
-                    await Promise
-                        .all(pickedFiles
-                            .map(async file => await pluginsLoader.loadFileFromFileSystem(file)));
-                } catch (e) {
-                    Logger.error(e);
-                }
-                RendererMessageCommunicator.emit('restartEnqueuer');
-                store.commit('stage/removeInstallingPluginModal');
-                commit('setPlugins', pluginsLoader.getPlugins());
-            }
+        loadPlugin: async ({commit}: any, pluginJavascript: string) => {
+            const pluginsLoader = PluginsLoader.getInstance();
+            await pluginsLoader.loadPlugin(pluginJavascript);
+            commit('setPlugins', pluginsLoader.getPlugins());
         },
         runComponent: async (_: any, component: CarabinaComponent) => {
             const decycled: CarabinaRequisition = new RequisitionWrapperCreator(component).create();
@@ -86,6 +69,7 @@ export default () => ({
     },
     getters: {
         plugins: (state: any) => state.plugins,
+        pluginManagerModal: (state: any) => state.pluginManagerModal,
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
         currentLogLevel: (state: any) => state.enqueuerLogParser.getPriorityFilterName(),
         installingPluginModal: (state: any) => state.installingPluginModal,
@@ -99,5 +83,5 @@ export default () => ({
             return [];
         },
     },
-    namespaced: true
+    namespaced: true,
 });

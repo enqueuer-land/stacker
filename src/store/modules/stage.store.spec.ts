@@ -1,6 +1,5 @@
 import store from '@/store'
 import LZString from 'lz-string';
-import {FileDialog} from '@/renderer/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import * as stageStore from '@/store/modules/stage.store';
 import {ComponentTypes} from '@/components/component-types';
@@ -8,7 +7,6 @@ import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
 import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
 jest.mock('@/store');
-jest.mock('@/renderer/file-dialog');
 jest.mock('@/plugins/plugins-loader');
 jest.mock('@/components/enqueuer-log-parser');
 jest.mock('@/renderer/renderer-message-communicator');
@@ -16,7 +14,7 @@ jest.mock('@/renderer/renderer-message-communicator');
 describe('StageStore', () => {
     const getPluginsMock = jest.fn(() => ['plugin1']);
     // @ts-ignore
-    PluginsLoader.mockImplementation(() => ({getPlugins: getPluginsMock, loadFileFromFileSystem: () => ''}));
+    PluginsLoader.getInstance.mockImplementation(() => ({getPlugins: getPluginsMock, loadFileFromFileSystem: () => ''}));
     // @ts-ignore
     EnqueuerLogParser.mockImplementation(() => ({name: 'logParser'}));
     // @ts-ignore
@@ -36,7 +34,7 @@ describe('StageStore', () => {
             enqueuerLogParser: {
                 name: 'logParser'
             },
-            installingPluginModal: false,
+            pluginManagerModal: false,
         });
     });
 
@@ -63,11 +61,11 @@ describe('StageStore', () => {
         expect(stageStore.default().getters.currentLogLevel(state)).toEqual(state.enqueuerLogParser.getPriorityFilterName());
     });
 
-    it('should get installingPluginModal correctly', () => {
+    it('should get pluginManagerModal correctly', () => {
         const state = {
-            installingPluginModal: true
+            pluginManagerModal: true
         };
-        expect(stageStore.default().getters.installingPluginModal(state)).toBeTruthy();
+        expect(stageStore.default().getters.pluginManagerModal(state)).toBeTruthy();
     });
 
     it('should get requisition protocols list', () => {
@@ -189,20 +187,12 @@ describe('StageStore', () => {
 
     it('should add installing modal', () => {
         const state = {
-            installingPluginModal: false
+            pluginManagerModal: false
         };
-        stageStore.default().mutations.addInstallingPluginModal(state);
 
-        expect(state.installingPluginModal).toBeTruthy();
-    });
+        stageStore.default().mutations.setPluginManagerModalVisibility(state, true);
 
-    it('should remove installing modal', () => {
-        const state = {
-            installingPluginModal: true
-        };
-        stageStore.default().mutations.removeInstallingPluginModal(state);
-
-        expect(state.installingPluginModal).toBeFalsy();
+        expect(state.pluginManagerModal).toBeTruthy();
     });
 
     it('should set plugins', () => {
@@ -292,33 +282,4 @@ describe('StageStore', () => {
         expect(commitMock).toHaveBeenLastCalledWith('result/responseReceived', true);
     });
 
-    it('should not load plugin when no file is selected', async () => {
-        // @ts-ignore
-        FileDialog.showOpenDialog.mockImplementationOnce(() => []);
-
-        const commitMock = jest.fn();
-        const state = {commit: commitMock};
-        await stageStore.default().actions.loadPlugins(state);
-
-        expect(commitMock).not.toHaveBeenCalled();
-    });
-
-    it('should not load plugin when no file is selected', async () => {
-        // @ts-ignore
-        FileDialog.showOpenDialog.mockImplementationOnce(() => ['filename']);
-
-        const emitMock = jest.fn();
-        // @ts-ignore
-        RendererMessageCommunicator.emit.mockImplementationOnce(emitMock);
-
-        const commitMock = jest.fn();
-        store.commit = commitMock;
-        const state = {commit: commitMock};
-        await stageStore.default().actions.loadPlugins(state);
-
-        expect(commitMock).toHaveBeenCalledWith('stage/addInstallingPluginModal');
-        expect(commitMock).toHaveBeenCalledWith('stage/removeInstallingPluginModal');
-        expect(commitMock).toHaveBeenCalledWith('setPlugins', ['plugin1']);
-        expect(emitMock).toHaveBeenCalledWith('restartEnqueuer');
-    });
 });

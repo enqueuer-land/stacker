@@ -83,6 +83,12 @@ export default (window: Electron.BrowserWindow) => [
             // {type: 'separator'},
             // {label: 'Save All'},
             {type: 'separator'},
+            {
+                label: 'Install plugins',
+                accelerator: 'CommandOrControl+L',
+                click: () => window.webContents.send('openPluginManager')
+            },
+            {type: 'separator'},
             // {role: 'quit'},
             isMac ? {role: 'close'} : {role: 'quit'}
         ]
@@ -105,13 +111,6 @@ export default (window: Electron.BrowserWindow) => [
         ]
     },
     // {role: 'windowMenu'},
-    {
-        label: 'Plugins',
-        submenu: [{
-            label: 'Load from file',
-            click: () => window.webContents.send('loadPlugin')
-        }]
-    },
     {
         label: 'Logs',
         submenu: [
