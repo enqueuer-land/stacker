@@ -1,4 +1,6 @@
 const plugin = {
+    id: 'stacker-plugin-shell-v0.0.1',
+    version: '0.0.1',
     publishers: {
         exec: {
             dependencies: ['enqueuer-plugin-shell'],
