@@ -53,12 +53,12 @@ export class PluginsLoader {
         });
     }
 
-    public getInstalledPlugins(): string[] {
-        return this.installedPlugins;
+    public pluginIsInstalled(plugin: { name: string; version: string }): boolean {
+        return this.installedPlugins.includes(`${plugin.name}/${plugin.version}`);
     }
 
-    public addInstalledPluginId(id: string): void {
-        this.installedPlugins.push(id);
+    public addInstalledPlugin(plugin: { name: string; version: string }): void {
+        this.installedPlugins.push(`${plugin.name}/${plugin.version}`);
         this.installedPlugins = Array.from(new Set(this.installedPlugins));
         this.pluginsRepository.set('installedPluginsIds', this.installedPlugins);
     }

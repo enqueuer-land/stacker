@@ -23,58 +23,46 @@
             </b-row>
             <b-row no-gutters style="height: 70vh">
                 <b-col cols="4" id="plugins-list-panel">
-                    <div v-for="(plugin, index) in plugins" :key="index" :style="itemStyle(index)"
-                         class="carabina-text p-2 plugin-manager-item"
-                         @click="renderPlugin(index)">
-                        <b-row class="pb-1">
-                            <b-col col style="font-weight: bold; color: var(--carabina-text-color);">
-                                {{plugin.name}}
-                            </b-col>
-                            <b-col cols="auto">
-                                <b-button size="sm" class="float-right" :disabled="isInstalled(plugin)" variant="install-button"
-                                          @click="installPlugin(plugin, index)">
-                                    Install
-                                </b-button>
-                            </b-col>
-                        </b-row>
-                        <span class="pl-2">
-                            {{plugin.description}}
-                        </span>
-                    </div>
+                    <plugin-manager-item v-for="(plugin, index) in plugins" :key="index"
+                                         :item="plugin" :selected="selectedIndex === index"
+                                         @click.native="selectItem(index)">
+                    </plugin-manager-item>
                 </b-col>
-                <b-col cols="8" class="carabina-text px-4 py-1" id="plugin-display-panel">
-                    <template v-if="selectedIndex !== null">
-                        <div class="carabina-text" style="font-size: 48px">{{plugins[selectedIndex].name}}</div>
-                        <div v-html="plugins[selectedIndex].readme"></div>
-                    </template>
+                <b-col cols="8" class="carabina-text px-3 py-1" style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
+                    <plugin-manager-item-display v-if="selectedIndex !== null"
+                                                 :plugin="plugins[selectedIndex]"
+                                                 @install="installPlugin(plugins[selectedIndex])">
+                    </plugin-manager-item-display>
                 </b-col>
             </b-row>
         </b-container>
-
         <template v-slot:modal-footer="{ ok }">
             <b-button size="sm" variant="plugin-manager-ok-button" @click="ok()">
                 OK
             </b-button>
         </template>
-
     </b-modal>
 </template>
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import pagedown from 'pagedown';
     import {Logger} from '@/components/logger';
     import {HttpRequest} from '@/http/http-request';
     import {FileDialog} from '@/renderer/file-dialog';
     import {PluginsLoader} from '@/plugins/plugins-loader';
+    import PluginManagerItem from '@/views/plugin/plugin-manager-item';
+    import PluginManagerItemDisplay from '@/views/plugin/plugin-manager-item-display';
     import {mapActions, mapGetters, mapMutations} from 'vuex';
     import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
-    const converter = new pagedown.Converter();
     const httpRequest = new HttpRequest();
 
     export default Vue.extend({
         name: 'PluginManager',
+        components: {
+            PluginManagerItem,
+            PluginManagerItemDisplay
+        },
         data: function () {
             return {
                 plugins: [],
@@ -88,7 +76,7 @@
             if (pluginsList.statusCode === 200) {
                 this.plugins = JSON.parse(pluginsList.data);
                 if (this.plugins.length > 0) {
-                    this.renderPlugin(0);
+                    this.selectItem(0);
                 }
             }
             this.installingPluginModal = false;
@@ -96,16 +84,12 @@
         methods: {
             ...mapMutations('stage', ['setPluginManagerModalVisibility']),
             ...mapActions('stage', ['loadPlugin']),
-            isInstalled: function (plugin) {
-                return PluginsLoader.getInstance().getInstalledPlugins().includes(plugin.id);
+            selectItem: function(index) {
+                this.selectedIndex = index;
             },
-
-            installPlugin: async function (plugin, index) {
-                await this.renderPlugin(index);
+            installPlugin: async function (plugin) {
                 this.installingPluginModal = true;
-                await this.loadPlugin({javascript: plugin.javascript});
-                PluginsLoader.getInstance().addInstalledPluginId(plugin.id);
-                console.log(PluginsLoader.getInstance().getInstalledPlugins());
+                await this.loadPlugin(plugin);
                 RendererMessageCommunicator.emit('restartEnqueuer');
                 this.installingPluginModal = false;
             },
@@ -113,6 +97,7 @@
                 const pickedFiles = await FileDialog.showOpenDialog();
                 if (pickedFiles.length > 0) {
                     this.installingPluginModal = true;
+                    //TODO move this to stage.store
                     const pluginsLoader = PluginsLoader.getInstance();
                     try {
                         await Promise
@@ -124,50 +109,10 @@
                     RendererMessageCommunicator.emit('restartEnqueuer');
                     this.installingPluginModal = false;
                 }
-            },
-            renderPlugin: async function (index) {
-                const plugin = this.plugins[index];
-                if (!plugin.loaded) {
-                    const repoUrl = plugin.repositoryUrl.split('/');
-                    const user = repoUrl[repoUrl.length - 2];
-                    const repo = repoUrl[repoUrl.length - 1];
-
-                    const javascript = await httpRequest
-                        .request(plugin.javascriptUrl);
-                    const readme = await httpRequest
-                        .request(`https://raw.githubusercontent.com/${user}/${repo}/master/README.md`, {});
-                    const readMeHtmlized = converter.makeHtml(readme.data)
-                        .replace(/<img/g, '<img class="img-fluid" ')
-                        .replace(/src="([^"]*)/g, (match, url) => {
-                            if (url.startsWith('http')) {
-                                return match;
-                            }
-                            return `src="https://raw.githubusercontent.com/${user}/${repo}/master/${url}`;
-                        })
-                        .replace(/<a/g, '<a target="_blank"');
-                    plugin.readme = readMeHtmlized;
-                    plugin.javascript = javascript.data;
-                    plugin.loaded = true;
-                }
-                this.selectedIndex = index;
             }
         },
         computed: {
             ...mapGetters('stage', ['pluginManagerModal']),
-            itemStyle: function () {
-                return function (index) {
-                    const style = {
-                        height: '80px',
-                        cursor: 'pointer',
-                        overflow: 'hidden'
-                    };
-                    if (index === this.selectedIndex) {
-                        style.color = 'var(--carabina-text-color)';
-                        style['background-color'] = 'var(--carabina-header-background-color)';
-                    }
-                    return style;
-                }
-            }
         }
     });
 </script>
@@ -184,25 +129,8 @@
         padding: 10px;
     }
 
-    .plugin-manager-item {
-        border-bottom: 1px solid var(--carabina-header-background-lighter-color);
-    }
-
-    .plugin-manager-item:hover {
-        color: var(--carabina-text-color);
-    }
-
     #plugins-list-panel {
-        background-color: var(--carabina-header-background-darker-color);
-        height: 100%;
         overflow-y: auto;
-    }
-
-    #plugin-display-panel {
-        background-color: var(--carabina-header-background-darker-color);
-        overflow-y: auto;
-        height: 100%;
-        border-left: 1px solid var(--carabina-header-background-lighter-color);
     }
 
     .plugin-manager-footer-class {
@@ -226,15 +154,6 @@
 
     #plugin-display-panel pre code {
         color: var(--carabina-text-color);
-    }
-
-    .btn-install-button {
-        background-color: var(--carabina-theme-color);
-        color: var(--carabina-header-background-darker-color);
-    }
-
-    .btn-install-button:hover:not(.disabled) {
-        filter: brightness(1.15);
     }
 
     #installing-plugin-modal {

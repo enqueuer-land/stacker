@@ -6,7 +6,8 @@ export class HttpRequest {
         const stringifiedPayload = JSON.stringify(payload);
         options.headers = {
             ...options.headers,
-            'Content-Length': stringifiedPayload.length
+            'Content-Length': stringifiedPayload.length,
+            'User-Agent': 'stacker-plugins'
         };
         return new Promise((resolve, reject) => {
             const request = https.request(url, options, (resp) => {
