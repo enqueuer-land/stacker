@@ -17,7 +17,7 @@
                 <b-col style="font-size: 30px">
                     Manage Plugin
                 </b-col>
-                <b-col cols="auto" @click="loadPluginsFromFileSystem">
+                <b-col cols="auto" class="align-self-center" @click="loadPluginsFromFileSystem">
                     <i class="fas fa-folder-open carabina-icon"></i>
                 </b-col>
             </b-row>
@@ -31,8 +31,8 @@
                                 {{plugin.name}}
                             </b-col>
                             <b-col cols="auto">
-                                <b-button size="sm" class="float-right" variant="install-button"
-                                          @click="installPlugin(plugin.javascript)">
+                                <b-button size="sm" class="float-right" :disabled="isInstalled(plugin)" variant="install-button"
+                                          @click="installPlugin(plugin, index)">
                                     Install
                                 </b-button>
                             </b-col>
@@ -96,9 +96,16 @@
         methods: {
             ...mapMutations('stage', ['setPluginManagerModalVisibility']),
             ...mapActions('stage', ['loadPlugin']),
-            installPlugin: async function (javascript) {
+            isInstalled: function (plugin) {
+                return PluginsLoader.getInstance().getInstalledPlugins().includes(plugin.id);
+            },
+
+            installPlugin: async function (plugin, index) {
+                await this.renderPlugin(index);
                 this.installingPluginModal = true;
-                await this.loadPlugin(javascript);
+                await this.loadPlugin({javascript: plugin.javascript});
+                PluginsLoader.getInstance().addInstalledPluginId(plugin.id);
+                console.log(PluginsLoader.getInstance().getInstalledPlugins());
                 RendererMessageCommunicator.emit('restartEnqueuer');
                 this.installingPluginModal = false;
             },
@@ -203,6 +210,8 @@
     }
 
     .btn-plugin-manager-ok-button {
+        padding-left: 20px;
+        padding-right: 20px;
         background-color: var(--carabina-theme-color);
     }
 
@@ -220,13 +229,12 @@
     }
 
     .btn-install-button {
-        border: 1px solid var(--carabina-theme-color);
-        color: var(--carabina-theme-color);
+        background-color: var(--carabina-theme-color);
+        color: var(--carabina-header-background-darker-color);
     }
 
-    .btn-install-button:hover {
-        background-color: var(--carabina-theme-color);
-        color: var(--carabina-text-color);
+    .btn-install-button:hover:not(.disabled) {
+        filter: brightness(1.15);
     }
 
     #installing-plugin-modal {

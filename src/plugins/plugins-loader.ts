@@ -12,9 +12,11 @@ export class PluginsLoader {
     private readonly pluginsRepository: any;
     private readonly plugins: any;
     private readonly pluginsString: string[];
+    private installedPlugins: string[];
 
     private constructor() {
         this.pluginsRepository = new Store({name: 'plugins'});
+        this.installedPlugins = this.pluginsRepository.get('installedPluginsIds', []);
         this.plugins = {
             publishers: {http: httpPublisher.publishers.http},
             subscriptions: {http: httpSubscription.subscriptions.http}
@@ -51,11 +53,22 @@ export class PluginsLoader {
         });
     }
 
-    public async loadPlugin(fileContent: string): Promise<void> {
+    public getInstalledPlugins(): string[] {
+        return this.installedPlugins;
+    }
+
+    public addInstalledPluginId(id: string): void {
+        this.installedPlugins.push(id);
+        this.installedPlugins = Array.from(new Set(this.installedPlugins));
+        this.pluginsRepository.set('installedPluginsIds', this.installedPlugins);
+    }
+
+    public async loadPlugin(fileContent: string): Promise<any> {
         const plugin = this.loadStringPlugin(fileContent);
         await this.installDependencies(plugin);
         this.pluginsString.push(fileContent);
         this.pluginsRepository.set('pluginsString', this.pluginsString);
+        return plugin;
     }
 
     private loadStringPlugin(pluginString: string): any {
