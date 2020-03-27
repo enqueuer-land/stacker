@@ -9,7 +9,7 @@
             <b-col cols>
                 <b-row no-gutters align-v="center">
                     <b-col col>
-                        <h2>{{plugin.name}}</h2>
+                        <h2 class="m-0">{{plugin.name}}</h2>
                     </b-col>
                     <b-col cols="auto" class="px-3">
                         <small>{{plugin.version}}</small>

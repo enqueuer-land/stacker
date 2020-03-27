@@ -1,4 +1,5 @@
 import https from 'https';
+import {IdCreator} from '@/components/id-creator';
 
 //TODO test it
 export class HttpRequest {
@@ -7,7 +8,7 @@ export class HttpRequest {
         options.headers = {
             ...options.headers,
             'Content-Length': stringifiedPayload.length,
-            'User-Agent': 'stacker-plugins'
+            'User-Agent': 'stacker-plugins' + new IdCreator().create()
         };
         return new Promise((resolve, reject) => {
             const request = https.request(url, options, (resp) => {

@@ -5,7 +5,7 @@
              @hidden="setPluginManagerModalVisibility(false)"
              footer-class="plugin-manager-footer-class">
         <b-container fluid class="p-0 m-0" style="user-select: none">
-            <b-container v-if="installingPluginModal" id="installing-plugin-modal" fluid="">
+            <b-container v-if="installingPluginModal" id="installing-plugin-modal" fluid>
                 <b-row style="height: 100%" align-h="center" align-v="center">
                     <b-col cols="auto">
                         <b-spinner style="width: 10rem; height: 10rem; color: var(--carabina-theme-color)"
@@ -18,17 +18,24 @@
                     Manage Plugin
                 </b-col>
                 <b-col cols="auto" class="align-self-center" @click="loadPluginsFromFileSystem">
-                    <i class="fas fa-folder-open carabina-icon"></i>
+                    <i style="font-size: 30px" class="fas fa-folder-open carabina-icon"></i>
                 </b-col>
             </b-row>
             <b-row no-gutters style="height: 70vh">
-                <b-col cols="4" id="plugins-list-panel">
-                    <plugin-manager-item v-for="(plugin, index) in plugins" :key="index"
+                <b-col cols="4" class="pr-2" style="overflow-y: auto;">
+                    <stacker-input placeholder="Filter" type="text"
+                                   @input="filterChanged"
+                                   trim
+                                   :value="filter" class="text-input carabina-text mx-1 mb-3">
+                    </stacker-input>
+
+                    <plugin-manager-item v-for="(plugin, index) in filteredPlugins" :key="index"
                                          :item="plugin" :selected="selectedIndex === index"
                                          @click.native="selectItem(index)">
                     </plugin-manager-item>
                 </b-col>
-                <b-col cols="8" class="carabina-text px-3 py-1" style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
+                <b-col cols="8" class="carabina-text px-3 py-1"
+                       style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
                     <plugin-manager-item-display v-if="selectedIndex !== null"
                                                  :plugin="plugins[selectedIndex]"
                                                  @install="installPlugin(plugins[selectedIndex])">
@@ -65,6 +72,7 @@
         },
         data: function () {
             return {
+                filter: '',
                 plugins: [],
                 selectedIndex: null,
                 installingPluginModal: true,
@@ -84,7 +92,10 @@
         methods: {
             ...mapMutations('stage', ['setPluginManagerModalVisibility']),
             ...mapActions('stage', ['loadPlugin']),
-            selectItem: function(index) {
+            filterChanged: function (value) {
+                this.filter = value;
+            },
+            selectItem: function (index) {
                 this.selectedIndex = index;
             },
             installPlugin: async function (plugin) {
@@ -113,6 +124,10 @@
         },
         computed: {
             ...mapGetters('stage', ['pluginManagerModal']),
+            filteredPlugins: function () {
+                return this.plugins
+                    .filter(plugin => JSON.stringify(plugin).includes(this.filter));
+            }
         }
     });
 </script>
@@ -122,15 +137,10 @@
 
     .plugin-manager-title {
         user-select: none;
-        border-bottom: 1px solid var(--carabina-header-background-lighter-color);
     }
 
     .bg-plugin-manager {
         padding: 10px;
-    }
-
-    #plugins-list-panel {
-        overflow-y: auto;
     }
 
     .plugin-manager-footer-class {
