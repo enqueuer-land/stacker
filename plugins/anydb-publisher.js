@@ -1,6 +1,4 @@
 module.exports = {
-    id: 'stacker-plugin-anydb-v0.0.1',
-    version: '0.0.1',
     publishers: {
         anydb: {
             dependencies: ['enqueuer-plugin-anydb'],
