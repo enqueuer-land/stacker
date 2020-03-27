@@ -9,7 +9,7 @@
                 <b-row style="height: 100%" align-h="center" align-v="center">
                     <b-col cols="auto">
                         <b-spinner style="width: 10rem; height: 10rem; color: var(--carabina-theme-color)"
-                                   label="Loading plugin"></b-spinner>
+                                   label="Loading"></b-spinner>
                     </b-col>
                 </b-row>
             </b-container>
@@ -37,7 +37,9 @@
                                 </b-button>
                             </b-col>
                         </b-row>
-                        {{plugin.description}}
+                        <span class="pl-2">
+                            {{plugin.description}}
+                        </span>
                     </div>
                 </b-col>
                 <b-col cols="8" class="carabina-text px-4 py-1" id="plugin-display-panel">
@@ -62,7 +64,6 @@
     import '@/styles/texts.css';
     import pagedown from 'pagedown';
     import {Logger} from '@/components/logger';
-    import plugins from '@/views/plugin/plugins';
     import {HttpRequest} from '@/http/http-request';
     import {FileDialog} from '@/renderer/file-dialog';
     import {PluginsLoader} from '@/plugins/plugins-loader';
@@ -75,12 +76,22 @@
     export default Vue.extend({
         name: 'PluginManager',
         data: function () {
-            this.renderPlugin(0);
             return {
-                plugins,
+                plugins: [],
                 selectedIndex: null,
-                installingPluginModal: false,
+                installingPluginModal: true,
             }
+        },
+        mounted: async function () {
+            const pluginsList = await httpRequest
+                .request('https://raw.githubusercontent.com/enqueuer-land/stacker-plugins/master/plugins.json');
+            if (pluginsList.statusCode === 200) {
+                this.plugins = JSON.parse(pluginsList.data);
+                if (this.plugins.length > 0) {
+                    this.renderPlugin(0);
+                }
+            }
+            this.installingPluginModal = false;
         },
         methods: {
             ...mapMutations('stage', ['setPluginManagerModalVisibility']),
@@ -108,7 +119,7 @@
                 }
             },
             renderPlugin: async function (index) {
-                const plugin = plugins[index];
+                const plugin = this.plugins[index];
                 if (!plugin.loaded) {
                     const repoUrl = plugin.repositoryUrl.split('/');
                     const user = repoUrl[repoUrl.length - 2];
