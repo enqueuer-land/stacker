@@ -46,12 +46,8 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import pagedown from 'pagedown';
-    import {HttpRequest} from '@/http/http-request';
     import {PluginsLoader} from '@/plugins/plugins-loader';
-
-    const converter = new pagedown.Converter();
-    const httpRequest = new HttpRequest();
+    import {PluginDataFetcher} from '@/plugins/plugin-data-fetcher';
 
     export default Vue.extend({
         name: 'PluginManagerItemDisplay',
@@ -80,32 +76,11 @@
             },
         },
         methods: {
-            //TODO extract to a class
             loadData: async function () {
                 if (!this.plugin.loaded) {
-                    const repoUrl = this.plugin.repositoryUrl.split('/');
-                    const user = repoUrl[repoUrl.length - 2];
-                    const repo = repoUrl[repoUrl.length - 1];
-
-                    const javascript = await httpRequest
-                        .request(this.plugin.javascriptUrl);
-                    const readme = await httpRequest
-                        .request(`https://raw.githubusercontent.com/${user}/${repo}/master/README.md`);
-                    const readMeHtmlized = converter.makeHtml(readme.data)
-                        .replace(/<img/g, '<img class="img-fluid" ')
-                        .replace(/<h(\d)/g, (match, level) => `<h${Math.min(level + 2, 6)}`)
-                        .replace(/<a/g, '<a target="_blank"')
-                        .replace(/src="([^"]*)/g, (match, url) => {
-                            if (url.startsWith('http')) {
-                                return match;
-                            }
-                            return `src="https://raw.githubusercontent.com/${user}/${repo}/master/${url}`;
-                        });
-                    this.plugin.user = user;
-                    this.plugin.picture = `http://github.com/${user}.png`;
-                    this.plugin.readme = readMeHtmlized;
-                    this.plugin.javascript = javascript.data;
-                    this.plugin.size = (javascript.data.length / 1024).toFixed(2);
+                    const data = await new PluginDataFetcher(this.plugin).fetch();
+                    Object.keys(data)
+                        .forEach(key => this.plugin[key] = data[key]);
                     this.plugin.loaded = true;
                 }
                 this.loaded = true;

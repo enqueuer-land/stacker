@@ -2,7 +2,7 @@ import https from 'https';
 
 //TODO test it
 export class HttpRequest {
-    public request(url: string, options: https.RequestOptions = {}, payload = '') {
+    public request(url: string, options: https.RequestOptions = {}, payload = ''): Promise<{ data: any; statusCode: number }> {
         const stringifiedPayload = JSON.stringify(payload);
         options.headers = {
             ...options.headers,
@@ -17,9 +17,9 @@ export class HttpRequest {
                         data += chunk;
                     })
                     .on('end', () => {
-                        resolve({data, statusCode: resp.statusCode});
+                        resolve({data, statusCode: resp.statusCode!});
                     });
-            }).on("error", (err) => {
+            }).on('error', (err) => {
                 reject(err);
             });
             request.write(stringifiedPayload);
