@@ -102,6 +102,10 @@ h2 {
     animation: octocat-wave 560ms ease-in-out;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 
 @keyframes octocat-wave {
     0%, 100% {

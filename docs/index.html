@@ -23,7 +23,8 @@
     <meta name="keywords"
           content="open-source, cross platform, enqueuer, nqr, testing, tool, microservice, multiprotocol, polyglot, reactive, message, tcp, mock, amqp, http, test event, event-driven, continuous integration, message testing, polyglot flow, stacker"/>
     <meta name="robots" content="index, follow">
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/enqueuer-land/stacker/master/build/icons/16x16.png"/>
+    <link rel="shortcut icon"
+          href="https://raw.githubusercontent.com/enqueuer-land/stacker/master/build/icons/16x16.png"/>
 
     <title>Stacker</title>
 
@@ -33,7 +34,7 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../stacker.css">
+    <link rel="stylesheet" type="text/css" href="stacker.css">
 </head>
 
 <body>
@@ -76,21 +77,21 @@
                        href="https://github.com/enqueuer-land/stacker/releases/download/v0.2.0/stacker-0.2.0.dmg"
                        download="">
                         <img class="img-thumbnail img-binaries"
-                             src="https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/macos-logo.png"
+                             src="./icons/macos-logo.png"
                              alt="mac version">
                     </a>
                     <a class="col-12 col-md-4 py-1"
                        href="https://github.com/enqueuer-land/stacker/releases/download/v0.2.0/stacker.Setup.0.2.0.exe.zip"
                        download="">
                         <img class="img-thumbnail img-binaries"
-                             src="https://raw.githubusercontent.com/enqueuer-land/stacker/master/docs/windows-logo.png"
+                             src="./icons/windows-logo.png"
                              alt="win version">
                     </a>
                     <a class="col-12 col-md-4 py-1"
                        href="https://github.com/enqueuer-land/stacker/releases/download/v0.2.0/stacker-0.2.0.AppImage.zip"
                        download="">
                         <img class="img-thumbnail img-binaries" alt="linux version"
-                             src="https://raw.githubusercontent.com/lopidio/stacker/master/docs/linux-logo.png">
+                             src="./icons/linux-logo.png">
                     </a>
                 </div>
             </div>
@@ -100,7 +101,6 @@
     color: var(--carabina-text-darker-color); font-family: Avenir, Helvetica, Arial, sans-serif;"
          class="py-3">
         <div class="container" style="">
-            <!-- Example row of columns -->
             <div class="row">
                 <div class="col-md-4" style="text-align: justify">
                     <h2 style="
@@ -124,8 +124,10 @@
                         away from each other, including your own custom ones:</p>
                     <ul>
                         <li>HTTP</li>
+                        <li>EXEC</li><li>ANYDB</li>
                         <li>
-                            <a href="plugins/shell-publisher.js" class="stacker-link">Your own custom one</a>
+                            <a href="https://github.com/enqueuer-land/stacker-plugins/" class="stacker-link">Your own
+                                custom one</a>
                         </li>
                     </ul>
                 </div>
@@ -146,9 +148,7 @@
             </div>
             <hr>
             <div class="readme-container">
-                <p></p>
-
-<h3>Concept</h3>
+                <h3>Definition</h3>
 
 <p>Have you ever struggled with testing multi protocol flows?
 Want to ensure that a user journey which involves several steps with different protocols is working properly?
@@ -158,10 +158,10 @@ Have you ever wondered how awesome it would be to have a GUI tool to save you fr
 
 <h3>Description</h3>
 
-<p>Stacker is a <span style="text-decoration: line-through">yet another</span> GUI client for <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a> to handle multi protocol tests.
+<p>Stacker is the official GUI for <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a> to handle multi protocol tests.
 It aims to provide a clean, fun, and good looking interface for interacting with polyglot flows.  </p>
 
-<p><img src="docs/screenshot-1.png" alt="screenshot-1" title="" /></p>
+<p><img src="./screenshot-1.png" alt="screenshot-1" title="" /></p>
 
 <h3>Features</h3>
 
@@ -174,27 +174,59 @@ It aims to provide a clean, fun, and good looking interface for interacting with
 <li>Friendly for developers and non developers  </li>
 <li>Built in assertion library to verify response data coming from/going to your services  </li>
 <li>Built in CLI is easy to add to your team's existing CI pipelines powered by <a href="https://enqueuer-land.github.io/enqueuer/">enqueuer</a>  </li>
-<li>Easily extensible behavior through third party plugins, including your own custom ones. Check out <a href="plugins/shell-publisher.js">this example</a>  </li>
+<li>Easily extensible behavior through third party plugins, including your own custom ones.  </li>
 </ul>
 
-<h3>Test driven</h3>
-
-<p>Test are first class citizens, they are placed front and center here.
-Through assertions check whether each flowing by message matches what is expected:</p>
-
-<ul>
-<li>Sent to where it was suppose to be sent  </li>
-<li>Contains what it should contain  </li>
-<li>Sent faster than the threshold  </li>
-</ul>
+<p><img src="./screenshot-2.png" alt="screenshot-2" title="" /></p>
 
 <h3>Polyglot</h3>
 
 <p>Have you seen how many protocols it supports? Out of the box, just one click away from each other.
-Write as many protocols plugins as you want your one or download the ones that pleased you most.
-Check out <a href="plugins/shell-publisher.js">this example</a> of how to write a plugin.</p>
+Write as many protocols plugins as you want your one or download the ones that pleased you most.</p>
 
-<p><img src="docs/screenshot-2.png" alt="screenshot-2" title="" /></p>
+<h3>Plugins</h3>
+
+<p>You're probably aware by now but it doesn't hurt do emphasize it: stacker provides an amazingly powerful plugin extensible architecture.
+Stacker community offers support to the following plugins:</p>
+
+<p>
+                    <div class="container m-0 p-3" style="background-color: var(--carabina-nav-bar-background-color)">
+                      <div class="row no-gutters pb-1">
+                        <div class="col-12 col-md-6 col-lg-3"><h5 class="px-1">Author</h5></div>
+                        <div class="col-12 col-md-6 col-lg-3"><h5 class="px-1">Name</h5></div>
+                        <div class="col-12 col-lg-6 pb-3 pb-sm-1 pb-lg-0"><h5 class="px-1">Description</h5></div>
+                      </div>
+                       <div class="row no-gutters py-1 plugins-list-row">
+                          <div class="col-12 col-md-6 col-lg-3" style="">
+                            <a href="https://github.com/enqueuer-land" target="_blank" style="overflow: scroll; white-space: nowrap;">
+                                <img src="http://github.com/enqueuer-land.png" style="width: 15%;" class="img-fluid rounded mx-auto px-2 rounded-circle">
+                                @enqueuer-land
+                            </a>
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-3 pl-5 pl-lg-0">
+                            <a href="https://github.com/enqueuer-land/enqueuer-plugin-shell" style="overflow: scroll; white-space: nowrap;" target="_blank">enqueuer-plugin-shell</a>
+                          </div>
+                          <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--carabina-text-darker-color); overflow: scroll; white-space: nowrap;">
+                            Stacker plugin to handle shell commands
+                          </div>
+                    </div> <div class="row no-gutters py-1 plugins-list-row">
+                          <div class="col-12 col-md-6 col-lg-3" style="">
+                            <a href="https://github.com/guilhermecorsino" target="_blank" style="overflow: scroll; white-space: nowrap;">
+                                <img src="http://github.com/guilhermecorsino.png" style="width: 15%;" class="img-fluid rounded mx-auto px-2 rounded-circle">
+                                @guilhermecorsino
+                            </a>
+                          </div>
+                          <div class="col-12 col-md-6 col-lg-3 pl-5 pl-lg-0">
+                            <a href="https://github.com/guilhermecorsino/enqueuer-plugin-anydb" style="overflow: scroll; white-space: nowrap;" target="_blank">enqueuer-plugin-anydb</a>
+                          </div>
+                          <div class="col-12 col-lg-6 pb-3 pl-5 pl-lg-0 pb-sm-1 pb-lg-0" style="color: var(--carabina-text-darker-color); overflow: scroll; white-space: nowrap;">
+                            Stacker plugin to handle database manipulations
+                          </div>
+                    </div>
+                    </div></p>
+
+<p>If none of them pleases you, you're free to create your own.
+Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our <a href="https://github.com/enqueuer-land/stacker-plugins/">plugins repository</a>.</p>
 
 <hr />
 

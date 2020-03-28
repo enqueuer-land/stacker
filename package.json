@@ -26,7 +26,7 @@
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "updateHtml": "node generate-html"
+    "updateHtml": "node ./docs/generate-html"
   },
   "main": "background.js",
   "dependencies": {
