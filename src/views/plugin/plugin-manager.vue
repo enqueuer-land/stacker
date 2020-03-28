@@ -28,17 +28,18 @@
                                    trim
                                    :value="filter" class="text-input carabina-text mx-1 mb-3">
                     </stacker-input>
-
                     <plugin-manager-item v-for="(plugin, index) in filteredPlugins" :key="index"
                                          :item="plugin" :selected="selectedIndex === index"
+                                         :justInstalled="justInstalledIndex.includes(index)"
                                          @click.native="selectItem(index)">
                     </plugin-manager-item>
                 </b-col>
                 <b-col cols="8" class="carabina-text px-3 py-1"
                        style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
                     <plugin-manager-item-display v-if="selectedIndex !== null"
+                                                 :justInstalled="justInstalledIndex.includes(selectedIndex)"
                                                  :plugin="plugins[selectedIndex]"
-                                                 @install="installPlugin(plugins[selectedIndex])">
+                                                 @install="installPlugin(plugins[selectedIndex], selectedIndex)">
                     </plugin-manager-item-display>
                 </b-col>
             </b-row>
@@ -57,9 +58,9 @@
     import {HttpRequest} from '@/http/http-request';
     import {FileDialog} from '@/renderer/file-dialog';
     import {PluginsLoader} from '@/plugins/plugins-loader';
+    import {mapActions, mapGetters, mapMutations} from 'vuex';
     import PluginManagerItem from '@/views/plugin/plugin-manager-item';
     import PluginManagerItemDisplay from '@/views/plugin/plugin-manager-item-display';
-    import {mapActions, mapGetters, mapMutations} from 'vuex';
     import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
     const httpRequest = new HttpRequest();
@@ -74,6 +75,7 @@
             return {
                 filter: '',
                 plugins: [],
+                justInstalledIndex: [],
                 selectedIndex: null,
                 installingPluginModal: true,
             }
@@ -98,10 +100,11 @@
             selectItem: function (index) {
                 this.selectedIndex = index;
             },
-            installPlugin: async function (plugin) {
+            installPlugin: async function (plugin, selectedIndex) {
                 this.installingPluginModal = true;
                 await this.loadPlugin(plugin);
                 RendererMessageCommunicator.emit('restartEnqueuer');
+                this.justInstalledIndex.push(selectedIndex);
                 this.installingPluginModal = false;
             },
             loadPluginsFromFileSystem: async function () {

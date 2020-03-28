@@ -15,7 +15,7 @@
                         <small>{{plugin.version}}</small>
                     </b-col>
                     <b-col cols="auto">
-                        <b-button v-if="loaded" size="sm" class="float-right" :disabled="isInstalled"
+                        <b-button v-if="loaded" size="sm" class="float-right" :disabled="isInstalled || justInstalled"
                                   variant="install-button"
                                   @click="() => $emit('install')">
                             Install
@@ -24,7 +24,7 @@
                 </b-row>
                 <b-row v-if="loaded" no-gutters align-h="between">
                     <b-col cols="auto" class="pl-1">
-                        <small>@{{plugin.user}}</small>
+                        <small>@{{plugin.author}}</small>
                     </b-col>
                     <b-col cols="auto" class="pl-1">
                         <small>{{plugin.size}} Kib</small>
@@ -52,7 +52,8 @@
     export default Vue.extend({
         name: 'PluginManagerItemDisplay',
         props: {
-            plugin: Object
+            plugin: Object,
+            justInstalled: Boolean
         },
         data: function () {
             return {

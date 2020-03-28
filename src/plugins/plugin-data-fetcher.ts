@@ -4,7 +4,7 @@ import {HttpRequest} from '@/http/http-request';
 
 export type PluginData = {
         readme: string;
-        user: string;
+        author: string;
         picture: string;
         javascript: string;
         size: string;
@@ -15,14 +15,9 @@ export class PluginDataFetcher {
     private readonly httpRequest = new HttpRequest();
     private readonly converter = new pagedown.Converter();
     private readonly plugin: any;
-    private readonly user: string;
-    private readonly repo: string;
 
     public constructor(plugin: any) {
         this.plugin = plugin;
-        const repoUrl = this.plugin.repositoryUrl.split('/');
-        this.user = repoUrl[repoUrl.length - 2];
-        this.repo = repoUrl[repoUrl.length - 1];
     }
 
     public async fetch(): Promise<PluginData> {
@@ -31,16 +26,20 @@ export class PluginDataFetcher {
 
         return {
             readme: await this.fetchReadme(),
-            user: this.user,
-            picture: `http://github.com/${this.user}.png`,
+            picture: this.plugin.logo,
+            author: this.plugin.author,
             javascript: javascript.data,
             size: (javascript.data.length / 1024).toFixed(2),
         }
     }
 
     private async fetchReadme() {
+        const repoUrl = this.plugin.repositoryUrl.split('/');
+        const user = repoUrl[repoUrl.length - 2];
+        const repo = repoUrl[repoUrl.length - 1];
+
         const readme: string = (await this.httpRequest
-            .request(`https://raw.githubusercontent.com/${this.user}/${this.repo}/master/README.md`)).data;
+            .request(this.plugin.readme)).data;
 
         return this.converter.makeHtml(readme)
             .replace(/<img/g, '<img class="img-fluid" ')
@@ -50,7 +49,7 @@ export class PluginDataFetcher {
                 if (url.startsWith('http')) {
                     return match;
                 }
-                return `src="https://raw.githubusercontent.com/${this.user}/${this.repo}/master/${url}`;
+                return `src="https://raw.githubusercontent.com/${user}/${repo}/master/${url}`;
             });
     }
 }
