@@ -1,5 +1,6 @@
 <template>
     <div id="side-bar-footer">
+        <img src="../../assets/gui.png" class="img-fluid ml-2 m-1" id="gui-logo">
     </div>
 </template>
 <script>
@@ -13,5 +14,16 @@
     #side-bar-footer {
         background-color: var(--carabina-body-background-darker-color);
         border-top: 1px solid var(--carabina-header-background-lighter-color);
+    }
+
+    #gui-logo {
+        opacity: 0;
+        height: 75%;
+        width: auto;
+        transition: all ease 740ms;
+    }
+
+    #gui-logo:hover {
+        opacity: 0.75;
     }
 </style>
