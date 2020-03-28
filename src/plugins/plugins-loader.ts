@@ -15,7 +15,7 @@ export class PluginsLoader {
     private installedPlugins: string[];
 
     private constructor() {
-        this.pluginsRepository = new Store({name: 'plugins'});
+        this.pluginsRepository = new Store({name: 'installed-plugins'});
         this.installedPlugins = this.pluginsRepository.get('installedPluginsIds', []);
         this.plugins = {
             publishers: {http: httpPublisher.publishers.http},

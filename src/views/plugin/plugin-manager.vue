@@ -54,6 +54,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import Store from 'electron-store';
     import {Logger} from '@/components/logger';
     import {HttpRequest} from '@/http/http-request';
     import {FileDialog} from '@/renderer/file-dialog';
@@ -64,6 +65,7 @@
     import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
     const httpRequest = new HttpRequest();
+    const store = new Store({name: 'plugins-cache'});
 
     export default Vue.extend({
         name: 'PluginManager',
@@ -81,13 +83,19 @@
             }
         },
         mounted: async function () {
-            const pluginsList = await httpRequest
-                .request('https://raw.githubusercontent.com/enqueuer-land/stacker-plugins/master/plugins.json');
-            if (pluginsList.statusCode === 200) {
-                this.plugins = JSON.parse(pluginsList.data);
-                if (this.plugins.length > 0) {
-                    this.selectItem(0);
+            try {
+                const pluginsList = await httpRequest
+                    .request('https://raw.githubusercontent.com/enqueuer-land/stacker-plugins/master/plugins.json', {timeout: 3000});
+                if (pluginsList.statusCode === 200) {
+                    this.plugins = JSON.parse(pluginsList.data);
+                    if (this.plugins.length > 0) {
+                        store.set('list', this.plugins);
+                        this.selectItem(0);
+                    }
                 }
+            } catch (e) {
+                this.plugins = store.get('list', []);
+                console.log(e);
             }
             this.installingPluginModal = false;
         },

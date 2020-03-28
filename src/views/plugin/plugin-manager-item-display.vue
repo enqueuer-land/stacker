@@ -3,7 +3,7 @@
         <b-row align-v="center" no-gutters class="mb-4">
             <b-col cols="auto" class="pr-3">
                 <img v-if="loaded" :src="plugin.picture"
-                     style="width: 70px;"
+                     style="width: 70px; border-radius: 10px;"
                      class="img-fluid">
             </b-col>
             <b-col cols>
