@@ -7,7 +7,8 @@
              style="height: calc(100% - var(--carabina-header-size)) !important;">
             <div id="body-container" class="pt-3" style="height: var(--carabina-body-size);">
                 <template v-if="selectedComponent && selectedComponent.carabinaMeta">
-                    <Hooks class="mb-4" :component="selectedComponent" :hooks="hooks"></Hooks>
+                    <Hooks :component="selectedComponent" :hooks="hooks"></Hooks>
+                    <i class="far fa-question-circle carabina-icon mb-4 pl-3" @click="helpAction"></i>
                     <keep-alive>
                         <StageBodyRequisition v-if="componentIsRequisition"
                                               :component="selectedComponent"></StageBodyRequisition>
@@ -25,6 +26,7 @@
 <script>
     import Vue from 'vue';
     import split from 'split.js';
+    import {shell} from 'electron';
     import '@/styles/scrollbar.css';
     import '@/styles/color-palette.css';
     import Hooks from '@/views/stage/hooks';
@@ -59,6 +61,16 @@
         },
         methods: {
             ...mapMutations('side-bar', ['currentSelectedComponentChanged']),
+            helpAction: async function() {
+                if (this.componentIsRequisition) {
+                    await shell.openExternal('https://enqueuer.com/docs#requisition');
+                } else {
+                    const componentHelp = this.componentHelpUrl(this.selectedComponent);
+                    if (componentHelp !== '') {
+                        await shell.openExternal(componentHelp);
+                    }
+                }
+            },
             expandLogWindow: function () {
                 this.adjustStageLength(90);
             },
@@ -98,7 +110,7 @@
             }
         },
         computed: {
-            ...mapGetters('stage', ['plugins']),
+            ...mapGetters('stage', ['plugins', 'componentHelpUrl']),
             ...mapGetters('side-bar', ['selectedComponent']),
             componentIsRequisition: function () {
                 return this.selectedComponent.carabinaMeta.type === ComponentTypes.REQUISITION;

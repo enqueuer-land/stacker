@@ -1,6 +1,7 @@
 module.exports = {
     publishers: {
         anydb: {
+            urlHelp: 'https://www.npmjs.com/package/any-db',
             dependencies: ['enqueuer-plugin-anydb'],
             hooks: ['onQueryCompleted'],
             template: `

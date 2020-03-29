@@ -1,6 +1,7 @@
 module.exports = {
     publishers: {
         http: {
+            urlHelp: 'https://github.com/request/request',
             hooks: ['onResponseReceived'],
             template: `
                 <b-container fluid class="p-0 m-0">

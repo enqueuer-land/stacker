@@ -1,6 +1,7 @@
 module.exports = {
     publishers: {
         sqs: {
+            urlHelp: 'https://www.npmjs.com/package/aws-sdk',
             hooks: ['onPublished'],
             dependencies: ['enqueuer-plugin-sqs'],
             template: `
@@ -46,6 +47,7 @@ module.exports = {
     },
     subscriptions: {
         sqs: {
+            urlHelp: 'https://www.npmjs.com/package/aws-sdk',
             hooks: ['onMessageReceived'],
             dependencies: ['enqueuer-plugin-sqs'],
             template: `

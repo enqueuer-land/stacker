@@ -73,6 +73,7 @@ const statusMap = {
 module.exports = {
     subscriptions: {
         http: {
+            urlHelp: 'http://expressjs.com/',
             hooks: ['onMessageReceived'],
             template: `
                 <b-container fluid class="p-0 m-0">

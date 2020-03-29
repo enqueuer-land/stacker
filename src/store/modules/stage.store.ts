@@ -4,8 +4,10 @@ import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
 import {CarabinaComponent} from '@/models/carabina-component';
+import {CarabinaPublisher} from '@/models/carabina-publisher';
 import {CarabinaRequisition} from '@/models/carabina-requisition';
 import {EnqueuerLogParser} from '@/components/enqueuer-log-parser';
+import {CarabinaSubscription} from '@/models/carabina-subscription';
 import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
 import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
@@ -75,7 +77,7 @@ export default () => ({
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
         currentLogLevel: (state: any) => state.enqueuerLogParser.getPriorityFilterName(),
         installingPluginModal: (state: any) => state.installingPluginModal,
-        protocolsOfComponentList: (state: any) => (componentType: ComponentTypes) => {
+        protocolsOfComponentList: (state: any) => (componentType: ComponentTypes): any[] => {
             switch (componentType) {
                 case ComponentTypes.PUBLISHER:
                     return Object.keys(state.plugins.publishers).map((publisherKey: string) => ({value: publisherKey.toUpperCase()}));
@@ -83,6 +85,15 @@ export default () => ({
                     return Object.keys(state.plugins.subscriptions).map((subscriptionKey: string) => ({value: subscriptionKey.toUpperCase()}));
             }
             return [];
+        },
+        componentHelpUrl: (state: any) => (component: CarabinaPublisher | CarabinaSubscription): string => {
+            switch (component.carabinaMeta.type) {
+                case ComponentTypes.PUBLISHER:
+                    return state.plugins.publishers[component.type.toLowerCase()].urlHelp;
+                case ComponentTypes.SUBSCRIPTION:
+                    return state.plugins.subscriptions[component.type.toLowerCase()].urlHelp;
+            }
+            return '';
         },
     },
     namespaced: true,

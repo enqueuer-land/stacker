@@ -1,6 +1,7 @@
 module.exports = {
     publishers: {
         kafka: {
+            urlHelp: 'https://www.npmjs.com/package/kafka-node',
             hooks: ['onPublished'],
             dependencies: ['enqueuer-plugin-kafka'],
             template: `
@@ -44,6 +45,7 @@ module.exports = {
     },
     subscriptions: {
         kafka: {
+            urlHelp: 'https://www.npmjs.com/package/kafka-node',
             hooks: ['onMessageReceived'],
             dependencies: ['enqueuer-plugin-kafka'],
             template: `
