@@ -23,11 +23,11 @@
             </b-row>
             <b-row no-gutters style="height: 70vh">
                 <b-col cols="4" class="pr-2" style="overflow-y: auto;">
-                    <stacker-input placeholder="Filter" type="text"
-                                   @input="filterChanged"
-                                   trim
-                                   :value="filter" class="text-input carabina-text mx-1 mb-3">
-                    </stacker-input>
+<!--                    <stacker-input placeholder="Filter" type="text"-->
+<!--                                   @input="filterChanged"-->
+<!--                                   trim-->
+<!--                                   :value="filter" class="text-input carabina-text mx-1 mb-3">-->
+<!--                    </stacker-input>-->
                     <plugin-manager-item v-for="(plugin, index) in filteredPlugins" :key="index"
                                          :item="plugin" :selected="selectedIndex === index"
                                          :justInstalled="justInstalledIndex.includes(index)"

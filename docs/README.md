@@ -37,6 +37,8 @@ Stacker community offers support to the following plugins:
 If none of them pleases you, you're free to create your own.
 Albeit you don't have to share the one you created, we encourage you to do so. Then go ahead and publish yours to npm and add it to our [plugins repository](https://github.com/enqueuer-land/stacker-plugins/).
 
+![screenshot-3](./screenshot-3.png)
+
 ----
 
 ###### Reviews
