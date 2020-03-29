@@ -21,10 +21,14 @@ export class ComponentLoader {
                     }
                     const fileContent = data.toString();
                     try {
-                        resolve(ComponentLoader.loadRequisitionAsAnArrayOrObject(file, JSON.parse(fileContent)));
+                        const jsonRequisition = ComponentLoader.loadRequisitionAsAnArrayOrObject(file, JSON.parse(fileContent));
+                        jsonRequisition.carabinaMeta.filename = file;
+                        resolve(jsonRequisition);
                     } catch (e) {
                         try {
-                            resolve(ComponentLoader.loadRequisitionAsAnArrayOrObject(file, yaml.parse(fileContent)));
+                            const ymlRequisition = ComponentLoader.loadRequisitionAsAnArrayOrObject(file, yaml.parse(fileContent));
+                            ymlRequisition.carabinaMeta.filename = file;
+                            resolve(ymlRequisition);
                         } catch (e) {
                             Logger.error(`Error reading '${file}': ${e}`);
                         }
@@ -57,17 +61,6 @@ export class ComponentLoader {
         });
     }
 
-    private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any): CarabinaRequisition {
-        if (Array.isArray(parsed)) {
-            return ComponentLoader.loadRequisition({
-                name: path.parse(file).name,
-                requisitions: parsed
-            });
-        }
-        return ComponentLoader.loadRequisition(parsed);
-    }
-
-
     public static loadRequisition(rawRequisition: any, parent?: CarabinaRequisition): CarabinaRequisition {
         let defaultRequisition = new ComponentFactory().createRequisition(parent);
         const carabinaMetaBkp = defaultRequisition.carabinaMeta;
@@ -82,6 +75,17 @@ export class ComponentLoader {
         defaultRequisition.subscriptions = (rawRequisition.subscriptions || [])
             .map((subscription: any) => ComponentLoader.loadSubscription(subscription, defaultRequisition));
         return defaultRequisition;
+    }
+
+
+    private static loadRequisitionAsAnArrayOrObject(file: string, parsed: any): CarabinaRequisition {
+        if (Array.isArray(parsed)) {
+            return ComponentLoader.loadRequisition({
+                name: path.parse(file).name,
+                requisitions: parsed
+            });
+        }
+        return ComponentLoader.loadRequisition(parsed);
     }
 
     private static loadPublisher(component: any, parent: CarabinaRequisition): CarabinaPublisher {

@@ -33,6 +33,7 @@ describe('ComponentLoader', () => {
             .toEqual({
                 collapsed: true,
                 type: 'REQUISITION',
+                filename: 'filename',
                 selected: false,
                 parent: undefined
             });
@@ -82,6 +83,7 @@ describe('ComponentLoader', () => {
         expect(requisition)
             .toEqual({
                 carabinaMeta: {
+                    filename: 'filename',
                     collapsed: true,
                     selected: false,
                     type: 'REQUISITION'
@@ -123,6 +125,7 @@ describe('ComponentLoader', () => {
             .toEqual({
                 carabinaMeta: {
                     collapsed: false,
+                    filename: '/home/user/dir/file.txt',
                     selected: false,
                     type: 'REQUISITION'
                 },
