@@ -47,10 +47,10 @@
         },
         watch: {
             value: function () {
-                this.text = this.value.toString();
+                this.text = typeof this.value !== 'string' ? this.value.toString() : this.value;
             },
             placeholder: function () {
-                this.text = this.placeholder;
+                this.text = typeof this.value !== 'string' ? this.value.toString() : this.value;
             }
         },
         computed: {

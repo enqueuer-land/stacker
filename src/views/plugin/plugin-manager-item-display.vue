@@ -46,7 +46,6 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import {PluginsLoader} from '@/plugins/plugins-loader';
     import {PluginDataFetcher} from '@/plugins/plugin-data-fetcher';
 
     export default Vue.extend({
