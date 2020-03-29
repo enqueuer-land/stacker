@@ -53,14 +53,14 @@
     }
 
     .dropdown-item:hover .option-item-class {
-        transform: scale(1.25);
-        filter: brightness(1.25);
+        transform: scale(1.05);
+        filter: brightness(1.05);
         color: var(--carabina-theme-color);
     }
 
     .dropdown-item:active .option-item-class {
-        transform: scale(1.5);
-        filter: brightness(1.5);
+        transform: scale(1.1);
+        filter: brightness(1.1);
         color: var(--carabina-theme-color);
     }
 

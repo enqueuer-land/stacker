@@ -15,7 +15,7 @@
                         <small>{{plugin.version}}</small>
                     </b-col>
                     <b-col cols="auto">
-                        <b-button v-if="loaded" size="sm" class="float-right" :disabled="isInstalled || justInstalled"
+                        <b-button v-if="loaded" size="sm" class="float-right"
                                   variant="install-button"
                                   @click="() => $emit('install')">
                             Install
@@ -53,7 +53,6 @@
         name: 'PluginManagerItemDisplay',
         props: {
             plugin: Object,
-            justInstalled: Boolean
         },
         data: function () {
             return {
@@ -69,12 +68,6 @@
                 this.loaded = false;
                 this.loadData();
             }
-        },
-        computed: {
-            //TODO move to stage.store
-            isInstalled: function () {
-                return PluginsLoader.getInstance().pluginIsInstalled(this.plugin);
-            },
         },
         methods: {
             loadData: async function () {

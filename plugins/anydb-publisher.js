@@ -8,14 +8,14 @@ module.exports = {
                 <b-container fluid class="p-0 m-0">
                     <b-row class="px-3 mb-4" no-gutters align-h="between">
                         <b-col cols="auto" class="align-self-center">
-                            <label class="d-block carabina-text mb-2">Driver</label>
+                            <label class="d-block carabina-text">Driver</label>
                             <dropdown-selector
                                     :defaultSelection="{value: options.driver}"
                                     @select="onDriverChange"
                                     :availableList="availableDrivers"></dropdown-selector>
                         </b-col>
-                        <b-col cols="4" class="align-self-center mt-1 px-2">
-                            <label class="d-block carabina-text mb-2">Host</label>
+                        <b-col cols="4" class="align-self-center px-2">
+                            <label class="d-block carabina-text mb-3">Host</label>
                             <stacker-input placeholder="Hostname" type="text"
                                            :highlightable-regex="/:\\d+/g"
                                            @input="onHostnameChange"
@@ -23,8 +23,8 @@ module.exports = {
                                            class="text-input carabina-text" trim>
                             </stacker-input>
                         </b-col>
-                        <b-col cols="4" class="align-self-center mt-1">
-                            <label class="d-block carabina-text mb-2">Database</label>
+                        <b-col cols="4" class="align-self-center">
+                            <label class="d-block carabina-text mb-3">Database</label>
                             <stacker-input placeholder="Database" type="text"
                                            @input="onDatabaseChange"
                                            :value="options.database"

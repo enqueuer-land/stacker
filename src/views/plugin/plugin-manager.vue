@@ -37,7 +37,6 @@
                 <b-col cols="8" class="carabina-text px-3 py-1"
                        style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
                     <plugin-manager-item-display v-if="selectedIndex !== null"
-                                                 :justInstalled="justInstalledIndex.includes(selectedIndex)"
                                                  :plugin="plugins[selectedIndex]"
                                                  @install="installPlugin(plugins[selectedIndex], selectedIndex)">
                     </plugin-manager-item-display>

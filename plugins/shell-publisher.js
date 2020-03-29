@@ -23,7 +23,6 @@ const plugin = {
                 }
             },
             data: function () {
-                console.log('data', this.component);
                 const content = this.getContent();
                 return {
                     ...content

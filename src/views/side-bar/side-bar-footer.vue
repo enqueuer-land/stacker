@@ -17,10 +17,11 @@
     }
 
     #gui-logo {
+        filter: blur(3);
         opacity: 0;
         height: 75%;
         width: auto;
-        transition: all ease 740ms;
+        transition: all ease 1500ms;
     }
 
     #gui-logo:hover {
