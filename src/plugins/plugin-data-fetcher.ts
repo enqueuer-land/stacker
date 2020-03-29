@@ -3,12 +3,12 @@ import * as pagedown from 'pagedown';
 import {HttpRequest} from '@/http/http-request';
 
 export type PluginData = {
-        readme: string;
-        author: string;
-        picture: string;
-        javascript: string;
-        size: string;
-    }
+    readme: string;
+    author: string;
+    picture: string;
+    javascript: string;
+    size: string;
+}
 
 //TODO test it
 export class PluginDataFetcher {
@@ -21,11 +21,14 @@ export class PluginDataFetcher {
     }
 
     public async fetch(): Promise<PluginData> {
-        const javascript = await this.httpRequest
-            .request(this.plugin.javascriptUrl);
+        const [javascript, readme] = await Promise
+            .all([
+                this.httpRequest.request(this.plugin.javascriptUrl),
+                this.httpRequest.request(this.plugin.readme)
+            ]);
 
         return {
-            readme: await this.fetchReadme(),
+            readme: this.convertToHtml(readme.data),
             picture: this.plugin.logo,
             author: this.plugin.author,
             javascript: javascript.data,
@@ -33,15 +36,13 @@ export class PluginDataFetcher {
         }
     }
 
-    private async fetchReadme() {
+    private convertToHtml(readmeMarkDown: string): string {
         const repoUrl = this.plugin.repositoryUrl.split('/');
         const user = repoUrl[repoUrl.length - 2];
         const repo = repoUrl[repoUrl.length - 1];
 
-        const readme: string = (await this.httpRequest
-            .request(this.plugin.readme)).data;
 
-        return this.converter.makeHtml(readme)
+        return this.converter.makeHtml(readmeMarkDown)
             .replace(/<img/g, '<img class="img-fluid" ')
             .replace(/<h(\d)/g, (match: string, level: number) => `<h${Math.min(level + 2, 6)}`)
             .replace(/<a/g, '<a target="_blank"')

@@ -20,13 +20,6 @@
     import '@/styles/texts.css';
     import {mapGetters} from 'vuex';
     import HighlightableInput from 'vue-highlightable-input'
-// input.addEventListener('focus', onFocus)
-//     input.addEventListener('keydown', keyDown)
-//     input.addEventListener('keypress', keyPress)
-//     input.addEventListener('input', onInput)
-//     input.addEventListener('keyup', keyUp)
-//     input.addEventListener('change', onChange)
-//     input.addEventListener('blur', onBlur)
     export default Vue.extend({
         name: 'StackerHighlightableInput',
         components: {
@@ -46,8 +39,9 @@
                     style: 'color: var(--carabina-text-color); font-style: italic;'
                 });
             }
+            const text = typeof this.value !== 'string' ? this.value.toString() : this.value;
             return {
-                text: this.value.toString(),
+                text: text,
                 highlightRegex,
             }
         },
