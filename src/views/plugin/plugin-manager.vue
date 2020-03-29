@@ -111,7 +111,6 @@
             installPlugin: async function (plugin, selectedIndex) {
                 this.installingPluginModal = true;
                 await this.loadPlugin(plugin);
-                RendererMessageCommunicator.emit('restartEnqueuer');
                 this.justInstalledIndex.push(selectedIndex);
                 this.installingPluginModal = false;
             },

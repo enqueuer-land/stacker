@@ -31,13 +31,13 @@ export default class EnqueuerRunner {
     public async run(): Promise<void> {
         this.createNqrFolder();
         await this.installEnqueuerIfNeeded();
-        this.executeEnqueuerAsChild();
-        this.registerChildListeners();
         this.enqueuerLogExtractor.start();
+        this.executeEnqueuerAsChild();
         this.registerRendererProcessListener();
     }
 
     private registerRendererProcessListener() {
+        this.mainMessageCommunicator.on('restartEnqueuer', () => this.executeEnqueuerAsChild());
         this.mainMessageCommunicator.on('setEnqueuerStore', (data: any) => this.enqueuerStore = data);
         this.mainMessageCommunicator.on('runEnqueuer', async (requisition: InputRequisitionModel) => {
             const reply = await this.sendRequisition(requisition);
@@ -47,9 +47,11 @@ export default class EnqueuerRunner {
     }
 
     private executeEnqueuerAsChild() {
+        this.mainMessageCommunicator.addLog('Starting enqueuer', 'INFO');
         this.enqueuerProcess = spawn('enqueuer', ['-b', 'debug'], {
             stdio: ['pipe', 'pipe', 'pipe', 'ipc']
         });
+        this.registerChildListeners();
     }
 
     private createNqrFolder() {
@@ -61,11 +63,15 @@ export default class EnqueuerRunner {
     }
 
     private registerChildListeners(): void {
+        this.enqueuerProcess.removeAllListeners();
         this.enqueuerProcess.stdout.on('data', (data: Buffer) => this.enqueuerLogExtractor.addLog(data.toString()));
         const enqueuerEventsListener = (eventName: string) => (data: any) => {
             this.mainMessageCommunicator.addLog(`Child enqueuer '${eventName}': ${data}`, 'ERROR');
         };
-        this.enqueuerProcess.on('exit', enqueuerEventsListener('exit'));
+        this.enqueuerProcess.on('exit', () => {
+            enqueuerEventsListener('exit');
+            this.executeEnqueuerAsChild();
+        });
         this.enqueuerProcess.on('error', enqueuerEventsListener('error'));
         this.enqueuerProcess.on('close', enqueuerEventsListener('close'));
         this.enqueuerProcess.on('disconnect', enqueuerEventsListener('disconnect'));

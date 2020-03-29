@@ -36,6 +36,7 @@ export default () => ({
         },
         setPlugins: (stage: any, data: any) => {
             stage.plugins = data;
+            RendererMessageCommunicator.emit('restartEnqueuer');
         },
         runCurrentlySelectedComponent: () => {
             const selectedComponent = store.getters['side-bar/selectedComponent'];
