@@ -106,8 +106,8 @@ module.exports = {
                             user: (this.component && this.component.options && this.component.options.user) || '',
                             password: (this.component && this.component.options && this.component.options.password) || '',
                         },
-                        params: (this.component && this.component.params) || [],
-                        query: (this.component && this.component.query) || 'SELECT * FROM TABLE',
+                        params: (this.component && this.component.params) || ['*'],
+                        query: (this.component && this.component.query) || 'SELECT $ FROM TABLE',
                     }
                 },
                 onDriverChange: function (value) {

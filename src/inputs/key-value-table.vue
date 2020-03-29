@@ -4,7 +4,7 @@
                :key="pair.id" id="key-value-table" no-gutters align-h="center">
             <b-col cols="11" class="align-self-center mr-auto">
                 <b-row no-gutters>
-                    <b-col cols="6">
+                    <b-col cols="4">
                         <stacker-input placeholder="Key"
                                        trim
                                        style="text-align: right"
@@ -14,7 +14,7 @@
                                        class="text-input carabina-text mx-2">
                         </stacker-input>
                     </b-col>
-                    <b-col cols="6">
+                    <b-col cols="8">
                         <stacker-input placeholder="Value"
                                        :value="pair.value"
                                        @input="(value) => onValueChanged(value, index)"
