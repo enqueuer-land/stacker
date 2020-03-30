@@ -84,7 +84,7 @@ module.exports = {
                 getContent: function () {
                     return {
                         options: (this.component && this.component.options) || {},
-                        command: (this.component && this.component.command) || 'GET',
+                        command: (this.component && this.component.command.toUpperCase()) || 'GET',
                         key: (this.component && this.component.key) || '',
                         value: (this.component && this.component.value) || '',
                         pattern: (this.component && this.component.pattern) || '',

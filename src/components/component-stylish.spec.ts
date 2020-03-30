@@ -7,7 +7,7 @@ describe('ComponentStylish', () => {
             type: 'http-protocol',
             carabinaMeta: {type: ComponentTypes.PUBLISHER}
         } as any).getType();
-        expect(type).toBe('HTTP-PR');
+        expect(type).toBe('HTTP-PRO');
     });
 
     it('should not return requisition type', () => {
