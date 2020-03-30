@@ -2,7 +2,7 @@ module.exports = {
     publishers: {
         ['redis-db']: {
             urlHelp: 'https://redis.io/commands#string',
-            dependencies: ['enqueuer-plugin-redis-db'],
+            dependencies: ['enqueuer-redis-db'],
             hooks: ['onCommandExecuted'],
             template: `
                 <b-container fluid class="p-0 m-0">

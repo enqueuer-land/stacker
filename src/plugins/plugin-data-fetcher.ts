@@ -7,7 +7,6 @@ export type PluginData = {
     author: string;
     picture: string;
     javascript: string;
-    size: string;
 }
 
 //TODO test it
@@ -31,8 +30,7 @@ export class PluginDataFetcher {
             readme: this.convertToHtml(readme.data),
             picture: this.plugin.logo,
             author: this.plugin.author,
-            javascript: javascript.data,
-            size: (javascript.data.length / 1024).toFixed(2),
+            javascript: javascript.data
         }
     }
 

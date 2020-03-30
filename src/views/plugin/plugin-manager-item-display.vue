@@ -26,9 +26,6 @@
                     <b-col cols="auto" class="pl-1">
                         <small>@{{plugin.author}}</small>
                     </b-col>
-                    <b-col cols="auto" class="pl-1">
-                        <small>{{plugin.size}} Kib</small>
-                    </b-col>
                 </b-row>
             </b-col>
         </b-row>
@@ -46,6 +43,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import {Logger} from '@/components/logger';
     import {PluginDataFetcher} from '@/plugins/plugin-data-fetcher';
 
     export default Vue.extend({
@@ -72,6 +70,7 @@
             loadData: async function () {
                 if (!this.plugin.loaded) {
                     const data = await new PluginDataFetcher(this.plugin).fetch();
+                    Logger.info(`Plugin ${this.plugin.name} data fetched`);
                     Object.keys(data)
                         .forEach(key => this.plugin[key] = data[key]);
                     this.plugin.loaded = true;
