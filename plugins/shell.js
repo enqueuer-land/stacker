@@ -1,4 +1,6 @@
 const plugin = {
+    name: 'shell',
+    version: '0.0.1',
     publishers: {
         exec: {
             urlHelp: 'https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback',

@@ -1,4 +1,6 @@
 module.exports = {
+    name: 'kafka',
+    version: '0.0.1',
     publishers: {
         kafka: {
             urlHelp: 'https://www.npmjs.com/package/kafka-node',

@@ -1,4 +1,6 @@
 module.exports = {
+    name: 'anydb',
+    version: '0.0.1',
     publishers: {
         anydb: {
             urlHelp: 'https://www.npmjs.com/package/any-db',

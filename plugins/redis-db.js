@@ -1,14 +1,16 @@
 module.exports = {
+    name: 'redis-db',
+    version: '0.0.1',
     publishers: {
         ['redis-db']: {
-            urlHelp: 'https://redis.io/commands#string',
+            urlHelp: 'https://www.npmjs.com/package/redis',
             dependencies: ['enqueuer-redis-db'],
             hooks: ['onCommandExecuted'],
             template: `
                 <b-container fluid class="p-0 m-0">
                     <label class="pl-3 d-block carabina-text mb-0">Options</label>
                     <key-value-table @change="(options) => $parent.updateAttribute('options', options)"
-                                     :options="options" class="mb-4"></key-value-table>
+                                     :table="options" class="mb-4"></key-value-table>
                     <b-row no-gutters align-h="between" class="px-3">
                         <b-col cols="auto" class="align-self-center" style="text-align: right">
                             <label class="pl-3 d-block carabina-text mb-0">Command</label>
@@ -83,12 +85,14 @@ module.exports = {
             methods: {
                 getContent: function () {
                     return {
-                        options: (this.component && this.component.options) || {},
+                        options: (this.component && this.component.options) || {
+                            url: '[redis[s]:]//[[user][:password@]][host][:port][/db-number]'
+                        },
                         command: (this.component && this.component.command.toUpperCase()) || 'GET',
                         key: (this.component && this.component.key) || '',
                         value: (this.component && this.component.value) || '',
                         pattern: (this.component && this.component.pattern) || '',
-                    }
+                    };
                 },
                 emit: function () {
                     this.$parent.updateAttribute('options', this.options);
@@ -96,7 +100,6 @@ module.exports = {
                     this.$parent.updateAttribute('key', this.key);
                     this.$parent.updateAttribute('value', this.value);
                     this.$parent.updateAttribute('pattern', this.pattern);
-                    console.log(this.pattern);
                 },
                 onCommandChanged: function (command) {
                     this.command = command.value;

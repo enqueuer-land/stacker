@@ -1,4 +1,6 @@
 module.exports = {
+    name: 'aws-sqs',
+    version: '0.0.1',
     publishers: {
         sqs: {
             urlHelp: 'https://www.npmjs.com/package/aws-sdk',
