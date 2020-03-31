@@ -25,7 +25,9 @@ export class PluginDataFetcher {
                 this.httpRequest.request(this.plugin.javascriptUrl),
                 this.httpRequest.request(this.plugin.readme)
             ]);
-
+        if (readme.statusCode !== 200 || javascript.statusCode !== 200) {
+            throw `Unable to fetch plugin '${this.plugin.name}' data`;
+        }
         return {
             readme: this.convertToHtml(readme.data),
             picture: this.plugin.logo,

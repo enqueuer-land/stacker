@@ -15,7 +15,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         Store.mockImplementationOnce(() => {
             return {
-                get: () => []
+                get: () => ({})
             }
         });
 
@@ -36,7 +36,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         Store.mockImplementationOnce(() => {
             return {
-                get: () => [],
+                get: () => ({}),
                 set: setMock
             }
         });
@@ -45,7 +45,7 @@ describe('PluginsLoader', () => {
         cp.exec.mockImplementationOnce((command, cb) => cb());
 
         const pluginsLoader = PluginsLoader.getInstance();
-        await pluginsLoader.loadFileFromFileSystem('plugins/shell-publisher.js');
+        await pluginsLoader.loadFileFromFileSystem('plugins/shell.js');
 
         expect(pluginsLoader.getPlugins()).toEqual({
             publishers: {
@@ -63,7 +63,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         Store.mockImplementationOnce(() => {
             return {
-                get: () => [],
+                get: () => ({}),
                 set: () => {
                 }
             }
@@ -74,7 +74,7 @@ describe('PluginsLoader', () => {
         cp.exec.mockImplementationOnce(execMock);
 
         const pluginsLoader = PluginsLoader.getInstance();
-        await pluginsLoader.loadFileFromFileSystem('plugins/shell-publisher.js');
+        await pluginsLoader.loadFileFromFileSystem('plugins/shell.js');
         const npmInstallCommand = execMock.mock.calls[0][0];
 
         expect(execMock).toHaveBeenCalledTimes(1);

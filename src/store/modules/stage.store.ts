@@ -58,7 +58,6 @@ export default () => ({
         loadPlugin: async ({commit}: any, plugin: any) => {
             const pluginsLoader = PluginsLoader.getInstance();
             await pluginsLoader.loadPlugin(plugin.javascript);
-            pluginsLoader.addInstalledPlugin(plugin);
             commit('setPlugins', pluginsLoader.getPlugins());
         },
         runComponent: async (_: any, component: CarabinaComponent) => {

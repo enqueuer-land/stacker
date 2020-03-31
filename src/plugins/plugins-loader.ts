@@ -11,19 +11,19 @@ export class PluginsLoader {
     private static instance: PluginsLoader;
     private readonly pluginsRepository: any;
     private readonly plugins: any;
-    private readonly pluginsString: string[];
-    private installedPlugins: string[];
+    private readonly pluginsString: {
+        [pluginName: string]: string;
+    };
 
     private constructor() {
         this.pluginsRepository = new Store({name: 'installed-plugins'});
-        this.installedPlugins = this.pluginsRepository.get('installedPluginsIds', []);
         this.plugins = {
             publishers: {http: httpPublisher.publishers.http},
             subscriptions: {http: httpSubscription.subscriptions.http}
         };
-        this.pluginsString = this.pluginsRepository.get('pluginsString', []);
-        this.pluginsString
-            .forEach((pluginString: string) => this.loadStringPlugin(pluginString));
+        this.pluginsString = this.pluginsRepository.get('pluginsString', {});
+        Object.keys(this.pluginsString)
+            .forEach((key: string) => this.loadStringPlugin(this.pluginsString[key]));
     }
 
     public static getInstance(): PluginsLoader {
@@ -54,19 +54,13 @@ export class PluginsLoader {
     }
 
     public pluginIsInstalled(plugin: { name: string; version: string }): boolean {
-        return this.installedPlugins.includes(`${plugin.name}/${plugin.version}`);
-    }
-
-    public addInstalledPlugin(plugin: { name: string; version: string }): void {
-        this.installedPlugins.push(`${plugin.name}/${plugin.version}`);
-        this.installedPlugins = Array.from(new Set(this.installedPlugins));
-        this.pluginsRepository.set('installedPluginsIds', this.installedPlugins);
+        return this.pluginsString[`${plugin.name}/${plugin.version}`] !== undefined;
     }
 
     public async loadPlugin(fileContent: string): Promise<any> {
         const plugin = this.loadStringPlugin(fileContent);
+        this.pluginsString[`${plugin.name}/${plugin.version}`] = fileContent;
         await this.installDependencies(plugin);
-        this.pluginsString.push(fileContent);
         this.pluginsRepository.set('pluginsString', this.pluginsString);
         return plugin;
     }

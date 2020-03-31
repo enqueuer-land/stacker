@@ -3,14 +3,14 @@
         <b-col col class="px-2" style="font-weight: bold; color: var(--carabina-text-color);">
             {{item.name}}
         </b-col>
+        <b-col cols="auto" class="align-self-center px-2">
+            <i :style="{visibility: (isInstalled || justInstalled) ? 'visible': 'hidden'}"
+               class="fas fa-check carabina-icon"></i>
+        </b-col>
         <b-col cols="auto" class="px-2">
             <small>
                 {{item.version}}
             </small>
-        </b-col>
-        <b-col cols="auto" class="align-self-center px-2">
-            <i :style="{visibility: (isInstalled || justInstalled) ? 'visible': 'hidden'}"
-               class="fas fa-check carabina-icon"></i>
         </b-col>
         <span class="pl-3 pt-3">
             {{item.description}}
