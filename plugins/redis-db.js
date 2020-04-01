@@ -59,9 +59,8 @@ module.exports = {
                 }
             },
             data: function () {
-                const content = this.getContent();
                 return {
-                    ...content,
+                    ...this.getContent(),
                     availableCommands: ['append', 'get', 'keys', 'set',
                         'incrby', 'getset', 'setex', 'setnx']
                         .sort()
@@ -88,7 +87,7 @@ module.exports = {
                         options: (this.component && this.component.options) || {
                             url: '[redis[s]:]//[[user][:password@]][host][:port][/db-number]'
                         },
-                        command: (this.component && this.component.command.toUpperCase()) || 'GET',
+                        command: (this.component && this.component.command && this.component.command.toUpperCase()) || 'GET',
                         key: (this.component && this.component.key) || '',
                         value: (this.component && this.component.value) || '',
                         pattern: (this.component && this.component.pattern) || '',
