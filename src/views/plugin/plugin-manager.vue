@@ -54,14 +54,10 @@
     import Vue from 'vue';
     import '@/styles/texts.css';
     import Store from 'electron-store';
-    import {Logger} from '@/components/logger';
     import {HttpRequest} from '@/http/http-request';
-    import {FileDialog} from '@/renderer/file-dialog';
-    import {PluginsLoader} from '@/plugins/plugins-loader';
     import {mapActions, mapGetters, mapMutations} from 'vuex';
     import PluginManagerItem from '@/views/plugin/plugin-manager-item';
     import PluginManagerItemDisplay from '@/views/plugin/plugin-manager-item-display';
-    import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
     const httpRequest = new HttpRequest();
     const store = new Store({name: 'plugins-cache'});

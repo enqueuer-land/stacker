@@ -14,7 +14,7 @@ jest.mock('@/renderer/renderer-message-communicator');
 describe('StageStore', () => {
     const getPluginsMock = jest.fn(() => ['plugin1']);
     // @ts-ignore
-    PluginsLoader.getInstance.mockImplementation(() => ({getPlugins: getPluginsMock, loadFileFromFileSystem: () => ''}));
+    PluginsLoader.mockImplementation(() => ({getPlugins: getPluginsMock, loadFileFromFileSystem: () => ''}));
     // @ts-ignore
     EnqueuerLogParser.mockImplementation(() => ({name: 'logParser'}));
     // @ts-ignore
@@ -30,7 +30,6 @@ describe('StageStore', () => {
 
     it('should initialize correctly', () => {
         expect(stageStore.default().state).toEqual({
-            plugins: ['plugin1'],
             enqueuerLogParser: {
                 name: 'logParser'
             },
@@ -199,9 +198,11 @@ describe('StageStore', () => {
         const state = {
             plugins: [true]
         };
-        stageStore.default().mutations.setPlugins(state, [false, true]);
+        // @ts-ignore
+        RendererMessageCommunicator.emit = jest.fn();
 
-        expect(state.plugins).toEqual([false, true]);
+        stageStore.default().mutations.updatePluginsList(state);
+        expect(RendererMessageCommunicator.emit).toHaveBeenCalledWith("restartEnqueuer");
     });
 
     it('should runCurrentlySelectedComponent', async () => {

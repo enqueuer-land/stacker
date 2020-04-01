@@ -94,7 +94,6 @@
             isNewVersion: function () {
                 const installed = this.pluginsNames.find(name => name.startsWith(`${this.plugin.name}/`));
                 const currentInstalledVersion = installed.split('/')[1];
-                console.log(currentInstalledVersion, this.plugin.version);
                 return currentInstalledVersion < this.plugin.version;
             },
         },
