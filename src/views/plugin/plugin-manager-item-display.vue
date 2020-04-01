@@ -11,18 +11,30 @@
                     <b-col col>
                         <h2 class="m-0">{{plugin.name}}</h2>
                     </b-col>
-                    <b-col cols="auto" class="px-3">
-                        <small>{{plugin.version}}</small>
-                    </b-col>
                     <b-col cols="auto">
-                        <b-button v-if="loaded" size="sm" class="float-right"
-                                  variant="install-button"
-                                  @click="() => $emit('install')">
-                            Install
-                        </b-button>
+                        <template v-if="loaded" class="float-right">
+                            <template v-if="isInstalled">
+                                <b-button size="sm"
+                                          class="mx-2"
+                                          variant="uninstall-button"
+                                          @click="() => $emit('uninstall')">
+                                    Uninstall {{currentVersion}}
+                                </b-button>
+                                <b-button v-if="isNewVersion" size="sm"
+                                          variant="install-button"
+                                          @click="() => $emit('install')">
+                                    Upgrade to {{plugin.version}}
+                                </b-button>
+                            </template>
+                            <b-button v-else size="sm"
+                                      variant="install-button"
+                                      @click="() => $emit('install')">
+                                Install {{plugin.version}}
+                            </b-button>
+                        </template>
                     </b-col>
                 </b-row>
-                <b-row v-if="loaded" no-gutters align-h="between">
+                <b-row v-if="loaded" no-gutters>
                     <b-col cols="auto" class="pl-1">
                         <small>@{{plugin.author}}</small>
                     </b-col>
@@ -43,6 +55,7 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
+    import {mapGetters} from 'vuex';
     import {Logger} from '@/components/logger';
     import {PluginDataFetcher} from '@/plugins/plugin-data-fetcher';
 
@@ -65,6 +78,25 @@
                 this.loaded = false;
                 this.loadData();
             }
+        },
+        computed: {
+            ...mapGetters('stage', ['pluginsNames']),
+            isInstalled: function () {
+                return this.pluginsNames.some(name => name.startsWith(`${this.plugin.name}/`));
+            },
+            currentVersion: function () {
+                if (this.isInstalled) {
+                    const installed = this.pluginsNames.find(name => name.startsWith(`${this.plugin.name}/`));
+                    return installed.split('/')[1];
+                }
+                return '';
+            },
+            isNewVersion: function () {
+                const installed = this.pluginsNames.find(name => name.startsWith(`${this.plugin.name}/`));
+                const currentInstalledVersion = installed.split('/')[1];
+                console.log(currentInstalledVersion, this.plugin.version);
+                return currentInstalledVersion < this.plugin.version;
+            },
         },
         methods: {
             loadData: async function () {
@@ -101,8 +133,9 @@
         color: var(--carabina-header-background-darker-color);
     }
 
-    .btn-install-button:hover:not(.disabled) {
-        filter: brightness(1.15);
+    .btn-uninstall-button {
+        background-color: var(--carabina-fail-theme-color);
+        color: var(--carabina-header-background-darker-color);
     }
 
 </style>

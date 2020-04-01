@@ -4,7 +4,7 @@
             {{item.name}}
         </b-col>
         <b-col cols="auto" class="align-self-center px-2">
-            <i :style="{visibility: (isInstalled || justInstalled) ? 'visible': 'hidden'}"
+            <i :style="{visibility: (isInstalled) ? 'visible': 'hidden'}"
                class="fas fa-check carabina-icon"></i>
         </b-col>
         <b-col cols="auto" class="px-2">
@@ -20,19 +20,19 @@
 <script>
     import Vue from 'vue';
     import '@/styles/texts.css';
-    import {PluginsLoader} from '@/plugins/plugins-loader';
+    import {mapGetters} from 'vuex';
 
     export default Vue.extend({
         name: 'PluginManagerItem',
         props: {
             item: Object,
-            selected: Boolean,
-            justInstalled: Boolean
+            selected: Boolean
         },
         computed: {
+            ...mapGetters('stage', ['pluginsNames']),
             //TODO move this to store
             isInstalled: function () {
-                return PluginsLoader.getInstance().pluginIsInstalled(this.item);
+                return this.pluginsNames.some(name => name.startsWith(`${this.item.name}/`));
             },
             itemStyle: function () {
                 const style = {

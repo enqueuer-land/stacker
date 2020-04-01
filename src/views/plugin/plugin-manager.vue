@@ -17,7 +17,7 @@
                 <b-col style="font-size: 30px">
                     Manage Plugin
                 </b-col>
-                <b-col cols="auto" class="align-self-center" @click="loadPluginsFromFileSystem">
+                <b-col cols="auto" class="align-self-center" @click="installPluginsFromFileSystem">
                     <i style="font-size: 30px" class="fas fa-folder-open carabina-icon"></i>
                 </b-col>
             </b-row>
@@ -30,7 +30,6 @@
 <!--                    </stacker-input>-->
                     <plugin-manager-item v-for="(plugin, index) in filteredPlugins" :key="index"
                                          :item="plugin" :selected="selectedIndex === index"
-                                         :justInstalled="justInstalledIndex.includes(index)"
                                          @click.native="selectItem(index)">
                     </plugin-manager-item>
                 </b-col>
@@ -38,7 +37,8 @@
                        style="border-left: 1px solid var(--carabina-header-background-lighter-color)">
                     <plugin-manager-item-display v-if="selectedIndex !== null"
                                                  :plugin="plugins[selectedIndex]"
-                                                 @install="installPlugin(plugins[selectedIndex], selectedIndex)">
+                                                 @install="installPlugin(plugins[selectedIndex])"
+                                                 @uninstall="uninstallPlugin(plugins[selectedIndex])">
                     </plugin-manager-item-display>
                 </b-col>
             </b-row>
@@ -76,7 +76,6 @@
             return {
                 filter: '',
                 plugins: [],
-                justInstalledIndex: [],
                 selectedIndex: null,
                 installingPluginModal: true,
             }
@@ -100,35 +99,27 @@
         },
         methods: {
             ...mapMutations('stage', ['setPluginManagerModalVisibility']),
-            ...mapActions('stage', ['loadPlugin']),
+            ...mapActions('stage', ['loadPlugin', 'loadPluginsFromFileSystem', 'removePlugin']),
             filterChanged: function (value) {
                 this.filter = value;
             },
             selectItem: function (index) {
                 this.selectedIndex = index;
             },
-            installPlugin: async function (plugin, selectedIndex) {
+            installPlugin: async function (plugin) {
                 this.installingPluginModal = true;
                 await this.loadPlugin(plugin);
-                this.justInstalledIndex.push(selectedIndex);
                 this.installingPluginModal = false;
             },
-            loadPluginsFromFileSystem: async function () {
-                const pickedFiles = await FileDialog.showOpenDialog();
-                if (pickedFiles.length > 0) {
-                    this.installingPluginModal = true;
-                    //TODO move this to stage.store
-                    const pluginsLoader = PluginsLoader.getInstance();
-                    try {
-                        await Promise
-                            .all(pickedFiles
-                                .map(async file => await pluginsLoader.loadFileFromFileSystem(file)));
-                    } catch (e) {
-                        Logger.error(e);
-                    }
-                    RendererMessageCommunicator.emit('restartEnqueuer');
-                    this.installingPluginModal = false;
-                }
+            uninstallPlugin: async function (plugin) {
+                this.installingPluginModal = true;
+                await this.removePlugin(plugin);
+                this.installingPluginModal = false;
+            },
+            installPluginsFromFileSystem: async function () {
+                this.installingPluginModal = true;
+                await this.loadPluginsFromFileSystem();
+                this.installingPluginModal = false;
             }
         },
         computed: {

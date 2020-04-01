@@ -1,5 +1,7 @@
 import store from '@/store'
 import LZString from 'lz-string';
+import {Logger} from '@/components/logger';
+import {FileDialog} from '@/renderer/file-dialog';
 import {PluginsLoader} from '@/plugins/plugins-loader';
 import {ComponentTypes} from '@/components/component-types';
 import {ComponentParent} from '@/components/component-parent';
@@ -11,9 +13,11 @@ import {CarabinaSubscription} from '@/models/carabina-subscription';
 import {RequisitionWrapperCreator} from '@/components/requisition-wrapper-creator';
 import {RendererMessageCommunicator} from '@/renderer/renderer-message-communicator';
 
+const pluginsLoader = new PluginsLoader();
 export default () => ({
     state: {
-        plugins: PluginsLoader.getInstance().getPlugins(),
+        plugins: pluginsLoader.getPlugins(),
+        pluginsNames: pluginsLoader.getPluginsNames(),
         enqueuerLogParser: new EnqueuerLogParser(600, 'INFO'),
         pluginManagerModal: false,
     },
@@ -36,8 +40,9 @@ export default () => ({
         setPluginManagerModalVisibility: (stage: any, visibility: boolean) => {
             stage.pluginManagerModal = visibility;
         },
-        setPlugins: (stage: any, data: any) => {
-            stage.plugins = data;
+        updatePluginsList: (stage: any) => {
+            stage.plugins = pluginsLoader.getPlugins();
+            stage.pluginsNames = pluginsLoader.getPluginsNames();
             RendererMessageCommunicator.emit('restartEnqueuer');
         },
         runCurrentlySelectedComponent: () => {
@@ -56,9 +61,23 @@ export default () => ({
     },
     actions: {
         loadPlugin: async ({commit}: any, plugin: any) => {
-            const pluginsLoader = PluginsLoader.getInstance();
             await pluginsLoader.loadPlugin(plugin.javascript);
-            commit('setPlugins', pluginsLoader.getPlugins());
+            commit('updatePluginsList');
+        },
+        removePlugin: async ({commit}: any, plugin: any) => {
+            await pluginsLoader.removePlugin(plugin.javascript);
+            commit('updatePluginsList');
+        },
+        loadPluginsFromFileSystem: async ({commit}: any) => {
+            const pickedFiles = await FileDialog.showOpenDialog();
+            if (pickedFiles.length > 0) {
+                try {
+                    await Promise.all(pickedFiles.map(async file => await pluginsLoader.loadFileFromFileSystem(file)));
+                    commit('updatePluginsList');
+                } catch (e) {
+                    Logger.error(e);
+                }
+            }
         },
         runComponent: async (_: any, component: CarabinaComponent) => {
             const decycled: CarabinaRequisition = new RequisitionWrapperCreator(component).create();
@@ -72,6 +91,7 @@ export default () => ({
     },
     getters: {
         plugins: (state: any) => state.plugins,
+        pluginsNames: (state: any) => state.pluginsNames,
         pluginManagerModal: (state: any) => state.pluginManagerModal,
         enqueuerLogs: (state: any) => state.enqueuerLogParser.getLogs(),
         currentLogLevel: (state: any) => state.enqueuerLogParser.getPriorityFilterName(),
@@ -79,9 +99,9 @@ export default () => ({
         protocolsOfComponentList: (state: any) => (componentType: ComponentTypes): any[] => {
             switch (componentType) {
                 case ComponentTypes.PUBLISHER:
-                    return Object.keys(state.plugins.publishers).map((publisherKey: string) => ({value: publisherKey.toUpperCase()}));
+                    return Object.keys(state.plugins.publishers).map((key: string) => ({value: key.toUpperCase()}));
                 case ComponentTypes.SUBSCRIPTION:
-                    return Object.keys(state.plugins.subscriptions).map((subscriptionKey: string) => ({value: subscriptionKey.toUpperCase()}));
+                    return Object.keys(state.plugins.subscriptions).map((key: string) => ({value: key.toUpperCase()}));
             }
             return [];
         },

@@ -6,12 +6,8 @@ jest.mock('electron-store');
 jest.mock('child_process');
 
 describe('PluginsLoader', () => {
-    beforeEach(() => {
-        // @ts-ignore
-        delete PluginsLoader.instance;
-    });
 
-    it('should begin with http pub and sub', () => {
+    it('should init with http pub and sub', () => {
         // @ts-ignore
         Store.mockImplementationOnce(() => {
             return {
@@ -19,7 +15,7 @@ describe('PluginsLoader', () => {
             }
         });
 
-        const plugins = PluginsLoader.getInstance().getPlugins();
+        const plugins = new PluginsLoader().getPlugins();
 
         expect(plugins).toEqual({
             publishers: {
@@ -44,7 +40,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         cp.exec.mockImplementationOnce((command, cb) => cb());
 
-        const pluginsLoader = PluginsLoader.getInstance();
+        const pluginsLoader = new PluginsLoader();
         await pluginsLoader.loadFileFromFileSystem('plugins/shell.js');
 
         expect(pluginsLoader.getPlugins()).toEqual({
@@ -56,7 +52,8 @@ describe('PluginsLoader', () => {
                 http: expect.anything()
             }
         });
-        expect(setMock).toHaveBeenCalledWith('pluginsString', expect.any(Array));
+        expect(setMock.mock.calls[0][0]).toBe('pluginsString');
+        expect(setMock.mock.calls[0][1]).toEqual({['shell/0.0.1']: expect.any(String)});
     });
 
     it('should install enqueuer dependencies', async () => {
@@ -73,7 +70,7 @@ describe('PluginsLoader', () => {
         // @ts-ignore
         cp.exec.mockImplementationOnce(execMock);
 
-        const pluginsLoader = PluginsLoader.getInstance();
+        const pluginsLoader = new PluginsLoader();
         await pluginsLoader.loadFileFromFileSystem('plugins/shell.js');
         const npmInstallCommand = execMock.mock.calls[0][0];
 
