@@ -28,35 +28,32 @@
                  no-fade
                  centered
                  hide-footer
-                 hide-header-close
+                 hide-header
                  size="xl" scrollable
                  :title="selectedEnvironment.name"
-                 header-bg-variant="header"
-                 header-text-variant="header"
                  body-bg-variant="body"
                  body-text-variant="body"
                  footer-bg-variant="footer"
                  footer-text-variant="footer">
-            <key-value-table :table="selectedEnvironment.store"
-                             @change="store => changeSelectedEnvironmentStore({environment: selectedEnvironment, store})">
-            </key-value-table>
+            <stacker-input style="font-size: 30px" :value="selectedEnvironment.name"
+                           :disableHighlight="true"
+                           @input="name => changeSelectedEnvironmentName({environment: selectedEnvironment, name})"></stacker-input>
+            <key-value-table class="pt-4" :table="selectedEnvironment.store"
+                             @change="store => changeSelectedEnvironmentStore({environment: selectedEnvironment, store})" />
         </b-modal>
 
         <b-modal id="manage-environments-modal" size="lg" scrollable
                  no-fade
                  centered
                  hide-footer
-                 hide-header-close
-                 title="Manage environments"
-                 header-bg-variant="header"
-                 header-text-variant="header"
+                 hide-header
                  body-bg-variant="body"
                  body-text-variant="body"
                  footer-bg-variant="footer"
                  footer-text-variant="footer">
+            <div style="font-size: 30px" class="carabina-text pb-4">Manage environments</div>
             <div v-for="environment in environments" :key="environment.id">
-                <NavBarEnvironmentManagement v-if="environment.role !== 'none'" :environment="environment">
-                </NavBarEnvironmentManagement>
+                <NavBarEnvironmentManagement v-if="environment.role !== 'none'" :environment="environment" />
             </div>
         </b-modal>
     </b-container>
@@ -87,7 +84,7 @@
         },
         methods: {
             ...mapMutations('nav-bar', ['environmentSelected', 'changeSelectedEnvironmentStore',
-                'addNewEnvironment']),
+                'addNewEnvironment', 'changeSelectedEnvironmentName']),
         }
     });
 </script>
@@ -107,11 +104,7 @@
         font-family: Avenir, Helvetica, Arial, sans-serif;
     }
 
-    .modal-header {
-        border: none;
-    }
-
-    .bg-body, .bg-header, .modal-content {
+    .bg-body, .modal-content {
         padding: 8px;
         background-color: var(--carabina-header-background-darker-color);
     }

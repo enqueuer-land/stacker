@@ -8,7 +8,7 @@
             <b-dropdown-divider v-if="item.divider"></b-dropdown-divider>
             <b-dropdown-item v-else>
                 <b-row class="pl-2" @click="item.action">
-                    <b-col cols="auto" class="align-self-center px-1">
+                    <b-col cols="auto" class="align-self-center pl-1 pr-3">
                         <i :class="['carabina-icon option-item-class', item.iconClass(component)]"
                            style="font-size: 14px"></i>
                     </b-col>
@@ -111,7 +111,7 @@
                 },
                 {
                     name: () => 'Delete',
-                    iconClass: () => 'fas fa-trash',
+                    iconClass: () => 'fas fa-trash delete-option',
                     action: (event) => {
                         event.stopPropagation();
                         this.deleteComponentById({
@@ -140,6 +140,10 @@
         transform: scale(1.05);
         filter: brightness(1.05);
         color: var(--carabina-theme-color);
+    }
+
+    .delete-option {
+        color: var(--carabina-fail-theme-color) !important;
     }
 
     .dropdown-item:active .option-item-class {

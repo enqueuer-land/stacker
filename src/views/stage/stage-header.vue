@@ -7,7 +7,7 @@
                 </b-breadcrumb-item>
             </b-breadcrumb>
         </div>
-        <b-row class="px-2" style="height: 50%" no-gutters>
+        <b-row class="px-2" style="height: 50%; padding-top: 2px" no-gutters>
             <b-col cols="auto" class="align-self-center">
                 <DropdownSelector
                         v-if="component.carabinaMeta.type !== 'REQUISITION'"

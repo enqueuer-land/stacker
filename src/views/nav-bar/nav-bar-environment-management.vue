@@ -4,6 +4,7 @@
             <b-col cols class="align-self-center carabina-text">
                 <stacker-input type="text"
                               trim
+                              :disableHighlight="true"
                               :readonly="environment.role === 'none'"
                               @input="(name) => changeSelectedEnvironmentName({environment, name})"
                               :value="environment.name"

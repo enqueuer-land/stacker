@@ -25,6 +25,7 @@
                     <stacker-input placeholder="Filter" type="text"
                                   @input="filterTextChanged"
                                   trim
+                                  :disableHighlight="true"
                                   :value="textFilter" class="text-input carabina-text">
                     </stacker-input>
                 </div>

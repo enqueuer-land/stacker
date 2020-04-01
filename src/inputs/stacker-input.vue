@@ -20,12 +20,13 @@
     import '@/styles/texts.css';
     import {mapGetters} from 'vuex';
     import HighlightableInput from 'vue-highlightable-input'
+
     export default Vue.extend({
         name: 'StackerHighlightableInput',
         components: {
             HighlightableInput
         },
-        props: ['highlightableRegex', 'value', 'placeholder', 'emptyValue', 'password'],
+        props: ['highlightableRegex', 'value', 'placeholder', 'emptyValue', 'password', 'disableHighlight'],
         data() {
             const highlightRegex = [
                 {
@@ -42,7 +43,7 @@
             const text = typeof this.value !== 'string' ? this.value.toString() : this.value;
             return {
                 text: text,
-                highlightRegex,
+                highlightRegex: this.disableHighlight ? [{text: /a^/g}] : highlightRegex,
             }
         },
         watch: {
@@ -56,20 +57,25 @@
         computed: {
             ...mapGetters('nav-bar', ['selectedEnvironment']),
             tooltipContent: function () {
-                const variableRegex = this.highlightRegex[0].text;
-                const store = this.selectedEnvironment.store || {};
-                let flagReplacement = false;
+                const defaultHighlight = this.highlightRegex[0];
+                if (defaultHighlight) {
+                    const variableRegex = defaultHighlight.text;
+                    const store = this.selectedEnvironment.store || {};
+                    let flagReplacement = false;
 
-                const htmlTag = '<div style="color: var(--carabina-text-color);">' + this.text.replace(variableRegex, (item) => {
-                    const itemName = item.substr(2, item.length - 4);
-                    const storeElement = store[itemName];
-                    if (storeElement) {
-                        flagReplacement = true;
-                        return storeElement;
-                    }
-                    return item;
-                }) + '</div>';
-                return flagReplacement ? htmlTag : '';
+                    const htmlTag = '<div style="color: var(--carabina-text-color);">' + this.text.replace(variableRegex, (item) => {
+                        const itemName = item.substr(2, item.length - 4);
+                        const storeElement = store[itemName];
+                        if (storeElement) {
+                            flagReplacement = true;
+                            return storeElement;
+                        }
+                        return item;
+                    }) + '</div>';
+
+                    return flagReplacement ? htmlTag : '';
+                }
+                return '';
             },
         },
         methods: {

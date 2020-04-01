@@ -15,6 +15,7 @@
             <b-col cols="9" class="align-self-center mr-auto">
                 <stacker-input placeholder="Filter" type="text"
                                @input="filterTextChanged"
+                               :disableHighlight="true"
                                trim
                                :value="textFilter" class="text-input carabina-text">
                 </stacker-input>
