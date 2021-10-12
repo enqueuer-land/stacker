@@ -62,7 +62,7 @@
     "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "1.0.0-beta.31",
-    "electron": "^9.4.0",
+    "electron": "^11.5.0",
     "electron-icon-builder": "^1.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
